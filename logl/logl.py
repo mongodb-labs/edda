@@ -1,5 +1,6 @@
 #!/usr/bin/env
 
+import os
 import sys
 import string
 import pymongo
@@ -23,11 +24,10 @@ def main():
     counter = 0 # this is mostly for debugging
     stored = 0
 
-    date = datetime.datetime.now()
-    connection = Connection('localhost', 27017)
-    db = connection.log
-
-    newcoll = db.logl[date]
+#    date = datetime.datetime.now()
+#    connection = Connection('localhost', 27017)
+#    db = connection.log
+#    newcoll = db.logl[date]
 
     for line in f:
         counter += 1
@@ -44,7 +44,7 @@ def main():
                 continue
             doc = trafficControl(line, date)
             if (doc != None):
-                storeInDB(newcoll, date, doc)
+ #               storeInDB(newcoll, date, doc)
                 stored += 1
 
     print 'Finished running, stored {0} of {1} log lines'.format(stored, counter)
@@ -56,9 +56,22 @@ def main():
 # a document, which this function will pass up to main().
 def trafficControl(msg, date):
 
+    module_map = map(__import__, ["modules" + "." + f for f in os.listdir("modules")])
+    print module_map
+
+    dirList = os.listdir("modules")
+    for fname in dirList:
+        print fname        
+
     # want to adapt the following to search ANY module in the modules directory
     return process(msg, date)
 
+
+#-------------------------------------------------------------    
+
+# another testing funtion to dynamically import modules
+def load_from_dir(file_path="modules"):
+    pass
 
 #-------------------------------------------------------------    
 
