@@ -40,6 +40,7 @@ def main():
         # skip blank lines, parse other lines
         elif (len(line) > 1):
             date = dateParser(line)
+            date2 = efficientDateParser(line)
 #            if (date != None):
             if (trafficControl(line, date)):
                 storeInDB(db, line, date)
@@ -139,6 +140,12 @@ def handleConnMsg(msg):
 def handleExitMsg(msg):
     return
 
+#-------------------------------------------------------------    
+
+def efficientDateParser(message):
+    month = str(parseMonth(message[4:7])) + message[7:19]
+    print 'current string: {0}'.format(month)
+    
 #-------------------------------------------------------------    
 
 def dateParser(message):
