@@ -18,6 +18,7 @@ def storeInDB(db, msg, date):
     entry = {}
     entry["date"] = date
     entry["msg"] = msg
-
-    db.loglines.insert(entry)
+    
+    db.logl[date].insert(entry)
+   # db.logl.date.insert(entry)
 

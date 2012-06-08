@@ -5,7 +5,7 @@ import string
 import re
 import urllib
 import pymongo
-import datetime
+from datetime import datetime
 from pymongo import Connection
 from noOp import storeInDB
 from datetime import timedelta
@@ -39,8 +39,8 @@ def main():
             print 'handle restart message'
         # skip blank lines, parse other lines
         elif (len(line) > 1):
-            date = dateParser(line)
-            date2 = efficientDateParser(line)
+            date2 = dateParser(line)
+            date = efficientDateParser(line)
 #            if (date != None):
             if (trafficControl(line, date)):
                 storeInDB(db, line, date)
@@ -143,8 +143,11 @@ def handleExitMsg(msg):
 #-------------------------------------------------------------    
 
 def efficientDateParser(message):
-    month = str(parseMonth(message[4:7])) + message[7:19]
-    print 'current string: {0}'.format(month)
+    newMessage  = str(parseMonth(message[4:7])) + message[7:19]
+   # print 'current string: {0}'.format(newMessage)
+    time = datetime.strptime(newMessage, "%m %d %H:%M:%S")
+    print 'date: {0}'.format(time)
+    return time
     
 #-------------------------------------------------------------    
 
