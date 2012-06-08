@@ -6,6 +6,8 @@ import pymongo
 from pymongo import Connection
 from noOp import storeInDB
 from init import process
+from parse_date import date_parser
+from datetime import datetime
 
 #------------------------------------------------------------    
 
@@ -21,12 +23,11 @@ def main():
     counter = 0 # this is mostly for debugging
     stored = 0
 
+    date = datetime.datetime.now()
     connection = Connection('localhost', 27017)
     db = connection.log
 
-    # drop the old collection
-    db.drop_collection(db.loglines)
-    loglines = db.loglines
+    newcoll = db.logl[date]
 
     for line in f:
         counter += 1
@@ -38,13 +39,12 @@ def main():
 
         # skip blank lines
         if (len(line) > 1):
-            date2 = dateParser(line)
-            date = efficientDateParser(line)
+            date = date_parser(line)
             if (date == None): 
                 continue
             doc = trafficControl(line, date)
             if (doc != None):
-                storeInDB(db, doc)
+                storeInDB(newcoll, date, doc)
                 stored += 1
 
     print 'Finished running, stored {0} of {1} log lines'.format(stored, counter)
