@@ -14,9 +14,14 @@ from datetime import datetime
 # a main function, handles basic parsing and sends 
 # to trafficControl for more advanced handling
 def main():
-
-    if (len(sys.argv) < 2):
+    
+    arguement = sys.argv
+    print "Arguement: {0}".format(arguement)
+    if (len(arguement) < 2):
         print "Missing argument: please give me a filename"
+        return
+    if "version" in arguement:
+        print "Current version: 0.0.0.0.0.0.0.1}" 
         return
 
     f = open(sys.argv[1], 'r')
