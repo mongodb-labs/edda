@@ -23,35 +23,40 @@ def main():
         print "Missing argument: please give me a filename"
         return
 
-    f = open(sys.argv[1], 'r')
-    counter = 0 
-    stored = 0
-
     connection = Connection('localhost', 27017)
     db = connection.log
     now = datetime.datetime.now()
     name = str(now.strftime("logl_%m_%d_%Y_at_%H_%M_%S"))
     newcoll = db[name]
 
-    for line in f:
-        counter += 1
+    # for now, treat ALL args as if they were filenames and parse them
+    # for now, handle sequentially.
+
+    for arg in sys.argv[1:]:
+        
+        f = open(arg, 'r')
+        counter = 0 
+        stored = 0
+        
+        for line in f:
+            counter += 1
 
         # skip restart messages
-        if (string.find(line, '*****') >= 0):
-            print 'handle restart message'
-            continue
+            if (string.find(line, '*****') >= 0):
+                print 'handle restart message'
+                continue
 
         # skip blank lines
-        if (len(line) > 1):
-            date = date_parser(line)
-            if (date == None): 
-                continue
-            doc = trafficControl(line, date)
-            if (doc != None):
-                storeInDB(newcoll, date, doc)
-                stored += 1
+            if (len(line) > 1):
+                date = date_parser(line)
+                if (date == None): 
+                    continue
+                doc = trafficControl(line, date)
+                if (doc != None):
+                    storeInDB(newcoll, date, doc)
+                    stored += 1
 
-    print 'Finished running, stored {0} of {1} log lines'.format(stored, counter)
+        print 'Finished running on {0}, stored {1} of {2} log lines'.format(arg, stored, counter)
 
 #-------------------------------------------------------------    
 
