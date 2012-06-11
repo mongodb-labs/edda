@@ -27,10 +27,11 @@ def main():
     counter = 0 
     stored = 0
 
-    date = datetime.datetime.now()
     connection = Connection('localhost', 27017)
     db = connection.log
-    newcoll = db.logl[date]
+    now = datetime.datetime.now()
+    name = now.strftime("-%m-%d-%Y-at-%H:%M:%S")
+    newcoll = db.logl[name]
 
     for line in f:
         counter += 1
@@ -79,10 +80,8 @@ def trafficControl(msg, date):
                     if (doc != None):
                         return doc
                     # for now, this will only return the first module hit...
-#print 'process() method found for module ', fname
-                    # if a valid doc was returned, store it!
 
-#-------------------------------------------------------------    
+#------------------------------------------------------------    
 
 if __name__ == "__main__":
     main()
