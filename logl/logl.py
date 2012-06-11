@@ -10,6 +10,8 @@ from init import process
 from parse_date import date_parser
 from datetime import datetime
 
+from modules import *
+
 #------------------------------------------------------------    
 
 # a main function, handles basic parsing and sends 
@@ -56,22 +58,25 @@ def main():
 # a document, which this function will pass up to main().
 def trafficControl(msg, date):
 
-    module_map = map(__import__, ["modules" + "." + f for f in os.listdir("modules")])
-    print module_map
-
+    pattern = re.compile(".py$")
     dirList = os.listdir("modules")
+
     for fname in dirList:
-        print fname        
+        
+        # only deal with .py files
+        m = pattern.search(fname)
+        if (m != None):
+            fname = fname[0:len(d) - 3]
 
-    # want to adapt the following to search ANY module in the modules directory
-    return process(msg, date)
+            # ignore __init__ file
+            if (fname != "__init__"):
+                fname = "modules." + fname
 
+                # if module is valid and contains method, run!
+                if 'process' in dir(sys.modules[fname]):
+                    doc = sys.modules[fname].process(msg, date)
 
-#-------------------------------------------------------------    
-
-# another testing funtion to dynamically import modules
-def load_from_dir(file_path="modules"):
-    pass
+                    # if a valid doc was returned, store it!
 
 #-------------------------------------------------------------    
 
