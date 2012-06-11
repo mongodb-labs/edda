@@ -1,0 +1,39 @@
+Tue Feb 21 02:18:56 [initandlisten] MongoDB starting : pid=1611 port=27017 dbpath=/data 64-bit host=ip-10-28-25-114
+Tue Feb 21 02:18:56 [initandlisten] db version v2.0.2, pdfile version 4.5
+Tue Feb 21 02:18:56 [initandlisten] git version: 514b122d308928517f5841888ceaa4246a7f18e3
+Tue Feb 21 02:18:56 [initandlisten] build info: Linux bs-linux64.10gen.cc 2.6.21.7-2.ec2.v1.2.fc8xen #1 SMP Fri Nov 20 17:48:28 EST 2009 x86_64 BOOST_LIB_VERSION=1_41
+Tue Feb 21 02:18:56 [initandlisten] options: { config: "/etc/mongod.conf", dbpath: "/data", fork: "true", logappend: "true", logpath: "/var/log/mongo/mongod.log" }
+Tue Feb 21 02:18:56 [initandlisten] journal dir=/data/journal
+Tue Feb 21 02:18:56 [initandlisten] recover : no journal files present, no recovery needed
+Tue Feb 21 02:18:56 [initandlisten] preallocateIsFaster=true 3.72
+Tue Feb 21 02:18:57 [initandlisten] preallocateIsFaster=true 4.4
+Tue Feb 21 02:18:58 [initandlisten] preallocateIsFaster=true 4.3
+Tue Feb 21 02:18:58 [initandlisten] preallocating a journal file /data/journal/prealloc.0
+Tue Feb 21 02:19:22 [initandlisten] preallocating a journal file /data/journal/prealloc.1
+Tue Feb 21 02:19:47 [initandlisten] preallocating a journal file /data/journal/prealloc.2
+Tue Feb 21 02:20:12 [websvr] admin web console waiting for connections on port 28017
+Tue Feb 21 02:20:12 [initandlisten] waiting for connections on port 27017
+Tue Feb 21 02:20:35 [initandlisten] connection accepted from 127.0.0.1:40252 #1
+Tue Feb 21 02:21:12 [clientcursormon] mem (MB) res:13 virt:677 mapped:0
+Tue Feb 21 02:21:14 [FileAllocator] allocating new datafile /data/testdb.ns, filling with zeroes...
+Tue Feb 21 02:21:14 [FileAllocator] creating directory /data/_tmp
+Tue Feb 21 02:21:14 [FileAllocator] done allocating datafile /data/testdb.ns, size: 16MB,  took 0.002 secs
+Tue Feb 21 02:21:14 [FileAllocator] allocating new datafile /data/testdb.0, filling with zeroes...
+Tue Feb 21 02:21:14 [FileAllocator] done allocating datafile /data/testdb.0, size: 64MB,  took 0.018 secs
+Tue Feb 21 02:21:14 [FileAllocator] allocating new datafile /data/testdb.1, filling with zeroes...
+Tue Feb 21 02:21:14 [conn1] build index testdb.testCollection { _id: 1 }
+Tue Feb 21 02:21:14 [conn1] build index done 0 records 0.002 secs
+Tue Feb 21 02:21:14 [FileAllocator] done allocating datafile /data/testdb.1, size: 128MB,  took 0.002 secs
+Tue Feb 21 02:21:14 [conn1] command testdb.$cmd command: { create: "testCollection", capped: undefined, size: undefined, max: undefined } ntoreturn:1 reslen:37 122ms
+Tue Feb 21 02:21:31 [conn1] end connection 127.0.0.1:40252
+Tue Feb 21 02:22:12 [clientcursormon] mem (MB) res:29 virt:869 mapped:80
+Tue Feb 21 02:27:12 [clientcursormon] mem (MB) res:29 virt:869 mapped:80
+Tue Feb 21 02:32:12 [clientcursormon] mem (MB) res:29 virt:869 mapped:80
+Tue Feb 21 02:34:54 got kill or ctrl c or hup signal 15 (Terminated), will terminate after current cmd ends
+Tue Feb 21 02:34:54 [interruptThread] now exiting
+Tue Feb 21 02:34:54 dbexit: 
+Tue Feb 21 02:34:54 [interruptThread] shutdown: going to close listening sockets...
+Tue Feb 21 02:34:54 [interruptThread] closing listening socket: 6
+Tue Feb 21 02:34:54 [interruptThread] closing listening socket: 7
+Tue Feb 21 02:34:54 [interruptThread] closing listening socket: 8
+Tue Feb 21 02:34:54 [interruptThread] removing socket file: /tmp/mongodb-27017.sock

@@ -1,0 +1,104 @@
+Mon Jun 11 16:00:32 [initandlisten] MongoDB starting : pid=7048 port=27017 dbpath=/data/rs1 64-bit host=Kaushals-MacBook-Air.local
+Mon Jun 11 16:00:32 [initandlisten] 
+Mon Jun 11 16:00:32 [initandlisten] ** NOTE: This is a development version (2.1.1) of MongoDB.
+Mon Jun 11 16:00:32 [initandlisten] **       Not recommended for production.
+Mon Jun 11 16:00:32 [initandlisten] 
+Mon Jun 11 16:00:32 [initandlisten] ** WARNING: soft rlimits too low. Number of files is 256, should be at least 1000
+Mon Jun 11 16:00:32 [initandlisten] 
+Mon Jun 11 16:00:32 [initandlisten] db version v2.1.1, pdfile version 4.5
+Mon Jun 11 16:00:32 [initandlisten] git version: 6c1c98b332a4ebe2604462ccbf9f1af475734460
+Mon Jun 11 16:00:32 [initandlisten] build info: Darwin Kaushals-MacBook-Air.local 11.3.0 Darwin Kernel Version 11.3.0: Thu Jan 12 18:47:41 PST 2012; root:xnu-1699.24.23~1/RELEASE_X86_64 x86_64 BOOST_LIB_VERSION=1_49
+Mon Jun 11 16:00:32 [initandlisten] options: { dbpath: "/data/rs1", fork: true, logpath: "1.log", port: 27017, replSet: "foo" }
+Mon Jun 11 16:00:32 [initandlisten] journal dir=/data/rs1/journal
+Mon Jun 11 16:00:32 [initandlisten] recover : no journal files present, no recovery needed
+Mon Jun 11 16:00:32 [websvr] admin web console waiting for connections on port 28017
+Mon Jun 11 16:00:32 [initandlisten] waiting for connections on port 27017
+Mon Jun 11 16:00:32 [initandlisten] connection accepted from 127.0.0.1:55699 #1 (1 connection now open)
+Mon Jun 11 16:00:32 [rsStart] replSet I am localhost:27017
+Mon Jun 11 16:00:32 [rsStart] replSet STARTUP2
+Mon Jun 11 16:00:32 [rsSync] replSet SECONDARY
+Mon Jun 11 16:00:32 [rsHealthPoll] replSet member localhost:27018 is up
+Mon Jun 11 16:00:32 [rsHealthPoll] replSet member localhost:27018 is now in state PRIMARY
+Mon Jun 11 16:00:33 [initandlisten] connection accepted from 127.0.0.1:55701 #2 (2 connections now open)
+Mon Jun 11 16:00:33 [initandlisten] connection accepted from 127.0.0.1:55702 #3 (3 connections now open)
+Mon Jun 11 16:00:33 [conn2] end connection 127.0.0.1:55701 (1 connection now open)
+Mon Jun 11 16:00:34 [initandlisten] connection accepted from 127.0.0.1:55703 #4 (3 connections now open)
+Mon Jun 11 16:00:34 [initandlisten] connection accepted from 127.0.0.1:55704 #5 (4 connections now open)
+Mon Jun 11 16:00:34 [conn4] end connection 127.0.0.1:55703 (2 connections now open)
+Mon Jun 11 16:00:34 [rsHealthPoll] replSet member localhost:27019 is up
+Mon Jun 11 16:00:34 [rsHealthPoll] replSet member localhost:27019 is now in state ARBITER
+Mon Jun 11 16:00:38 [rsSync] replSet syncing to: localhost:27018
+Mon Jun 11 16:00:38 [rsSync] build index local.me { _id: 1 }
+Mon Jun 11 16:00:38 [rsSync] build index done.  scanned 0 total records. 0.001 secs
+Mon Jun 11 16:00:38 [rsSync] info journal _rotate called inside dbMutex - ok but should be somewhat rare
+Mon Jun 11 16:00:57 [conn3] end connection 127.0.0.1:55702 (2 connections now open)
+Mon Jun 11 16:00:57 [initandlisten] connection accepted from 127.0.0.1:55711 #6 (4 connections now open)
+Mon Jun 11 16:01:00 [conn5] end connection 127.0.0.1:55704 (2 connections now open)
+Mon Jun 11 16:01:00 [initandlisten] connection accepted from 127.0.0.1:55712 #7 (4 connections now open)
+Mon Jun 11 16:01:02 [initandlisten] connection accepted from 127.0.0.1:55713 #8 (4 connections now open)
+Mon Jun 11 16:01:27 [conn6] end connection 127.0.0.1:55711 (3 connections now open)
+Mon Jun 11 16:01:27 [initandlisten] connection accepted from 127.0.0.1:55718 #9 (5 connections now open)
+Mon Jun 11 16:01:30 [conn7] end connection 127.0.0.1:55712 (3 connections now open)
+Mon Jun 11 16:01:30 [initandlisten] connection accepted from 127.0.0.1:55722 #10 (5 connections now open)
+Mon Jun 11 16:01:32 [clientcursormon] mem (MB) res:3 virt:3179 mapped:352
+Mon Jun 11 16:01:50 [conn8] assertion 13435 not master and slaveOk=false ns:foo.foo query:{}
+Mon Jun 11 16:01:50 [conn8] { $err: "not master and slaveOk=false", code: 13435 }
+Mon Jun 11 16:01:57 [conn9] end connection 127.0.0.1:55718 (3 connections now open)
+Mon Jun 11 16:01:57 [initandlisten] connection accepted from 127.0.0.1:55727 #11 (5 connections now open)
+Mon Jun 11 16:02:00 [conn10] end connection 127.0.0.1:55722 (3 connections now open)
+Mon Jun 11 16:02:00 [initandlisten] connection accepted from 127.0.0.1:55728 #12 (5 connections now open)
+Mon Jun 11 16:02:14 [conn8] assertion 13435 not master and slaveOk=false ns:foo.foo query:{}
+Mon Jun 11 16:02:14 [conn8] { $err: "not master and slaveOk=false", code: 13435 }
+Mon Jun 11 16:02:27 [conn11] end connection 127.0.0.1:55727 (3 connections now open)
+Mon Jun 11 16:02:27 [initandlisten] connection accepted from 127.0.0.1:55734 #13 (5 connections now open)
+Mon Jun 11 16:02:30 [conn12] end connection 127.0.0.1:55728 (3 connections now open)
+Mon Jun 11 16:02:30 [initandlisten] connection accepted from 127.0.0.1:55735 #14 (5 connections now open)
+Mon Jun 11 16:02:57 [conn13] end connection 127.0.0.1:55734 (3 connections now open)
+Mon Jun 11 16:02:57 [initandlisten] connection accepted from 127.0.0.1:55740 #15 (5 connections now open)
+Mon Jun 11 16:03:00 [conn14] end connection 127.0.0.1:55735 (3 connections now open)
+Mon Jun 11 16:03:00 [initandlisten] connection accepted from 127.0.0.1:55741 #16 (5 connections now open)
+Mon Jun 11 16:03:27 [conn15] end connection 127.0.0.1:55740 (3 connections now open)
+Mon Jun 11 16:03:27 [initandlisten] connection accepted from 127.0.0.1:55746 #17 (5 connections now open)
+Mon Jun 11 16:03:30 [conn16] end connection 127.0.0.1:55741 (3 connections now open)
+Mon Jun 11 16:03:30 [initandlisten] connection accepted from 127.0.0.1:55747 #18 (5 connections now open)
+Mon Jun 11 16:03:57 [conn17] end connection 127.0.0.1:55746 (3 connections now open)
+Mon Jun 11 16:03:57 [initandlisten] connection accepted from 127.0.0.1:55754 #19 (5 connections now open)
+Mon Jun 11 16:04:00 [conn18] end connection 127.0.0.1:55747 (3 connections now open)
+Mon Jun 11 16:04:00 [initandlisten] connection accepted from 127.0.0.1:55755 #20 (5 connections now open)
+Mon Jun 11 16:04:27 [conn19] end connection 127.0.0.1:55754 (3 connections now open)
+Mon Jun 11 16:04:27 [initandlisten] connection accepted from 127.0.0.1:55761 #21 (5 connections now open)
+Mon Jun 11 16:04:30 [conn20] end connection 127.0.0.1:55755 (3 connections now open)
+Mon Jun 11 16:04:30 [initandlisten] connection accepted from 127.0.0.1:55762 #22 (4 connections now open)
+Mon Jun 11 16:04:57 [conn21] end connection 127.0.0.1:55761 (3 connections now open)
+Mon Jun 11 16:04:57 [initandlisten] connection accepted from 127.0.0.1:55783 #23 (5 connections now open)
+Mon Jun 11 16:05:00 [conn22] end connection 127.0.0.1:55762 (3 connections now open)
+Mon Jun 11 16:05:00 [initandlisten] connection accepted from 127.0.0.1:55784 #24 (5 connections now open)
+Mon Jun 11 16:05:27 [conn23] end connection 127.0.0.1:55783 (3 connections now open)
+Mon Jun 11 16:05:27 [initandlisten] connection accepted from 127.0.0.1:55797 #25 (5 connections now open)
+Mon Jun 11 16:05:30 [conn24] end connection 127.0.0.1:55784 (3 connections now open)
+Mon Jun 11 16:05:30 [initandlisten] connection accepted from 127.0.0.1:55798 #26 (5 connections now open)
+Mon Jun 11 16:05:57 [conn25] end connection 127.0.0.1:55797 (3 connections now open)
+Mon Jun 11 16:05:57 [initandlisten] connection accepted from 127.0.0.1:55804 #27 (5 connections now open)
+Mon Jun 11 16:06:00 [conn26] end connection 127.0.0.1:55798 (3 connections now open)
+Mon Jun 11 16:06:00 [initandlisten] connection accepted from 127.0.0.1:55805 #28 (5 connections now open)
+Mon Jun 11 16:06:27 [conn27] end connection 127.0.0.1:55804 (3 connections now open)
+Mon Jun 11 16:06:27 [initandlisten] connection accepted from 127.0.0.1:55811 #29 (5 connections now open)
+Mon Jun 11 16:06:30 [conn28] end connection 127.0.0.1:55805 (3 connections now open)
+Mon Jun 11 16:06:30 [initandlisten] connection accepted from 127.0.0.1:55812 #30 (4 connections now open)
+Mon Jun 11 16:06:32 [clientcursormon] mem (MB) res:3 virt:3179 mapped:352
+Mon Jun 11 16:06:57 [conn29] end connection 127.0.0.1:55811 (3 connections now open)
+Mon Jun 11 16:06:57 [initandlisten] connection accepted from 127.0.0.1:55818 #31 (5 connections now open)
+Mon Jun 11 16:07:00 [conn30] end connection 127.0.0.1:55812 (3 connections now open)
+Mon Jun 11 16:07:00 [initandlisten] connection accepted from 127.0.0.1:55819 #32 (5 connections now open)
+Mon Jun 11 16:07:27 [conn31] end connection 127.0.0.1:55818 (3 connections now open)
+Mon Jun 11 16:07:27 [initandlisten] connection accepted from 127.0.0.1:55825 #33 (5 connections now open)
+Mon Jun 11 16:07:30 [conn32] end connection 127.0.0.1:55819 (3 connections now open)
+Mon Jun 11 16:07:30 [initandlisten] connection accepted from 127.0.0.1:55826 #34 (5 connections now open)
+Mon Jun 11 16:07:57 [conn33] end connection 127.0.0.1:55825 (3 connections now open)
+Mon Jun 11 16:07:57 [initandlisten] connection accepted from 127.0.0.1:55831 #35 (5 connections now open)
+Mon Jun 11 16:08:00 [conn34] end connection 127.0.0.1:55826 (3 connections now open)
+Mon Jun 11 16:08:00 [initandlisten] connection accepted from 127.0.0.1:55832 #36 (5 connections now open)
+Mon Jun 11 16:08:27 [conn35] end connection 127.0.0.1:55831 (3 connections now open)
+Mon Jun 11 16:08:27 [initandlisten] connection accepted from 127.0.0.1:55839 #37 (5 connections now open)
+Mon Jun 11 16:08:30 [conn36] end connection 127.0.0.1:55832 (3 connections now open)
+Mon Jun 11 16:08:30 [initandlisten] connection accepted from 127.0.0.1:55840 #38 (5 connections now open)
