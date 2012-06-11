@@ -30,8 +30,8 @@ def main():
     connection = Connection('localhost', 27017)
     db = connection.log
     now = datetime.datetime.now()
-    name = now.strftime("-%m-%d-%Y-at-%H:%M:%S")
-    newcoll = db.logl[name]
+    name = str(now.strftime("logl_%m_%d_%Y_at_%H_%M_%S"))
+    newcoll = db[name]
 
     for line in f:
         counter += 1
