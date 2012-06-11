@@ -4,11 +4,12 @@ import os
 import sys
 import string
 import pymongo
+import re
 from pymongo import Connection
 from noOp import storeInDB
 from init import process
 from parse_date import date_parser
-from datetime import datetime
+import datetime
 
 from modules import *
 
@@ -23,13 +24,13 @@ def main():
         return
 
     f = open(sys.argv[1], 'r')
-    counter = 0 # this is mostly for debugging
+    counter = 0 
     stored = 0
 
-#    date = datetime.datetime.now()
-#    connection = Connection('localhost', 27017)
-#    db = connection.log
-#    newcoll = db.logl[date]
+    date = datetime.datetime.now()
+    connection = Connection('localhost', 27017)
+    db = connection.log
+    newcoll = db.logl[date]
 
     for line in f:
         counter += 1
@@ -46,7 +47,7 @@ def main():
                 continue
             doc = trafficControl(line, date)
             if (doc != None):
- #               storeInDB(newcoll, date, doc)
+                storeInDB(newcoll, date, doc)
                 stored += 1
 
     print 'Finished running, stored {0} of {1} log lines'.format(stored, counter)
@@ -66,16 +67,19 @@ def trafficControl(msg, date):
         # only deal with .py files
         m = pattern.search(fname)
         if (m != None):
-            fname = fname[0:len(d) - 3]
+            fname = fname[0:len(fname) - 3]
 
-            # ignore __init__ file
-            if (fname != "__init__"):
+            # ignore __init__ file and template.py
+            if fname != "__init__" and fname != "template":
                 fname = "modules." + fname
 
                 # if module is valid and contains method, run!
                 if 'process' in dir(sys.modules[fname]):
                     doc = sys.modules[fname].process(msg, date)
-
+                    if (doc != None):
+                        return doc
+                    # for now, this will only return the first module hit...
+#print 'process() method found for module ', fname
                     # if a valid doc was returned, store it!
 
 #-------------------------------------------------------------    
