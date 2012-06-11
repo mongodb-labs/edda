@@ -29,21 +29,45 @@ def main():
     V2 = False
     V3 = False
     V4 = False
+    port = 27017
+    host = 'localhost'
+    PORTSET = False
+    HOSTSET = False
 
     pattern = re.compile("^-")
 
-    # handle filenames v command-line options
+    # handle filenames and command-line options
     for arg in sys.argv[1:]:
+
+        if PORTSET: 
+            port = arg
+            PORTSET = False
+            continue
+        if HOSTSET:
+            pos = string.find(arg, ":")
+            if (pos > 0):
+                host = arg[0:pos]
+                port = arg[pos + 1: len(arg)]
+                print 'host: {0} port: {1}'.format(host, port)
+            else: 
+                host = arg
+                print 'host: ', host
+            HOSTSET = False
+            continue
 
         # is it an option? 
         m = pattern.search(arg)
         if (m != None):
+
             if "version" in arg:
                 print "Running logl version: 0.0.1" 
                 return
             elif "help" in arg:
                 print helpMsg()
-
+            elif "port" in arg:
+                PORTSET = True
+            elif "host" in arg or arg is "-h":
+                HOSTSET = True
             elif "verbose" in arg:
                 V1 = True
                 print "V1 on"
