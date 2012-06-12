@@ -84,9 +84,10 @@ def main():
 
     # configure logger      
     logname = "logl_logs/" + name + ".log"
-    if flags["V1"]: logging.basicConfig(filename=logname, level=logging.WARNING)
-    elif flags["V2"]: logging.basicConfig(filename=logname, level=logging.INFO)
-    elif flags["V3"]: logging.basicConfig(filename=logname, level=logging.DEBUG)
+#    if flags["V1"]: logging.basicConfig(filename=logname, level=logging.WARNING)
+#    elif flags["V2"]: logging.basicConfig(filename=logname, level=logging.INFO)
+#    elif flags["V3"]: logging.basicConfig(filename=logname, level=logging.DEBUG)
+    logging.basicConfig(level=logging.DEBUG)
 
     logger = logging.getLogger(__name__)
 
@@ -142,7 +143,7 @@ def trafficControl(msg, date):
     logger = logging.getLogger(__name__)
 
     for fname in dirList:
-        
+
         # only deal with .py files
         m = pattern.search(fname)
         if (m != None):
@@ -150,7 +151,7 @@ def trafficControl(msg, date):
 
             # ignore __init__ file and template.py
             if fname != "__init__" and fname != "template":
-                fname = "modules." + fname
+                fname = "modules." + fname 
 
                 # if module is valid and contains method, run!
                 if 'process' in dir(sys.modules[fname]):
