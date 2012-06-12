@@ -31,6 +31,10 @@ rs.status()
 
 
 
+for (var i = 1; i <= Math.floor(Math.random()*10000); i++) db.foo.save({x : Math.floor(Math.random()*Math.random()), j : Math.floor(Math.random()*10000)});
+
+
+
 var random = Math.floor(Math.random()*5)
 for(i = 0; i<Math.floor(Math.random()*30); i++){
 	db.foo.insert({_id: Math.floor(Math.random()*86753)
