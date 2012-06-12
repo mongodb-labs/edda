@@ -1,0 +1,26 @@
+INFO:__main__:Connection opened with logl mongod
+INFO:__main__:Connected to localhost on port 27017
+INFO:__main__:Writing to db logl, collection logl_06_12_2012_at_10_43_01
+INFO:__main__:Reading from logfile sample.log...
+INFO:__main__:Found modules.init type message, storing to db
+INFO:__main__:Found modules.init type message, storing to db
+INFO:__main__:Found modules.init type message, storing to db
+INFO:__main__:Found modules.init type message, storing to db
+INFO:__main__:Found modules.init type message, storing to db
+INFO:__main__:Found modules.init type message, storing to db
+INFO:__main__:Found modules.init type message, storing to db
+INFO:__main__:Found modules.init type message, storing to db
+INFO:__main__:Found modules.init type message, storing to db
+INFO:__main__:Found modules.init type message, storing to db
+INFO:__main__:Found modules.init type message, storing to db
+INFO:__main__:Found modules.init type message, storing to db
+INFO:__main__:Found modules.init type message, storing to db
+INFO:__main__:Found modules.init type message, storing to db
+INFO:__main__:Found modules.init type message, storing to db
+INFO:__main__:Found modules.init type message, storing to db
+INFO:__main__:Found modules.init type message, storing to db
+INFO:__main__:----------------------------------------------------------------
+INFO:__main__:Finished running on sample.log
+INFO:__main__:Stored 17 of 646 log lines to db
+INFO:__main__:================================================================
+INFO:__main__:Exiting.

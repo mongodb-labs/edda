@@ -5,6 +5,7 @@ import sys
 import string
 import pymongo
 import re
+import logging
 from pymongo import Connection
 from noOp import storeInDB
 from init import process
@@ -25,25 +26,28 @@ def main():
 
     # file list and option flags
     files = []
-    V1 = False
-    V2 = False
-    V3 = False
-    V4 = False
+    flags = dict.fromkeys(["V1", "V2", "V3", "V4", "PORTSET", "HOSTSET"], False)
     port = 27017
     host = 'localhost'
-    PORTSET = False
-    HOSTSET = False
+
+    now = datetime.datetime.now()
+    name = str(now.strftime("logl_%m_%d_%Y_at_%H_%M_%S"))
+
+    # configure logger
+    logname = "logl_logs/" + name + ".log"
+    logging.basicConfig(filename=logname, level=logging.INFO)
+    logger = logging.getLogger(__name__)
 
     pattern = re.compile("^-")
 
     # handle filenames and command-line options
     for arg in sys.argv[1:]:
 
-        if PORTSET: 
+        if flags["PORTSET"]: 
             port = arg
-            PORTSET = False
+            flags["PORTSET"] = False
             continue
-        if HOSTSET:
+        if flags["HOSTSET"]:
             pos = string.find(arg, ":")
             if (pos > 0):
                 host = arg[0:pos]
@@ -52,7 +56,7 @@ def main():
             else: 
                 host = arg
                 print 'host: ', host
-            HOSTSET = False
+            flags["HOSTSET"] = False
             continue
 
         # is it an option? 
@@ -65,21 +69,21 @@ def main():
             elif "help" in arg:
                 print helpMsg()
             elif "port" in arg:
-                PORTSET = True
+                flags["PORTSET"] = True
             elif "host" in arg or arg is "-h":
-                HOSTSET = True
+                flags["HOSTSET"] = True
             elif "verbose" in arg:
-                V1 = True
-                print "V1 on"
+                flags["V1"] = True
+                print "basic verbosity on"
             else:
                 vstring = re.compile("v+")
                 m = vstring.search(arg)
                 if (m != None):
                     x = m.end(0) - m.start(0)
-                    if x >= 1: V1 = True
-                    if x >= 2: V2 = True
-                    if x >= 3: V3 = True
-                    if x >= 4: V4 = True
+                    if x >= 1: flags["V1"] = True
+                    if x >= 2: flags["V2"] = True
+                    if x >= 3: flags["V3"] = True
+                    if x >= 4: flags["V4"] = True
 
         # No, must be a filename
         else:
@@ -87,15 +91,13 @@ def main():
 
     connection = Connection('localhost', 27017)
     db = connection.logl
-    now = datetime.datetime.now()
-    name = str(now.strftime("logl_%m_%d_%Y_at_%H_%M_%S"))
     newcoll = db[name]
 
     # some verbose comments
-    if V1: print 'Connection opened with logl mongod'
-    if V2: print 'Connected to localhost on port 27017'
-    if V3: print 'Writing to db logl, collection ', name
-    if V4: print 'Preparing to parse log files'
+    if flags["V1"]: logger.info('Connection opened with logl mongod')
+    if flags["V2"]: logger.info('Connected to localhost on port 27017')
+    if flags["V3"]: logger.info('Writing to db logl, collection {0}'.format(name))
+    if flags["V4"]: logger.info('Preparing to parse log files')
 
     # read in from each log file
     for arg in files:
@@ -104,12 +106,12 @@ def main():
         counter = 0 
         stored = 0
 
-        if V1: print 'Reading from logfile', arg, '...'
+        if flags["V1"]: logger.info('Reading from logfile {0}...'.format(arg))
         
         for line in f:
 
             counter += 1
-            if V4: print 'Reading line {0} from {1}'.format(counter, arg)
+            if flags["V4"]: logger.info('Reading line {0} from {1}'.format(counter, arg))
 
             # skip restart messages
             if (string.find(line, '*****') >= 0):
@@ -120,28 +122,30 @@ def main():
                 date = date_parser(line)
                 if (date == None): 
                     continue
-                doc = trafficControl(line, date, V3, V4)
+                doc = trafficControl(line, date, flags)
                 if (doc != None):
                     storeInDB(newcoll, date, doc)
-                    if V4: print 'Stored line {0} of {1} to db'.format(counter, arg)
+                    if flags["V4"]: logger.info('Stored line {0} of {1} to db'.format(counter, arg))
                     stored += 1
 
-        if V1: print '-'*64
-        if V1: print 'Finished running on {0}'.format(arg)
-        if V2: print 'Stored {0} of {1} log lines to db'.format(stored, counter)
-        if V1: 
-            print '='*64
-            print 'Exiting.'
+        if flags["V1"]: logger.info('-'*64)
+        if flags["V1"]: logger.info('Finished running on {0}'.format(arg))
+        if flags["V2"]: logger.info('Stored {0} of {1} log lines to db'.format(stored, counter))
+        if flags["V1"]: 
+            logger.info('='*64)
+            logger.info('Exiting.')
 
 #-------------------------------------------------------------    
 
 # passes given message through a number of modules.  If a 
 # it fits the criteria of a given module, that module returns
 # a document, which this function will pass up to main().
-def trafficControl(msg, date, V3, V4):
+def trafficControl(msg, date, flags):
 
     pattern = re.compile(".py$")
     dirList = os.listdir("modules")
+
+    logger = logging.getLogger(__name__)
 
     for fname in dirList:
         
@@ -158,7 +162,7 @@ def trafficControl(msg, date, V3, V4):
                 if 'process' in dir(sys.modules[fname]):
                     doc = sys.modules[fname].process(msg, date)
                     if (doc != None):
-                        if V3: print 'Found a {0} type message, storing to db'.format(fname)  
+                        if flags["V3"]: logger.info('Found {0} type message, storing to db'.format(fname))  
                         return doc
                     # for now, this will only return the first module hit...
 
