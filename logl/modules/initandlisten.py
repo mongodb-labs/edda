@@ -60,15 +60,15 @@ def process(msg, date):
 # this server is starting up.  Capture host information.
 def starting_up(msg, doc):
 
-    doc["info.subtype"] = "startup"
+    doc["info"]["subtype"] = "startup"
 
     # isolate port number                                                              
     start = string.find(msg, 'port=')
-    doc["info.port"] = msg[start + 5:start + 10]
+    doc["info"]["port"] = msg[start + 5:start + 10]
 
     # isolate host IP address                                                          
     start = string.find(msg, 'host=')
-    doc["info.host"] = msg[start + 5:len(msg) - 1]
+    doc["info"]["host"] = msg[start + 5:len(msg) - 1]
 
     return doc
 
@@ -77,20 +77,22 @@ def starting_up(msg, doc):
 # this server has accepted a new connection.
 def new_conn(msg, doc):
 
-    doc["info.subtype"] = "new_conn"
+    doc["info"]["subtype"] = "new_conn"
 
     # this very long regex recognizes legal IP addresses
     pattern = re.compile("(([0|1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))(\.([0|1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5])){3}")
     m = pattern.search(msg)
     if (m == None): return None
-    doc["info.host"] = m.group(0)
+    doc["info"]["host"] = m.group(0)
     
     # isolate port number                  
-    doc["info.port"] = msg[m.end(0) + 1: m.end(0) + 6]
+    doc["info"]["port"] = msg[m.end(0) + 1: m.end(0) + 6]
     
     # isolate connection number                                               
+    # it is NOT safe to assume number is the last thing on the line...
+    # FIX ME!
     place = string.find(msg, '#')
-    doc["info.conn_number"] = msg[place + 1: len(msg) - 1]
+    doc["info"]["conn_number"] = msg[place + 1: len(msg) - 1]
     
     return doc
 
