@@ -6,8 +6,8 @@ import string
 import pymongo
 import re
 import logging
+from bson import objectid
 from pymongo import Connection
-from noOp import storeInDB
 from parse_date import date_parser
 import datetime
 
@@ -25,7 +25,7 @@ def main():
 
     # file list and option flags
     files = []
-    flags = dict.fromkeys(["V1", "V2", "V3", "V4", "PORTSET", "HOSTSET"], False)
+    flags = dict.fromkeys(["V1", "V2", "V3", "PORTSET", "HOSTSET"], False)
     port = 27017
     host = 'localhost'
 
@@ -57,15 +57,10 @@ def main():
             if "version" in arg:
                 print "Running logl version: 0.0.1" 
                 return
-            elif "help" in arg:
-                print helpMsg()
-            elif "port" in arg:
-                flags["PORTSET"] = True
-            elif "host" in arg or arg is "-h":
-                flags["HOSTSET"] = True
-            elif "verbose" in arg:
-                flags["V1"] = True
-                print "basic verbosity on"
+            elif "help" in arg: print helpMsg()
+            elif "port" in arg: flags["PORTSET"] = True
+            elif "host" in arg or arg is "-h": flags["HOSTSET"] = True
+            elif "verbose" in arg: flags["V1"] = True
             else:
                 vstring = re.compile("v+")
                 m = vstring.search(arg)
@@ -76,12 +71,13 @@ def main():
                     if x >= 3: flags["V3"] = True
 
         # No, must be a filename
-        else:
-            files.append(arg)
+        else: files.append(arg)
 
+    # generate a unique collection name
+    collName = str(objectid.ObjectId())
     connection = Connection('localhost', 27017)
     db = connection.logl
-    newcoll = db[name]
+    newcoll = db[collName]
 
     now = datetime.datetime.now()
     name = str(now.strftime("logl_%m_%d_%Y_at_%H_%M_%S"))
@@ -123,7 +119,7 @@ def main():
                     continue
                 doc = trafficControl(line, date)
                 if (doc != None):
-                    storeInDB(newcoll, date, doc)
+                    newcoll.insert(doc)
                     logger.debug('Stored line {0} of {1} to db'.format(counter, arg))
                     stored += 1
 
