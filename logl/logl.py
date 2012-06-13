@@ -6,6 +6,7 @@ import string
 import pymongo
 import re
 import logging
+import argparse
 from bson import objectid
 from pymongo import Connection
 from parse_date import date_parser
@@ -19,59 +20,26 @@ from modules import *
 # to trafficControl for more advanced handling
 def main():
     
+    __version__ = "0.1"
+
     if (len(sys.argv) < 2):
-        print "Missing argument: please give me a filename"
+        print "Missing argument: please provide a filename"
         return
 
-    # file list and option flags
-    files = []
-    flags = dict.fromkeys(["V1", "V2", "V3", "PORTSET", "HOSTSET"], False)
-    port = 27017
-    host = 'localhost'
+    # argparse methods
+    parser = argparse.ArgumentParser(description='Process and visualize log files from mongo servers')
+    parser.add_argument('--port', nargs=1)
+    parser.add_argument('--host', nargs=1)
+    parser.add_argument('--verbose', '-v', action='count')
+    parser.add_argument('--version', action='version', version="Running logl version {0}".format(__version__))
+    parser.add_argument('filename', nargs='+')
+    namespace = parser.parse_args()
 
-    pattern = re.compile("^-")
-
-    # handle filenames and command-line options
-    for arg in sys.argv[1:]:
-
-        if flags["PORTSET"]: 
-            port = arg
-            flags["PORTSET"] = False
-            continue
-        if flags["HOSTSET"]:
-            pos = string.find(arg, ":")
-            if (pos > 0):
-                host = arg[0:pos]
-                port = arg[pos + 1: len(arg)]
-                print 'host: {0} port: {1}'.format(host, port)
-            else: 
-                host = arg
-                print 'host: ', host
-            flags["HOSTSET"] = False
-            continue
-
-        # is it an option? 
-        m = pattern.search(arg)
-        if (m != None):
-
-            if "version" in arg:
-                print "Running logl version: 0.0.1" 
-                return
-            elif "help" in arg: print helpMsg()
-            elif "port" in arg: flags["PORTSET"] = True
-            elif "host" in arg or arg is "-h": flags["HOSTSET"] = True
-            elif "verbose" in arg: flags["V1"] = True
-            else:
-                vstring = re.compile("v+")
-                m = vstring.search(arg)
-                if (m != None):
-                    x = m.end(0) - m.start(0)
-                    if x >= 1: flags["V1"] = True
-                    if x >= 2: flags["V2"] = True
-                    if x >= 3: flags["V3"] = True
-
-        # No, must be a filename
-        else: files.append(arg)
+    # handle captured arguments
+    if namespace.port != None: port = namespace.port
+    else: port = 27017
+    if namespace.host != None: host = namespace.host
+    else: host ='localhost'
 
     # generate a unique collection name
     collName = str(objectid.ObjectId())
@@ -83,12 +51,11 @@ def main():
     name = str(now.strftime("logl_%m_%d_%Y_at_%H_%M_%S"))
 
     # configure logger      
-    logname = "logl_logs/" + name + ".log"
-#    if flags["V1"]: logging.basicConfig(filename=logname, level=logging.WARNING)
-#    elif flags["V2"]: logging.basicConfig(filename=logname, level=logging.INFO)
-#    elif flags["V3"]: logging.basicConfig(filename=logname, level=logging.DEBUG)
-    logging.basicConfig(level=logging.DEBUG)
-
+    # use to switch from console to file: logname = "logl_logs/" + name + ".log"
+    if namespace.verbose is None: logging.basicConfig(level=logging.ERROR)
+    elif namespace.verbose == 1: logging.basicConfig(level=logging.WARNING)
+    elif namespace.verbose == 2: logging.basicConfig(level=logging.INFO)
+    elif namespace.verbose == 3: logging.basicConfig(level=logging.DEBUG)
     logger = logging.getLogger(__name__)
 
     # some verbose comments
@@ -96,7 +63,7 @@ def main():
     logger.debug('Writing to db logl, collection {0}\nPreparing to parse log files'.format(name))
 
     # read in from each log file
-    for arg in files:
+    for arg in namespace.filename:
         
         f = open(arg, 'r')
         counter = 0 
@@ -160,19 +127,6 @@ def trafficControl(msg, date):
                         logger.info('Found {0} type message, storing to db'.format(fname))  
                         return doc
                     # for now, this will only return the first module hit...
-
-#------------------------------------------------------------    
-
-def helpMsg():
-    str_list = []
-    str_list.append("Logl version: 0.0.1\n")
-    str_list.append("usage: logl.py [options] [log filenames]\n")
-    str_list.append("options:\n")
-    str_list.append(" -v [--verbose]\tto increase verbosity, increase number of v's (-vvv is max)\n")
-    str_list.append(" --host\t\tspecify host to connect to (can also use --host hostname:port)\n")
-    str_list.append(" --port\t\tspecify server port\n")
-    str_list.append(" --version\tprint logl version number\n")
-    return ''.join(str_list)
 
 #------------------------------------------------------------    
 
