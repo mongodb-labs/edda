@@ -44,7 +44,7 @@ def process(msg, date):
 
     #Has the member begun syncing to a different place
     if(messageType == 1):
-        return syncingDIff(msg, doc)
+        return syncingDiff(msg, doc)
 
 #------------------------------------------------------------
 
