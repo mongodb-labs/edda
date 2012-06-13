@@ -1,10 +1,11 @@
 #!/usr/bin/env
 #------------------------------------------------------------
-# This module processes WHICH types of log lines.
+# This module processes INITANDLISTEN log lines.
 #------------------------------------------------------------
 
 import re
 import string
+import logging
 
 #------------------------------------------------------------
 
@@ -60,6 +61,7 @@ def process(msg, date):
 # this server is starting up.  Capture host information.
 def starting_up(msg, doc):
 
+    logger = logging.getLogger(__name__)
     doc["info"]["subtype"] = "startup"
 
     # isolate port number                                                              
@@ -69,7 +71,7 @@ def starting_up(msg, doc):
     # isolate host IP address                                                          
     start = string.find(msg, 'host=')
     doc["info"]["host"] = msg[start + 5:len(msg) - 1]
-
+    logger.debug("Returning new doc for a message of type: initandlisten: starting_up")
     return doc
 
 #------------------------------------------------------------
@@ -78,6 +80,7 @@ def starting_up(msg, doc):
 def new_conn(msg, doc):
 
     doc["info"]["subtype"] = "new_conn"
+    logger = logging.getLogger(__name__)
 
     # this very long regex recognizes legal IP addresses
     pattern = re.compile("(([0|1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))(\.([0|1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5])){3}")
@@ -89,11 +92,11 @@ def new_conn(msg, doc):
     doc["info"]["port"] = msg[m.end(0) + 1: m.end(0) + 6]
     
     # isolate connection number                                               
-    # it is NOT safe to assume number is the last thing on the line...
-    # FIX ME!
-    place = string.find(msg, '#')
-    doc["info"]["conn_number"] = msg[place + 1: len(msg) - 1]
-    
+    pattern2 = re.compile("#[0-9]+")
+    m = pattern2.search(msg)
+    if m is None: return None
+    doc["info"]["conn_number"] = m.group(0)[1:]
+    logger.debug("Returning new doc for a message of type: initandlisten: new_conn")
     return doc
 
 
