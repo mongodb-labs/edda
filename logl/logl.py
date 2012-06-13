@@ -3,7 +3,6 @@
 import os
 import sys
 import string
-import pymongo
 import re
 import logging
 import argparse
@@ -13,14 +12,12 @@ from parse_date import date_parser
 import datetime
 
 from modules import *
+__version__ = "0.1"
 
-#------------------------------------------------------------    
 
-# a main function, handles basic parsing and sends 
-# to trafficControl for more advanced handling
 def main():
-    
-    __version__ = "0.1"
+    """a main function, handles basic parsing and sends
+    to trafficControl for more advanced handling"""
 
     if (len(sys.argv) < 2):
         print "Missing argument: please provide a filename"
@@ -40,11 +37,15 @@ def main():
     namespace = parser.parse_args()
 
     # handle captured arguments
-    if namespace.username != None: pass
-    if namespace.password != None: pass
-    if namespace.port != None: port = namespace.port
+    if namespace.username != None:
+        pass
+    if namespace.password != None:
+        pass
+    if namespace.port != None:
+        port = namespace.port
     else: port = 27017
-    if namespace.host != None: host = namespace.host
+    if namespace.host != None:
+        host = namespace.host
     else: host ='localhost'
 
     # generate a unique collection name
@@ -56,12 +57,16 @@ def main():
     now = datetime.datetime.now()
     name = str(now.strftime("logl_%m_%d_%Y_at_%H_%M_%S"))
 
-    # configure logger      
+    # configure logger
     # use to switch from console to file: logname = "logl_logs/" + name + ".log"
-    if namespace.verbose is None: logging.basicConfig(level=logging.ERROR)
-    elif namespace.verbose == 1: logging.basicConfig(level=logging.WARNING)
-    elif namespace.verbose == 2: logging.basicConfig(level=logging.INFO)
-    elif namespace.verbose == 3: logging.basicConfig(level=logging.DEBUG)
+    if not namespace.verbose:
+        logging.basicConfig(level=logging.ERROR)
+    elif namespace.verbose == 1:
+        logging.basicConfig(level=logging.WARNING)
+    elif namespace.verbose == 2:
+        logging.basicConfig(level=logging.INFO)
+    elif namespace.verbose == 3:
+        logging.basicConfig(level=logging.DEBUG)
     logger = logging.getLogger(__name__)
 
     # some verbose comments
@@ -70,15 +75,13 @@ def main():
 
     # read in from each log file
     for arg in namespace.filename:
-        
         f = open(arg, 'r')
-        counter = 0 
+        counter = 0
         stored = 0
 
         logger.info('Reading from logfile {0}...'.format(arg))
-        
-        for line in f:
 
+        for line in f:
             counter += 1
             logger.debug('Reading line {0} from {1}'.format(counter, arg))
 
@@ -89,7 +92,7 @@ def main():
             # skip blank lines
             if (len(line) > 1):
                 date = date_parser(line)
-                if (date == None): 
+                if (date == None):
                     continue
                 doc = trafficControl(line, date)
                 if (doc != None):
@@ -97,19 +100,17 @@ def main():
                     logger.debug('Stored line {0} of {1} to db'.format(counter, arg))
                     stored += 1
 
-        logger.info('-'*64)
+        logger.info('-' * 64)
         logger.info('Finished running on {0}'.format(arg))
         logger.debug('Stored {0} of {1} log lines to db'.format(stored, counter))
-        logger.info('='*64)
+        logger.info('=' * 64)
         logger.info('Exiting.')
 
-#-------------------------------------------------------------    
 
-# passes given message through a number of modules.  If a 
-# it fits the criteria of a given module, that module returns
-# a document, which this function will pass up to main().
 def trafficControl(msg, date):
-
+    """passes given message through a number of modules.  If a
+    it fits the criteria of a given module, that module returns
+    a document, which this function will pass up to main()."""
     pattern = re.compile(".py$")
     dirList = os.listdir("modules")
 
@@ -124,17 +125,15 @@ def trafficControl(msg, date):
 
             # ignore __init__ file and template.py
             if fname != "__init__" and fname != "template":
-                fname = "modules." + fname 
+                fname = "modules." + fname
 
                 # if module is valid and contains method, run!
                 if 'process' in dir(sys.modules[fname]):
                     doc = sys.modules[fname].process(msg, date)
                     if (doc != None):
-                        logger.info('Found {0} type message, storing to db'.format(fname))  
+                        logger.info('Found {0} type message, storing to db'.format(fname))
                         return doc
                     # for now, this will only return the first module hit...
-
-#------------------------------------------------------------    
 
 if __name__ == "__main__":
     main()
