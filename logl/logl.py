@@ -32,10 +32,16 @@ def main():
     parser.add_argument('--host', nargs=1)
     parser.add_argument('--verbose', '-v', action='count')
     parser.add_argument('--version', action='version', version="Running logl version {0}".format(__version__))
+    parser.add_argument('--username', 'u', nargs=1)
+    parser.add_argument('--password', 'p', nargs=1) # really???
+    parser.add_argument('--db', 'd', nargs=1)
+    parser.add_argument('--collection', '-c', nargs=1)
     parser.add_argument('filename', nargs='+')
     namespace = parser.parse_args()
 
     # handle captured arguments
+    if namespace.username != None: pass
+    if namespace.password != None: pass
     if namespace.port != None: port = namespace.port
     else: port = 27017
     if namespace.host != None: host = namespace.host
