@@ -29,8 +29,7 @@ def criteria(msg):
     # "msg" : msg
     # "info" structure below:
 # (syncingDIff) "info" : {
-         # "host" : ip or host name
-         # "port" : port
+         # "server" #in the form "Host : Port" 
 
 def process(msg, date):
     messageType = criteria(msg)
@@ -55,8 +54,7 @@ def syncingDiff(msg, doc):
 
     start = string.find(msg, "to: ")
 
-    doc["info"]["port"] = msg[start + 4: len(msg) - 5]
-    doc["info"]["host"] = msg[len(msg) - 5: len(msg)]
+    doc["info"]["server"] = msg[start + 4: len(msg)]
     
     logger = logging.getLogger(__name__)
     logger.debug(doc)
