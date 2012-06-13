@@ -50,7 +50,6 @@ def process(msg, date):
 def syncingDiff(msg, doc):
     doc["info"]["subtype"] = "reSyncing"
 
-
     start = string.find(msg, "to: ")
 
     doc["info"]["port"] = msg[start + 4: len(msg) - 5]
