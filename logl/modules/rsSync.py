@@ -14,7 +14,9 @@ import logging
 # VL: low verbosity, VH: high verbosity (if VH is True, VL is also True)
 def criteria(msg):
     if (string.find(msg, '[rsSync]') >= 0):
-        return True
+        if(string.find(msg, 'syncing') >= 0):
+            return 1
+        return -1
 
 #------------------------------------------------------------
 
@@ -31,7 +33,8 @@ def criteria(msg):
          # "port" : port
 
 def process(msg, date):
-    if(criteria(msg) == False):
+    messageType = criteria(msg)
+    if(messageType == -1):
         return None
     
     doc = {}
@@ -41,7 +44,7 @@ def process(msg, date):
     doc["msg"] = msg
 
     #Has the member begun syncing to a different place
-    if(string.find(msg, 'syncing') > 0):
+    if(messageType == 1):
         return syncingDIff(msg, doc)
 
 #------------------------------------------------------------
