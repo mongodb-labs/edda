@@ -1,9 +1,8 @@
-#!/usr/bin/env
+#!/usr/bin/env python
 #------------------------------------------------------------
 # This module processes WHICH types of log lines.
 #------------------------------------------------------------
 
-import re
 import string
 import logging
 
@@ -12,6 +11,8 @@ import logging
 # does the given log line fit the criteria for this module?
 # return True if yes, False if no.
 # VL: low verbosity, VH: high verbosity (if VH is True, VL is also True)
+
+
 def criteria(msg):
     if (string.find(msg, '[rsSync]') >= 0):
         if(string.find(msg, 'syncing') >= 0):
@@ -25,17 +26,17 @@ def criteria(msg):
 # VL: low verbosity, VH: high verbosity (if VH is True, VL is also True)
 # document = {
     # "date" : date,
-    # "type" : "init", 
+    # "type" : "init",
     # "msg" : msg
     # "info" structure below:
 # (syncingDIff) "info" : {
-         # "server" #in the form "Host : Port" 
+         # "server" #in the form "Host : Port"
+
 
 def process(msg, date):
     messageType = criteria(msg)
     if(messageType == -1):
         return None
-    
     doc = {}
     doc["date"] = date
     doc["type"] = "sync"
@@ -55,8 +56,6 @@ def syncingDiff(msg, doc):
     start = string.find(msg, "to: ")
 
     doc["info"]["server"] = msg[start + 4: len(msg)]
-    
     logger = logging.getLogger(__name__)
     logger.debug(doc)
-    
     return doc

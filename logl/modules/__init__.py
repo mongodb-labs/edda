@@ -1,6 +1,5 @@
 import os
 import re
-import string
 
 __all__ = []
 dirList = os.listdir(os.path.dirname(os.path.abspath(__file__)))
