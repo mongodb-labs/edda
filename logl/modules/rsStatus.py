@@ -38,8 +38,8 @@ def process(msg, date):
        "origin_server" : name,
        "info" : {
           "subtype" : None,
-          "status" : status,
-          "status_code" : int,
+          "state" : state,
+          "state_code" : int,
           "server" : "host:port",
           }
     }"""
@@ -55,13 +55,13 @@ def process(msg, date):
     doc["type"] = "status"
     doc["info"] = {}
     doc["msg"] = msg
-    doc["info"]["status_code"] = result
-    doc["info"]["status_code"] = labels[result]
+    doc["info"]["state_code"] = result
+    doc["info"]["state"] = labels[result]
 
-    pattern = re.compile("\s.*:[0-9]{1,5}")
-    m = pattern.search(msg)
+    pattern = re.compile("\S*:[0-9]{1,5}\s")
+    m = pattern.search(msg[21:])
     if m:
-        doc["info"]["server"] = m.group(0)[1:]
+        doc["info"]["server"] = m.group(0)[:len(m.group(0)) - 1]
     else:
         # if no server found, assume self is target??
         doc["info"]["server"] = "self"

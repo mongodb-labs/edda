@@ -52,7 +52,7 @@ def syncingDiff(msg, doc):
     start = string.find(msg, "to: ")
     if (start < 0):
         return None
-    doc["info"]["server"] = msg[start + 4: len(msg)]
+    doc["info"]["server"] = msg[start + 4: len(msg) - 1]
     logger = logging.getLogger(__name__)
     logger.debug(doc)
     return doc
