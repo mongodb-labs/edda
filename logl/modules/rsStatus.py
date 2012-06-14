@@ -58,7 +58,7 @@ def process(msg, date):
     doc["info"]["status_code"] = result
     doc["info"]["status_code"] = labels[result]
 
-    pattern = re.compile["\s.*:[0-9]{1,5}")
+    pattern = re.compile("\s.*:[0-9]{1,5}")
     m = pattern.search(msg)
     if m:
         doc["info"]["server"] = m.goup(0)[1:]
