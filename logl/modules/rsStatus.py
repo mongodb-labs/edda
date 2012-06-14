@@ -4,17 +4,28 @@
 import string
 import re
 
+
 def criteria(msg):
     """does the given log line fit the criteria for this module?
     return an integer code if yes, -1 if no"""
-
-    # check for rsStart msg
-    if (string.find(msg, '[rsStart]') >= 0):
+    # state STARTUP1
+    if (string.find(msg, '[rsStart] replSet I am') >= 0):
+        return 0
+    # state PRIMARY
+    if (string.find(msg, 'PRIMARY') >= 0):
         return 1
-
-    # check for rsHealthPoll msg
-    if (string.find(msg, '[rsHealthPoll] replSet') >= 0):
+    # state SECONDARY
+    if (string.find(msg, 'SECONDARY') >= 0):
         return 2
+    # state STARTUP2
+    if (string.find(msg, 'STARTUP2') >= 0):
+        return 5
+    # state ARBITER
+    if (string.find(msg, 'ARBITER') >= 0):
+        return 7
+    # state DOWN
+    if (string.find(msg, 'DOWN') >= 0):
+        return 8
 
 
 def process(msg, date):
@@ -32,48 +43,26 @@ def process(msg, date):
           "server" : "host:port",
           }
     }"""
-
     result = criteria(msg)
     if result < 0:
         return None
-
+    labels = ["STARTUP1", "PRIMARY", "SECONDARY",
+              "RECOVERING", "FATAL", "STARTUP2",
+              "UNKNOWN", "ARBITER", "DOWN", "ROLLBACK",
+              "REMOVED"]
     doc = {}
     doc["date"] = date
     doc["type"] = "status"
     doc["info"] = {}
     doc["msg"] = msg
+    doc["info"]["status_code"] = result
+    doc["info"]["status_code"] = labels[result]
 
-    # is the replSet starting up?
-    if result == 1:
-        return rs_start(msg, doc)
-    # is the replSet reporting a health change?
-    elif result == 2:
-        return rs_health(msg, doc)
+    pattern = re.compile["\s.*:[0-9]{1,5}")
+    m = pattern.search(msg)
+    if m:
+        doc["info"]["server"] = m.goup(0)[1:]
     else:
-        return None
-
-
-def rs_start(msg, doc):
-    """this replica set is starting up.  Capture host information."""
-
-    # capture host information from state STARTUP1
-    place = string.find(msg, "I am")
-    if (place >= 0):
-        doc["info"]["server"] = msg[place + 6:]
-        doc["info"]["status"] = "STARTUP1"
-        doc["info"]["status_code"] = 0
-        return doc
-    # capture information for state STARTUP2
-    place = string.find(msg, "STARTUP2")
-    if (place >= 0):
+        # if no server found, assume self is target??
         doc["info"]["server"] = "self"
-        doc["info"]["status"] = "STARTUP2"
-        doc["info"]["status_code"] = 5
-        return doc
-    return None
-
-
-def rs_health(msg, doc):
-    """this replica set is reporting a health change."""
     return doc
-
