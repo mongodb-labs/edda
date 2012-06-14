@@ -121,9 +121,10 @@ def main():
                 doc = trafficControl(line, date)
                 if doc:
                     if reset:
-                        if doc["info"]["subtype"] == "startup":
-                            origin_server = doc["info"]["server"]
-                            reset = False
+                        if doc["info"] == "init":
+                            if doc["info"]["subtype"] == "startup":
+                                origin_server = doc["info"]["server"]
+                                reset = False
                     reset = False # yes?
                     doc["origin_server"] = origin_server
                     newcoll.insert(doc)

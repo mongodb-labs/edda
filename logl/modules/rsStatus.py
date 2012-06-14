@@ -61,7 +61,7 @@ def process(msg, date):
     pattern = re.compile("\s.*:[0-9]{1,5}")
     m = pattern.search(msg)
     if m:
-        doc["info"]["server"] = m.goup(0)[1:]
+        doc["info"]["server"] = m.group(0)[1:]
     else:
         # if no server found, assume self is target??
         doc["info"]["server"] = "self"
