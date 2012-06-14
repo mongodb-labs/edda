@@ -87,11 +87,19 @@ def main():
     logger.info('Connection opened with logl mongod, using {0} on port {1}'.format(host, port))
     logger.debug('Writing to db logl, collection {0}\nPreparing to parse log files'.format(name))
 
+    reset = True
+    server_num = 0
+
     # read in from each log file
     for arg in namespace.filename:
         f = open(arg, 'r')
         counter = 0
         stored = 0
+
+        server_num += 1
+
+        # a name for this server
+        origin_server = server_num
 
         logger.info('Reading from logfile {0}...'.format(arg))
 
@@ -101,15 +109,23 @@ def main():
 
             # skip restart messages
             if (string.find(line, '*****') >= 0):
+                reset = True
+                server_num += 1
+                origin_server = server_num
                 continue
-
             # skip blank lines
             if (len(line) > 1):
                 date = date_parser(line)
-                if (date == None):
+                if not date:
                     continue
                 doc = trafficControl(line, date)
-                if (doc != None):
+                if doc:
+                    if reset:
+                        if doc["info"]["subtype"] == "startup":
+                            origin_server = doc["info"]["server"]
+                            reset = False
+                    reset = False # yes?
+                    doc["origin_server"] = origin_server
                     newcoll.insert(doc)
                     logger.debug('Stored line {0} of {1} to db'.format(counter, arg))
                     stored += 1
