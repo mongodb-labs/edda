@@ -130,9 +130,10 @@ def main():
                 if doc and reset:
                     if doc["type"] == "init":
                         if doc["info"]["subtype"] == "startup":
-                            origin_server = doc["info"]["server"]
-                            servers.insert(newServer(server_num, origin_server))
-                            reset = False
+                            if doc["info"]["server"]:
+                                origin_server = doc["info"]["server"]
+                                servers.insert(newServer(server_num, origin_server))
+                                reset = False
                     reset = False # yes?
                     doc["origin_server"] = origin_server
                     entries.insert(doc)
