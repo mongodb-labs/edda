@@ -13,29 +13,24 @@ return True if yes, False if no."""
     if (string.find(msg, '[initandlisten]') >= 0):
         return True
 
-#------------------------------------------------------------
-
-# if the given log line fits the criteria for this module,
-# processes the line and creates a document for it.
-# document = {
-    # "date" : date,
-    # "type" : "init"
-    # "msg" : msg
-    # "info" field structure varies with subtype:
-# (startup) "info" : {
-             # "subtype" : "startup",
-             # "host" : IP or hostaddr,
-             # "port" : port
-             # }
-# (new_conn) "info" : {
-             # "subtype" : "new_conn",
-             # "host" : IP,
-             # "port" : port,
-             # "conn_number" : int,
-             # }
-
 
 def process(msg, date):
+    """If the given log line fits the criteria for this modules,
+    processes the line and creates a document for it.
+    document = {
+    "date" : date,
+    "type" : "init",
+    "msg" : msg,
+    "info" field structure varies with subtype:
+    (startup) "info" : {
+       "subtype" : "startup"
+       "server" : "hostaddr:port"
+    }
+    (new_conn) "info" : {
+       "subtype" : "new_conn",
+       "server" : "hostaddr:port",
+       "conn_number" : int,
+    }"""
     if criteria(msg) == False:
         return None
     doc = {}
@@ -52,8 +47,6 @@ def process(msg, date):
     if (string.find(msg, 'connection accepted') >= 0):
         return new_conn(msg, doc)
 
-#------------------------------------------------------------
-
 
 def starting_up(msg, doc):
     """this server is starting up.  Capture host information."""
@@ -68,8 +61,6 @@ def starting_up(msg, doc):
     doc["info"]["host"] = msg[start + 5:len(msg) - 1]
     logger.debug("Returning new doc for a message of type: initandlisten: starting_up")
     return doc
-
-#------------------------------------------------------------
 
 
 def new_conn(msg, doc):

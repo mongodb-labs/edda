@@ -6,6 +6,7 @@ import string
 import re
 import logging
 import argparse
+import getpass
 from bson import objectid
 from pymongo import Connection
 from parse_date import date_parser
@@ -29,23 +30,42 @@ def main():
     parser.add_argument('--host', nargs=1)
     parser.add_argument('--verbose', '-v', action='count')
     parser.add_argument('--version', action='version', version="Running logl version {0}".format(__version__))
+    parser.add_argument('--auth', action='store_true')
+    parser.add_argument('--db', '-d', nargs=1)
+    parser.add_argument('--collection', '-c', nargs=1)
     parser.add_argument('filename', nargs='+')
     namespace = parser.parse_args()
 
     # handle captured arguments
-    if not namespace.port:
-        port = namespace.port
+    if namespace.port:
+        port = str(namespace.port)
     else:
-        port = 27017
-    if not namespace.host:
-        host = namespace.host
+        port = '27017'
+    if namespace.host:
+        host = str(namespace.host)
     else:
-        host = 'localhost'
+        host ='localhost'
+    uri = host + ":" + port
 
-    # generate a unique collection name
-    collName = str(objectid.ObjectId())
-    connection = Connection('localhost', 27017)
-    db = connection.logl
+    # handle auth
+    # could probably be more secure...
+    if namespace.auth:
+        dbuser = getpass.getpass("Username:")
+        dbpass = getpass.getpass()
+        uri = dbuser + ":" + dbpass + "@" + uri
+    uri = "mongodb://" + uri
+
+    # generate a unique collection name, if not specified by user
+    if namespace.collection:
+        collName = str(namespace.collection)
+    else:
+        collName = str(objectid.ObjectId())
+    print collName
+    connection = Connection(uri)
+    if namespace.db:
+        db = connection[str(namespace.db)]
+    else:
+        db = connection.logl
     newcoll = db[collName]
 
     now = datetime.datetime.now()
