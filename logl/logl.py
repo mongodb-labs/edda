@@ -1,4 +1,13 @@
 #!/usr/bin/env
+"""logl reads in from MongoDB log files and parses them.
+After storing the parsed data in a separate collection,
+the program then uses this data to provide users with a
+visual tool to help them analyze their servers.
+
+Users can customize this tool by adding their own parsers
+to the logl/modules/ subdirectory, following the layout specified
+in logl/modules/template.py"""
+__version__ = "0.1"
 
 import os
 import sys
@@ -11,9 +20,7 @@ from bson import objectid
 from pymongo import Connection
 from parse_date import date_parser
 import datetime
-
 from modules import *
-__version__ = "0.1"
 
 
 def main():
@@ -66,7 +73,8 @@ def main():
         db = connection[str(namespace.db)]
     else:
         db = connection.logl
-    newcoll = db[collName]
+    entries = db[collName + ".entries"]
+    servers = db[collName + ".servers"]
 
     now = datetime.datetime.now()
     name = str(now.strftime("logl_%m_%d_%Y_at_%H_%M_%S"))
@@ -119,15 +127,15 @@ def main():
                 if not date:
                     continue
                 doc = trafficControl(line, date)
-                if doc:
-                    if reset:
-                        if doc["info"] == "init":
-                            if doc["info"]["subtype"] == "startup":
-                                origin_server = doc["info"]["server"]
-                                reset = False
+                if doc and reset:
+                    if doc["type"] == "init":
+                        if doc["info"]["subtype"] == "startup":
+                            origin_server = doc["info"]["server"]
+                            servers.insert(newServer(server_num, origin_server))
+                            reset = False
                     reset = False # yes?
                     doc["origin_server"] = origin_server
-                    newcoll.insert(doc)
+                    entries.insert(doc)
                     logger.debug('Stored line {0} of {1} to db'.format(counter, arg))
                     stored += 1
 
@@ -137,6 +145,17 @@ def main():
         logger.info('=' * 64)
         logger.info('Exiting.')
 
+
+def newServer(server_num, origin_server):
+    """Creates a document for each new server writing
+    to a log the program handles"""
+    doc = {}
+    doc["number"] = server_num
+    if origin_server == server_num:
+        doc["address"] = "unknown"
+    else:
+        doc["address"] = origin_server
+    return doc
 
 def trafficControl(msg, date):
     """passes given message through a number of modules.  If a
