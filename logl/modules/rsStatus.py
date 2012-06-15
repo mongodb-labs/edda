@@ -58,10 +58,10 @@ def process(msg, date):
     doc["info"]["state_code"] = result
     doc["info"]["state"] = labels[result]
 
-    pattern = re.compile("\S*:[0-9]{1,5}\s")
-    m = pattern.search(msg[21:])
-    if m:
-        doc["info"]["server"] = m.group(0)[:len(m.group(0)) - 1]
+    pattern = re.compile("\S+:[0-9]{1,5}")
+    n = pattern.search(msg[20:])
+    if n:
+        doc["info"]["server"] = n.group(0)
     else:
         # if no server found, assume self is target??
         doc["info"]["server"] = "self"

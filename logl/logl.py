@@ -37,7 +37,6 @@ def main():
     parser.add_argument('--host', nargs=1)
     parser.add_argument('--verbose', '-v', action='count')
     parser.add_argument('--version', action='version', version="Running logl version {0}".format(__version__))
-    parser.add_argument('--auth', action='store_true')
     parser.add_argument('--db', '-d', nargs=1)
     parser.add_argument('--collection', '-c', nargs=1)
     parser.add_argument('filename', nargs='+')
@@ -45,32 +44,30 @@ def main():
 
     # handle captured arguments
     if namespace.port:
-        port = str(namespace.port)
+        port = str(namespace.port[0])
     else:
         port = '27017'
     if namespace.host:
-        host = str(namespace.host)
+        host = str(namespace.host[0])
+        place = string.find(host, ":")
+        if place >= 0:
+            port = host[place + 1:]
+            host = host[:place]
     else:
         host ='localhost'
     uri = host + ":" + port
-
-    # handle auth
-    # could probably be more secure...
-    if namespace.auth:
-        dbuser = getpass.getpass("Username:")
-        dbpass = getpass.getpass()
-        uri = dbuser + ":" + dbpass + "@" + uri
     uri = "mongodb://" + uri
 
     # generate a unique collection name, if not specified by user
     if namespace.collection:
-        collName = str(namespace.collection)
+        collName = str(namespace.collection[0])
     else:
         collName = str(objectid.ObjectId())
+    # for easier debugging:
     print collName
     connection = Connection(uri)
     if namespace.db:
-        db = connection[str(namespace.db)]
+        db = connection[str(namespace.db[0])]
     else:
         db = connection.logl
     entries = db[collName + ".entries"]
@@ -109,7 +106,7 @@ def main():
         # a name for this server
         origin_server = server_num
 
-        logger.info('Reading from logfile {0}...'.format(arg))
+        logger.warning('Reading from logfile {0}...'.format(arg))
 
         for line in f:
             counter += 1
@@ -140,11 +137,11 @@ def main():
                     logger.debug('Stored line {0} of {1} to db'.format(counter, arg))
                     stored += 1
 
-        logger.info('-' * 64)
-        logger.info('Finished running on {0}'.format(arg))
-        logger.debug('Stored {0} of {1} log lines to db'.format(stored, counter))
-        logger.info('=' * 64)
-        logger.info('Exiting.')
+        logger.warning('-' * 64)
+        logger.warning('Finished running on {0}'.format(arg))
+        logger.info('Stored {0} of {1} log lines to db'.format(stored, counter))
+        logger.warning('=' * 64)
+        logger.warning('Exiting.')
 
 
 def newServer(server_num, origin_server):
@@ -157,6 +154,7 @@ def newServer(server_num, origin_server):
     else:
         doc["address"] = origin_server
     return doc
+
 
 def trafficControl(msg, date):
     """passes given message through a number of modules.  If a
