@@ -12,11 +12,9 @@ def criteria(msg):
     # maybe we should fix this later...
     if (string.find(msg, '[initandlisten]') < 0):
         return -1
-
     # is it this server starting up?
     if (string.find(msg, 'starting') >= 0):
         return 1
-
     # has this server accepted a new connection?
     if (string.find(msg, 'connection accepted') >= 0):
         return 2
@@ -41,7 +39,6 @@ def process(msg, date):
           "conn_number" : int,
        }
     }"""
-
     result = criteria(msg)
     if result < 0:
         return None
@@ -75,7 +72,7 @@ def starting_up(msg, doc):
 
     # isolate host address
     start = string.find(msg, 'host=')
-    host = msg[start + 5:len(msg) - 1]
+    host = msg[start + 5:len(msg)]
 
     doc["info"]["server"] = host + ":" + port
     logger.debug("Returning new doc for a message of type: initandlisten: starting_up")
@@ -96,12 +93,13 @@ def new_conn(msg, doc):
     host = m.group(0)
 
     # isolate port number
-    pattern = re.compile(":[0-9]+")
-    m = pattern.search(msg)
-    if m is None:
+    pattern = re.compile(":[0-9]{1,5}")
+    n = pattern.search(msg[21:])
+    if n is None:
         logger.debug("malformed new_conn message: no port number found")
         return None
-    port = msg[m.end(0) + 1: m.end(0) + 6]
+    port = n.group(0)[1:]
+    doc["info"]["server"] = host + ":" + port
 
     # isolate connection number
     pattern2 = re.compile("#[0-9]+")

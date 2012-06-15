@@ -35,6 +35,8 @@ def test_process():
 def test_starting_up():
     """test the starting_up() method of this module"""
     doc = {}
+    doc["type"] = "init"
+    doc["info"] = {}
     # non-valid message
     assert starting_up("this is a nonvalid message", doc) == None
     assert starting_up("Mon Jun 11 15:56:16 [initandlisten] MongoDB starting : 64-bit host=Kaushals-MacBook-Air.local", doc) == None
@@ -50,6 +52,8 @@ def test_starting_up():
 def test_new_conn():
     """test the new_conn() method of this module"""
     doc = {}
+    doc["type"] = "init"
+    doc["info"] = {}
     # non-valid messages
     assert new_conn("this is an invalid message", doc) == None
     assert new_conn("Mon Jun 11 15:56:16 [initandlisten] connection accepted from 127.0.0.1:55224 (4 connections now open)", doc) == None
@@ -60,6 +64,6 @@ def test_new_conn():
     assert doc
     assert doc["type"] == "init"
     assert doc["info"]["subtype"] == "new_conn"
-    assert doc["info"]["conn_number"] == 5
+    assert doc["info"]["conn_number"] == "5"
     assert doc["info"]["server"] == "127.0.0.1:55224"
     return
