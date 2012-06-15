@@ -17,15 +17,30 @@ def criteria(msg):
     # state SECONDARY
     if (string.find(msg, 'SECONDARY') >= 0):
         return 2
+    # state RECOVERING
+    if (string.find(msg, 'RECOVERING') >= 0):
+        return 3
+    # state FATAL ERROR
+    if (string.find(msg, 'FATAL') >= 0):
+        return 4
     # state STARTUP2
     if (string.find(msg, 'STARTUP2') >= 0):
         return 5
+    # state UNKNOWN
+    if (string.find(msg, 'UNKNOWN') >= 0):
+        return 6
     # state ARBITER
     if (string.find(msg, 'ARBITER') >= 0):
         return 7
     # state DOWN
     if (string.find(msg, 'DOWN') >= 0):
         return 8
+    # state ROLLBACK
+    if (string.find(msg, 'ROLLBACK') >= 0):
+        return 9
+    # state REMOVED
+    if (string.find(msg, 'REMOVED') >= 0):
+        return 10
 
 
 def process(msg, date):
