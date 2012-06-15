@@ -144,6 +144,10 @@ def main():
         logger.warning('Exiting.')
 
 
+def server_matchup():
+    pass
+
+
 def newServer(server_num, origin_server):
     """Creates a document for each new server writing
     to a log the program handles"""
