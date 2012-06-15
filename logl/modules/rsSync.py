@@ -12,7 +12,7 @@ def criteria(msg):
     if (string.find(msg, '[rsSync]') >= 0):
         if(string.find(msg, 'syncing') >= 0):
             return 1
-        return -1
+    return -1
 
 
 def process(msg, date):
