@@ -40,10 +40,10 @@ def process(msg, date):
 
     #Has the member begun syncing to a different place
     if(messageType == 1):
-        return syncingDiff(msg, doc)
+        return syncing_diff(msg, doc)
 
 
-def syncingDiff(msg, doc):
+def syncing_diff(msg, doc):
     """generates and returns a document for rs that are
     syncing to a new server"""
 

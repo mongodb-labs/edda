@@ -11,7 +11,7 @@
 # "msg" : stores the full line from the log
 
 
-def storeInDB(db, msg, date):
+def store_in_db(db, msg, date):
     entry = {}
     entry["date"] = date
     entry["msg"] = msg

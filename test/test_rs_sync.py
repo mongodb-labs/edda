@@ -15,8 +15,8 @@ def test_criteria():
     #foo bar test from git
     assert criteria("foo bar") == -1
 
-def test_process():
 
+def test_process():
     doc = process("Tue Jun 12 13:08:47 [rsSync] replSet syncing to: localhost:27017", datetime.now())
     assert doc
     assert doc["type"] == 'sync'
@@ -26,7 +26,7 @@ def test_process():
 def test_syncingDiff():
 
     currTime = datetime.now()
-    test = syncingDiff("Tue Jun 12 13:08:47 [rsSync] replSet syncing to: localhost:27017", process("Tue Jun 12 13:08:47 [rsSync] replSet syncing to: localhost:27017", currTime))
+    test = syncing_diff("Tue Jun 12 13:08:47 [rsSync] replSet syncing to: localhost:27017", process("Tue Jun 12 13:08:47 [rsSync] replSet syncing to: localhost:27017", currTime))
     assert test
     assert test["type"] == 'sync'
 
