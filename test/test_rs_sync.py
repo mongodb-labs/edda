@@ -1,5 +1,5 @@
 from datetime import datetime
-from logl.filters.rsSync import *
+from logl.filters.rs_sync import *
 
 
 def test_criteria():
