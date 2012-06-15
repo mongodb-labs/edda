@@ -25,7 +25,7 @@ from filters import *
 
 def main():
     """a main function, handles basic parsing and sends
-    to trafficControl for more advanced handling"""
+    to traffic_control for more advanced handling"""
 
     if (len(sys.argv) < 2):
         print "Missing argument: please provide a filename"
@@ -123,7 +123,7 @@ def main():
                 date = date_parser(line)
                 if not date:
                     continue
-                doc = trafficControl(line, date)
+                doc = traffic_control(line, date)
                 if doc and reset:
                     if doc["type"] == "init":
                         if doc["info"]["subtype"] == "startup":
@@ -156,7 +156,7 @@ def newServer(server_num, origin_server):
     return doc
 
 
-def trafficControl(msg, date):
+def traffic_control(msg, date):
     """passes given message through a number of filters.  If a
     it fits the criteria of a given filter, that filter returns
     a document, which this function will pass up to main()."""
