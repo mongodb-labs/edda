@@ -1,7 +1,9 @@
 from logl.modules.initandlisten import *
 from datetime import datetime
 
+
 def test_criteria():
+    """Test the criteria() method of this module"""
     # these should not pass
     assert criteria("this should not pass") < 0
     assert criteria("Mon Jun 11 15:56:40 [conn5] end connection 127.0.0.1:55224 (2 connections now open)") < 0
@@ -17,6 +19,7 @@ def test_criteria():
 
 
 def test_process():
+    """test the process() method of this module"""
     date = datetime.now()
     # non-valid message
     assert process("this is an invalid message", date) == None
@@ -26,4 +29,37 @@ def test_process():
     assert doc["type"] == "init"
     assert doc["info"]["server"] == "Kaushals-MacBook-Air.local:27018"
     assert doc["info"]["subtype"] == "startup"
-    pass
+    return
+
+
+def test_starting_up():
+    """test the starting_up() method of this module"""
+    doc = {}
+    # non-valid message
+    assert starting_up("this is a nonvalid message", doc) == None
+    assert starting_up("Mon Jun 11 15:56:16 [initandlisten] MongoDB starting : 64-bit host=Kaushals-MacBook-Air.local", doc) == None
+    # valid messages
+    doc = starting_up("Mon Jun 11 15:56:16 [initandlisten] MongoDB starting : pid=7029 port=27018 dbpath=/data/rs2 64-bit host=Kaushals-MacBook-Air.local", doc)
+    assert doc
+    assert doc["type"] == "init"
+    assert doc["info"]["subtype"] == "startup"
+    assert doc["info"]["server"] == "Kaushals-MacBook-Air.local:27018"
+    return
+
+
+def test_new_conn():
+    """test the new_conn() method of this module"""
+    doc = {}
+    # non-valid messages
+    assert new_conn("this is an invalid message", doc) == None
+    assert new_conn("Mon Jun 11 15:56:16 [initandlisten] connection accepted from 127.0.0.1:55224 (4 connections now open)", doc) == None
+    assert new_conn("Mon Jun 11 15:56:16 [initandlisten] connection #5 (4 connections now open)", doc) == None
+    assert new_conn("Mon Jun 11 15:56:16 [initandlisten] connection accepted from 127.0.0.1 #5 (4 connections now open)", doc) == None
+    # valid messages
+    doc = new_conn("Mon Jun 11 15:56:16 [initandlisten] connection accepted from 127.0.0.1:55224 #5", doc)
+    assert doc
+    assert doc["type"] == "init"
+    assert doc["info"]["subtype"] == "new_conn"
+    assert doc["info"]["conn_number"] == 5
+    assert doc["info"]["server"] == "127.0.0.1:55224"
+    return
