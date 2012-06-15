@@ -49,6 +49,10 @@ def main():
         port = '27017'
     if namespace.host:
         host = str(namespace.host[0])
+        place = string.find(host, ":")
+        if place >= 0:
+            port = host[place + 1:]
+            host = host[:place]
     else:
         host ='localhost'
     uri = host + ":" + port
