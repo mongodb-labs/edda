@@ -1,4 +1,4 @@
-from logl.modules.initandlisten import *
+from logl.filters.initandlisten import *
 from datetime import datetime
 
 

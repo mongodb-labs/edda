@@ -1,12 +1,12 @@
 #!/usr/bin/env python
-"""This module processes RS STATUS CHANGE types of log lines."""
+"""This filter processes RS STATUS CHANGE types of log lines."""
 
 import string
 import re
 
 
 def criteria(msg):
-    """does the given log line fit the criteria for this module?
+    """does the given log line fit the criteria for this filter?
     return an integer code if yes, -1 if no"""
     # state STARTUP1
     if (string.find(msg, '[rsStart] replSet I am') >= 0):
@@ -29,7 +29,7 @@ def criteria(msg):
 
 
 def process(msg, date):
-    """if the given log line fits the critera for this module,
+    """if the given log line fits the critera for this filter,
     processes the line and creates a document for it.
     document = {
        "date" : date,

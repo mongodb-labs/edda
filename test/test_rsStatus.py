@@ -1,4 +1,4 @@
-from logl.modules.rsStatus import *
+from logl.filters.rsStatus import *
 from datetime import datetime
 
 

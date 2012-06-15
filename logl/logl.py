@@ -20,7 +20,7 @@ from bson import objectid
 from pymongo import Connection
 from parse_date import date_parser
 import datetime
-from modules import *
+from filters import *
 
 
 def main():
@@ -157,11 +157,11 @@ def newServer(server_num, origin_server):
 
 
 def trafficControl(msg, date):
-    """passes given message through a number of modules.  If a
-    it fits the criteria of a given module, that module returns
+    """passes given message through a number of filters.  If a
+    it fits the criteria of a given filter, that filter returns
     a document, which this function will pass up to main()."""
     pattern = re.compile(".py$")
-    dirList = os.listdir("modules")
+    dirList = os.listdir("filters")
 
     logger = logging.getLogger(__name__)
 
@@ -174,7 +174,7 @@ def trafficControl(msg, date):
 
             # ignore __init__ file and template.py
             if fname != "__init__" and fname != "template":
-                fname = "modules." + fname
+                fname = "filters." + fname
 
                 # if module is valid and contains method, run!
                 if 'process' in dir(sys.modules[fname]):

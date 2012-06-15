@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""This module processes RSSYNC types of log lines"""
+"""This filter processes RSSYNC types of log lines"""
 
 
 import string
@@ -7,7 +7,7 @@ import logging
 
 
 def criteria(msg):
-    """Does the given log line fit the criteria for this module?
+    """Does the given log line fit the criteria for this filter?
     return an integer code if yes, -1 if not."""
     if (string.find(msg, '[rsSync]') >= 0):
         if(string.find(msg, 'syncing') >= 0):
@@ -16,7 +16,7 @@ def criteria(msg):
 
 
 def process(msg, date):
-    """if the given log line fits the criteria for this module,
+    """if the given log line fits the criteria for this filter,
     processes the line and creates a document for it.
     document = {
        "date" : date,

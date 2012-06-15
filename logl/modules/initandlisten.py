@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""This module processes INITANDLISTEN log lines."""
+"""This filter processes INITANDLISTEN log lines."""
 
 import re
 import string
@@ -7,7 +7,7 @@ import logging
 
 
 def criteria(msg):
-    """does the given log line fit the criteria for this module?
+    """does the given log line fit the criteria for this filter?
     return an integer code if yes, -1 if no."""
     # maybe we should fix this later...
     if (string.find(msg, '[initandlisten]') < 0):
@@ -21,7 +21,7 @@ def criteria(msg):
 
 
 def process(msg, date):
-    """If the given log line fits the criteria for this modules,
+    """If the given log line fits the criteria for this filter,
     processes the line and creates a document for it.
     document = {
        "date" : date,
