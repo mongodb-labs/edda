@@ -18,28 +18,42 @@ def server_clock_skew(db, collName):
     attempts to detect and resolve clock skew
     across different servers.  Returns 1 on success,
     -1 on failure"""
-    # for each server (a) entry:
     for doc_a in collName[servers].find():
-        if doc_a["server_name"] == "unknown":
+        a = doc_a["server_name"]
+        if a == "unknown":
             continue
-        # get this server's clock_skew document
-        skew_a = collName[clock_skew].find_one({"server": doc_a["server_name"]})
-        if skew_a is None:
-            skew_a = clock_skew_doc(doc_a["server_name"])
-        # check against every later server (b) entry:
+        skew_a = collName[clock_skew].find_one({"server": a})
+        if not skew_a:
+            skew_a = clock_skew_doc(a)
         for doc_b in collName[servers]find():
-            if doc_a["server_name"] == doc_b["server_name"]:
+            b = doc_b["server_name"]
+            if b == "unknown":
                 continue
-            if doc_b["server_name"] == "unknown":
+            if a == b:
                 continue
-            # skip if there is already clock skew data for this pair:
+            if skew_a["partners"][b]:
+                continue
+            skew_a["partners"][b] = detect(a,b, db, collName)
+            skew_b = collName[clock_skew].find_one({"server":b})
+            if not skew_b:
+                skew_b = clock_skew_doc(b)
+            # change this to use a sign convention
+            skew_b["partners"][a] = skew_a["partners"][b]
+    return -1
+
+
+def detect(a, b, db, collName):
+    """Detect any clock skew between a and b,
+    and return it as a timedelta object.  If
+    unable to detect skew, return None.  This is different
+    from 0 skew, which will be a timedelta with value 0"""
     # --> until (stable timedelta is found):
     # -------> take next two rsStatus entries from a about b
     # -------> find matching entries from b about itself
     # -------> compute timedelta for each entry
     # -------> FOR STARTERS: if two timedeltas are equal (to within some margin), this is the clock skew.
     # (we can probably fix this algorithm to better confirm clock skew...)
-    return -1
+    pass
 
 
 def clock_skew_doc(name):
