@@ -7,7 +7,7 @@ def test_criteria():
     assert criteria("Thu Jun 14 11:43:28 [interruptThread] closing listening socket: 6") == 0
     assert criteria("Thu Jun 14 11:43:28 [interruptThread] shutdown: going to close listening sockets...") == 1
     assert criteria("Thu Jun 14 11:43:28 dbexit: really exiting now") == 2
-
+    assert criteria("Foo bar") == -1
 
 def test_process():
     date = datetime.now()
