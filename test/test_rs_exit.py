@@ -11,7 +11,10 @@ def test_criteria():
 
 def test_process():
     date = datetime.now()
-    check_state("Thu Jun 14 11:43:28 [interruptThread] closing listening socket: 6", 0, date)
+    check_state("Thu Jun 14 11:43:28 [interruptThread] closing", 0, date)
+    check_state("Thu Jun 14 11:43:28 [interruptThread] shutdown: ", 1, date)
+    check_state("Thu Jun 14 11:43:28 dbexit: really exiting now", 2, date)
+    check_state("Thu Jun 14 11:43:28 [interruptThread] closing", 0, date)
     check_state("Thu Jun 14 11:43:28 [interruptThread] shutdown: going to close listening sockets...", 1, date)
     check_state("Thu Jun 14 11:43:28 dbexit: really exiting now", 2, date)
     assert process("This should fail", date) == None
