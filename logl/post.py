@@ -1,3 +1,6 @@
+import pymongo
+from datetime import datetime
+from datetime import timedelta
 
 
 def server_clock_skew(db, collName):
@@ -5,6 +8,18 @@ def server_clock_skew(db, collName):
     attempts to detect and resolve clock skew
     across different servers.  Returns 1 on success,
     -1 on failure"""
+    # begin with first server (a) in .servers coll
+    # --> if server is unnamed, skip
+    # check against every later server (b) entry:
+    # --> if server is unnamed, skip
+    # --> if a's name == b's name, skip
+    # --> if a and b are from same log file, skip?  Worth even checking?
+    # --> until (stable timedelta is found):
+    # -------> take next two rsStatus entries from a about b
+    # -------> find matching entries from b about itself
+    # -------> compute timedelta for each entry
+    # -------> FOR STARTERS: if two timedeltas are equal (to within some margin), this is the clock skew.
+    # (we can probably fix this algorithm to better confirm clock skew...)
     return -1
 
 
@@ -13,18 +28,16 @@ def server_matchup(db, collName):
     attempts to resolve any differences in server names
     or missing server names across entries.  Returns
     1 on success, -1 on failure"""
-    # (assuming no clock skew, or check for clock skew)
-    # first, how can we tell if there exists an unnamed server?
+    # check for clock skew in tandem with server name checking
     # --> check if coll.servers has any entries where server_num == origin_server
     # -----> if none, return
     # -----> for each such server:
-    # ----------> for each message FROM this server:
-    # ---------------> if the message is an important status change
+    # ----------> for each message FROM this server (a):
+    # ---------------> if the message is an important status change about itself
     # ---------------> (not SECONDARY, b/c multiple rs can be SECONDARY?)
-    # ---------------> (PRIMARY,
-
-    # what do we actually want to match up?
-    # --> entries where the origin server is a number
-    # ------> select key events that would signal a match for the server name
-    # -----------> like a change of state
+    # ---------------> (not STARTUP2, b/c no server name means probably no startup msg)
+    # ---------------> (PRIMARY, ARBITER, RECOVERING, DOWN (w/ exit))
+    # ---------------> find all status messages from other servers about a with same state
+    # ---------------> check if the other servers' messages align in time (with clock skew) and are about the same unnamed server
+    # ---------------> if other times agree, take that as this server's name, and calculate clock skew with it.
     return -1
