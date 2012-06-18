@@ -11,6 +11,13 @@ def test_detect():
 
 
 def test_clock_skew_doc():
+    """Simple tests of the clock_skew_doc() method
+    in post.py"""
+    doc = clock_skew_def("Samantha")
+    assert doc
+    assert doc["server_name"] == "Samantha"
+    assert doc["type"] == "clock_skew"
+    assert doc["partners"]
     pass
 
 
