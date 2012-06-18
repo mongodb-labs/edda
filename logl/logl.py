@@ -106,8 +106,9 @@ def main():
         # a name for this server
         origin_server = server_num
         logger.warning('Reading from logfile {0}...'.format(arg))
-
+        previous = "none"
         for line in f:
+            add_doc = True
             counter += 1
             logger.debug('Reading line {0} from {1}'.format(counter, arg))
             # handle restart lines
@@ -122,20 +123,26 @@ def main():
                 if not date:
                     continue
                 doc = traffic_control(line, date)
-                if doc and reset:
-                    if doc["type"] == "init":
-                        if doc["info"]["subtype"] == "startup":
-                            if doc["info"]["server"]:
-                                origin_server = doc["info"]["server"]
-                                servers.insert(new_server(server_num, origin_server, db, collName))
+                if doc:
+                    if reset:
+                        if doc["type"] == "init":
+                            if doc["info"]["subtype"] == "startup":
+                                if doc["info"]["server"]:
+                                    origin_server = doc["info"]["server"]
+                                    servers.insert(new_server(server_num, origin_server, db, collName))
+                    if doc["type"] == "exit":
+                        if previous == "exit":
+                            add_doc = False
+                        pass
+
                     reset = False
                     doc["origin_server"] = origin_server
-                if doc
-                    if doc["type"] == "exit"
-                        
-                    entries.insert(doc)
-                    logger.debug('Stored line {0} of {1} to db'.format(counter, arg))
-                    stored += 1
+                    if add_doc:
+                        entries.insert(doc)
+                        logger.debug('Stored line {0} of {1} to db'.format(counter, arg))
+                        stored += 1
+                    previous = doc["type"]
+
         logger.warning('-' * 64)
         logger.warning('Finished running on {0}'.format(arg))
         logger.info('Stored {0} of {1} log lines to db'.format(stored, counter))
