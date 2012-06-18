@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 # anatomy of a clock skew document:
 # document = {
 #    "type" = "clock_skew"
@@ -9,6 +11,7 @@
 
 
 import pymongo
+import logging
 from datetime import datetime
 from datetime import timedelta
 
@@ -18,9 +21,11 @@ def server_clock_skew(db, collName):
     attempts to detect and resolve clock skew
     across different servers.  Returns 1 on success,
     -1 on failure"""
+    logger = getLogger(__name__)
     for doc_a in collName[servers].find():
         a = doc_a["server_name"]
         if a == "unknown":
+            logger.debug("Skipping unknown server")
             continue
         skew_a = collName[clock_skew].find_one({"server": a})
         if not skew_a:
@@ -32,6 +37,7 @@ def server_clock_skew(db, collName):
             if a == b:
                 continue
             if skew_a["partners"][b]:
+                logger.debug("Already found clock skew for {0} - {1}".format(a, b))
                 continue
             skew_a["partners"][b] = detect(a,b, db, collName)
             skew_b = collName[clock_skew].find_one({"server":b})
@@ -47,13 +53,50 @@ def detect(a, b, db, collName):
     and return it as a timedelta object.  If
     unable to detect skew, return None.  This is different
     from 0 skew, which will be a timedelta with value 0"""
-    # --> until (stable timedelta is found):
-    # -------> take next two rsStatus entries from a about b
-    # -------> find matching entries from b about itself
-    # -------> compute timedelta for each entry
-    # -------> FOR STARTERS: if two timedeltas are equal (to within some margin), this is the clock skew.
-    # (we can probably fix this algorithm to better confirm clock skew...)
-    pass
+    cursor_a = collName[.entries].find({"type" : "status", "origin_server" : a, "info.server" : b})
+    cursor_b = collName[.entries].find({"type" : "Status", "origin_server" : b, "info.server" : b})
+    cursor_a.sort("date")
+    cursor_b.sort("date")
+    if not cursor_a.alive():
+        return None
+    if not cursor_b.alive():
+        return None
+    a_1 = cursor_a.next()
+    b_1 = cursor_b.next()
+    min_time = timedelta(seconds=2)
+    # take and compare two consecutive entries from each cursor
+    while True:
+        if not cursor_a.alive():
+            return None
+        if not cursor_b.alive():
+            return None
+        a_2 = cursor_a.next()
+        b_2 = cursor_b.next()
+        # if first entries do not match, advance A
+        while a_1["state_code"] != b_1["state_code"]:
+            a_1 = a_2
+            if not cursor_a.alive():
+                return None
+            a_2 = cursor_a.next()
+        # if first entries match but not second ones, advance A and B
+        if (a_1["state_code"] == b_1["state_code"])
+        and (a_2["state_code"] != b_2["state_code"]):
+            a_2 = cursor_a.next()
+            b_2 = cursor_b.next()
+        # if both first and second entries match, take clock skew
+        # (fix me so I work better please...)
+        if (a_1["info"]["state_code"] == b_1["info"]["state_code"])
+        and (a_2["info"]["state"] == b_2["info"]["state"]):
+            td1 = a_1["date"] - b_1["date"]
+            td2 = a_2["date"] - b_2["date"]
+            # if td1 and td2 are wildly different, try again
+            diff = td1 - td2
+            if abs(diff) > min_time:
+                # they agree.  But big enough for clock skew?
+                if abs(td1) > min_time:
+                    return td1 # or return the smaller of the two?
+        a_1 = a_2
+        b_1 = b_2
 
 
 def clock_skew_doc(name):
