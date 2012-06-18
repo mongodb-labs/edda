@@ -1,3 +1,13 @@
+# anatomy of a clock skew document:
+# document = {
+#    "type" = "clock_skew"
+#    "server" = "name"
+#    "partners" = {
+#          server_name : timedelta,
+#          }
+#     }
+
+
 import pymongo
 from datetime import datetime
 from datetime import timedelta
@@ -8,12 +18,21 @@ def server_clock_skew(db, collName):
     attempts to detect and resolve clock skew
     across different servers.  Returns 1 on success,
     -1 on failure"""
-    # begin with first server (a) in .servers coll
-    # --> if server is unnamed, skip
-    # check against every later server (b) entry:
-    # --> if server is unnamed, skip
-    # --> if a's name == b's name, skip
-    # --> if a and b are from same log file, skip?  Worth even checking?
+    # for each server (a) entry:
+    for doc_a in collName[servers].find():
+        if doc_a["server_name"] == "unknown":
+            continue
+        # get this server's clock_skew document
+        skew_a = collName[clock_skew].find_one({"server": doc_a["server_name"]})
+        if skew_a is None:
+            skew_a = clock_skew_doc(doc_a["server_name"])
+        # check against every later server (b) entry:
+        for doc_b in collName[servers]find():
+            if doc_a["server_name"] == doc_b["server_name"]:
+                continue
+            if doc_b["server_name"] == "unknown":
+                continue
+            # skip if there is already clock skew data for this pair:
     # --> until (stable timedelta is found):
     # -------> take next two rsStatus entries from a about b
     # -------> find matching entries from b about itself
@@ -21,6 +40,16 @@ def server_clock_skew(db, collName):
     # -------> FOR STARTERS: if two timedeltas are equal (to within some margin), this is the clock skew.
     # (we can probably fix this algorithm to better confirm clock skew...)
     return -1
+
+
+def clock_skew_doc(name):
+    """Create and return an empty clock skew doc
+    for this server"""
+    doc = {}
+    doc["server_name"] = name
+    doc["type"] = "clock_skew"
+    doc["partners"] = {}
+    return doc
 
 
 def server_matchup(db, collName):
