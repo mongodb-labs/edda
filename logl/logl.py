@@ -130,6 +130,9 @@ def main():
                                 servers.insert(new_server(server_num, origin_server, db, collName))
                     reset = False
                     doc["origin_server"] = origin_server
+                if doc
+                    if doc["type"] == "exit"
+                        
                     entries.insert(doc)
                     logger.debug('Stored line {0} of {1} to db'.format(counter, arg))
                     stored += 1
