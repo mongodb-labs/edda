@@ -20,15 +20,15 @@ def server_clock_skew(db, collName):
     across different servers.  Returns 1 on success,
     -1 on failure"""
     logger = logging.getLogger(__name__)
-    for doc_a in collName[servers].find():
+    for doc_a in collName["servers"].find():
         a = doc_a["server_name"]
         if a == "unknown":
             logger.debug("Skipping unknown server")
             continue
-        skew_a = collName[clock_skew].find_one({"server": a})
+        skew_a = collName["clock_skew"].find_one({"server": a})
         if not skew_a:
             skew_a = clock_skew_doc(a)
-        for doc_b in collName[servers]find():
+        for doc_b in collName["servers"].find():
             b = doc_b["server_name"]
             logger.info("Finding clock skew for {0} - {1}...".format(a, b))
             if b == "unknown":
@@ -41,7 +41,7 @@ def server_clock_skew(db, collName):
                 logger.debug("Already found clock skew for {0} - {1}".format(a, b))
                 continue
             skew_a["partners"][b] = detect(a, b, db, collName)
-            skew_b = collName[clock_skew].find_one({"server":b})
+            skew_b = collName["clock_skew"].find_one({"server":b})
             if not skew_b:
                 skew_b = clock_skew_doc(b)
             # change this to use a sign convention
@@ -54,15 +54,15 @@ def detect(a, b, db, collName):
     and return it as a timedelta object.  If
     unable to detect skew, return None.  This is different
     from 0 skew, which will be a timedelta with value 0"""
-    cursor_a = collName[.entries].find({"type" : "status", "origin_server" : a, "info.server" : b})
-    cursor_b = collName[.entries].find({"type" : "Status", "origin_server" : b, "info.server" : b})
+    cursor_a = collName["entries"].find({"type" : "status", "origin_server" : a, "info.server" : b})
+    cursor_b = collName["entries"].find({"type" : "Status", "origin_server" : b, "info.server" : b})
     cursor_a.sort("date")
     cursor_b.sort("date")
     logger = logging.getLogger(__name__)
     logger.debug("Detecting clock skew for pair {0} - {1}...".format(a, b))
-    if not cursor_a.alive():
+    if not cursor_a.hasNext():
         return None
-    if not cursor_b.alive():
+    if not cursor_b.hasNext():
         return None
     a_1 = cursor_a.next()
     b_1 = cursor_b.next()
@@ -70,9 +70,9 @@ def detect(a, b, db, collName):
     # take and compare two consecutive entries from each cursor
     while True:
         logger.debug("Using next set of entries")
-        if not cursor_a.alive():
+        if not cursor_a.hasNext():
             return None
-        if not cursor_b.alive():
+        if not cursor_b.hasNext():
             return None
         a_2 = cursor_a.next()
         b_2 = cursor_b.next()
@@ -80,7 +80,7 @@ def detect(a, b, db, collName):
         while a_1["state_code"] != b_1["state_code"]:
             logger.debug("first entries do not match")
             a_1 = a_2
-            if not cursor_a.alive():
+            if not cursor_a.hasNext():
                 return None
             a_2 = cursor_a.next()
         # if first entries match but not second ones, advance A and B
@@ -104,8 +104,6 @@ def detect(a, b, db, collName):
                     return td1 # or return the smaller of the two?
         a_1 = a_2
         b_1 = b_2
-
-
 
 
 def clock_skew_doc(name):
