@@ -60,9 +60,9 @@ def detect(a, b, db, collName):
     cursor_b.sort("date")
     logger = logging.getLogger(__name__)
     logger.debug("Detecting clock skew for pair {0} - {1}...".format(a, b))
-    if not cursor_a.hasNext():
+    if not cursor_a.alive():
         return None
-    if not cursor_b.hasNext():
+    if not cursor_b.alive():
         return None
     a_1 = cursor_a.next()
     b_1 = cursor_b.next()
@@ -70,9 +70,9 @@ def detect(a, b, db, collName):
     # take and compare two consecutive entries from each cursor
     while True:
         logger.debug("Using next set of entries")
-        if not cursor_a.hasNext():
+        if not cursor_a.alive():
             return None
-        if not cursor_b.hasNext():
+        if not cursor_b.alive():
             return None
         a_2 = cursor_a.next()
         b_2 = cursor_b.next()
@@ -80,7 +80,7 @@ def detect(a, b, db, collName):
         while a_1["state_code"] != b_1["state_code"]:
             logger.debug("first entries do not match")
             a_1 = a_2
-            if not cursor_a.hasNext():
+            if not cursor_a.alive():
                 return None
             a_2 = cursor_a.next()
         # if first entries match but not second ones, advance A and B
