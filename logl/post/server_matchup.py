@@ -20,24 +20,32 @@ def server_matchup(db, collName):
     # ---------------> check if the other servers' messages align in time (with clock skew) and are about the same unnamed server
     # ---------------> if other times agree, take that as this server's name, and calculate clock skew with it.
 
-    for doc in collName[servers].find()
-        if doc["server_name"] == "unknown"
-            cursor = collName[.entries].find({"origin_server" : doc["server_num"], "type": "status"})
+    for doc in collName[servers].find():
+        if doc["server_name"] == "unknown":
+            entries_a = db[collName + ".entries"]
+            #cursor_a = entries_a.find({"type" : "status", "origin_server" : a, "info.server" : b})
+            cursor_a = entries_a.find({"origin_server" : doc["server_num"], "type": "status" , "info.server" : "self"})
+            cursor_a.sort("date")
+            #needs to be fixed, doesn't work
             if cursor.alive():
                 while True:
-                    code = doc["info"]["state_code"]
-                    if code == 2 or code == 5:
-                        if cursor.alive():
+                    try:
+                        code = doc["info"]["state_code"]
+                        if code == 2 or code == 5:
                             cursor = cursor.next()
                             continue
-                    else
-                        cursor2 = colName[.entries].find({"type": "status", "info.state_code" : code})
-                            for doc2 in 
+                        else:
+                        #like last time, itterating through cursors needs to be fixed
+                            cursor_b = entries_a.find({"type": "status", "info.state_code": code, "origin_server" : {"$ne": doc["server_num"]}})
+                            cursor b.sort("date")
+                            while True:
+                                doc[server_name] = cursor_b["info"]["server"] 
+                                cursor2 = cursor2.next()
 
-                    if cursor.alive():
-                        cursor = cursor.next()
-                    else:
-                        break
-        elif:
+                    except StopIteration:
+                        continue
+
+                    cursor = cursor.next()
+        else:
             continue
     return -1
