@@ -89,8 +89,8 @@ def detect(a, b, db, collName):
             # (fix me so I work better please...)
             if (a_1["info"]["state_code"] == b_1["info"]["state_code"]) and (a_2["info"]["state"] == b_2["info"]["state"]):
                 logger.debug("Both entries match!  Calculating clock skew")
-                td1 = a_1["date"] - b_1["date"]
-                td2 = a_2["date"] - b_2["date"]
+                td1 = abs(a_1["date"] - b_1["date"])
+                td2 = abs(a_2["date"] - b_2["date"])
                 # if td1 and td2 are wildly different, try again
                 diff = td1 - td2
                 if abs(diff) < min_time:
@@ -99,6 +99,9 @@ def detect(a, b, db, collName):
                 if abs(td1) > min_time:
                     logger.debug("clock skew found!  Returning {0}".format(td1))
                     return td1 # or return the smaller of the two?
+                else:
+                    logger.debug("Not big enough, 0 clock skew")
+                    return timedelta() # automatically 0, right?
             a_1 = a_2
             b_1 = b_2
         except StopIteration:
