@@ -163,11 +163,11 @@ def new_server(server_num, origin_server):
     the database.  If so, returns the matching document.
     If not, creates a document for the server"""
     doc = {}
-    doc["number"] = server_num
+    doc["server_numb"] = server_num
     if origin_server == server_num:
-        doc["address"] = "unknown"
+        doc["server_name"] = "unknown"
     else:
-        doc["address"] = origin_server
+        doc["server_name"] = origin_server
     return doc
 
 
