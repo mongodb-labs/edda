@@ -1,0 +1,461 @@
+Thu Jun 14 11:23:42 [initandlisten] MongoDB starting : pid=6664 port=27018 dbpath=/data/rs2 64-bit host=Kaushals-MacBook-Air.local
+Thu Jun 14 11:23:42 [initandlisten] db version v2.0.5, pdfile version 4.5
+Thu Jun 14 11:23:42 [initandlisten] git version: 1bb4de4630302fad8af53824ca4f627db490b753
+Thu Jun 14 11:23:42 [initandlisten] build info: Darwin erh2.10gen.cc 9.8.0 Darwin Kernel Version 9.8.0: Wed Jul 15 16:55:01 PDT 2009; root:xnu-1228.15.4~1/RELEASE_I386 i386 BOOST_LIB_VERSION=1_40
+Thu Jun 14 11:23:42 [initandlisten] options: { dbpath: "/data/rs2", logappend: true, logpath: "2.log", port: 27018, replSet: "foo" }
+Thu Jun 14 11:23:42 [initandlisten] journal dir=/data/rs2/journal
+Thu Jun 14 11:23:42 [initandlisten] recover : no journal files present, no recovery needed
+Thu Jun 14 11:23:42 [websvr] admin web console waiting for connections on port 28018
+Thu Jun 14 11:23:42 [initandlisten] waiting for connections on port 27018
+Thu Jun 14 11:23:42 [initandlisten] connection accepted from 127.0.0.1:53239 #1
+Thu Jun 14 11:23:42 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Thu Jun 14 11:23:42 [rsStart] replSet info you may need to run replSetInitiate -- rs.initiate() in the shell -- if that is not already done
+Thu Jun 14 11:23:52 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Thu Jun 14 11:24:02 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Thu Jun 14 11:24:12 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Thu Jun 14 11:24:22 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Thu Jun 14 11:24:32 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Thu Jun 14 11:24:42 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Thu Jun 14 11:24:42 [clientcursormon] mem (MB) res:15 virt:2435 mapped:0
+Thu Jun 14 11:24:52 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Thu Jun 14 11:24:59 [initandlisten] connection accepted from 127.0.0.1:53244 #2
+Thu Jun 14 11:25:02 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Thu Jun 14 11:25:09 [initandlisten] connection accepted from 127.0.0.1:53251 #3
+Thu Jun 14 11:25:12 [initandlisten] connection accepted from 127.0.0.1:53255 #4
+Thu Jun 14 11:25:12 [rsStart] trying to contact localhost:27017
+Thu Jun 14 11:25:12 [rsStart] trying to contact localhost:27019
+Thu Jun 14 11:25:12 [rsStart] trying to contact localhost:27020
+Thu Jun 14 11:25:12 [rsStart] replSet got config version 1 from a remote, saving locally
+Thu Jun 14 11:25:12 [rsStart] replSet info saving a newer config version to local.system.replset
+Thu Jun 14 11:25:12 [FileAllocator] allocating new datafile /data/rs2/local.ns, filling with zeroes...
+Thu Jun 14 11:25:12 [FileAllocator] creating directory /data/rs2/_tmp
+Thu Jun 14 11:25:12 [FileAllocator] done allocating datafile /data/rs2/local.ns, size: 16MB,  took 0.04 secs
+Thu Jun 14 11:25:12 [FileAllocator] allocating new datafile /data/rs2/local.0, filling with zeroes...
+Thu Jun 14 11:25:13 [FileAllocator] done allocating datafile /data/rs2/local.0, size: 64MB,  took 0.263 secs
+Thu Jun 14 11:25:13 [FileAllocator] allocating new datafile /data/rs2/local.1, filling with zeroes...
+Thu Jun 14 11:25:13 [rsStart] replSet saveConfigLocally done
+Thu Jun 14 11:25:13 [rsStart] replSet STARTUP2
+Thu Jun 14 11:25:13 [rsSync] ******
+Thu Jun 14 11:25:13 [rsSync] creating replication oplog of size: 183MB...
+Thu Jun 14 11:25:13 [FileAllocator] done allocating datafile /data/rs2/local.1, size: 128MB,  took 0.877 secs
+Thu Jun 14 11:25:14 [FileAllocator] allocating new datafile /data/rs2/local.2, filling with zeroes...
+Thu Jun 14 11:25:14 [rsHealthPoll] replSet member localhost:27017 is up
+Thu Jun 14 11:25:14 [rsHealthPoll] replSet member localhost:27019 is up
+Thu Jun 14 11:25:14 [rsHealthPoll] replSet member localhost:27020 is up
+Thu Jun 14 11:25:14 [rsHealthPoll] replSet member localhost:27019 is now in state STARTUP2
+Thu Jun 14 11:25:14 [rsHealthPoll] replSet member localhost:27020 is now in state STARTUP2
+Thu Jun 14 11:25:14 [rsHealthPoll] replSet member localhost:27017 is now in state SECONDARY
+Thu Jun 14 11:25:14 [rsHealthPoll] replSet member localhost:27021 is up
+Thu Jun 14 11:25:14 [rsHealthPoll] replSet member localhost:27021 is now in state STARTUP2
+Thu Jun 14 11:25:15 [initandlisten] connection accepted from 127.0.0.1:53263 #5
+Thu Jun 14 11:25:15 [FileAllocator] done allocating datafile /data/rs2/local.2, size: 256MB,  took 1.747 secs
+Thu Jun 14 11:25:15 [rsSync] ******
+Thu Jun 14 11:25:15 [rsSync] replSet initial sync pending
+Thu Jun 14 11:25:15 [rsSync] replSet initial sync need a member to be primary or secondary to do our initial sync
+Thu Jun 14 11:25:18 [conn2] replSet RECOVERING
+Thu Jun 14 11:25:18 [conn2] replSet info voting yea for localhost:27017 (0)
+Thu Jun 14 11:25:18 [rsHealthPoll] replSet member localhost:27017 is now in state PRIMARY
+Thu Jun 14 11:25:18 [rsHealthPoll] replSet member localhost:27020 is now in state RECOVERING
+Thu Jun 14 11:25:18 [rsHealthPoll] replSet member localhost:27021 is now in state RECOVERING
+Thu Jun 14 11:25:18 [rsHealthPoll] replSet member localhost:27019 is now in state RECOVERING
+Thu Jun 14 11:25:20 [rsHealthPoll] replSet member localhost:27021 is now in state ARBITER
+Thu Jun 14 11:25:30 [rsHealthPoll] replSet member localhost:27019 is now in state SECONDARY
+Thu Jun 14 11:25:31 [rsSync] replSet initial sync pending
+Thu Jun 14 11:25:31 [rsSync] replSet syncing to: localhost:27019
+Thu Jun 14 11:25:31 [rsSync] build index local.me { _id: 1 }
+Thu Jun 14 11:25:31 [rsSync] build index done 0 records 0 secs
+Thu Jun 14 11:25:31 [rsSync] replSet initial sync drop all databases
+Thu Jun 14 11:25:31 [rsSync] dropAllDatabasesExceptLocal 1
+Thu Jun 14 11:25:31 [rsSync] replSet initial sync clone all databases
+Thu Jun 14 11:25:31 [rsSync] replSet initial sync query minValid
+Thu Jun 14 11:25:31 [rsSync] replSet initial oplog application from localhost:27019 starting at Jun 14 11:25:02:1 to Jun 14 11:25:02:1
+Thu Jun 14 11:25:32 [conn2] end connection 127.0.0.1:53244
+Thu Jun 14 11:25:32 [initandlisten] connection accepted from 127.0.0.1:53276 #6
+Thu Jun 14 11:25:32 [rsHealthPoll] replSet member localhost:27020 is now in state SECONDARY
+Thu Jun 14 11:25:34 [rsSync] replSet initial sync finishing up
+Thu Jun 14 11:25:34 [rsSync] replSet set minValid=4fda024e:1
+Thu Jun 14 11:25:34 [rsSync] build index local.replset.minvalid { _id: 1 }
+Thu Jun 14 11:25:34 [rsSync] build index done 0 records 0 secs
+Thu Jun 14 11:25:34 [rsSync] replSet initial sync done
+Thu Jun 14 11:25:35 [rsSync] replSet syncing to: localhost:27017
+Thu Jun 14 11:25:35 [rsSync] replSet SECONDARY
+Thu Jun 14 11:25:37 [conn3] end connection 127.0.0.1:53251
+Thu Jun 14 11:25:37 [initandlisten] connection accepted from 127.0.0.1:53278 #7
+Thu Jun 14 11:25:40 [conn4] end connection 127.0.0.1:53255
+Thu Jun 14 11:25:40 [initandlisten] connection accepted from 127.0.0.1:53285 #8
+Thu Jun 14 11:25:43 [conn5] end connection 127.0.0.1:53263
+Thu Jun 14 11:25:43 [initandlisten] connection accepted from 127.0.0.1:53293 #9
+Thu Jun 14 11:25:46 [clientcursormon] mem (MB) res:18 virt:3400 mapped:464
+Thu Jun 14 11:25:56 [FileAllocator] allocating new datafile /data/rs2/foo.ns, filling with zeroes...
+Thu Jun 14 11:25:56 [FileAllocator] done allocating datafile /data/rs2/foo.ns, size: 16MB,  took 0.406 secs
+Thu Jun 14 11:25:56 [FileAllocator] allocating new datafile /data/rs2/foo.0, filling with zeroes...
+Thu Jun 14 11:25:57 [FileAllocator] done allocating datafile /data/rs2/foo.0, size: 64MB,  took 1.054 secs
+Thu Jun 14 11:25:57 [FileAllocator] allocating new datafile /data/rs2/foo.1, filling with zeroes...
+Thu Jun 14 11:25:57 [rsSync] build index foo.foo { _id: 1 }
+Thu Jun 14 11:25:57 [rsSync] build index done 0 records 0.009 secs
+Thu Jun 14 11:25:59 [FileAllocator] done allocating datafile /data/rs2/foo.1, size: 128MB,  took 1.732 secs
+Thu Jun 14 11:26:02 [conn6] end connection 127.0.0.1:53276
+Thu Jun 14 11:26:02 [initandlisten] connection accepted from 127.0.0.1:53294 #10
+Thu Jun 14 11:26:03 [conn10] end connection 127.0.0.1:53294
+Thu Jun 14 11:26:03 [rsSync] replSet syncThread: 10278 dbclient error communicating with server: localhost:27017
+Thu Jun 14 11:26:04 [rsHealthPoll] DBClientCursor::init call() failed
+Thu Jun 14 11:26:04 [rsHealthPoll] replSet info localhost:27017 is down (or slow to respond): DBClientBase::findN: transport error: localhost:27017 query: { replSetHeartbeat: "foo", v: 1, pv: 1, checkEmpty: false, from: "localhost:27018" }
+Thu Jun 14 11:26:04 [rsHealthPoll] replSet member localhost:27017 is now in state DOWN
+Thu Jun 14 11:26:04 [rsMgr] not electing self, localhost:27021 would veto
+Thu Jun 14 11:26:05 [conn7] replSet info voting yea for localhost:27019 (2)
+Thu Jun 14 11:26:06 [rsHealthPoll] replSet member localhost:27019 is now in state PRIMARY
+Thu Jun 14 11:26:07 [conn7] end connection 127.0.0.1:53278
+Thu Jun 14 11:26:07 [initandlisten] connection accepted from 127.0.0.1:53303 #11
+Thu Jun 14 11:26:10 [conn8] end connection 127.0.0.1:53285
+Thu Jun 14 11:26:10 [initandlisten] connection accepted from 127.0.0.1:53315 #12
+Thu Jun 14 11:26:12 [rsHealthPoll] couldn't connect to localhost:27017: couldn't connect to server localhost:27017
+Thu Jun 14 11:26:13 [conn9] end connection 127.0.0.1:53293
+Thu Jun 14 11:26:13 [initandlisten] connection accepted from 127.0.0.1:53327 #13
+Thu Jun 14 11:26:14 [rsSync] replSet syncing to: localhost:27019
+Thu Jun 14 11:26:19 [initandlisten] connection accepted from 127.0.0.1:53345 #14
+Thu Jun 14 11:26:28 [conn14] end connection 127.0.0.1:53345
+Thu Jun 14 11:26:37 [conn11] end connection 127.0.0.1:53303
+Thu Jun 14 11:26:37 [initandlisten] connection accepted from 127.0.0.1:53383 #15
+Thu Jun 14 11:26:40 [conn12] end connection 127.0.0.1:53315
+Thu Jun 14 11:26:40 [initandlisten] connection accepted from 127.0.0.1:53396 #16
+Thu Jun 14 11:26:40 [rsHealthPoll] replSet member localhost:27017 is up
+Thu Jun 14 11:26:40 [rsHealthPoll] replSet member localhost:27017 is now in state SECONDARY
+Thu Jun 14 11:26:41 [initandlisten] connection accepted from 127.0.0.1:53401 #17
+Thu Jun 14 11:26:43 [conn13] end connection 127.0.0.1:53327
+Thu Jun 14 11:26:43 [initandlisten] connection accepted from 127.0.0.1:53410 #18
+Thu Jun 14 11:26:46 [clientcursormon] mem (MB) res:18 virt:3560 mapped:544
+Thu Jun 14 11:26:47 [rsSync] replSet syncThread: 10278 dbclient error communicating with server: localhost:27019
+Thu Jun 14 11:26:47 [conn15] end connection 127.0.0.1:53383
+Thu Jun 14 11:26:48 [rsHealthPoll] DBClientCursor::init call() failed
+Thu Jun 14 11:26:48 [rsHealthPoll] replSet info localhost:27019 is down (or slow to respond): DBClientBase::findN: transport error: localhost:27019 query: { replSetHeartbeat: "foo", v: 1, pv: 1, checkEmpty: false, from: "localhost:27018" }
+Thu Jun 14 11:26:48 [rsHealthPoll] replSet member localhost:27019 is now in state DOWN
+Thu Jun 14 11:26:49 [rsMgr] replSet info electSelf 1
+Thu Jun 14 11:26:49 [rsMgr] replSet PRIMARY
+Thu Jun 14 11:26:50 [conn16] end connection 127.0.0.1:53396
+Thu Jun 14 11:26:50 [rsHealthPoll] DBClientCursor::init call() failed
+Thu Jun 14 11:26:50 [rsHealthPoll] replSet info localhost:27020 is down (or slow to respond): DBClientBase::findN: transport error: localhost:27020 query: { replSetHeartbeat: "foo", v: 1, pv: 1, checkEmpty: false, from: "localhost:27018" }
+Thu Jun 14 11:26:50 [rsHealthPoll] replSet member localhost:27020 is now in state DOWN
+Thu Jun 14 11:27:01 [initandlisten] connection accepted from 127.0.0.1:53451 #19
+Thu Jun 14 11:27:02 [slaveTracking] build index local.slaves { _id: 1 }
+Thu Jun 14 11:27:02 [slaveTracking] build index done 0 records 0 secs
+Thu Jun 14 11:27:03 [initandlisten] connection accepted from 127.0.0.1:53458 #20
+Thu Jun 14 11:27:09 [conn17] end connection 127.0.0.1:53401
+Thu Jun 14 11:27:09 [initandlisten] connection accepted from 127.0.0.1:53478 #21
+Thu Jun 14 11:27:12 [rsHealthPoll] couldn't connect to localhost:27020: couldn't connect to server localhost:27020
+Thu Jun 14 11:27:12 [rsHealthPoll] couldn't connect to localhost:27019: couldn't connect to server localhost:27019
+Thu Jun 14 11:27:13 [conn18] end connection 127.0.0.1:53410
+Thu Jun 14 11:27:13 [initandlisten] connection accepted from 127.0.0.1:53495 #22
+Thu Jun 14 11:27:14 [rsHealthPoll] replSet member localhost:27019 is up
+Thu Jun 14 11:27:14 [rsHealthPoll] replSet member localhost:27019 is now in state SECONDARY
+Thu Jun 14 11:27:15 [initandlisten] connection accepted from 127.0.0.1:53511 #23
+Thu Jun 14 11:27:16 [rsHealthPoll] replSet member localhost:27020 is up
+Thu Jun 14 11:27:16 [rsHealthPoll] replSet member localhost:27020 is now in state SECONDARY
+Thu Jun 14 11:27:17 [initandlisten] connection accepted from 127.0.0.1:53516 #24
+Thu Jun 14 11:27:18 [conn21] end connection 127.0.0.1:53478
+Thu Jun 14 11:27:18 [conn19] end connection 127.0.0.1:53451
+Thu Jun 14 11:27:18 [rsHealthPoll] DBClientCursor::init call() failed
+Thu Jun 14 11:27:18 [rsHealthPoll] replSet info localhost:27017 is down (or slow to respond): DBClientBase::findN: transport error: localhost:27017 query: { replSetHeartbeat: "foo", v: 1, pv: 1, checkEmpty: false, from: "localhost:27018" }
+Thu Jun 14 11:27:18 [rsHealthPoll] replSet member localhost:27017 is now in state DOWN
+Thu Jun 14 11:27:20 [initandlisten] connection accepted from 127.0.0.1:53519 #25
+Thu Jun 14 11:27:22 [initandlisten] connection accepted from 127.0.0.1:53525 #26
+Thu Jun 14 11:27:24 [rsHealthPoll] replSet member localhost:27017 is up
+Thu Jun 14 11:27:24 [rsHealthPoll] replSet member localhost:27017 is now in state SECONDARY
+Thu Jun 14 11:27:26 [initandlisten] connection accepted from 127.0.0.1:53537 #27
+Thu Jun 14 11:27:32 [initandlisten] connection accepted from 127.0.0.1:53541 #28
+Thu Jun 14 11:27:43 [conn22] end connection 127.0.0.1:53495
+Thu Jun 14 11:27:43 [initandlisten] connection accepted from 127.0.0.1:53547 #29
+Thu Jun 14 11:27:43 [conn23] end connection 127.0.0.1:53511
+Thu Jun 14 11:27:43 [initandlisten] connection accepted from 127.0.0.1:53550 #30
+Thu Jun 14 11:27:45 [conn24] end connection 127.0.0.1:53516
+Thu Jun 14 11:27:45 [initandlisten] connection accepted from 127.0.0.1:53554 #31
+Thu Jun 14 11:27:54 [conn27] end connection 127.0.0.1:53537
+Thu Jun 14 11:27:54 [initandlisten] connection accepted from 127.0.0.1:53561 #32
+Thu Jun 14 11:28:13 [conn29] end connection 127.0.0.1:53547
+Thu Jun 14 11:28:13 [initandlisten] connection accepted from 127.0.0.1:53567 #33
+Thu Jun 14 11:28:13 [conn30] end connection 127.0.0.1:53550
+Thu Jun 14 11:28:13 [initandlisten] connection accepted from 127.0.0.1:53571 #34
+Thu Jun 14 11:28:15 [conn31] end connection 127.0.0.1:53554
+Thu Jun 14 11:28:15 [initandlisten] connection accepted from 127.0.0.1:53576 #35
+Thu Jun 14 11:28:24 [conn32] end connection 127.0.0.1:53561
+Thu Jun 14 11:28:24 [initandlisten] connection accepted from 127.0.0.1:53581 #36
+Thu Jun 14 11:28:43 [conn33] end connection 127.0.0.1:53567
+Thu Jun 14 11:28:43 [initandlisten] connection accepted from 127.0.0.1:53587 #37
+Thu Jun 14 11:28:43 [conn34] end connection 127.0.0.1:53571
+Thu Jun 14 11:28:43 [initandlisten] connection accepted from 127.0.0.1:53594 #38
+Thu Jun 14 11:28:45 [conn35] end connection 127.0.0.1:53576
+Thu Jun 14 11:28:45 [initandlisten] connection accepted from 127.0.0.1:53597 #39
+Thu Jun 14 11:28:54 [conn36] end connection 127.0.0.1:53581
+Thu Jun 14 11:28:54 [initandlisten] connection accepted from 127.0.0.1:53600 #40
+Thu Jun 14 11:28:56 [conn39] end connection 127.0.0.1:53597
+Thu Jun 14 11:28:56 [rsHealthPoll] DBClientCursor::init call() failed
+Thu Jun 14 11:28:56 [rsHealthPoll] replSet info localhost:27020 is down (or slow to respond): DBClientBase::findN: transport error: localhost:27020 query: { replSetHeartbeat: "foo", v: 1, pv: 1, checkEmpty: false, from: "localhost:27018" }
+Thu Jun 14 11:28:56 [rsHealthPoll] replSet member localhost:27020 is now in state DOWN
+Thu Jun 14 11:28:58 [rsHealthPoll] replSet member localhost:27020 is up
+Thu Jun 14 11:28:58 [rsHealthPoll] replSet member localhost:27020 is now in state SECONDARY
+Thu Jun 14 11:28:59 [initandlisten] connection accepted from 127.0.0.1:53607 #41
+Thu Jun 14 11:29:03 [initandlisten] connection accepted from 127.0.0.1:53612 #42
+Thu Jun 14 11:29:07 [initandlisten] connection accepted from 127.0.0.1:53613 #43
+Thu Jun 14 11:29:13 [conn37] end connection 127.0.0.1:53587
+Thu Jun 14 11:29:13 [initandlisten] connection accepted from 127.0.0.1:53618 #44
+Thu Jun 14 11:29:13 [conn38] end connection 127.0.0.1:53594
+Thu Jun 14 11:29:13 [initandlisten] connection accepted from 127.0.0.1:53624 #45
+Thu Jun 14 11:29:24 [initandlisten] connection accepted from 127.0.0.1:53626 #46
+Thu Jun 14 11:29:24 [conn40] end connection 127.0.0.1:53600
+Thu Jun 14 11:29:27 [conn41] end connection 127.0.0.1:53607
+Thu Jun 14 11:29:27 [initandlisten] connection accepted from 127.0.0.1:53632 #47
+Thu Jun 14 11:29:43 [conn44] end connection 127.0.0.1:53618
+Thu Jun 14 11:29:43 [initandlisten] connection accepted from 127.0.0.1:53642 #48
+Thu Jun 14 11:29:43 [conn45] end connection 127.0.0.1:53624
+Thu Jun 14 11:29:43 [initandlisten] connection accepted from 127.0.0.1:53646 #49
+Thu Jun 14 11:29:54 [conn46] end connection 127.0.0.1:53626
+Thu Jun 14 11:29:54 [initandlisten] connection accepted from 127.0.0.1:53650 #50
+Thu Jun 14 11:29:57 [conn47] end connection 127.0.0.1:53632
+Thu Jun 14 11:29:57 [initandlisten] connection accepted from 127.0.0.1:53654 #51
+Thu Jun 14 11:30:13 [conn48] end connection 127.0.0.1:53642
+Thu Jun 14 11:30:13 [initandlisten] connection accepted from 127.0.0.1:53661 #52
+Thu Jun 14 11:30:13 [conn49] end connection 127.0.0.1:53646
+Thu Jun 14 11:30:13 [initandlisten] connection accepted from 127.0.0.1:53666 #53
+Thu Jun 14 11:30:24 [conn50] end connection 127.0.0.1:53650
+Thu Jun 14 11:30:24 [initandlisten] connection accepted from 127.0.0.1:53671 #54
+Thu Jun 14 11:30:27 [conn51] end connection 127.0.0.1:53654
+Thu Jun 14 11:30:27 [initandlisten] connection accepted from 127.0.0.1:53674 #55
+Thu Jun 14 11:30:43 [conn52] end connection 127.0.0.1:53661
+Thu Jun 14 11:30:43 [initandlisten] connection accepted from 127.0.0.1:53683 #56
+Thu Jun 14 11:30:43 [conn53] end connection 127.0.0.1:53666
+Thu Jun 14 11:30:43 [initandlisten] connection accepted from 127.0.0.1:53686 #57
+Thu Jun 14 11:30:54 [initandlisten] connection accepted from 127.0.0.1:53691 #58
+Thu Jun 14 11:30:54 [conn54] end connection 127.0.0.1:53671
+Thu Jun 14 11:30:57 [conn55] end connection 127.0.0.1:53674
+Thu Jun 14 11:30:57 [initandlisten] connection accepted from 127.0.0.1:53693 #59
+Thu Jun 14 11:31:13 [conn56] end connection 127.0.0.1:53683
+Thu Jun 14 11:31:13 [initandlisten] connection accepted from 127.0.0.1:53703 #60
+Thu Jun 14 11:31:13 [conn57] end connection 127.0.0.1:53686
+Thu Jun 14 11:31:13 [initandlisten] connection accepted from 127.0.0.1:53707 #61
+Thu Jun 14 11:31:24 [conn58] end connection 127.0.0.1:53691
+Thu Jun 14 11:31:24 [initandlisten] connection accepted from 127.0.0.1:53710 #62
+Thu Jun 14 11:31:27 [conn59] end connection 127.0.0.1:53693
+Thu Jun 14 11:31:27 [initandlisten] connection accepted from 127.0.0.1:53713 #63
+Thu Jun 14 11:31:43 [conn60] end connection 127.0.0.1:53703
+Thu Jun 14 11:31:43 [initandlisten] connection accepted from 127.0.0.1:53723 #64
+Thu Jun 14 11:31:43 [conn61] end connection 127.0.0.1:53707
+Thu Jun 14 11:31:43 [initandlisten] connection accepted from 127.0.0.1:53726 #65
+Thu Jun 14 11:31:46 [clientcursormon] mem (MB) res:18 virt:3580 mapped:544
+Thu Jun 14 11:31:54 [conn62] end connection 127.0.0.1:53710
+Thu Jun 14 11:31:54 [initandlisten] connection accepted from 127.0.0.1:53731 #66
+Thu Jun 14 11:31:57 [conn63] end connection 127.0.0.1:53713
+Thu Jun 14 11:31:57 [initandlisten] connection accepted from 127.0.0.1:53735 #67
+Thu Jun 14 11:32:13 [conn64] end connection 127.0.0.1:53723
+Thu Jun 14 11:32:13 [initandlisten] connection accepted from 127.0.0.1:53743 #68
+Thu Jun 14 11:32:13 [conn65] end connection 127.0.0.1:53726
+Thu Jun 14 11:32:13 [initandlisten] connection accepted from 127.0.0.1:53748 #69
+Thu Jun 14 11:32:24 [conn66] end connection 127.0.0.1:53731
+Thu Jun 14 11:32:24 [initandlisten] connection accepted from 127.0.0.1:53750 #70
+Thu Jun 14 11:32:27 [conn67] end connection 127.0.0.1:53735
+Thu Jun 14 11:32:27 [initandlisten] connection accepted from 127.0.0.1:53755 #71
+Thu Jun 14 11:32:43 [conn68] end connection 127.0.0.1:53743
+Thu Jun 14 11:32:43 [initandlisten] connection accepted from 127.0.0.1:53764 #72
+Thu Jun 14 11:32:43 [conn69] end connection 127.0.0.1:53748
+Thu Jun 14 11:32:43 [initandlisten] connection accepted from 127.0.0.1:53768 #73
+Thu Jun 14 11:32:54 [conn70] end connection 127.0.0.1:53750
+Thu Jun 14 11:32:54 [initandlisten] connection accepted from 127.0.0.1:53769 #74
+Thu Jun 14 11:32:57 [conn71] end connection 127.0.0.1:53755
+Thu Jun 14 11:32:57 [initandlisten] connection accepted from 127.0.0.1:53774 #75
+Thu Jun 14 11:33:13 [conn72] end connection 127.0.0.1:53764
+Thu Jun 14 11:33:13 [initandlisten] connection accepted from 127.0.0.1:53784 #76
+Thu Jun 14 11:33:13 [conn73] end connection 127.0.0.1:53768
+Thu Jun 14 11:33:13 [initandlisten] connection accepted from 127.0.0.1:53788 #77
+Thu Jun 14 11:33:24 [conn74] end connection 127.0.0.1:53769
+Thu Jun 14 11:33:24 [initandlisten] connection accepted from 127.0.0.1:53791 #78
+Thu Jun 14 11:33:27 [conn75] end connection 127.0.0.1:53774
+Thu Jun 14 11:33:27 [initandlisten] connection accepted from 127.0.0.1:53797 #79
+Thu Jun 14 11:33:43 [conn76] end connection 127.0.0.1:53784
+Thu Jun 14 11:33:43 [initandlisten] connection accepted from 127.0.0.1:53805 #80
+Thu Jun 14 11:33:43 [conn77] end connection 127.0.0.1:53788
+Thu Jun 14 11:33:43 [initandlisten] connection accepted from 127.0.0.1:53809 #81
+Thu Jun 14 11:33:54 [conn78] end connection 127.0.0.1:53791
+Thu Jun 14 11:33:54 [initandlisten] connection accepted from 127.0.0.1:53810 #82
+Thu Jun 14 11:33:57 [conn79] end connection 127.0.0.1:53797
+Thu Jun 14 11:33:57 [initandlisten] connection accepted from 127.0.0.1:53816 #83
+Thu Jun 14 11:34:13 [conn80] end connection 127.0.0.1:53805
+Thu Jun 14 11:34:13 [initandlisten] connection accepted from 127.0.0.1:53825 #84
+Thu Jun 14 11:34:13 [conn81] end connection 127.0.0.1:53809
+Thu Jun 14 11:34:13 [initandlisten] connection accepted from 127.0.0.1:53828 #85
+Thu Jun 14 11:34:24 [conn82] end connection 127.0.0.1:53810
+Thu Jun 14 11:34:24 [initandlisten] connection accepted from 127.0.0.1:53832 #86
+Thu Jun 14 11:34:27 [conn83] end connection 127.0.0.1:53816
+Thu Jun 14 11:34:27 [initandlisten] connection accepted from 127.0.0.1:53837 #87
+Thu Jun 14 11:34:43 [conn84] end connection 127.0.0.1:53825
+Thu Jun 14 11:34:43 [initandlisten] connection accepted from 127.0.0.1:53857 #88
+Thu Jun 14 11:34:43 [conn85] end connection 127.0.0.1:53828
+Thu Jun 14 11:34:43 [initandlisten] connection accepted from 127.0.0.1:53859 #89
+Thu Jun 14 11:34:54 [conn86] end connection 127.0.0.1:53832
+Thu Jun 14 11:34:54 [initandlisten] connection accepted from 127.0.0.1:53864 #90
+Thu Jun 14 11:34:57 [conn87] end connection 127.0.0.1:53837
+Thu Jun 14 11:34:57 [initandlisten] connection accepted from 127.0.0.1:53870 #91
+Thu Jun 14 11:35:13 [conn88] end connection 127.0.0.1:53857
+Thu Jun 14 11:35:13 [initandlisten] connection accepted from 127.0.0.1:53878 #92
+Thu Jun 14 11:35:13 [conn89] end connection 127.0.0.1:53859
+Thu Jun 14 11:35:13 [initandlisten] connection accepted from 127.0.0.1:53881 #93
+Thu Jun 14 11:35:24 [conn90] end connection 127.0.0.1:53864
+Thu Jun 14 11:35:24 [initandlisten] connection accepted from 127.0.0.1:53884 #94
+Thu Jun 14 11:35:27 [conn91] end connection 127.0.0.1:53870
+Thu Jun 14 11:35:27 [initandlisten] connection accepted from 127.0.0.1:53891 #95
+Thu Jun 14 11:35:43 [conn92] end connection 127.0.0.1:53878
+Thu Jun 14 11:35:43 [initandlisten] connection accepted from 127.0.0.1:53899 #96
+Thu Jun 14 11:35:43 [conn93] end connection 127.0.0.1:53881
+Thu Jun 14 11:35:43 [initandlisten] connection accepted from 127.0.0.1:53901 #97
+Thu Jun 14 11:35:54 [conn94] end connection 127.0.0.1:53884
+Thu Jun 14 11:35:54 [initandlisten] connection accepted from 127.0.0.1:53906 #98
+Thu Jun 14 11:35:57 [conn95] end connection 127.0.0.1:53891
+Thu Jun 14 11:35:57 [initandlisten] connection accepted from 127.0.0.1:53910 #99
+Thu Jun 14 11:36:13 [conn96] end connection 127.0.0.1:53899
+Thu Jun 14 11:36:13 [initandlisten] connection accepted from 127.0.0.1:53919 #100
+Thu Jun 14 11:36:13 [conn97] end connection 127.0.0.1:53901
+Thu Jun 14 11:36:13 [initandlisten] connection accepted from 127.0.0.1:53920 #101
+Thu Jun 14 11:36:24 [conn98] end connection 127.0.0.1:53906
+Thu Jun 14 11:36:24 [initandlisten] connection accepted from 127.0.0.1:53924 #102
+Thu Jun 14 11:36:27 [conn99] end connection 127.0.0.1:53910
+Thu Jun 14 11:36:27 [initandlisten] connection accepted from 127.0.0.1:53930 #103
+Thu Jun 14 11:36:43 [conn100] end connection 127.0.0.1:53919
+Thu Jun 14 11:36:43 [initandlisten] connection accepted from 127.0.0.1:53942 #104
+Thu Jun 14 11:36:43 [conn101] end connection 127.0.0.1:53920
+Thu Jun 14 11:36:43 [initandlisten] connection accepted from 127.0.0.1:53944 #105
+Thu Jun 14 11:36:46 [clientcursormon] mem (MB) res:18 virt:3580 mapped:544
+Thu Jun 14 11:36:54 [conn102] end connection 127.0.0.1:53924
+Thu Jun 14 11:36:54 [initandlisten] connection accepted from 127.0.0.1:53949 #106
+Thu Jun 14 11:36:57 [conn103] end connection 127.0.0.1:53930
+Thu Jun 14 11:36:57 [initandlisten] connection accepted from 127.0.0.1:53955 #107
+Thu Jun 14 11:37:13 [conn104] end connection 127.0.0.1:53942
+Thu Jun 14 11:37:13 [initandlisten] connection accepted from 127.0.0.1:53965 #108
+Thu Jun 14 11:37:13 [conn105] end connection 127.0.0.1:53944
+Thu Jun 14 11:37:13 [initandlisten] connection accepted from 127.0.0.1:53967 #109
+Thu Jun 14 11:37:24 [conn106] end connection 127.0.0.1:53949
+Thu Jun 14 11:37:24 [initandlisten] connection accepted from 127.0.0.1:53971 #110
+Thu Jun 14 11:37:27 [conn107] end connection 127.0.0.1:53955
+Thu Jun 14 11:37:27 [initandlisten] connection accepted from 127.0.0.1:53977 #111
+Thu Jun 14 11:37:43 [conn108] end connection 127.0.0.1:53965
+Thu Jun 14 11:37:43 [initandlisten] connection accepted from 127.0.0.1:53985 #112
+Thu Jun 14 11:37:43 [conn109] end connection 127.0.0.1:53967
+Thu Jun 14 11:37:43 [initandlisten] connection accepted from 127.0.0.1:53989 #113
+Thu Jun 14 11:37:54 [conn110] end connection 127.0.0.1:53971
+Thu Jun 14 11:37:54 [initandlisten] connection accepted from 127.0.0.1:53991 #114
+Thu Jun 14 11:37:57 [conn111] end connection 127.0.0.1:53977
+Thu Jun 14 11:37:57 [initandlisten] connection accepted from 127.0.0.1:53998 #115
+Thu Jun 14 11:38:13 [conn112] end connection 127.0.0.1:53985
+Thu Jun 14 11:38:13 [initandlisten] connection accepted from 127.0.0.1:54167 #116
+Thu Jun 14 11:38:13 [conn113] end connection 127.0.0.1:53989
+Thu Jun 14 11:38:13 [initandlisten] connection accepted from 127.0.0.1:54168 #117
+Thu Jun 14 11:38:24 [conn114] end connection 127.0.0.1:53991
+Thu Jun 14 11:38:24 [initandlisten] connection accepted from 127.0.0.1:54173 #118
+Thu Jun 14 11:38:27 [conn115] end connection 127.0.0.1:53998
+Thu Jun 14 11:38:27 [initandlisten] connection accepted from 127.0.0.1:54180 #119
+Thu Jun 14 11:38:43 [conn116] end connection 127.0.0.1:54167
+Thu Jun 14 11:38:43 [initandlisten] connection accepted from 127.0.0.1:54188 #120
+Thu Jun 14 11:38:43 [conn117] end connection 127.0.0.1:54168
+Thu Jun 14 11:38:43 [initandlisten] connection accepted from 127.0.0.1:54190 #121
+Thu Jun 14 11:38:54 [conn118] end connection 127.0.0.1:54173
+Thu Jun 14 11:38:54 [initandlisten] connection accepted from 127.0.0.1:54193 #122
+Thu Jun 14 11:38:57 [conn119] end connection 127.0.0.1:54180
+Thu Jun 14 11:38:57 [initandlisten] connection accepted from 127.0.0.1:54199 #123
+Thu Jun 14 11:39:13 [conn120] end connection 127.0.0.1:54188
+Thu Jun 14 11:39:13 [initandlisten] connection accepted from 127.0.0.1:54208 #124
+Thu Jun 14 11:39:13 [conn121] end connection 127.0.0.1:54190
+Thu Jun 14 11:39:13 [initandlisten] connection accepted from 127.0.0.1:54210 #125
+Thu Jun 14 11:39:24 [conn122] end connection 127.0.0.1:54193
+Thu Jun 14 11:39:24 [initandlisten] connection accepted from 127.0.0.1:54213 #126
+Thu Jun 14 11:39:27 [conn123] end connection 127.0.0.1:54199
+Thu Jun 14 11:39:27 [initandlisten] connection accepted from 127.0.0.1:54219 #127
+Thu Jun 14 11:39:43 [conn124] end connection 127.0.0.1:54208
+Thu Jun 14 11:39:43 [initandlisten] connection accepted from 127.0.0.1:54226 #128
+Thu Jun 14 11:39:43 [conn125] end connection 127.0.0.1:54210
+Thu Jun 14 11:39:43 [initandlisten] connection accepted from 127.0.0.1:54231 #129
+Thu Jun 14 11:39:54 [conn126] end connection 127.0.0.1:54213
+Thu Jun 14 11:39:54 [initandlisten] connection accepted from 127.0.0.1:54234 #130
+Thu Jun 14 11:39:57 [conn127] end connection 127.0.0.1:54219
+Thu Jun 14 11:39:57 [initandlisten] connection accepted from 127.0.0.1:54240 #131
+Thu Jun 14 11:40:13 [conn128] end connection 127.0.0.1:54226
+Thu Jun 14 11:40:13 [initandlisten] connection accepted from 127.0.0.1:54250 #132
+Thu Jun 14 11:40:13 [conn129] end connection 127.0.0.1:54231
+Thu Jun 14 11:40:13 [initandlisten] connection accepted from 127.0.0.1:54255 #133
+Thu Jun 14 11:40:24 [conn130] end connection 127.0.0.1:54234
+Thu Jun 14 11:40:24 [initandlisten] connection accepted from 127.0.0.1:54257 #134
+Thu Jun 14 11:40:27 [conn131] end connection 127.0.0.1:54240
+Thu Jun 14 11:40:27 [initandlisten] connection accepted from 127.0.0.1:54263 #135
+Thu Jun 14 11:40:43 [conn132] end connection 127.0.0.1:54250
+Thu Jun 14 11:40:43 [initandlisten] connection accepted from 127.0.0.1:54270 #136
+Thu Jun 14 11:40:43 [conn133] end connection 127.0.0.1:54255
+Thu Jun 14 11:40:43 [initandlisten] connection accepted from 127.0.0.1:54275 #137
+Thu Jun 14 11:40:54 [conn134] end connection 127.0.0.1:54257
+Thu Jun 14 11:40:54 [initandlisten] connection accepted from 127.0.0.1:54277 #138
+Thu Jun 14 11:40:57 [conn135] end connection 127.0.0.1:54263
+Thu Jun 14 11:40:57 [initandlisten] connection accepted from 127.0.0.1:54283 #139
+Thu Jun 14 11:41:13 [conn136] end connection 127.0.0.1:54270
+Thu Jun 14 11:41:13 [initandlisten] connection accepted from 127.0.0.1:54327 #140
+Thu Jun 14 11:41:13 [conn137] end connection 127.0.0.1:54275
+Thu Jun 14 11:41:13 [initandlisten] connection accepted from 127.0.0.1:54332 #141
+Thu Jun 14 11:41:24 [conn138] end connection 127.0.0.1:54277
+Thu Jun 14 11:41:24 [initandlisten] connection accepted from 127.0.0.1:54335 #142
+Thu Jun 14 11:41:27 [conn139] end connection 127.0.0.1:54283
+Thu Jun 14 11:41:27 [initandlisten] connection accepted from 127.0.0.1:54341 #143
+Thu Jun 14 11:41:43 [conn140] end connection 127.0.0.1:54327
+Thu Jun 14 11:41:43 [initandlisten] connection accepted from 127.0.0.1:54348 #144
+Thu Jun 14 11:41:43 [conn141] end connection 127.0.0.1:54332
+Thu Jun 14 11:41:43 [initandlisten] connection accepted from 127.0.0.1:54351 #145
+Thu Jun 14 11:41:46 [clientcursormon] mem (MB) res:18 virt:3580 mapped:544
+Thu Jun 14 11:41:54 [conn142] end connection 127.0.0.1:54335
+Thu Jun 14 11:41:54 [initandlisten] connection accepted from 127.0.0.1:54355 #146
+Thu Jun 14 11:41:57 [conn143] end connection 127.0.0.1:54341
+Thu Jun 14 11:41:57 [initandlisten] connection accepted from 127.0.0.1:54361 #147
+Thu Jun 14 11:42:13 [conn144] end connection 127.0.0.1:54348
+Thu Jun 14 11:42:13 [initandlisten] connection accepted from 127.0.0.1:54371 #148
+Thu Jun 14 11:42:13 [conn145] end connection 127.0.0.1:54351
+Thu Jun 14 11:42:13 [initandlisten] connection accepted from 127.0.0.1:54373 #149
+Thu Jun 14 11:42:24 [conn146] end connection 127.0.0.1:54355
+Thu Jun 14 11:42:24 [initandlisten] connection accepted from 127.0.0.1:54376 #150
+Thu Jun 14 11:42:27 [conn147] end connection 127.0.0.1:54361
+Thu Jun 14 11:42:27 [initandlisten] connection accepted from 127.0.0.1:54382 #151
+Thu Jun 14 11:42:43 [conn148] end connection 127.0.0.1:54371
+Thu Jun 14 11:42:43 [initandlisten] connection accepted from 127.0.0.1:54390 #152
+Thu Jun 14 11:42:43 [conn149] end connection 127.0.0.1:54373
+Thu Jun 14 11:42:43 [initandlisten] connection accepted from 127.0.0.1:54392 #153
+Thu Jun 14 11:42:54 [conn150] end connection 127.0.0.1:54376
+Thu Jun 14 11:42:54 [initandlisten] connection accepted from 127.0.0.1:54396 #154
+Thu Jun 14 11:42:57 [conn151] end connection 127.0.0.1:54382
+Thu Jun 14 11:42:57 [initandlisten] connection accepted from 127.0.0.1:54403 #155
+Thu Jun 14 11:43:13 [conn152] end connection 127.0.0.1:54390
+Thu Jun 14 11:43:13 [initandlisten] connection accepted from 127.0.0.1:54411 #156
+Thu Jun 14 11:43:13 [conn153] end connection 127.0.0.1:54392
+Thu Jun 14 11:43:13 [initandlisten] connection accepted from 127.0.0.1:54412 #157
+Thu Jun 14 11:43:17 [conn20] end connection 127.0.0.1:53458
+Thu Jun 14 11:43:22 [conn155] end connection 127.0.0.1:54403
+Thu Jun 14 11:43:23 [rsHealthPoll] DBClientCursor::init call() failed
+Thu Jun 14 11:43:23 [rsHealthPoll] replSet info localhost:27020 is down (or slow to respond): DBClientBase::findN: transport error: localhost:27020 query: { replSetHeartbeat: "foo", v: 1, pv: 1, checkEmpty: false, from: "localhost:27018" }
+Thu Jun 14 11:43:23 [rsHealthPoll] replSet member localhost:27020 is now in state DOWN
+Thu Jun 14 11:43:24 [conn42] end connection 127.0.0.1:53612
+Thu Jun 14 11:43:24 [conn154] end connection 127.0.0.1:54396
+Thu Jun 14 11:43:24 [initandlisten] connection accepted from 127.0.0.1:54416 #158
+Thu Jun 14 11:43:28 got kill or ctrl c or hup signal 15 (Terminated: 15), will terminate after current cmd ends
+Thu Jun 14 11:43:28 [interruptThread] now exiting
+Thu Jun 14 11:43:28 dbexit: 
+Thu Jun 14 11:43:28 [interruptThread] shutdown: going to close listening sockets...
+Thu Jun 14 11:43:28 [interruptThread] closing listening socket: 6
+Thu Jun 14 11:43:28 [interruptThread] closing listening socket: 7
+Thu Jun 14 11:43:28 [conn26] end connection 127.0.0.1:53525
+Thu Jun 14 11:43:28 [interruptThread] closing listening socket: 8
+Thu Jun 14 11:43:28 [interruptThread] removing socket file: /tmp/mongodb-27018.sock
+Thu Jun 14 11:43:28 [interruptThread] shutdown: going to flush diaglog...
+Thu Jun 14 11:43:28 [interruptThread] shutdown: going to close sockets...
+Thu Jun 14 11:43:28 [interruptThread] shutdown: waiting for fs preallocator...
+Thu Jun 14 11:43:28 [interruptThread] shutdown: lock for final commit...
+Thu Jun 14 11:43:28 [interruptThread] shutdown: final commit...
+Thu Jun 14 11:43:28 [conn1] end connection 127.0.0.1:53239
+Thu Jun 14 11:43:28 [conn28] end connection 127.0.0.1:53541
+Thu Jun 14 11:43:28 [conn158] end connection 127.0.0.1:54416
+Thu Jun 14 11:43:28 [conn156] end connection 127.0.0.1:54411
+Thu Jun 14 11:43:28 [conn157] end connection 127.0.0.1:54412
+Thu Jun 14 11:43:28 [interruptThread] shutdown: closing all files...
+Thu Jun 14 11:43:28 [interruptThread] closeAllFiles() finished
+Thu Jun 14 11:43:28 [interruptThread] journalCleanup...
+Thu Jun 14 11:43:28 [interruptThread] removeJournalFiles
+Thu Jun 14 11:43:28 [interruptThread] shutdown: removing fs lock...
+Thu Jun 14 11:43:28 dbexit: really exiting now
