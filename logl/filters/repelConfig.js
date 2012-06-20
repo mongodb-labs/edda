@@ -22,7 +22,12 @@ sudo ./mongo localhost:27017/foo
 config = { _id: "foo", members:[
           { _id:0, host : 'localhost:27017' },
           { _id:1, host : 'localhost:27018' },
-          { _id:2, host : 'localhost:27019', arbiterOnly: true } ]
+          { _id:2, host : 'localhost:27019', arbiterOnly: true } 
+          { _id:3, host : '10.4.100.75:27018' },
+          { _id:4, host : '10.4.100.75:27019' },
+          { _id:5, host : '10.4.100.75:27020' },
+          { _id:6, host : '10.4.100.75:27021' },
+          { _id:7, host : '10.4.100.75:27022' }]
 }
 
 rs.initiate(config)
