@@ -74,37 +74,33 @@ def test_clock_skew_two():
     entries.insert(generate_doc("status", "Nuni", "STARTUP2", 5, "self", datetime.now()))
     server_clock_skew(db, "wildcats")
     cursor = result[2].find()
-    print cursor.count()
-    for doc in cursor:
-        print doc["type"]
-        print doc["server_name"]
-        print doc["partners"]
     assert cursor.count() == 2
     # check first server entry
-    doc = db["wildcats.clock_skew"].find_one({"server" : "Sam"})
+    doc = result[2].find_one({"server_name" : "Sam"})
     assert doc
     assert doc["type"] == "clock_skew"
     assert doc["partners"]
     assert doc["partners"]["Nuni"]
     assert len(doc["partners"]["Nuni"]) == 1
-    assert not doc["partners"]["Sam"]
+    assert not "Sam" in doc["partners"]
     t1 = doc["partners"]["Nuni"][0]
     assert abs(abs(t1) - 3) < .01
-    assert t1 > timedelta(0)
+    assert t1 > 0
     # check second server entry
-    doc2 = db["wildcats.clock_skew"].find_one({"server" : "Nuni"})
+    doc2 = result[2].find_one({"server_name" : "Nuni"})
     assert doc2
     assert doc2["type"] == "clock_skew"
     assert doc2["partners"]
     assert doc2["partners"]["Sam"]
     assert len(doc["partners"]["Nuni"]) == 1
-    assert not doc2["partners"]["Nuni"]
+    assert not "Nuni" in doc2["partners"]
     t2 = doc2["partners"]["Sam"][0]
     assert abs(abs(t2) - 3) < .01
-    assert t1 < 0
+    assert t2 < 0
     # compare entries against each other
     assert abs(t1) == abs(t2)
     assert t1 == -t2
+
 
 def test_clock_skew_three():
     """Test on a db that contains entries from
@@ -224,17 +220,17 @@ def test_detect_random_skew():
     # these are skewed by 5 seconds
     entries.insert(generate_doc("status", "Hannah", "SECONDARY", 2, "Mel", datetime.now()))
     sleep(5)
-    entries.insert(generate_doc("status", "Mel", "SECONDARY", 1, "self", datetime.now()))
+    entries.insert(generate_doc("status", "Mel", "SECONDARY", 2, "self", datetime.now()))
     # these are skewed by 1 second
-    entries.insert(generate_doc("status", "Hannah", "ARBITER", 1, "Mel", datetime.now()))
+    entries.insert(generate_doc("status", "Hannah", "ARBITER", 7, "Mel", datetime.now()))
     sleep(1)
-    entries.insert(generate_doc("status", "Hannah", "PRIMARY", 1, "Mel", datetime.now()))
-    skews = detect("Hannah", "Mel", result[2], "wildcats")
+    entries.insert(generate_doc("status", "Mel", "ARBITER", 7, "self", datetime.now()))
+    skews = detect("Hannah", "Mel", result[3], "wildcats")
     assert skews
-    assert len(skews) == 3
+    print len(skews)
+    assert len(skews) == 2
     assert abs(skews[0] - 3) < .01
     assert abs(skews[1] - 5) < .01
-    assert abs(skews[2] - 1) < .01
 
 
 def test_detect_zero_skew():
@@ -294,6 +290,8 @@ def test_detect_network_delay():
     # run detect()!
     skews1 = detect("Erica", "Alison", db, "wildcats")
     skews2 = detect("Alison", "Erica", db, "wildcats")
+    print skews1
+    print skews2
     assert not skews1
     assert not skews2
 

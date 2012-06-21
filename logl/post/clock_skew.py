@@ -39,7 +39,7 @@ def server_clock_skew(db, collName):
         if a == "unknown":
             logger.debug("Skipping unknown server")
             continue
-        skew_a = db[collName + ".clock_skew"].find_one({"server": a})
+        skew_a = db[collName + ".clock_skew"].find_one({"server_name": a})
         if not skew_a:
             skew_a = clock_skew_doc(a)
         for doc_b in db[collName + ".servers"].find():
@@ -55,8 +55,8 @@ def server_clock_skew(db, collName):
                 logger.debug("Clock skew already found for this server")
                 continue
             list = detect(a, b, db, collName)
-            skew_a["partners"][b] = []
-            skew_b = db[collName + ".clock_skew"].find_one({"server":b})
+            skew_a["partners"][b] = list
+            skew_b = db[collName + ".clock_skew"].find_one({"server_name":b})
             if not skew_b:
                 skew_b = clock_skew_doc(b)
             # flip according to sign convention for other server:
@@ -66,6 +66,7 @@ def server_clock_skew(db, collName):
             if skew_a["partners"][b]:
                 for t in skew_a["partners"][b]:
                     t = -t
+                    logger.debug("flipped one");
                     skew_b["partners"][a].append(t)
             db[collName + ".clock_skew"].save(skew_a)
             db[collName + ".clock_skew"].save(skew_b)
@@ -96,12 +97,26 @@ def detect(a, b, db, collName):
             logger.debug("Using next set of entries")
             a_2 = cursor_a.next()
             b_2 = cursor_b.next()
-            # if first entries do not match, advance A
-            # if still not found, reset A and advance B
-            while a_1["info"]["state_code"] != b_1["info"]["state_code"]:
-                logger.debug("first entries do not match")
-                a_1 = a_2
-                a_2 = cursor_a.next()
+            # if first entries do not match, call mismatch
+            mismatch(cursor_a, cursor_b)
+            if a_1["info"]["state_code"] != b_1["info"]["state_code"]:
+                clone_a = cursor_a
+                clone_a_2 = a_2
+                clone_a_1 = a_1
+                while a_1["info"]["state_code"] != b_1["info"]["state_code"]:
+                    logger.debug("first entries do not match")
+                    a_1 = a_2
+                    if not a.alive:
+                        break
+                    a_2 = cursor_a.next()
+            # if first entries still do not match, reset A and advance B
+            if a_1["info"]["state_code"] != b_1["info"]["state_code"]:
+                # reset a
+                cursor_a = clone_a
+                a_1 = clone_a_1
+                a_2 = clone_a_2
+                # advance through B
+                # if B runs out,
             # if first entries match but not second ones, advance A and B
             if (a_1["info"]["state_code"] == b_1["info"]["state_code"]) and (a_2["info"]["state_code"] != b_2["info"]["state_code"]):
                 logger.debug("first entries match, but not second ones")
@@ -110,20 +125,22 @@ def detect(a, b, db, collName):
             # (fix me so I work better please...)
             if (a_1["info"]["state_code"] == b_1["info"]["state_code"]) and (a_2["info"]["state"] == b_2["info"]["state"]):
                 logger.debug("Both entries match!  Calculating clock skew")
-                td1 = a_1["date"] - b_1["date"]
-                td2 = a_2["date"] - b_2["date"]
+                td1 = b_1["date"] - a_1["date"]
+                td2 = b_2["date"] - a_2["date"]
                 # if td1 and td2 are wildly different, append both
                 diff = td1 - td2
                 if abs(diff) < min_time:
                     logger.debug("td1 and td2 agree.  Big enough for clock skew?")
                 # they agree.  But big enough for clock skew?
                     if abs(td1) > min_time:
-                        logger.debug("clock skew found!  Returning {0}".format(td1))
+                        logger.debug("clock skew found!")
                         if not in_skews(td1, skews):
+                            logger.debug("appending new value")
                             skews.append(td1)
+                        else:
+                            logger.debug("value already in list")
                     else:
-                        logger.debug("Not big enough, 0 clock skew")
-                        skews.append(timedelta(0))
+                        logger.debug("Not big enough for clock skew, ignore")
                 else:
                     logger.debug("Found two different clock skew values")
                     if not in_skews(td1, skews):
