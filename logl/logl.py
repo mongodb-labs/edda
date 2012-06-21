@@ -135,6 +135,7 @@ def main():
             if (len(line) > 1):
                 date = date_parser(line)
                 if not date:
+                    logger.warning("Line {0} has a malformatted date, skipping".format(counter)
                     continue
                 doc = traffic_control(line, date)
                 if doc:
