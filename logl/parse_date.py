@@ -21,9 +21,12 @@ def date_parser(message):
     """extracts the date information from the given line.  If
 line contains incomplete or no date information, skip
 and return None."""
-    newMessage = str(parse_month(message[4:7])) + message[7:19]
-    time = datetime.strptime(newMessage, "%m %d %H:%M:%S")
-    return time
+    try:
+        newMessage = str(parse_month(message[4:7])) + message[7:19]
+        time = datetime.strptime(newMessage, "%m %d %H:%M:%S")
+        return time
+    except ValueError:
+        return None
 
 
 def parse_month(month):
