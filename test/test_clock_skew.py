@@ -83,20 +83,27 @@ def test_clock_skew_two():
     assert doc["partners"]["Nuni"]
     assert len(doc["partners"]["Nuni"]) == 1
     assert not "Sam" in doc["partners"]
-    t1 = doc["partners"]["Nuni"][0]
+    t1, wt1 = doc["partners"]["Nuni"].popitem()
+    t1 = int(t1)
     assert abs(abs(t1) - 3) < .01
     assert t1 > 0
+    print wt1
+    assert wt1 == 2
     # check second server entry
     doc2 = result[2].find_one({"server_name" : "Nuni"})
     assert doc2
     assert doc2["type"] == "clock_skew"
     assert doc2["partners"]
     assert doc2["partners"]["Sam"]
-    assert len(doc["partners"]["Nuni"]) == 1
+    assert len(doc2["partners"]["Sam"]) == 1
     assert not "Nuni" in doc2["partners"]
-    t2 = doc2["partners"]["Sam"][0]
+    t2, wt2 = doc2["partners"]["Sam"].popitem()
+    t2 = int(t2)
     assert abs(abs(t2) - 3) < .01
     assert t2 < 0
+    print wt1
+    print wt2
+    assert wt2 == 2
     # compare entries against each other
     assert abs(t1) == abs(t2)
     assert t1 == -t2
@@ -138,25 +145,25 @@ def test_detect_simple():
     skews1 = detect("Erica", "Alison", db, "wildcats")
     assert skews1
     assert len(skews1) == 1
-    t1 = skews1[0]
+    t1, wt1 = skews1.popitem()
+    t1 = int(t1)
     assert t1
-    print t1
     assert -.01 < (abs(t1) - 3) < .01
     assert t1 > 0
     # check b - a
     skews2 = detect("Alison", "Erica", db, "wildcats")
     assert skews2
     assert len(skews2) == 1
-    t2 = skews2[0]
+    t2, wt2 = skews2.popitem()
+    t2 = int(t2)
     assert t2
     assert t2 < 0
     assert abs(abs(t2) - 3) < .01
     # compare runs against each other
-    print t1
-    print t2
     assert abs(t1) == abs(t2)
     assert t1 == -t2
-
+    assert wt1 == wt2
+    assert wt1 == 2
 
 def test_detect_a_has_more():
     """Test the scenario where server a has more
@@ -181,21 +188,27 @@ def test_detect_a_has_more():
     skews1 = detect("Erica", "Alison", db, "wildcats")
     assert skews1
     assert len(skews1) == 1
-    t1 = skews1[0]
+    t1, wt1 = skews1.popitem()
+    t1 = int(t1)
     assert t1
+    assert wt1
+    assert wt1 == 2
     assert abs(abs(t1) - 3) < .01
     # replace some entries
     entries.remove({"origin_server" : "Alison"})
-    entries.insert(generate_doc("status", "Alison", "STARTUP2", 2, "self", datetime.now()))
-    entries.insert(generate_doc("status", "Alison", "STARTUP2", 2, "self", datetime.now()))
+    entries.insert(generate_doc("status", "Alison", "STARTUP2", 5, "self", datetime.now()))
+    entries.insert(generate_doc("status", "Alison", "STARTUP2", 5, "self", datetime.now()))
     entries.insert(generate_doc("status", "Alison", "SECONDARY", 2, "self", datetime.now()))
     # second pair doesn't match
     skews2 = detect("Erica", "Alison", db, "wildcats")
     assert skews2
     assert len(skews2) == 1
-    t2 = skews1[0]
+    print skews2
+    t2, wt2 = skews2.popitem()
     assert t2
-
+    assert wt2
+    print wt2
+    assert wt2 == 2
 
 def test_detect_b_has_more():
     """Test the case where server b has more
@@ -227,11 +240,10 @@ def test_detect_random_skew():
     entries.insert(generate_doc("status", "Mel", "ARBITER", 7, "self", datetime.now()))
     skews = detect("Hannah", "Mel", result[3], "wildcats")
     assert skews
-    print len(skews)
-    assert len(skews) == 2
-    assert abs(skews[0] - 3) < .01
-    assert abs(skews[1] - 5) < .01
-
+    assert len(skews) == 1
+    assert in_skews(5, skews)
+    assert not in_skews(1, skews)
+    assert not in_skews(3, skews)
 
 def test_detect_zero_skew():
     """Test the case where there is no clock skew."""
