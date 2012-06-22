@@ -26,9 +26,11 @@ def test_criteria():
     assert criteria("Tue Jun 12 13:08:47 [rsSync] replSet syncing to:") == 1
     #should pass in this situation, date is irrevealant
     assert criteria("[rsSync] replSet syncing to: localhost:27017") == 1
-    #foo bar test from git
+    #foo bar test from git comment
     assert criteria("foo bar") == -1
     assert criteria("[rsSync] replSet syncing to:") == 1
+    assert criteria("[rsSync] syncing [rsSync]") == 1
+    assert criteria("This should fail!!! [rsSync]")
     return
 
 
@@ -38,6 +40,10 @@ def test_process():
     assert process("Mon Jun 11 15:56:18 [rsHealthPoll] replSet member localhost:27019 is up", date) == None
     check_state("Tue Jun 12 13:08:47 [rsSync] replSet syncing to: localhost:27017", "localhost:27017")
     check_state("Tue Jun 12 13:08:47 [rsSync] replSet syncing to: 10.4.3.56:45456", "10.4.3.56:45456")
+    check_state("Tue Jun 12 13:08:47 [rsSync] replSet syncing to: 10.4.3.56:45456", "10.4.3.56:45456")
+    check_state("Tue Jun 12 13:08:47 [rsSync] replSet syncing to: 10.4.3.56:45456", "10.4.3.56:45456")
+    check_state("Tue Jun 12 13:08:47 [rsSync] replSet syncing to: 10.4.3.56:45456", "10.4.3.56:45456")
+    check_state("Tue Jun 12 13:08:47 [rsSync] replSet syncing to: p'localhost:1234", "localhost:1234")
     check_state("[rsSync] syncing to: 10.4.3.56:45456", "10.4.3.56:45456")
 
 
