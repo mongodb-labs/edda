@@ -26,6 +26,7 @@ def server_matchup(db, collName):
     logger = logging.getLogger(__name__)
 
     servers = db[collName + ".servers"]
+    entries = db[collName + ".entries"]
     server_count = servers.find().count()
 
     # no servers
@@ -34,39 +35,62 @@ def server_matchup(db, collName):
 
     # no unknown servers
     unknowns = servers.find({"server_name" : "unknown"})
-    if not unknowns.alive:
+    unknown_count = unknowns.count()
+    if unknown_count == 0:
         return 1
 
     # all servers are unknown
     # this case could probably be handled for cases where server_count > 1
-    unknown_count = unknowns.count()
     logger.debug("attempting to name {0} unnamed servers".format(unknown_count))
     if server_count == unknown_count:
         return -1
 
-    knowns = servers.find({"server_name" : { "$ne" : "unknown"}})
+    # find a list of all unnamed servers being talked about
+    unmatched_names = []
+    cursor = entries.distinct("info.server")
+    for name in cursor:
+        if name == "self":
+            continue
+        if servers.find_one({"server_name" : name}):
+            continue
+        unmatched_names.appen(name)
+
+    # if there are no free names and still unknown servers, failure.
+    if len(unmatched_names) == 0:
+        return -1
+
     failures = 0
-    # -----> for each such server:
+    candidates = {}
+
+    # match up the names!
     for unknown in unknowns:
-    # ----------> for each message FROM this server (only state changes and exit messages, for now):
-        sent_msgs = db[collName + ".entries"].find({"origin_server" : unknown["server_num"], "$or" : [{"type" : "status"}, {"type" : "exit"}] })
-        if not sent_msgs.alive:
-            failures += 1
-            continue
-        msgs = []
-        for msg in sent_msgs:
-            msgs.append(msg)
-        for i in range(0, len(msgs)):
-            continue
-    # ---------------> if the message is an important status change about itself
-    # ---------------> (not SECONDARY, b/c multiple rs can be SECONDARY?)
-    # ---------------> (not STARTUP2, b/c no server name means probably no startup msg)
-    # ---------------> (PRIMARY, ARBITER, RECOVERING, DOWN (w/ exit))
-    # ---------------> find all status messages from other servers about a with same state
-    # ---------------> check if the other servers' messages align in time (with clock skew) and are about the same unnamed server
-    # ---------------> if other times agree, take that as this server's name, and calculate clock skew with it.
+        for name in unmatched_names:
+            # if we're on the last name, winner!!
+            if len(name) == 1:
+                candidates[str(1)] = name
+                break
+            # in the .servers coll, replace server_name for unknown with name
+            # in the .entries coll, replace origin_server from unknown["server_num"] to name
+            # run the clock skew algorithm
+            # store name and highest weight clock skew from this round (with first named server)
+            # set the entries back to the original server_num
+        # select candidate with highest weight!
+        keys = candidates.keys()
+        keys.sort()
+        winner = candidates[keys[0]]
+        # update db entries accordingly with winning name
+        unknown["server_name"] = winner
+        servers.save(unknown)
+        entries.update({"origin_server" : unknown["server_num"]}, {"$set" : {"origin_server" : winner}})
+        # run clock skew algorithm anew
+        server_clock_skew()
+        # remove name from the list of unmatched_names
+        unmatched_names.remove(winner)
+        candidates = {}
+
     if failures > 0:
         logger.info("Unable to match names for {0} of {1} unnamed servers".format(failures, unknown_count))
         return -1
     logger.info("Successfully named {0} unnamed servers".format(unknown_count))
     return 1
+
