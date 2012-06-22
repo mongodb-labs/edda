@@ -23,6 +23,7 @@
 #          }
 #     }
 
+import pdb
 import pymongo
 import logging
 from datetime import datetime
@@ -54,123 +55,119 @@ def server_clock_skew(db, collName):
             if b in skew_a["partners"]:
                 logger.debug("Clock skew already found for this server")
                 continue
-            list = detect(a, b, db, collName)
-            skew_a["partners"][b] = list
+            skew_a["partners"][b] = detect(a, b, db, collName)
             skew_b = db[collName + ".clock_skew"].find_one({"server_name":b})
             if not skew_b:
                 skew_b = clock_skew_doc(b)
             # flip according to sign convention for other server:
             # if server is ahead, +t
             # if server is behind, -t
-            skew_b["partners"][a] = []
+            skew_b["partners"][a] = {}
             if skew_a["partners"][b]:
                 for t in skew_a["partners"][b]:
-                    t = -t
+                    wt = skew_a["partners"][b][t]
+                    t = str(-int(t))
                     logger.debug("flipped one");
-                    skew_b["partners"][a].append(t)
+                    skew_b["partners"][a][t] = wt
             db[collName + ".clock_skew"].save(skew_a)
             db[collName + ".clock_skew"].save(skew_b)
 
+
 def detect(a, b, db, collName):
-    """Detect any clock skew between a and b,
-    and return it as a list of integers representing skew
-    in seconds.  If unable to detect skew, return None."""
-    entries_a = db[collName + ".entries"]
-    entries_b = db[collName + ".entries"]
-    cursor_a = entries_a.find({"type" : "status", "origin_server" : a, "info.server" : b})
-    cursor_b = entries_b.find({"type" : "status", "origin_server" : b, "info.server" : "self"})
+    """Compares each entry from cursor_a against every entry from
+    cursor_b.  In the case of matching messages, advances both cursors.
+    Calculates time skew.  While entries continue to match, adds
+    weight to that time skew value.  Stores all found time skew values,
+    with respective weights, in a dictionary and returns.
+    KNOWN BUGS: this algorithm may count some matches twice."""
+
+    entries = db[collName + ".entries"]
+
+    # set up cursors
+    cursor_a = entries.find({"type" : "status", "origin_server" : a, "info.server" : b})
+    cursor_b = entries.find({"type" : "status", "origin_server" : b, "info.server" : "self"})
     cursor_a.sort("date")
     cursor_b.sort("date")
     logger = logging.getLogger(__name__)
-    logger.debug("Detecting clock skew for pair {0} - {1}...".format(a, b))
-    skews = []
-    min_time = timedelta(seconds=2)
-    try:
-        a_1 = cursor_a.next()
-        b_1 = cursor_b.next()
-    except StopIteration:
-        logger.debug("Cursors are empty!")
-        return None
-    # take and compare two consecutive entries from each cursor
-    while True:
-        try:
-            logger.debug("Using next set of entries")
-            a_2 = cursor_a.next()
-            b_2 = cursor_b.next()
-            # if first entries do not match, call mismatch
-            mismatch(cursor_a, cursor_b)
-            if a_1["info"]["state_code"] != b_1["info"]["state_code"]:
-                clone_a = cursor_a
-                clone_a_2 = a_2
-                clone_a_1 = a_1
-                while a_1["info"]["state_code"] != b_1["info"]["state_code"]:
-                    logger.debug("first entries do not match")
-                    a_1 = a_2
-                    if not a.alive:
+    logger.debug("Detecting clock skew for pair {0} - {1}".format(a, b))
+    skews = {}
+    list_a = []
+    list_b = []
+
+    # store the entries from the cursor in a list
+    for a in cursor_a:
+        list_a.append(a)
+    for b in cursor_b:
+        list_b.append(b)
+
+    majority = False
+
+    # for each a, compare against every b
+    for i in range(0, len(list_a)):
+        for j in range(0, len(list_b)):
+           # if they match, crawl through and count matches
+            if match(list_a[i], list_b[j]):
+                wt = 0
+                while match(list_a[i + wt], list_b[j + wt]):
+                    wt += 1
+                    logger.debug("match!")
+                    if (wt + i >= len(list_a)) or (wt + j >= len(list_b)):
                         break
-                    a_2 = cursor_a.next()
-            # if first entries still do not match, reset A and advance B
-            if a_1["info"]["state_code"] != b_1["info"]["state_code"]:
-                # reset a
-                cursor_a = clone_a
-                a_1 = clone_a_1
-                a_2 = clone_a_2
-                # advance through B
-                # if B runs out,
-            # if first entries match but not second ones, advance A and B
-            if (a_1["info"]["state_code"] == b_1["info"]["state_code"]) and (a_2["info"]["state_code"] != b_2["info"]["state_code"]):
-                logger.debug("first entries match, but not second ones")
-                continue
-            # if both first and second entries match, take clock skew
-            # (fix me so I work better please...)
-            if (a_1["info"]["state_code"] == b_1["info"]["state_code"]) and (a_2["info"]["state"] == b_2["info"]["state"]):
-                logger.debug("Both entries match!  Calculating clock skew")
-                td1 = b_1["date"] - a_1["date"]
-                td2 = b_2["date"] - a_2["date"]
-                # if td1 and td2 are wildly different, append both
-                diff = td1 - td2
-                if abs(diff) < min_time:
-                    logger.debug("td1 and td2 agree.  Big enough for clock skew?")
-                # they agree.  But big enough for clock skew?
-                    if abs(td1) > min_time:
-                        logger.debug("clock skew found!")
-                        if not in_skews(td1, skews):
-                            logger.debug("appending new value")
-                            skews.append(td1)
-                        else:
-                            logger.debug("value already in list")
+                    # if we have a majority of the messages, break
+                    if wt > len(list_a)/2 or wt > len(list_b)/2:
+                        majority = True
+                        break
+                # calculate time skew, save with weight
+                td = list_b[j + wt - 1]["date"] - list_a[i + wt - 1]["date"]
+                td = timedelta_to_int(td)
+                if abs(td) > 2:
+                    key = in_skews(td, skews)
+                    if not key:
+                        logger.debug("inserting new weight for td {0} into skews {1}".format(td, skews))
+                        skews[str(td)] = wt
                     else:
-                        logger.debug("Not big enough for clock skew, ignore")
-                else:
-                    logger.debug("Found two different clock skew values")
-                    if not in_skews(td1, skews):
-                        skews.append(td1)
-                    if not in_skews(td1, skews):
-                        skews.append(td2)
-            a_1 = a_2
-            b_1 = b_2
-        except StopIteration:
-            logger.debug("Out of entries, return skew information")
-            if not skews:
-                return skews
-            list = []
-            for t in skews:
-                list.append(timedelta_to_int(t))
-            return list
+                        logger.debug("adding additional weight for td {0} into skews {1}".format(td, skews))
+                        skews[key] += wt
+                if majority:
+                    break
+                # could maybe fix redundant counting by taking
+                # each a analyzed here and comparing against all earlier b's.
+                # another option would be to keep a table of size[len(a)*len(b)] of booleans.
+                # or, just accept this bug as something that weights multiple
+                # matches in a row even higher.
+            else:
+                continue
+            break
+        else:
+            continue
+        break
+    return skews
+
+
+def match(a, b):
+    """Given two entries, determines whether
+    they match.  For now, only handles pure status messages.
+    Should be changed in the future to inclide exit messages"""
+    if a["info"]["state_code"] == b["info"]["state_code"]:
+        return True
+    return False
+
 
 def in_skews(t, skews):
     """If this entry is not close in value
-    to an existing entry in skews, return False"""
+    to an existing entry in skews, return None.
+    If it is close in value to an existing entry,
+    return the key for that entry"""
     for skew in skews:
-        if abs(t) - abs(skew) < timedelta(seconds=2):
-            return True
-    return False
+        if abs(int(skew) - t) < 2:
+            return skew
+    return None
 
 
 def timedelta_to_int(td):
     """Takes a timedelta and converts it
-    to a single integer that represents its value
-    in seconds.  Returns an integer"""
+    to a single string that represents its value
+    in seconds.  Returns a string"""
     # because MongoDB cannot store timedeltas
     sec = 0
     t = abs(td)
