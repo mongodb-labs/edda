@@ -98,7 +98,7 @@ def main():
     try:
         connection = Connection(uri)
     except:
-        logger.critical("Unable to connect to MongoDB, exiting")
+        logger.critical("Unable to connect to {0}, exiting".format(uri))
         return
 
     if namespace.db:
