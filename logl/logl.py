@@ -79,16 +79,7 @@ def main():
         collName = str(objectid.ObjectId())
     # for easier debugging:
     print collName
-    connection = Connection(uri)
-    if namespace.db:
-        db = connection[str(namespace.db[0])]
-    else:
-        db = connection.logl
-    entries = db[collName + ".entries"]
-    servers = db[collName + ".servers"]
 
-    now = datetime.datetime.now()
-    name = str(now.strftime("logl_%m_%d_%Y_at_%H_%M_%S"))
 
     # configure logger
     # use to switch from console to file: logname = "logl_logs/" + name + ".log"
@@ -101,6 +92,24 @@ def main():
     elif namespace.verbose == 3:
         logging.basicConfig(level=logging.DEBUG)
     logger = logging.getLogger(__name__)
+
+
+    # exit gracefully if no server is running
+    try:
+        connection = Connection(uri)
+    except:
+        logger.critical("Unable to connect to MongoDB, exiting")
+        return
+
+    if namespace.db:
+        db = connection[str(namespace.db[0])]
+    else:
+        db = connection.logl
+    entries = db[collName + ".entries"]
+    servers = db[collName + ".servers"]
+
+    now = datetime.datetime.now()
+    name = str(now.strftime("logl_%m_%d_%Y_at_%H_%M_%S"))
 
     # some verbose comments
     logger.info('Connection opened with logl mongod, using {0} on port {1}'.format(host, port))
@@ -135,7 +144,7 @@ def main():
             if (len(line) > 1):
                 date = date_parser(line)
                 if not date:
-                    logger.warning("Line {0} has a malformatted date, skipping".format(counter)
+                    logger.warning("Line {0} has a malformatted date, skipping".format(counter))
                     continue
                 doc = traffic_control(line, date)
                 if doc:
