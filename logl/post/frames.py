@@ -15,13 +15,11 @@
 #!/usr/bin/env python
 
 import json
+import os
+import webbrowser
+import socket
 
-# This document will get information from another module
-# that organizes the animation information by order
-# of events for each server, with values adjusted for
-# clock skew.  This module will change that information into a
-# series of 'frames' that will be passed up to the javascript
-# program to interpret and animate.  The documents this module
+# The documents this module
 # generates will include the following information:
 
 # time : (int, in seconds?)
@@ -51,6 +49,26 @@ def generate_frames():
 def send_to_js(data):
     """Sends information to the JavaScript
     client"""
+    # open the JS page
+    url = "file://"
+    url += str(os.path.dirname(os.path.abspath(__file__)))
+    url += "/../display/logl.html"
+    webbrowser.open(url, 1, True)
+
+    # open socket, bind and listen
+    host = 'localhost'
+    port = 28018
+    size = 1024
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.bind((host, port))
+    s.listen(backlog)
+
+    # accept connection and send data
+    client, address = s.accept()
+    client.send(data)
+    client.close()
+
+    # return upon completion
     pass
 
 
