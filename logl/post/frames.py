@@ -14,6 +14,8 @@
 
 #!/usr/bin/env python
 
+import json
+
 # This document will get information from another module
 # that organizes the animation information by order
 # of events for each server, with values adjusted for
