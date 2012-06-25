@@ -14,6 +14,50 @@ serverSetup = function() {
 };
 
 
+generate_coords = function(count, names) {
+
+    var r = 50;
+    var w = canvas.width;
+    var h = canvas.height;
+
+    switch(count) {
+    case 0:
+    break;
+    case 1:
+	// one centered server
+	servers[names[0]] = {"x" : w/2, "y" : h/2, "r", "on" : false, "type" : "primary"};
+	break;
+    case 2:
+	// two servers, one on either side
+	servers[names[0]] = {"x" : w/3, "y" : h/2, "r", "on" : false, "type" : "primary"};
+	servers[names[1]] = {"x" : (0.66)*w, "y" : h/2, "r", "on" : false, "type" : "primary"};
+	break;
+    case 3:
+	// three servers in a triangle
+	servers[names[0]] = {"x" : w/2, "y" : h/3, "r", "on" : false, "type" : "primary"};
+	servers[names[1]] = {"x" : w/3, "y" : (0.66)*h, "r", "on" : false, "type" : "primary"};
+	servers[names[2]] = {"x" : (0.66)*w, "y" : (0.66)*h, "r", "on" : false, "type" : "primary"};
+	break;
+    case 4:
+	// four servers in a square
+	servers[names[0]] = {"x" : w/3, "y" : h/3, "r", "on" : false, "type" : "primary"};
+	servers[names[1]] = {"x" : w/3, "y" : (0.66)*h, "r", "on" : false, "type" : "primary"};
+	servers[names[2]] = {"x" : (0.66)*w, "y" : (0.66)*h, "r", "on" : false, "type" : "primary"};
+	servers[names[3]] = {"x" : (0.66)*w, "y" : h/3, "r", "on" : false, "type" : "primary"};
+	break;
+    case 5:
+	// five servers in a pentagon
+	break;
+    case 6:
+	// six servers in a wheel
+	break;
+    case 7:
+	// seven servers in a wheel
+	break;
+    }
+};
+
+
 primary = function(x, y, r, ctx) {
     // draw a primary server with radius r centered at (x, y)
      // draw a green circle with a yellow stroke
@@ -21,7 +65,6 @@ primary = function(x, y, r, ctx) {
     // add the crown
     crown(x, (y - 0.22*r), 0.6*r, 0.5*r, ctx);
 };
-
 
 down = function(x, y, r, ctx) {
     // draw a down server
