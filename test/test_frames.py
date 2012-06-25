@@ -13,8 +13,10 @@
 # limitations under the License.
 
 from logl.post.frames import *
+import os
 
 def test_send_to_js():
     """Test the send_to_js() method"""
+    send_to_js(None)
     pass
 
