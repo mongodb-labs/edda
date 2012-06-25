@@ -3,11 +3,39 @@
 <html>
 
 <head>
-Logl, a log visualizer for MongoDB
+  <!--Title/-->
+  <title>Logl, a log visualizer for MongoDB</title>
+
+  <!--Import style files/-->
+  <link rel="stylesheet" type="text/css" href="style/logl.css"/>
+
+  <!--Import js files/-->
+  <script src="js/draw_servers.js"></script>
+  <script src="js/connection.js"></script>
+  <script src="js/mouse_over.js"></script>
+
 </head>
 
-<body>
-Welcome to logl!
+<body onload="serverSetup();mouse_over_setup();">
+
+  <script>
+    <!--load necessary things/-->
+
+  </script>
+    <div id="page">
+      <br/><br/>
+      <div id="canvas">
+	<span id="msg">Message from Python</span>
+	<!--Canvas layers go in here/-->
+	<canvas id="background_layer" height="600" width="800"></canvas>
+	<canvas id="shadow_layer" height="600" width="800"></canvas>
+	<canvas id="server_layer" height="600" width="800"></canvas>
+	<canvas id="arrow_layer" height="600" width="800"></canvas>
+	<canvas id="text_layer" height="600" width="800"></canvas>
+	<canvas id="message_layer" height="600" width="800"></canvas>
+      </div>
+    </div>
+
 </body>
 
 
