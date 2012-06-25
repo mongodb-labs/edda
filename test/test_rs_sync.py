@@ -43,7 +43,7 @@ def test_process():
     check_state("Tue Jun 12 13:08:47 [rsSync] replSet syncing to: 10.4.3.56:45456", "10.4.3.56:45456")
     check_state("Tue Jun 12 13:08:47 [rsSync] replSet syncing to: 10.4.3.56:45456", "10.4.3.56:45456")
     check_state("Tue Jun 12 13:08:47 [rsSync] replSet syncing to: 10.4.3.56:45456", "10.4.3.56:45456")
-    check_state("Tue Jun 12 13:08:47 [rsSync] replSet syncing to: p'localhost:1234", "localhost:1234")
+    check_state("Tue Jun 12 13:08:47 [rsSync] replSet syncing to: localhost:1234", "localhost:1234")
     check_state("[rsSync] syncing to: 10.4.3.56:45456", "10.4.3.56:45456")
 
 
