@@ -45,7 +45,6 @@ def test_replacing_none():
     doc1 = generate_cs_doc("pear")
     doc1["partners"]["apple"] = 0
     clock_skew.insert(doc1)
-    
     doc1 = generate_cs_doc("apple")
     doc1["partners"]["pear"] = 0
     clock_skew.insert(doc1)
@@ -56,6 +55,25 @@ def test_replacing_none():
     print entries.find()
     print clock_skew.find()
     #assert original_date == entries.find().
+def test_replacing_one_val():
+    result = db_setup()
+    entries = result[1]
+    clock_skew = result[2]
+    original_date = datetime.now()
+    entries.insert(generate_doc("status", "apple", "STARTUP2", 5, "pear", original_date))
+    entries.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date))
+    doc1 = generate_cs_doc("pear")
+    doc1["partners"]["apple"] = 4
+    clock_skew.insert(doc1)
+    doc1 = generate_cs_doc("apple")
+    doc1["partners"]["pear"] = 4
+    clock_skew.insert(doc1)
+
+    clock_skew.insert(generate_cs_doc("apple"))
+    print entries.find()
+    fix_clock_skew(result[2], "fruit")
+    print entries.find()
+    print clock_skew.find()
 
 
 def generate_doc(type, server, label, code, target, date):
