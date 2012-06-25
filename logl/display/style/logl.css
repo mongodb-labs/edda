@@ -1,3 +1,52 @@
-#main {
-	 border: 1px solid #9C9898;
-	 }
+body {
+     background-color: #e0e0e0;
+}
+
+#page {
+      background-color: #e0e0e0;
+      font-family: Baskerville, Georgia, Serif;
+}
+
+/* div that holds all the canvases */
+#canvas {
+	position: relative;
+	width: 800px;
+	height: 600px;
+	background-color: #ffffff;
+	margin-left: auto;
+	margin-right: auto;
+	clear: both;
+	box-shadow: 0px 0px 40px #444444;
+}
+
+#background_layer, #shadow_layer, #server_layer, #arrow_layer, #text_layer, #message_layer {
+		  position: absolute;
+		  left: 0;
+		  top: 0;
+}
+
+/* information for each layer */
+#background_layer {
+	     z-index: 4;
+}
+
+#shadow_layer {
+	     z-index: 5;
+}
+
+#server_layer {
+	     z-index: 6;
+}
+
+#arrow_layer {
+	     z-index: 7;
+}
+
+#text_layer {
+	     z-index: 8;
+}
+
+#message_layer {
+	      z-index: 9;
+}
+
