@@ -32,12 +32,14 @@
 #    "type" = "clock_skew"
 #    "server_name" = "name"
 #    "partners" = {
-#          server_name : [ td1, td2, ... ]
+#          server_name : 
+                [time_delay1, time_delay2, ...]: [weight]
 #          }
 #     }
 
 import pymongo
 import logging
+import opeprator
 from datetime import datetime
 from datetime import timedelta
 
@@ -54,8 +56,12 @@ def fix_clock_skew(db, collName):
             if(server_name in fixed_servers):
                 continue
             fixed_servers.append(server_name)
+
+            adjustment_value = max(server_name.iteritems(), key=operator.itemgetter(1))[0]
+
             cursor = entries.find({"origin_server": server_name})
             for entry in cursor:
-                entry["date"] += doc["partners"][server_name]
-                
+                temp = max()
+                entry["date"] += adjustment_value
+
 
