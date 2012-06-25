@@ -12,12 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
 from logl.post.clock_skew import *
 from logl.logl import new_server
 import pymongo
 from datetime import datetime
 from pymongo import Connection
 from time import sleep
+from nose.plugins.skip import Skip, SkipTest
 
 
 def db_setup():
@@ -168,6 +170,7 @@ def test_detect_simple():
 def test_detect_a_has_more():
     """Test the scenario where server a has more
     entries about b than b has about itself"""
+    raise SkipTest
     result = db_setup()
     servers = result[0]
     entries = result[1]
