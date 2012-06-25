@@ -35,6 +35,7 @@ from pymongo import Connection
 from parse_date import date_parser
 import datetime
 from filters import *
+from post import *
 
 
 def main():
@@ -200,7 +201,8 @@ def traffic_control(msg, date):
     it fits the criteria of a given filter, that filter returns
     a document, which this function will pass up to main()."""
     pattern = re.compile(".py$")
-    dirList = os.listdir("filters")
+    dir_name = os.path.dirname(os.path.abspath(__file__)) + "/filters"
+    dirList = os.listdir(dir_name)
 
     logger = logging.getLogger(__name__)
 
