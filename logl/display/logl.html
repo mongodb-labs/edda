@@ -9,7 +9,12 @@
   <!--Import style files/-->
   <link rel="stylesheet" type="text/css" href="style/logl.css"/>
 
-  <!--Import js files/-->
+  <!--Declare global variables/-->
+  <script>
+    var servers = {};
+  </script>
+
+  <!--Import JS files/-->
   <script src="js/draw_servers.js"></script>
   <script src="js/connection.js"></script>
   <script src="js/mouse_over.js"></script>
@@ -23,7 +28,7 @@
 
   </script>
     <div id="page">
-      <br/><br/>
+      <br/>
       <div id="canvas">
 	<span id="msg">Message from Python</span>
 	<!--Canvas layers go in here/-->
@@ -34,6 +39,11 @@
 	<canvas id="text_layer" height="600" width="800"></canvas>
 	<canvas id="message_layer" height="600" width="800"></canvas>
       </div>
+      <br/><br/>
+      <input id="timescale" width="400px" type="range" name="time" min="0" range="100"/>
+      <br/>
+      <div id="timestamp">Time:</div>
+      <br/>
     </div>
 
 </body>
