@@ -1,58 +1,61 @@
 // test 2: draw basic servers
 
 var canvas;
-var ctx;
 
 
 serverSetup = function() {
-    canvas = document.getElementById("main");
-    ctx = canvas.getContext("2d");
+    canvas = document.getElementById("background_layer");
+    var ctx = canvas.getContext("2d");
     ctx.beginPath();
     ctx.rect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "#4E3629";
     ctx.fill();
+
 };
 
 
-primary = function(x, y, r) {
+primary = function(x, y, r, ctx) {
     // draw a primary server with radius r centered at (x, y)
      // draw a green circle with a yellow stroke
-    circle(x, y, r, "#24B314", "#F0E92F", 18);
+    circle(x, y, r, "#24B314", "#F0E92F", 18, ctx);
     // add the crown
-    crown(x, (y - .22*r), .6*r, .5*r)
+    crown(x, (y - 0.22*r), 0.6*r, 0.5*r, ctx);
 };
 
 
-down = function(x, y, r) {
+down = function(x, y, r, ctx) {
     // draw a down server
-    ctx.globalAlpha = 0.4 // 40% opacity
+    ctx.globalAlpha = 0.4; // 40% opacity
     ctx.beginPath();
     ctx.arc(x, y, r, 0, 360, false);
     ctx.lineWidth = 9;
-    ctx.strokeStyle = "#9A9A9A"
-    ctx.fillStyle = "#515151"
+    ctx.strokeStyle = "#9A9A9A";
+    ctx.fillStyle = "#515151";
     ctx.fill();
-    ctx.globalAlpha = 1 // full opacity
+    ctx.globalAlpha = 1; // full opacity
     //ctx.stroke();
 
     // generate dotted outline
     var a = 0;
-    var b = .05;
+    var b = 0.05;
     while (b <= 2) {
 	ctx.beginPath();
 	ctx.arc(x, y, r, a*Math.PI, b*Math.PI, false);
 	ctx.stroke();
-	a += .08;
-	b += .08;
+	a += 0.08;
+	b += 0.08;
         }
 };
 
 
-arbiter = function(x, y, r) {
+arbiter = function(x, y, r, ctx) {
     // draw an arbiter centered at (x, y) with radius r
 
     // draw bottom white circle
     ctx.beginPath();
+
+    ctx.lineWidth = 5;
+
     ctx.arc(x, y, r, 0, 360, false);
     ctx.fillStyle = "#BFB1A4";
     ctx.fill();
@@ -61,29 +64,29 @@ arbiter = function(x, y, r) {
     // right stripe
     ctx.fillStyle = "#33312F";
     ctx.beginPath();
-    ctx.arc(x, y, r, -.4*Math.PI, -.25*Math.PI, false);
-    ctx.lineTo(x + r*Math.sin(.25*Math.PI), y + r*Math.sin(45))
-    ctx.arc(x, y, r, .25*Math.PI, .4*Math.PI, false);
-    ctx.lineTo(x + r*Math.cos(.4*Math.PI), y - r*Math.sin(.4*Math.PI));
+    ctx.arc(x, y, r, -0.4 * Math.PI, -0.25 * Math.PI, false);
+    ctx.lineTo(x + r * Math.sin(0.25 * Math.PI), y + r * Math.sin(45));
+    ctx.arc(x, y, r, 0.25 * Math.PI, 0.4 * Math.PI, false);
+    ctx.lineTo(x + r * Math.cos(0.4 * Math.PI), y - r * Math.sin(0.4 * Math.PI));
     ctx.fill();
 
     // left stripe
     ctx.beginPath();
-    ctx.arc(x, y, r, -.6*Math.PI, -.75*Math.PI, true);
-    ctx.lineTo(x - r*Math.sin(.25*Math.PI), y + r*Math.sin(45))
+    ctx.arc(x, y, r, -0.6 * Math.PI, -0.75 * Math.PI, true);
+    ctx.lineTo(x - r * Math.sin(0.25 * Math.PI), y + r * Math.sin(45));
     ctx.arc(x, y, r, -1.25*Math.PI, -1.4*Math.PI, true);
-    ctx.lineTo(x - r*Math.cos(.4*Math.PI), y - r*Math.sin(.4*Math.PI));
+    ctx.lineTo(x - r * Math.cos(0.4 * Math.PI), y - r * Math.sin(0.4*Math.PI));
     ctx.fill();
 
     // top circle, just for outline
     ctx.beginPath();
     ctx.arc(x, y, r, 0, 360, false);
     ctx.strokeStyle = "#1A1007";
-    ctx.lineWidth = 9;
     ctx.stroke();
+
 };
 
-circle = function(x, y, r, fill, stroke, wt) {
+circle = function(x, y, r, fill, stroke, wt, ctx) {
     // draw a circle with given qualities
     ctx.fillStyle = fill;
     ctx.beginPath();
@@ -94,19 +97,19 @@ circle = function(x, y, r, fill, stroke, wt) {
     ctx.fill();
 };
 
-user = function(x, y, r) {
+user = function(x, y, r, ctx) {
     // draw a user circle with radius r centered at (x, y)
-    circle(x, y, r, "#93191C", "#AF434B", 5);
+    circle(x, y, r, "#93191C", "#AF434B", 5, ctx);
 };
 
-secondary = function(x, y, r) {
+secondary = function(x, y, r, ctx) {
     // draw a secondary server with radius r centered at (x, y)
     // draw a green circle with a
-    circle(x, y, r, "#24B314", "#196E0F", 18)
+    circle(x, y, r, "#24B314", "#196E0F", 18, ctx);
 };
 
 
-crown = function(x, y, w, h) {
+crown = function(x, y, w, h, ctx) {
     // draw a crown with center spike at (x, y)
     // with width w and height h
     // fill yellow
@@ -115,13 +118,13 @@ crown = function(x, y, w, h) {
     // right side
     ctx.lineTo(x + w/5, y + h/2);
     ctx.lineTo(x + (2*w/5), y + h/5);
-    ctx.lineTo(x + (3*w/5), y + (.55)*h);
+    ctx.lineTo(x + (3*w/5), y + (0.55)*h);
     ctx.lineTo(x + w, y + h/5);
     ctx.lineTo(x + (2*w/3), y + h);
     // left side
     ctx.lineTo(x - (2*w/3), y + h);
     ctx.lineTo(x - w, y + h/5);
-    ctx.lineTo(x - (3*w/5), y + .55*h);
+    ctx.lineTo(x - (3*w/5), y + 0.55*h);
     ctx.lineTo(x - (2*w/5), y + h/5);
     ctx.lineTo(x - w/5, y + h/2);
     ctx.lineTo(x, y);
