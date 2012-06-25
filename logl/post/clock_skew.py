@@ -19,7 +19,9 @@
 #    "type" = "clock_skew"
 #    "server_name" = "name"
 #    "partners" = {
-#          server_name : [ td1, td2, ... ]
+#          server_name : {
+#                "skew_1" : weight,
+#                "skew_2" : weight...
 #          }
 #     }
 
