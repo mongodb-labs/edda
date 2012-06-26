@@ -42,14 +42,13 @@ def test_replacing_none():
     print original_date
     entries.insert(generate_doc("status", "apple", "STARTUP2", 5, "pear", original_date))
     entries.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date))
-    doc1 = generate_cs_doc("apple")
+    doc1 = generate_cs_doc("pear", "apple")
     doc1["partners"]["apple"]["0"] = 5
     clock_skew.insert(doc1)
-    doc1 = generate_cs_doc("apple")
+    doc1 = generate_cs_doc("apple", "pear")
     doc1["partners"]["pear"]["0"] = 5
     clock_skew.insert(doc1)
 
-    clock_skew.insert(generate_cs_doc("apple"))
     print entries.find()
     fix_clock_skew(db, "fruit")
     print entries.find()
@@ -68,31 +67,39 @@ def test_replacing_none():
     #assert 4 == 5
     #assert original_date == entries.find().
 
-def replacing_one_val():
+def test_replacing_one_val():
     result = db_setup()
     servers, entries, clock_skew, db = db_setup()
+    skew1 = 5
 
     original_date = datetime.now()
     entries.insert(generate_doc("status", "apple", "STARTUP2", 5, "pear", original_date))
     entries.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date))
-    doc1 = generate_cs_doc("pear")
-    doc1["partners"]["apple"] = 4
+    doc1 = generate_cs_doc("pear", "apple")
+    doc1["partners"]["apple"]["5"] = skew1
     clock_skew.insert(doc1)
-    doc1 = generate_cs_doc("apple")
-    doc1["partners"]["pear"] = 4
+    doc1 = generate_cs_doc("apple", "pear")
+    doc1["partners"]["pear"]["0"] = -skew1
     clock_skew.insert(doc1)
 
-    clock_skew.insert(generate_cs_doc("apple"))
-    print entries.find()
+    clock_skew.insert(doc1)
     fix_clock_skew(db, "fruit")
     print entries.find()
     print clock_skew.find()
-    docs = servers.find({"origin_server": "pear"})
+    docs = entries.find({"origin_server": "apple"})
     for doc in docs:
-        assert  doc["date"] == oritinal_date + 4
+        print doc["date"]
+        print doc["adjusted_date"]
+        delta = abs(original_date - doc["adjusted_date"])
+        print repr(delta)
+        if delta - timedelta(seconds = skew1) < timedelta(milliseconds = 1):
+            assert True
+            continue
+        assert False
     assert 5 == 5
 
-def asdf_asdf():
+
+def test_three_servers():
     result = db_setup()
     entries - result[1]
     clock_skew = result[2]
@@ -122,9 +129,10 @@ def generate_doc(type, server, label, code, target, date):
 #                "skew_2" : weight...
 #          }
 #     }
-def generate_cs_doc(name):
+def generate_cs_doc(name, referal):
     doc = {}
     doc["type"] = "clock_skew"
     doc["server_name"] = name
     doc["partners"] = {}
+    doc["partners"][referal] = {}
     return doc
