@@ -21,7 +21,8 @@
     #Loop for each entry in the partners field of the specific server that you are on
         #Isolate messages that have the origin server the same as the partners field
         #Loop through each message and adjust clock skew for each server individually
-        #Along the way, add each server to a list that has already been checked. From here on out, we will only be going through servers not on this list
+        #Along the way, add each server to a list that has already been checked. 
+            #From here on out, we will only be going through servers not on this list
 
         #Move on to the next server and continue
     #Since the time deltas should be signed, we should be able to add the time skews of the different servers together. 
@@ -44,8 +45,8 @@ from datetime import datetime
 from datetime import timedelta
 
 def fix_clock_skew(db, collName):
-    fixed_servers = []#moving forward, make this a dictionary with a server_name field and a clock skew field that will constantly be added to. work on this first
-    fixed_skews = {}
+    
+    fixed_servers = {}
     first = True
     """"Using clock skew values that we have recieved from the
         clock skew method, fixes these values in the original DB, (.entries)."""""
@@ -58,23 +59,48 @@ def fix_clock_skew(db, collName):
     for doc in clock_skew.find():
         #the first thing that we suold do is make sure doc is not in fixed_servers. 
         #if !doc["name"] in fixed_servers:
-        #print "I am fixing stuff I shouldn't: {0}".format(doc["date"])
+        print ""
+        print "-----------------Start of first Loop-----------------"
         if first:
-            fixed_skews[doc["server_name"]] = 0
+            fixed_servers[doc["server_name"]] = 0
             first = False
+            print "Officially adding: {0} to fixed servers".format(doc["server_name"])
         for server_name in doc["partners"]:
             if(server_name in fixed_servers):
+                print "Server name already in list of fixed servers. EXITING: " 
+                print "------------------------------------------------------   \n"
                 continue
-            fixed_servers.append(server_name)
 
             #could potentially use this
-            for item in server_name:
-                weight = server_name[item]
+            largest_weight = 0
+            largest_time = None
+            print server_name
+            print '                               '
+            print "Server Name is: {0}".format(doc["partners"][server_name])
+            print '                               '
+            for skew in doc["partners"][server_name]:
+                weight = doc["partners"][server_name][skew]
+                print '                               '
+                print "Skew Weight is: {0}".format(weight)
+                print '                    '
 
-            adjustment_value = max(server_name.iteritems(), key=operator.itemgetter(1))[0]
-            adjustment_value += fixed_skews[doc["server_name"]]
-            print "Adjustment Value: {}".format(adjustment_value)
+                if weight > largest_weight:
+                    largest_weight = weight
+                    largest_time = int(skew)#int(doc["partners"][server_name][skew])
+
+            adjustment_value = largest_time
+            adjustment_value += fixed_servers[doc["server_name"]]
+
+            print "Adjustment Value: {0}".format(adjustment_value)
+            weight = doc["partners"][server_name][skew]
+            fixed_servers[server_name] = adjustment_value
+            print "Officially adding: {0} to fixed servers".format(server_name)
 
             cursor = entries.find({"origin_server": server_name})
             for entry in cursor:
+                print 'Entry adjusted from: {0}'.format(entry["date"])
+
                 entry["adjusted_date"] = entry["date"] + timedelta(seconds = adjustment_value)
+                entries.save(entry)
+                print 'Entry adjusted to: {0}'.format(entry["adjusted_date"])
+                print entry["origin_server"]
