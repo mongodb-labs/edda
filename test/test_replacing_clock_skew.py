@@ -36,29 +36,42 @@ def db_setup():
 
 def test_replacing_none():
     """"Replaces servers without skews."""""
-    result = db_setup()
-    entries = result[1]
-    clock_skew = result[2]
+    #result = db_setup()
+    servers, entries, clock_skew, db = db_setup()
     original_date = datetime.now()
+    print original_date
     entries.insert(generate_doc("status", "apple", "STARTUP2", 5, "pear", original_date))
     entries.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date))
-    doc1 = generate_cs_doc("pear")
-    doc1["partners"]["apple"] = 0
+    doc1 = generate_cs_doc("apple")
+    doc1["partners"]["apple"]["0"] = 5
     clock_skew.insert(doc1)
     doc1 = generate_cs_doc("apple")
-    doc1["partners"]["pear"] = 0
+    doc1["partners"]["pear"]["0"] = 5
     clock_skew.insert(doc1)
 
     clock_skew.insert(generate_cs_doc("apple"))
     print entries.find()
-    fix_clock_skew(result[2], "fruit")
+    fix_clock_skew(db, "fruit")
     print entries.find()
     print clock_skew.find()
+    docs = entries.find({"origin_server": "pear"})
+    for doc in docs:
+        print doc["date"]
+        print original_date
+        print original_date - doc["date"]
+        delta = original_date - doc["date"]
+        print repr(delta)
+        if delta < timedelta(milliseconds = 1):
+            assert  True
+            continue
+        assert False    
+    #assert 4 == 5
     #assert original_date == entries.find().
-def test_replacing_one_val():
+
+def replacing_one_val():
     result = db_setup()
-    entries = result[1]
-    clock_skew = result[2]
+    servers, entries, clock_skew, db = db_setup()
+
     original_date = datetime.now()
     entries.insert(generate_doc("status", "apple", "STARTUP2", 5, "pear", original_date))
     entries.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date))
@@ -71,9 +84,20 @@ def test_replacing_one_val():
 
     clock_skew.insert(generate_cs_doc("apple"))
     print entries.find()
-    fix_clock_skew(result[2], "fruit")
+    fix_clock_skew(db, "fruit")
     print entries.find()
     print clock_skew.find()
+    docs = servers.find({"origin_server": "pear"})
+    for doc in docs:
+        assert  doc["date"] == oritinal_date + 4
+    assert 5 == 5
+
+def asdf_asdf():
+    result = db_setup()
+    entries - result[1]
+    clock_skew = result[2]
+    oritinal_date = datetime.now()
+
 
 
 def generate_doc(type, server, label, code, target, date):

@@ -33,9 +33,10 @@ import getpass
 from bson import objectid
 from pymongo import Connection
 from parse_date import date_parser
-import datetime
+from datetime import datetime
 from filters import *
-from post import *
+from post.clock_skew import server_clock_skew
+from post.replace_clock_skew import *
 
 
 def main():
@@ -109,7 +110,7 @@ def main():
     entries = db[collName + ".entries"]
     servers = db[collName + ".servers"]
 
-    now = datetime.datetime.now()
+    now = datetime.now()
     name = str(now.strftime("logl_%m_%d_%Y_at_%H_%M_%S"))
 
     # some verbose comments
@@ -176,10 +177,12 @@ def main():
     logger.info('-' * 64)
     if len(namespace.filename) > 1:
         logger.info("Attempting to resolve server names")
-        result = server_matchup(db, collName)
+        #result = server_matchup(db, collName)
         logger.info('-' * 64)
         logger.info("Attempting to resolve clock skew across servers")
         result = server_clock_skew(db, collName)
+        result2 = fix_clock_skew(db, collName)
+        print 'I am here!'
     logger.warning('Exiting.')
 
 

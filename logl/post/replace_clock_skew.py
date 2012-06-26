@@ -33,11 +33,11 @@
 #    "server_name" = "name"
 #    "partners" = {
 #          server_name : 
-#                [time_delay1, time_delay2, ...]: [weight]
+#                [time_delay1 : weight1, time_delay2 : weight2, ...]
 #          }
 #     }
 
-import pymongo
+from pymongo import *
 import logging
 import operator
 from datetime import datetime
@@ -49,23 +49,30 @@ def fix_clock_skew(db, collName):
     first = True
     """"Using clock skew values that we have recieved from the
         clock skew method, fixes these values in the original DB, (.entries)."""""
-    print 'I am here'
+    #print 'I am here'
     entries = db[collName + ".entries"]
+    clock_skew = db[collName + ".clock_skew"]
+    print db.collection_names()
 
     logger = logging.getLogger(__name__)
-    for doc in db[collName + ".clock_skews"].find():
+    for doc in clock_skew.find():
         #the first thing that we suold do is make sure doc is not in fixed_servers. 
         #if !doc["name"] in fixed_servers:
+        #print "I am fixing stuff I shouldn't: {0}".format(doc["date"])
         if first:
-            fixed_skews[doc["name"]] = 0
+            fixed_skews[doc["server_name"]] = 0
             first = False
         for server_name in doc["partners"]:
             if(server_name in fixed_servers):
                 continue
             fixed_servers.append(server_name)
 
+            #could potentially use this
+            for item in server_name:
+                weight = server_name[item]
+
             adjustment_value = max(server_name.iteritems(), key=operator.itemgetter(1))[0]
-            adjustment_value += fixed_skews[doc["name"]]
+            adjustment_value += fixed_skews[doc["server_name"]]
             print "Adjustment Value: {}".format(adjustment_value)
 
             cursor = entries.find({"origin_server": server_name})
