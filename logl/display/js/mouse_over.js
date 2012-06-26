@@ -2,7 +2,6 @@
 
 var canvas;
 var ctx;
-var servers = {};
 
 mouse_over_setup = function() {
     canvas = document.getElementById("server_layer");
@@ -21,7 +20,6 @@ mouse_over_setup = function() {
     r = 25;
 
     // draw server(s)
-
     var randomnumber;
     var xval, yval;
     for(var i = 0; i < 10; i++) {
