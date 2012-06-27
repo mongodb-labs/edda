@@ -39,7 +39,7 @@ def test_replacing_none():
     #result = db_setup()
     servers, entries, clock_skew, db = db_setup()
     original_date = datetime.now()
-    print original_date
+
     entries.insert(generate_doc("status", "apple", "STARTUP2", 5, "pear", original_date))
     entries.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date))
     doc1 = generate_cs_doc("pear", "apple")
@@ -49,18 +49,15 @@ def test_replacing_none():
     doc1["partners"]["pear"]["0"] = 5
     clock_skew.insert(doc1)
 
-    print entries.find()
     fix_clock_skew(db, "fruit")
-    print entries.find()
-    print clock_skew.find()
+
     docs = entries.find({"origin_server": "pear"})
     for doc in docs:
-        print doc["date"]
-        print original_date
-        print original_date - doc["date"]
+        logger.debug("Original Date: {}".format(doc["date"]))
         delta = original_date - doc["date"]
-        print repr(delta)
-        if delta < timedelta(milliseconds = 1):
+        logger.debug("Delta: {}".format(repr(delta)))
+
+        if delta < timedelta(milliseconds=1):
             assert  True
             continue
         assert False    
@@ -85,14 +82,13 @@ def test_replacing_one_value():
 
     clock_skew.insert(doc1)
     fix_clock_skew(db, "fruit")
-    print entries.find()
-    print clock_skew.find()
+
     docs = entries.find({"origin_server": "apple"})
     for doc in docs:
-        print doc["date"]
-        print doc["adjusted_date"]
+        logger.debug("Original Date: {}".format(doc["date"]))
+        logger.debug("Adjusted Date: {}".format(doc["adjusted_date"]))
         delta = abs(original_date - doc["adjusted_date"])
-        print repr(delta)
+        logger.debug("Delta: {}".format(repr(delta)))
         if delta - timedelta(seconds = skew1) < timedelta(milliseconds = 1):
             assert test_replacing_one_value
             continue
@@ -129,14 +125,12 @@ def test_replacing_multiple():
     doc1["partners"]["pear"][neg_skew] = weight
     clock_skew.insert(doc1)
     fix_clock_skew(db, "fruit")
-    print entries.find()
-    print clock_skew.find()
     docs = entries.find({"origin_server": "plum"})
     for doc in docs:
-        print doc["date"]
-        print doc["adjusted_date"]
+        logger.debug("Original Date: {}".format(doc["date"]))
+        logger.debug("Adjusted Date: {}".format(doc["adjusted_date"]))
         delta = abs(original_date - doc["adjusted_date"])
-        print repr(delta)
+        logger.debug("Delta: {}".format(repr(delta)))
         if delta - timedelta(seconds=int(skew)) < timedelta(milliseconds=1):
             assert True
             continue
@@ -144,10 +138,10 @@ def test_replacing_multiple():
 
     docs = entries.find({"origin_server": "apple"})
     for doc in docs:
-        print doc["date"]
-        print doc["adjusted_date"]
+        logger.debug("Original Date: {}".format(doc["date"]))
+        logger.debug("Adjusted Date: {}".format(doc["adjusted_date"]))
         delta = abs(original_date - doc["adjusted_date"])
-        print repr(delta)
+        logger.debug("Delta: {}".format(repr(delta)))
         if delta - timedelta(seconds=int(skew)) < timedelta(milliseconds=1):
             assert True
             continue
