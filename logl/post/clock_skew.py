@@ -107,8 +107,6 @@ def detect(a, b, db, collName):
     for b in cursor_b:
         list_b.append(b)
 
-    majority = False
-
     # for each a, compare against every b
     for i in range(0, len(list_a)):
         for j in range(0, len(list_b)):
@@ -117,16 +115,12 @@ def detect(a, b, db, collName):
                 wt = 0
                 while match(list_a[i + wt], list_b[j + wt]):
                     wt += 1
-                    logger.debug("match!")
                     if (wt + i >= len(list_a)) or (wt + j >= len(list_b)):
-                        break
-                    # if we have a majority of the messages, break
-                    if wt > len(list_a)/2 or wt > len(list_b)/2:
-                        majority = True
                         break
                 # calculate time skew, save with weight
                 td = list_b[j + wt - 1]["date"] - list_a[i + wt - 1]["date"]
                 td = timedelta_to_int(td)
+                logger.debug(td)
                 if abs(td) > 2:
                     key = in_skews(td, skews)
                     if not key:
@@ -135,19 +129,12 @@ def detect(a, b, db, collName):
                     else:
                         logger.debug("adding additional weight for td {0} into skews {1}".format(td, skews))
                         skews[key] += wt
-                if majority:
-                    break
                 # could maybe fix redundant counting by taking
                 # each a analyzed here and comparing against all earlier b's.
                 # another option would be to keep a table of size[len(a)*len(b)] of booleans.
                 # or, just accept this bug as something that weights multiple
                 # matches in a row even higher.
-            else:
-                continue
-            break
-        else:
-            continue
-        break
+
     return skews
 
 

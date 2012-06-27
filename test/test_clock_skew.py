@@ -37,19 +37,16 @@ def db_setup():
 
 def test_clock_skew_none():
     """Test on an empty db"""
-    result = db_setup()
-    db = result[3]
+    servers, entries, clock_skew, db = db_setup()
     server_clock_skew(db, "wildcats")
-    cursor = result[2].find()
+    cursor = clock_skew.find()
     assert cursor.count() == 0
 
 
 def test_clock_skew_one():
     """DB with entries from one server"""
-    result = db_setup()
-    db = result[3]
-    entries = result[1]
-    result[0].insert(new_server(1, "Sam"))
+    servers, entries, clock_skew, db = db_setup()
+    servers.insert(new_server(1, "Sam"))
     entries.insert(generate_doc("status", "Sam", "STARTUP2", 5, "Gaya", datetime.now()))
     entries.insert(generate_doc("status", "Sam", "PRIMARY", 1, "self", datetime.now()))
     server_clock_skew(db, "wildcats")
@@ -59,10 +56,7 @@ def test_clock_skew_one():
 
 def test_clock_skew_two():
     """Two different servers"""
-    result = db_setup()
-    servers = result[0]
-    entries = result[1]
-    db = result[3]
+    servers, entries, clock_skew, db = db_setup()
     # fill in some servers
     servers.insert(new_server(1, "Sam"))
     servers.insert(new_server(2, "Nuni"))
@@ -75,10 +69,10 @@ def test_clock_skew_two():
     entries.insert(generate_doc("status", "Nuni", "DOWN", 8, "self", datetime.now()))
     entries.insert(generate_doc("status", "Nuni", "STARTUP2", 5, "self", datetime.now()))
     server_clock_skew(db, "wildcats")
-    cursor = result[2].find()
+    cursor = clock_skew.find()
     assert cursor.count() == 2
     # check first server entry
-    doc = result[2].find_one({"server_name" : "Sam"})
+    doc = clock_skew.find_one({"server_name" : "Sam"})
     assert doc
     assert doc["type"] == "clock_skew"
     assert doc["partners"]
@@ -90,9 +84,9 @@ def test_clock_skew_two():
     assert abs(abs(t1) - 3) < .01
     assert t1 > 0
     print wt1
-    assert wt1 == 2
+    assert wt1 == 6
     # check second server entry
-    doc2 = result[2].find_one({"server_name" : "Nuni"})
+    doc2 = clock_skew.find_one({"server_name" : "Nuni"})
     assert doc2
     assert doc2["type"] == "clock_skew"
     assert doc2["partners"]
@@ -105,7 +99,7 @@ def test_clock_skew_two():
     assert t2 < 0
     print wt1
     print wt2
-    assert wt2 == 2
+    assert wt2 == 6
     # compare entries against each other
     assert abs(t1) == abs(t2)
     assert t1 == -t2
@@ -120,10 +114,7 @@ def test_clock_skew_three():
 
 def test_detect_simple():
     """A simple test of the detect() method in post.py"""
-    result = db_setup()
-    servers = result[0]
-    entries = result[1]
-    db = result[3]
+    servers, entries, clock_skew, db = db_setup()
     # fill in some servers
     servers.insert(new_server(1, "Erica"))
     servers.insert(new_server(2, "Alison"))
@@ -165,16 +156,12 @@ def test_detect_simple():
     assert abs(t1) == abs(t2)
     assert t1 == -t2
     assert wt1 == wt2
-    assert wt1 == 2
+    assert wt1 == 6
 
 def test_detect_a_has_more():
     """Test the scenario where server a has more
     entries about b than b has about itself"""
-    raise SkipTest
-    result = db_setup()
-    servers = result[0]
-    entries = result[1]
-    db = result[3]
+    servers, entries, clock_skew, db = db_setup()
     # fill in some servers
     servers.insert(new_server(1, "Erica"))
     servers.insert(new_server(2, "Alison"))
@@ -195,7 +182,7 @@ def test_detect_a_has_more():
     t1 = int(t1)
     assert t1
     assert wt1
-    assert wt1 == 2
+    assert wt1 == 3
     assert abs(abs(t1) - 3) < .01
     # replace some entries
     entries.remove({"origin_server" : "Alison"})
@@ -207,11 +194,8 @@ def test_detect_a_has_more():
     assert skews2
     assert len(skews2) == 1
     print skews2
-    t2, wt2 = skews2.popitem()
-    assert t2
-    assert wt2
-    print wt2
-    assert wt2 == 2
+    assert in_skews(3, skews2)
+    assert skews2['3'] == 4
 
 def test_detect_b_has_more():
     """Test the case where server b has more
@@ -219,13 +203,11 @@ def test_detect_b_has_more():
     pass
 
 
-def test_detect_random_skew():
+def test_two_different_skews():
     """Test the case where corresponding entries
     are skewed randomly in time"""
     # only tests a-b, not b-a
-    result = db_setup()
-    servers = result[0]
-    entries = result[1]
+    servers, entries, clock_skew, db = db_setup()
     # fill in some servers
     servers.insert(new_server(1, "Hannah"))
     servers.insert(new_server(2, "Mel"))
@@ -233,26 +215,26 @@ def test_detect_random_skew():
     entries.insert(generate_doc("status", "Hannah", "PRIMARY", 1, "Mel", datetime.now()))
     sleep(3)
     entries.insert(generate_doc("status", "Mel", "PRIMARY", 1, "self", datetime.now()))
+    # one other message to break the matching pattern
+    sleep(2)
+    entries.insert(generate_doc("status", "Hannah", "ARBITER", 7, "Mel", datetime.now()))
+    sleep(2)
     # these are skewed by 5 seconds
     entries.insert(generate_doc("status", "Hannah", "SECONDARY", 2, "Mel", datetime.now()))
     sleep(5)
     entries.insert(generate_doc("status", "Mel", "SECONDARY", 2, "self", datetime.now()))
-    # these are skewed by 1 second
-    entries.insert(generate_doc("status", "Hannah", "ARBITER", 7, "Mel", datetime.now()))
-    sleep(1)
-    entries.insert(generate_doc("status", "Mel", "ARBITER", 7, "self", datetime.now()))
-    skews = detect("Hannah", "Mel", result[3], "wildcats")
+    skews = detect("Hannah", "Mel", db, "wildcats")
+    print skews
     assert skews
-    assert len(skews) == 1
+    assert len(skews) == 2
     assert in_skews(5, skews)
-    assert not in_skews(1, skews)
-    assert not in_skews(3, skews)
+    assert skews['5'] == 1
+    assert in_skews(3, skews)
+    assert skews['3'] == 1
 
 def test_detect_zero_skew():
     """Test the case where there is no clock skew."""
-    result = db_setup()
-    servers = result[0]
-    entries = result[1]
+    servers, entries, clock_skew, db = db_setup()
     # fill in some servers
     servers.insert(new_server(1, "Sam"))
     servers.insert(new_server(2, "Gaya"))
@@ -270,8 +252,8 @@ def test_detect_zero_skew():
     entries.insert(generate_doc("status", "Sam", "STARTUP2", 5, "self", datetime.now()))
     entries.insert(generate_doc("status", "Gaya", "STARTUP2", 5, "Sam", datetime.now()))
     entries.insert(generate_doc("status", "Sam", "STARTUP2", 5, "self", datetime.now()))
-    skews1 = detect("Sam", "Gaya", result[2], "wildcats")
-    skews2 = detect("Gaya", "Sam", result[2], "wildcats")
+    skews1 = detect("Sam", "Gaya", db, "wildcats")
+    skews2 = detect("Gaya", "Sam", db, "wildcats")
     assert not skews1
     assert not skews2
 
@@ -279,10 +261,7 @@ def test_detect_zero_skew():
 def test_detect_network_delay():
     """Test the case where there are time differences
     too small to be considered clock skew"""
-    result = db_setup()
-    servers = result[0]
-    entries = result[1]
-    db = result[3]
+    servers, entries, clock_skew, db = db_setup()
     # fill in some servers
     servers.insert(new_server(1, "Erica"))
     servers.insert(new_server(2, "Alison"))
