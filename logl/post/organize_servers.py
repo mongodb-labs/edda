@@ -30,12 +30,12 @@ def organize_servers(db, collName):
     servers_list = {}
 
     entries = db[collName + ".entries"]
-    servers = db[collname + ".servers"]
+    servers = db[collName + ".servers"]
 
     for server in servers.find():
         servers_list[server["origin_server"]] = []
-        cursor = entries.find({"origin_server": server_name})
-        cursor.sort("date") 
+        cursor = entries.find({"origin_server": server["origin_server"]})
+        cursor.sort("date")
         for doc in cursor:
-            servers_list[server["origin_server"]].add(doc)
+            servers_list[server["origin_server"]].append(doc)
     return servers_list

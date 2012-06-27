@@ -37,7 +37,12 @@ def server_clock_skew(db, collName):
     attempts to detect and resolve clock skew
     across different servers."""
     logger = logging.getLogger(__name__)
+
+    clock_skew = db[collName + ".clock_skew"]
+    skew_a = clock_skew_doc("asdf")
+    clock_skew.save(skew_a)
     for doc_a in db[collName + ".servers"].find():
+        print 'In server_clock_skew'
         a = doc_a["server_name"]
         if a == "unknown":
             logger.debug("Skipping unknown server")
