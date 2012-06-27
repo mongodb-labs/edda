@@ -86,7 +86,7 @@ def test_clock_skew_two():
     print wt1
     assert wt1 == 6
     # check second server entry
-    doc2 = result[2].find_one({"server_name" : "Nuni"})
+    doc2 = clock_skew.find_one({"server_name" : "Nuni"})
     assert doc2
     assert doc2["type"] == "clock_skew"
     assert doc2["partners"]
@@ -195,7 +195,7 @@ def test_detect_a_has_more():
     assert len(skews2) == 1
     print skews2
     assert in_skews(3, skews2)
-    assert skews[3] == 4
+    assert skews2['3'] == 4
 
 def test_detect_b_has_more():
     """Test the case where server b has more
@@ -203,7 +203,7 @@ def test_detect_b_has_more():
     pass
 
 
-def test_detect_random_skew():
+def test_two_different_skews():
     """Test the case where corresponding entries
     are skewed randomly in time"""
     # only tests a-b, not b-a
@@ -215,20 +215,22 @@ def test_detect_random_skew():
     entries.insert(generate_doc("status", "Hannah", "PRIMARY", 1, "Mel", datetime.now()))
     sleep(3)
     entries.insert(generate_doc("status", "Mel", "PRIMARY", 1, "self", datetime.now()))
+    # one other message to break the matching pattern
+    sleep(2)
+    entries.insert(generate_doc("status", "Hannah", "ARBITER", 7, "Mel", datetime.now()))
+    sleep(2)
     # these are skewed by 5 seconds
     entries.insert(generate_doc("status", "Hannah", "SECONDARY", 2, "Mel", datetime.now()))
     sleep(5)
     entries.insert(generate_doc("status", "Mel", "SECONDARY", 2, "self", datetime.now()))
-    # these are skewed by 1 second
-    entries.insert(generate_doc("status", "Hannah", "ARBITER", 7, "Mel", datetime.now()))
-    sleep(1)
-    entries.insert(generate_doc("status", "Mel", "ARBITER", 7, "self", datetime.now()))
-    skews = detect("Hannah", "Mel", clock_skew, "wildcats")
+    skews = detect("Hannah", "Mel", db, "wildcats")
+    print skews
     assert skews
-    assert len(skews) == 1
+    assert len(skews) == 2
     assert in_skews(5, skews)
-    assert not in_skews(1, skews)
-    assert not in_skews(3, skews)
+    assert skews['5'] == 1
+    assert in_skews(3, skews)
+    assert skews['3'] == 1
 
 def test_detect_zero_skew():
     """Test the case where there is no clock skew."""
@@ -250,8 +252,8 @@ def test_detect_zero_skew():
     entries.insert(generate_doc("status", "Sam", "STARTUP2", 5, "self", datetime.now()))
     entries.insert(generate_doc("status", "Gaya", "STARTUP2", 5, "Sam", datetime.now()))
     entries.insert(generate_doc("status", "Sam", "STARTUP2", 5, "self", datetime.now()))
-    skews1 = detect("Sam", "Gaya", clock_skew, "wildcats")
-    skews2 = detect("Gaya", "Sam", clock_skew, "wildcats")
+    skews1 = detect("Sam", "Gaya", db, "wildcats")
+    skews2 = detect("Gaya", "Sam", db, "wildcats")
     assert not skews1
     assert not skews2
 
