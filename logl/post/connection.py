@@ -31,16 +31,20 @@ try:
     import json
 except ImportError:
     import simplejson as json
+import threading
 
-server = None
 data = None
 
-def child():
-    """Open page and send GET request to server"""
-    # open the JS page
-    url = "http://localhost:28018"
-    webbrowser.open(url, 1, True)
-    os._exit(0)
+class ThreadClass(threading.Thread):
+
+
+    def run(self):
+        """Open page and send GET request to server"""
+        # open the JS page
+        url = "http://localhost:28018"
+        webbrowser.open(url, 1, True)
+        print "child thread exiting"
+        return
 
 
 def send_to_js(msg):
@@ -51,30 +55,26 @@ def send_to_js(msg):
     data = msg
 
     # fork here!
-    newpid = os.fork()
+    t = ThreadClass()
+    t.start()
     # parent starts a server listening on localhost:27080
     # child opens page to send GET request to server
-    if newpid == 0:
-        child()
-    else:
-        # server serves up logl.html
-        # logl.html sends another GET request
-        # server sends over frames
-        global server
-        # open socket, bind and listen
-        print "Opening server"
-        try:
-            server = HTTPServer(('', 28018), LoglHTTPRequest)
-        except socket.error, (value, message):
-            if value == 98:
-                print "could not bind to localhost:28018"
-            else:
-                print message
+    # open socket, bind and listen
+    print "Opening server"
+    try:
+        server = HTTPServer(('', 28018), LoglHTTPRequest)
+    except socket.error, (value, message):
+        if value == 98:
+            print "could not bind to localhost:28018"
+        else:
+            print message
             return
 
-        print 'listening for connections on http://localhost:28018\n'
+    print 'listening for connections on http://localhost:28018\n'
+    try:
         server.serve_forever()
-
+    except KeyboardInterrupt:
+        server.socket.close()
         # return upon completion
         print "Done serving, exiting"
         return
