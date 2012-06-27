@@ -67,7 +67,8 @@ def test_replacing_none():
     #assert 4 == 5
     #assert original_date == entries.find().
 
-def test_replacing_one_val():
+
+def test_replacing_one_value():
     result = db_setup()
     servers, entries, clock_skew, db = db_setup()
     skew1 = 5
@@ -93,19 +94,72 @@ def test_replacing_one_val():
         delta = abs(original_date - doc["adjusted_date"])
         print repr(delta)
         if delta - timedelta(seconds = skew1) < timedelta(milliseconds = 1):
+            assert test_replacing_one_value
+            continue
+        assert False
+
+def test_replacing_multiple():
+    result = db_setup()
+    servers, entries, clock_skew, db = db_setup()
+    skew = "14"
+    neg_skew = "-14"
+    weight = 10
+
+    original_date = datetime.now()
+    entries.insert(generate_doc("status", "apple", "STARTUP2", 5, "pear", original_date))
+    entries.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date))
+    entries.insert(generate_doc("status", "plum", "STARTUP2", 5, "apple", original_date))
+    entries.insert(generate_doc("status", "apple", "STARTUP2", 5, "plum", original_date))
+    entries.insert(generate_doc("status", "pear", "STARTUP2", 5, "plum", original_date))
+    entries.insert(generate_doc("status", "plum", "STARTUP2", 5, "pear", original_date))
+
+    doc1 = generate_cs_doc("pear", "apple")
+    doc1["partners"]["apple"][skew] = weight
+    doc1["partners"]["plum"] = {}
+    doc1["partners"]["plum"][skew] = weight
+    clock_skew.insert(doc1)
+    doc1 = generate_cs_doc("apple", "pear")
+    doc1["partners"]["plum"] = {}
+    doc1["partners"]["plum"][skew] = weight
+    doc1["partners"]["pear"][neg_skew] = weight
+    clock_skew.insert(doc1)
+    doc1 = generate_cs_doc("plum", "pear")
+    doc1["partners"]["apple"] = {}
+    doc1["partners"]["apple"][neg_skew] = weight
+    doc1["partners"]["pear"][neg_skew] = weight
+    clock_skew.insert(doc1)
+    fix_clock_skew(db, "fruit")
+    print entries.find()
+    print clock_skew.find()
+    docs = entries.find({"origin_server": "plum"})
+    for doc in docs:
+        print doc["date"]
+        print doc["adjusted_date"]
+        delta = abs(original_date - doc["adjusted_date"])
+        print repr(delta)
+        if delta - timedelta(seconds=int(skew)) < timedelta(milliseconds=1):
             assert True
             continue
         assert False
-    assert 5 == 5
 
+    docs = entries.find({"origin_server": "apple"})
+    for doc in docs:
+        print doc["date"]
+        print doc["adjusted_date"]
+        delta = abs(original_date - doc["adjusted_date"])
+        print repr(delta)
+        if delta - timedelta(seconds=int(skew)) < timedelta(milliseconds=1):
+            assert True
+            continue
+        assert False
 
-def test_three_servers():
-    result = db_setup()
-    entries - result[1]
-    clock_skew = result[2]
-    oritinal_date = datetime.now()
-
-
+    docs = entries.find({"origin_server": "pear"})
+    
+    for doc in docs:
+        if not "adjusted_date" in doc:
+            assert True
+            continue
+        assert False
 
 def generate_doc(type, server, label, code, target, date):
     """Generate an entry"""
