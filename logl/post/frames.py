@@ -14,10 +14,6 @@
 
 #!/usr/bin/env python
 
-import json
-import os
-import webbrowser
-import socket
 
 # The documents this module
 # generates will include the following information:
@@ -44,31 +40,4 @@ def generate_frames():
     # amiss between two or more servers, it will set the 'flag'
     # to true, but will do nothing further.
     pass
-
-
-def send_to_js(data):
-    """Sends information to the JavaScript
-    client"""
-    # open the JS page
-    url = "file://"
-    url += str(os.path.dirname(os.path.abspath(__file__)))
-    url += "/../display/logl.html"
-    webbrowser.open(url, 1, True)
-
-    # open socket, bind and listen
-    host = 'localhost'
-    port = 28018
-    size = 1024
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.bind((host, port))
-    s.listen(backlog)
-
-    # accept connection and send data
-    client, address = s.accept()
-    client.send(data)
-    client.close()
-
-    # return upon completion
-    pass
-
 
