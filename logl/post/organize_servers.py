@@ -17,7 +17,9 @@
 
 #Anatomy of servers_list
 #servers_list
-    #{"Server1" : 
+    #{"Server1" : [doc1, doc2, doc3...]}
+    #{"Server2" : [doc1, doc2, doc3...]}
+    #..self
 
 
 from pymongo import *
