@@ -16,6 +16,7 @@
 from logl.post.replace_clock_skew import *
 from logl.logl import new_server
 import pymongo
+import logging
 from datetime import datetime
 from pymongo import Connection
 from time import sleep
@@ -23,6 +24,7 @@ from nose.plugins.skip import Skip, SkipTest
 
 
 def db_setup():
+    logger = logging.getLogger(__name__)
     """Set up a database for use by tests"""
     c = Connection()
     db = c["test"]
@@ -35,6 +37,7 @@ def db_setup():
     return [servers, entries, clock_skew, db]
 
 def test_replacing_none():
+    logger = logging.getLogger(__name__)
     """"Replaces servers without skews."""""
     #result = db_setup()
     servers, entries, clock_skew, db = db_setup()
@@ -66,7 +69,7 @@ def test_replacing_none():
 
 
 def test_replacing_one_value():
-    result = db_setup()
+    logger = logging.getLogger(__name__)
     servers, entries, clock_skew, db = db_setup()
     skew1 = 5
 
@@ -95,7 +98,7 @@ def test_replacing_one_value():
         assert False
 
 def test_replacing_multiple():
-    result = db_setup()
+    logger = logging.getLogger(__name__)
     servers, entries, clock_skew, db = db_setup()
     skew = "14"
     neg_skew = "-14"
@@ -156,6 +159,7 @@ def test_replacing_multiple():
         assert False
 
 def generate_doc(type, server, label, code, target, date):
+    logger = logging.getLogger(__name__)
     """Generate an entry"""
     doc = {}
     doc["type"] = type
@@ -178,6 +182,7 @@ def generate_doc(type, server, label, code, target, date):
 #          }
 #     }
 def generate_cs_doc(name, referal):
+    logger = logging.getLogger(__name__)
     doc = {}
     doc["type"] = "clock_skew"
     doc["server_name"] = name

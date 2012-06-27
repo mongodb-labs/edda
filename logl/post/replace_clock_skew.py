@@ -24,7 +24,7 @@
         #Along the way, add each server to a list that has already been checked. 
             #From here on out, we will only be going through servers not on this list
 
-        #Move on to the next server and continue
+        #Move on  to the next server and continue
     #Since the time deltas should be signed, we should be able to add the time skews of the different servers together. 
     #This should work for the case of the line of servers where every server is connected to every other server
 
@@ -45,7 +45,7 @@ from datetime import datetime
 from datetime import timedelta
 
 def fix_clock_skew(db, collName):
-    
+    logger = logging.getLogger(__name__)
     fixed_servers = {}
     first = True
     """"Using clock skew values that we have recieved from the
@@ -53,36 +53,32 @@ def fix_clock_skew(db, collName):
     #print 'I am here'
     entries = db[collName + ".entries"]
     clock_skew = db[collName + ".clock_skew"]
-    print db.collection_names()
+    logger.debug("\n------------List of Collections------------\n".format(db.collection_names()))
 
-    logger = logging.getLogger(__name__)
+    
     for doc in clock_skew.find():
         #the first thing that we suold do is make sure doc is not in fixed_servers. 
         #if !doc["name"] in fixed_servers:
-        print ""
-        print "-----------------Start of first Loop-----------------"
+        logger.debug("---------------Start of first Loop----------------")
         if first:
             fixed_servers[doc["server_name"]] = 0
             first = False
-            print "Officially adding: {0} to fixed servers".format(doc["server_name"])
+            logger.debug("Our supreme leader is: {0}".format(doc["server_name"]))
         for server_name in doc["partners"]:
             if(server_name in fixed_servers):
-                print "Server name already in list of fixed servers. EXITING: " 
-                print "------------------------------------------------------   \n"
+                logger.debug("Server name already in list of fixed servers. EXITING: ")
+                logger.debug("------------------------------------------------------   \n")
                 continue
 
             #could potentially use this
             largest_weight = 0
             largest_time = None
-            print server_name
-            print '                               '
-            print "Server Name is: {0}".format(doc["partners"][server_name])
-            print '                               '
+            logger.debug("Server name: {}".format(server_name))
+            logger.debug("Server Name is: {0}".format(doc["partners"][server_name]))
+
             for skew in doc["partners"][server_name]:
                 weight = doc["partners"][server_name][skew]
-                print '                               '
-                print "Skew Weight is: {0}".format(weight)
-                print '                    '
+                logger.debug("Skew Weight is: {0}".format(weight))
 
                 if weight > largest_weight:
                     largest_weight = weight
@@ -91,16 +87,16 @@ def fix_clock_skew(db, collName):
             adjustment_value = largest_time
             adjustment_value += fixed_servers[doc["server_name"]]
 
-            print "Adjustment Value: {0}".format(adjustment_value)
+            logger.debug("Adjustment Value: {0}".format(adjustment_value))
             weight = doc["partners"][server_name][skew]
             fixed_servers[server_name] = adjustment_value
-            print "Officially adding: {0} to fixed servers".format(server_name)
+            logger.debug("Officially adding: {0} to fixed servers".format(server_name))
 
             cursor = entries.find({"origin_server": server_name})
             for entry in cursor:
-                print 'Entry adjusted from: {0}'.format(entry["date"])
+                logger.debug('Entry adjusted from: {0}'.format(entry["date"]))
 
                 entry["adjusted_date"] = entry["date"] + timedelta(seconds = adjustment_value)
                 entries.save(entry)
-                print 'Entry adjusted to: {0}'.format(entry["adjusted_date"])
-                print entry["origin_server"]
+                logger.debug('Entry adjusted to: {0}'.format(entry["adjusted_date"]))
+                logger.debug(entry["origin_server"])
