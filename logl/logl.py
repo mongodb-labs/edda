@@ -151,18 +151,12 @@ def main():
                     continue
                 doc = traffic_control(line, date)
                 if doc:
-                    if reset:
-                        if doc["type"] == "init":
-                            if doc["info"]["subtype"] == "startup":
-                                if doc["info"]["server"]:
-                                    origin_server = doc["info"]["server"]
-                                    if not server_in_db(origin_server, db, collName):
-                                        servers.insert(new_server(server_num, origin_server))
-                    if doc["type"] == "exit":
-                        if previous == "exit":
-                            add_doc = False
-                        pass
-
+                    if reset and doc["type"] == "init" and doc["info"]["subtype"] == "startup":
+                        origin_server = doc["info"]["server"]
+                        if not server_in_db(origin_server, db, collName):
+                            servers.insert(new_server(server_num, origin_server))
+                    if doc["type"] == "exit" and previous == "exit":
+                        add_doc = False
                     reset = False
                     doc["origin_server"] = origin_server
                     if add_doc:
