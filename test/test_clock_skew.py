@@ -72,28 +72,28 @@ def test_clock_skew_two():
     cursor = clock_skew.find()
     assert cursor.count() == 2
     # check first server entry
-    doc = clock_skew.find_one({"server_name" : "Sam"})
+    doc = clock_skew.find_one({"server_num" : "1"})
     assert doc
     assert doc["type"] == "clock_skew"
     assert doc["partners"]
-    assert doc["partners"]["Nuni"]
-    assert len(doc["partners"]["Nuni"]) == 1
-    assert not "Sam" in doc["partners"]
-    t1, wt1 = doc["partners"]["Nuni"].popitem()
+    assert doc["partners"]["2"]
+    assert len(doc["partners"]["2"]) == 1
+    assert not "1" in doc["partners"]
+    t1, wt1 = doc["partners"]["2"].popitem()
     t1 = int(t1)
     assert abs(abs(t1) - 3) < .01
     assert t1 > 0
     print wt1
     assert wt1 == 6
     # check second server entry
-    doc2 = clock_skew.find_one({"server_name" : "Nuni"})
+    doc2 = clock_skew.find_one({"server_num" : "2"})
     assert doc2
     assert doc2["type"] == "clock_skew"
     assert doc2["partners"]
-    assert doc2["partners"]["Sam"]
-    assert len(doc2["partners"]["Sam"]) == 1
-    assert not "Nuni" in doc2["partners"]
-    t2, wt2 = doc2["partners"]["Sam"].popitem()
+    assert doc2["partners"]["1"]
+    assert len(doc2["partners"]["1"]) == 1
+    assert not "2" in doc2["partners"]
+    t2, wt2 = doc2["partners"]["1"].popitem()
     t2 = int(t2)
     assert abs(abs(t2) - 3) < .01
     assert t2 < 0
@@ -306,7 +306,7 @@ def generate_doc(type, server, label, code, target, date):
 def test_clock_skew_doc():
     """Simple tests of the clock_skew_doc() method
     in post.py"""
-    doc = clock_skew_doc("Samantha")
+    doc = clock_skew_doc("6")
     assert doc
-    assert doc["server_name"] == "Samantha"
+    assert doc["server_num"] == "6"
     assert doc["type"] == "clock_skew"

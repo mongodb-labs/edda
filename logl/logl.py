@@ -92,7 +92,7 @@ def main():
         logging.basicConfig(level=logging.WARNING)
     elif namespace.verbose == 2:
         logging.basicConfig(level=logging.INFO)
-    elif namespace.verbose == 3:
+    elif namespace.verbose >= 3:
         logging.basicConfig(level=logging.DEBUG)
     logger = logging.getLogger(__name__)
 
