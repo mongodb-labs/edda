@@ -164,7 +164,6 @@ def main():
                         logger.debug('Stored line {0} of {1} to db'.format(counter, arg))
                         stored += 1
                     previous = doc["type"]
-
         logger.warning('-' * 64)
         logger.warning('Finished running on {0}'.format(arg))
         logger.info('Stored {0} of {1} log lines to db'.format(stored, counter))
@@ -198,8 +197,15 @@ def new_server(server_num, origin_server):
     doc["server_num"] = str(server_num)
     if origin_server == str(server_num):
         doc["server_name"] = "unknown"
+        doc["server_IP"] = "unknown"
     else:
-        doc["server_name"] = origin_server
+        # determine if we have a hostname or IP address
+        pattern = re.compile("(([0|1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))(\.([0|1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5])){3}")
+        m = pattern.search(origin_server)
+        if (m == None):
+            doc["server_name"] = origin_server
+        else:
+            doc["server_IP"] = m.group(0)
     return doc
 
 
