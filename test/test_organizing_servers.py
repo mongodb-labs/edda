@@ -49,10 +49,12 @@ def test_organize_two_servers():
     servers.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date + timedelta(seconds=0)))
 
     organized_servers = organize_servers(db, "fruit")
-
+    logger.debug(organized_servers)
     for server_name in organized_servers:
         for item in server_name:
-            assert item
+            print(item[0])
+            logger.debug("Item: {}".format(item))
+    assert True
 
 
 def generate_doc(type, server, label, code, target, date):

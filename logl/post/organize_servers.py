@@ -27,6 +27,7 @@ import logging
 from datetime import *
 
 def organize_servers(db, collName):
+    logger = logging.getLogger(__name__)
     servers_list = {}
 
     entries = db[collName + ".entries"]
@@ -35,7 +36,9 @@ def organize_servers(db, collName):
     for server in servers.find():
         servers_list[server["origin_server"]] = []
         cursor = entries.find({"origin_server": server["origin_server"]})
+        logger.debug("Origin Server: {}".format(server["origin_server"]))
         cursor.sort("date")
         for doc in cursor:
+            logger.debug("Appending: {}".format(doc))
             servers_list[server["origin_server"]].append(doc)
     return servers_list
