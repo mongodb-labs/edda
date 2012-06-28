@@ -50,10 +50,10 @@ def server_clock_skew(db, collName):
         skew_a = clock_skew.find_one({"server_num": a_num})
         if not skew_a:
             skew_a = clock_skew_doc(a_num)
+            clock_skew.save(skew_a)
         for doc_b in servers.find():
             b_name = doc_b["server_name"]
             b_num = str(doc_b["server_num"])
-            logger.info("Finding clock skew for {0} - {1}...".format(a_name, b_name))
             if b_name == "unknown":
                 logger.debug("Skipping unknown server")
                 continue
@@ -63,7 +63,10 @@ def server_clock_skew(db, collName):
             if b_num in skew_a["partners"]:
                 logger.debug("Clock skew already found for this server")
                 continue
+            logger.info("Finding clock skew for {0} - {1}...".format(a_name, b_name))
             skew_a["partners"][b_num] = detect(a_name, b_name, db, collName)
+            if not skew_a["partners"][b_num]:
+                continue
             skew_b = clock_skew.find_one({"server_num": b_num})
             if not skew_b:
                 skew_b = clock_skew_doc(b_num)
@@ -71,12 +74,11 @@ def server_clock_skew(db, collName):
             # if server is ahead, +t
             # if server is behind, -t
             skew_b["partners"][a_num] = {}
-            if skew_a["partners"][b_num]:
-                for t in skew_a["partners"][b_num]:
-                    wt = skew_a["partners"][b_num][t]
-                    t = str(-int(t))
-                    logger.debug("flipped one");
-                    skew_b["partners"][a_num][t] = wt
+            for t in skew_a["partners"][b_num]:
+                wt = skew_a["partners"][b_num][t]
+                t = str(-int(t))
+                logger.debug("flipped one");
+                skew_b["partners"][a_num][t] = wt
             clock_skew.save(skew_a)
             clock_skew.save(skew_b)
 
@@ -97,7 +99,6 @@ def detect(a, b, db, collName):
     cursor_a.sort("date")
     cursor_b.sort("date")
     logger = logging.getLogger(__name__)
-    logger.debug("Detecting clock skew for pair {0} - {1}".format(a, b))
     skews = {}
     list_a = []
     list_b = []
@@ -121,7 +122,6 @@ def detect(a, b, db, collName):
                 # calculate time skew, save with weight
                 td = list_b[j + wt - 1]["date"] - list_a[i + wt - 1]["date"]
                 td = timedelta_to_int(td)
-                logger.debug(td)
                 if abs(td) > 2:
                     key = in_skews(td, skews)
                     if not key:
@@ -176,8 +176,6 @@ def timedelta_to_int(td):
 def clock_skew_doc(num):
     """Create and return an empty clock skew doc
     for this server"""
-    logger = logging.getLogger(__name__)
-    logger.debug("creating empty clock skew doc")
     doc = {}
     doc["server_num"] = num
     doc["type"] = "clock_skew"
