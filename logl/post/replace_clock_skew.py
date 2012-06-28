@@ -77,7 +77,6 @@ def replace_clock_skew(db, collName):
             logger.debug("Server Name is: {0}".format(server_num))
 
             for skew in doc["partners"][server_num]:
-                logger.debug("you can't possibly miss this-------------------------------------------------------------------------------------------------")
                 weight = doc["partners"][server_num][skew]
                 logger.debug("Skew Weight is: {0}".format(weight))
 

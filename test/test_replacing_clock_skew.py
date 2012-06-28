@@ -167,6 +167,9 @@ def test_replacing_multiple():
             continue
         assert False
 
+def insert_multiple():
+    assert False
+
 def generate_doc(type, server, label, code, target, date):
     logger = logging.getLogger(__name__)
     """Generate an entry"""
@@ -198,4 +201,3 @@ def generate_cs_doc(name, referal):
     doc["partners"] = {}
     doc["partners"][referal] = {}
     return doc
-
