@@ -141,7 +141,7 @@ def main():
             if (string.find(line, '*****') >= 0):
                 reset = True
                 server_num += 1
-                origin_server = server_num
+                origin_server = str(server_num)
                 continue
             # skip blank lines
             if (len(line) > 1):
@@ -156,7 +156,8 @@ def main():
                             if doc["info"]["subtype"] == "startup":
                                 if doc["info"]["server"]:
                                     origin_server = doc["info"]["server"]
-                                    servers.insert(new_server(server_num, origin_server))
+                                    if not server_in_db(origin_server, db, collName):
+                                        servers.insert(new_server(server_num, origin_server))
                     if doc["type"] == "exit":
                         if previous == "exit":
                             add_doc = False
@@ -183,19 +184,23 @@ def main():
         logger.info("Attempting to resolve clock skew across servers")
         result = server_clock_skew(db, collName)
         logger.info("Attempting to Fix Clock_skews in original .entries documents")
-        replace_clock_skew(db, collName)
+#        replace_clock_skew(db, collName)
         logger.info("Completed replacing skew values. ")
 
     logger.warning('Exiting.')
 
 
+def server_in_db(origin_server, db, collName):
+    """Checks if this server (hostaddr and port) is already
+    in the database."""
+    return db[collName + ".servers"].find_one({"server_name": origin_server})
+
+
 def new_server(server_num, origin_server):
-    """Checks if this server (hostaddr and port) is already in
-    the database.  If so, returns the matching document.
-    If not, creates a document for the server"""
+    """Creates and returns a document for the given server"""
     doc = {}
-    doc["server_num"] = server_num
-    if origin_server == server_num:
+    doc["server_num"] = str(server_num)
+    if origin_server == str(server_num):
         doc["server_name"] = "unknown"
     else:
         doc["server_name"] = origin_server
