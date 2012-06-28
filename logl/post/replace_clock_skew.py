@@ -66,30 +66,34 @@ def replace_clock_skew(db, collName):
             first = False
             logger.debug("Our supreme leader is: {0}".format(doc["server_num"]))
         for server_num in doc["partners"]:
-            if(server_num in fixed_servers):
-                logger.debug("Server name already in list of fixed servers. EXITING: ")
+            if server_num in fixed_servers:
+                logger.debug("Server name already in list of fixed servers. EXITING: {}".format(server_num))
                 logger.debug("------------------------------------------------------   \n")
                 continue
 
             #could potentially use this
             largest_weight = 0
-            largest_time = None
+            largest_time = 0
             logger.debug("Server name: {}".format(server_num))
-            logger.debug("Server Name is: {0}".format(doc["partners"][server_num]))
+            logger.debug("Server Name is: {0}".format(server_num))
 
             for skew in doc["partners"][server_num]:
+                logger.debug("you can't possibly miss this-------------------------------------------------------------------------------------------------")
                 weight = doc["partners"][server_num][skew]
                 logger.debug("Skew Weight is: {0}".format(weight))
 
-                if weight > largest_weight:
+                if abs(weight) > largest_weight:
                     largest_weight = weight
+                    logger.debug("Skew value on list: {}".format(skew))
                     largest_time = int(skew)#int(doc["partners"][server_name][skew])
 
             adjustment_value = largest_time
+            logger.debug("Skew value: {}".format(largest_time))
             adjustment_value += fixed_servers[doc["server_num"]]
 
             logger.debug("Adjustment Value: {0}".format(adjustment_value))
-            weight = doc["partners"][server_num][skew]
+            #weight = doc["partners"][server_num][skew]
+            logger.debug("Server is added to list of fixed servers: {}")
             fixed_servers[server_num] = adjustment_value
             logger.debug("Officially adding: {0} to fixed servers".format(server_num))
 
