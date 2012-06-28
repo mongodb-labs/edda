@@ -95,7 +95,7 @@ def replace_clock_skew(db, collName):
             fixed_servers[server_num] = adjustment_value
             logger.debug("Officially adding: {0} to fixed servers".format(server_num))
 
-            server_cursor = servers.find({"server_num": int(server_num)})
+            server_cursor = servers.find({"server_num": server_num})
             for server in server_cursor:
                 cursor = entries.find({"origin_server": server["server_name"]})
             for entry in cursor:
