@@ -184,12 +184,14 @@ def main():
 
 
 def server_in_db(origin_server, db, collName):
-    """Checks if this server (hostaddr and port) is already
-    in the database."""
-    count = db[collName + ".servers"].find({"server_name": origin_server}).count()
-    if count > 0:
+    """Checks if this server (by hostname or IP) is already
+    stored in the database."""
+    if db[collName + ".servers"].find({"server_name": origin_server}).count() > 0:
+        return True
+    if db[collName + ".servers"].find({"server_IP": origin_server}).count() > 0:
         return True
     return False
+
 
 def new_server(server_num, origin_server):
     """Creates and returns a document for the given server"""
