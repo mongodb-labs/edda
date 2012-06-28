@@ -50,8 +50,10 @@ def test_clock_skew_one():
     entries.insert(generate_doc("status", "Sam", "STARTUP2", 5, "Gaya", datetime.now()))
     entries.insert(generate_doc("status", "Sam", "PRIMARY", 1, "self", datetime.now()))
     server_clock_skew(db, "wildcats")
-    cursor = db["wildcats.clock_skew"].find()
-    assert cursor.count() == 0
+    doc = db["wildcats.clock_skew"].find_one()
+    assert doc
+    assert doc["server_num"] == "1"
+    assert not doc["partners"]
 
 
 def test_clock_skew_two():
