@@ -39,16 +39,17 @@ def server_clock_skew(db, collName):
     logger = logging.getLogger(__name__)
 
     clock_skew = db[collName + ".clock_skew"]
+    servers = db[collName + ".servers"]
 
     for doc_a in db[collName + ".servers"].find():
         a = doc_a["server_name"]
         if a == "unknown":
             logger.debug("Skipping unknown server")
             continue
-        skew_a = db[collName + ".clock_skew"].find_one({"server_name": a})
+        skew_a = clock_skew.find_one({"server_name": a})
         if not skew_a:
             skew_a = clock_skew_doc(a)
-        for doc_b in db[collName + ".servers"].find():
+        for doc_b in servers.find():
             b = doc_b["server_name"]
             logger.info("Finding clock skew for {0} - {1}...".format(a, b))
             if b == "unknown":
@@ -61,7 +62,7 @@ def server_clock_skew(db, collName):
                 logger.debug("Clock skew already found for this server")
                 continue
             skew_a["partners"][b] = detect(a, b, db, collName)
-            skew_b = db[collName + ".clock_skew"].find_one({"server_name":b})
+            skew_b = clock_skew.find_one({"server_name":b})
             if not skew_b:
                 skew_b = clock_skew_doc(b)
             # flip according to sign convention for other server:
@@ -74,8 +75,8 @@ def server_clock_skew(db, collName):
                     t = str(-int(t))
                     logger.debug("flipped one");
                     skew_b["partners"][a][t] = wt
-            db[collName + ".clock_skew"].save(skew_a)
-            db[collName + ".clock_skew"].save(skew_b)
+            clock_skew.save(skew_a)
+            clock_skew.save(skew_b)
 
 
 def detect(a, b, db, collName):
