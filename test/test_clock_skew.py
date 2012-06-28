@@ -31,7 +31,7 @@ def db_setup():
     clock_skew = db["wildcats.clock_skew"]
     db.drop_collection(servers)
     db.drop_collection(entries)
-#    db.drop_collection(clock_skew)
+    db.drop_collection(clock_skew)
     return [servers, entries, clock_skew, db]
 
 
