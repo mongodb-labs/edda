@@ -17,7 +17,7 @@ from logl.post.replace_clock_skew import replace_clock_skew
 from logl.logl import new_server
 import pymongo
 import logging
-from datetime import datetime
+from datetime import *
 from pymongo import Connection
 from time import sleep
 from nose.plugins.skip import Skip, SkipTest
@@ -57,7 +57,7 @@ def test_replacing_none():
 
     replace_clock_skew(db, "fruit")
 
-    docs = entries.find({"origin_server": "4"})
+    docs = entries.find({"origin_server": "apple"})
     for doc in docs:
         logger.debug("Original Date: {}".format(doc["date"]))
         delta = original_date - doc["date"]
@@ -71,7 +71,7 @@ def test_replacing_none():
     #assert original_date == entries.find().
 
 
-def replacing_one_value():
+def test_replacing_one_value():
     logger = logging.getLogger(__name__)
     servers, entries, clock_skew, db = db_setup()
     skew1 = 5
@@ -79,11 +79,13 @@ def replacing_one_value():
     original_date = datetime.now()
     entries.insert(generate_doc("status", "apple", "STARTUP2", 5, "pear", original_date))
     entries.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date))
-    doc1 = generate_cs_doc("pear", "apple")
-    doc1["partners"]["apple"]["5"] = skew1
+    servers.insert(new_server(5, "pear"))
+    servers.insert(new_server(6, "apple"))
+    doc1 = generate_cs_doc("5", "6")
+    doc1["partners"]["6"]["5"] = skew1
     clock_skew.insert(doc1)
-    doc1 = generate_cs_doc("apple", "pear")
-    doc1["partners"]["pear"]["0"] = -skew1
+    doc1 = generate_cs_doc("6", "5")
+    doc1["partners"]["5"]["0"] = -skew1
     clock_skew.insert(doc1)
 
     clock_skew.insert(doc1)
@@ -96,11 +98,11 @@ def replacing_one_value():
         delta = abs(original_date - doc["adjusted_date"])
         logger.debug("Delta: {}".format(repr(delta)))
         if delta - timedelta(seconds = skew1) < timedelta(milliseconds = 1):
-            assert test_replacing_one_value
+            assert True
             continue
         assert False
 
-def replacing_multiple():
+def test_replacing_multiple():
     logger = logging.getLogger(__name__)
     servers, entries, clock_skew, db = db_setup()
     skew = "14"
@@ -115,20 +117,24 @@ def replacing_multiple():
     entries.insert(generate_doc("status", "pear", "STARTUP2", 5, "plum", original_date))
     entries.insert(generate_doc("status", "plum", "STARTUP2", 5, "pear", original_date))
 
-    doc1 = generate_cs_doc("pear", "apple")
-    doc1["partners"]["apple"][skew] = weight
-    doc1["partners"]["plum"] = {}
-    doc1["partners"]["plum"][skew] = weight
+    servers.insert(new_server(4, "apple"))
+    servers.insert(new_server(5, "pear"))
+    servers.insert(new_server(6, "plum"))
+
+    doc1 = generate_cs_doc("5", "4")
+    doc1["partners"]["4"][skew] = weight
+    doc1["partners"]["5"] = {}
+    doc1["partners"]["5"][skew] = weight
     clock_skew.insert(doc1)
-    doc1 = generate_cs_doc("apple", "pear")
-    doc1["partners"]["plum"] = {}
-    doc1["partners"]["plum"][skew] = weight
-    doc1["partners"]["pear"][neg_skew] = weight
+    doc1 = generate_cs_doc("4", "5")
+    doc1["partners"]["6"] = {}
+    doc1["partners"]["6"][skew] = weight
+    doc1["partners"]["5"][neg_skew] = weight
     clock_skew.insert(doc1)
-    doc1 = generate_cs_doc("plum", "pear")
-    doc1["partners"]["apple"] = {}
-    doc1["partners"]["apple"][neg_skew] = weight
-    doc1["partners"]["pear"][neg_skew] = weight
+    doc1 = generate_cs_doc("6", "5")
+    doc1["partners"]["4"] = {}
+    doc1["partners"]["4"][neg_skew] = weight
+    doc1["partners"]["5"][neg_skew] = weight
     clock_skew.insert(doc1)
     replace_clock_skew(db, "fruit")
     docs = entries.find({"origin_server": "plum"})
@@ -137,7 +143,7 @@ def replacing_multiple():
         logger.debug("Adjusted Date: {}".format(doc["adjusted_date"]))
         delta = abs(original_date - doc["adjusted_date"])
         logger.debug("Delta: {}".format(repr(delta)))
-        if delta - timedelta(seconds=int(skew)) < timedelta(milliseconds=1):
+        if delta - timedelta(seconds=int(skew*2)) < timedelta(milliseconds=1):
             assert True
             continue
         assert False
@@ -148,7 +154,7 @@ def replacing_multiple():
         logger.debug("Adjusted Date: {}".format(doc["adjusted_date"]))
         delta = abs(original_date - doc["adjusted_date"])
         logger.debug("Delta: {}".format(repr(delta)))
-        if delta - timedelta(seconds=int(skew)) < timedelta(milliseconds=1):
+        if delta - timedelta(seconds=int(skew*2)) < timedelta(milliseconds=1):
             assert True
             continue
         assert False
