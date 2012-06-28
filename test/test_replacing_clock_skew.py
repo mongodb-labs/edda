@@ -123,8 +123,8 @@ def test_replacing_multiple():
 
     doc1 = generate_cs_doc("5", "4")
     doc1["partners"]["4"][skew] = weight
-    doc1["partners"]["5"] = {}
-    doc1["partners"]["5"][skew] = weight
+    doc1["partners"]["6"] = {}
+    doc1["partners"]["6"][skew] = weight
     clock_skew.insert(doc1)
     doc1 = generate_cs_doc("4", "5")
     doc1["partners"]["6"] = {}
@@ -143,7 +143,7 @@ def test_replacing_multiple():
         logger.debug("Adjusted Date: {}".format(doc["adjusted_date"]))
         delta = abs(original_date - doc["adjusted_date"])
         logger.debug("Delta: {}".format(repr(delta)))
-        if delta - timedelta(seconds=int(skew*2)) < timedelta(milliseconds=1):
+        if delta - timedelta(seconds=int(skew)) < timedelta(milliseconds=1):
             assert True
             continue
         assert False
@@ -154,7 +154,7 @@ def test_replacing_multiple():
         logger.debug("Adjusted Date: {}".format(doc["adjusted_date"]))
         delta = abs(original_date - doc["adjusted_date"])
         logger.debug("Delta: {}".format(repr(delta)))
-        if delta - timedelta(seconds=int(skew*2)) < timedelta(milliseconds=1):
+        if delta - timedelta(seconds=int(skew)) < timedelta(milliseconds=1):
             assert True
             continue
         assert False

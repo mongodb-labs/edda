@@ -88,11 +88,12 @@ def replace_clock_skew(db, collName):
             adjustment_value = largest_time
             logger.debug("Skew value: {}".format(largest_time))
             adjustment_value += fixed_servers[doc["server_num"]]
+            logger.debug("Strung server name: {}".format(doc["server_num"]))
 
             logger.debug("Adjustment Value: {0}".format(adjustment_value))
             #weight = doc["partners"][server_num][skew]
             logger.debug("Server is added to list of fixed servers: {}")
-            fixed_servers[server_num] = adjustment_value
+            fixed_servers[server_num] = adjustment_value + fixed_servers[doc["server_num"]]
             logger.debug("Officially adding: {0} to fixed servers".format(server_num))
 
             server_cursor = servers.find({"server_num": server_num})
