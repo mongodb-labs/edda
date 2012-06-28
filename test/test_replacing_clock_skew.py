@@ -13,7 +13,7 @@
 # limitations under the License.
 
 
-from logl.post.replace_clock_skew import *
+from logl.post.replace_clock_skew import replace_clock_skew
 from logl.logl import new_server
 import pymongo
 import logging
@@ -43,18 +43,21 @@ def test_replacing_none():
     servers, entries, clock_skew, db = db_setup()
     original_date = datetime.now()
 
+
     entries.insert(generate_doc("status", "apple", "STARTUP2", 5, "pear", original_date))
     entries.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date))
-    doc1 = generate_cs_doc("pear", "apple")
-    doc1["partners"]["apple"]["0"] = 5
+    servers.insert(new_server(5, "pear"))
+    servers.insert(new_server(6, "apple"))
+    doc1 = generate_cs_doc("5", "6")
+    doc1["partners"]["6"]["0"] = 5
     clock_skew.insert(doc1)
-    doc1 = generate_cs_doc("apple", "pear")
-    doc1["partners"]["pear"]["0"] = 5
+    doc1 = generate_cs_doc("6", "5")
+    doc1["partners"]["5"]["0"] = 5
     clock_skew.insert(doc1)
 
-    fix_clock_skew(db, "fruit")
+    replace_clock_skew(db, "fruit")
 
-    docs = entries.find({"origin_server": "pear"})
+    docs = entries.find({"origin_server": "4"})
     for doc in docs:
         logger.debug("Original Date: {}".format(doc["date"]))
         delta = original_date - doc["date"]
@@ -68,7 +71,7 @@ def test_replacing_none():
     #assert original_date == entries.find().
 
 
-def test_replacing_one_value():
+def replacing_one_value():
     logger = logging.getLogger(__name__)
     servers, entries, clock_skew, db = db_setup()
     skew1 = 5
@@ -84,7 +87,7 @@ def test_replacing_one_value():
     clock_skew.insert(doc1)
 
     clock_skew.insert(doc1)
-    fix_clock_skew(db, "fruit")
+    replace_clock_skew(db, "fruit")
 
     docs = entries.find({"origin_server": "apple"})
     for doc in docs:
@@ -97,7 +100,7 @@ def test_replacing_one_value():
             continue
         assert False
 
-def test_replacing_multiple():
+def replacing_multiple():
     logger = logging.getLogger(__name__)
     servers, entries, clock_skew, db = db_setup()
     skew = "14"
@@ -127,7 +130,7 @@ def test_replacing_multiple():
     doc1["partners"]["apple"][neg_skew] = weight
     doc1["partners"]["pear"][neg_skew] = weight
     clock_skew.insert(doc1)
-    fix_clock_skew(db, "fruit")
+    replace_clock_skew(db, "fruit")
     docs = entries.find({"origin_server": "plum"})
     for doc in docs:
         logger.debug("Original Date: {}".format(doc["date"]))
@@ -185,7 +188,8 @@ def generate_cs_doc(name, referal):
     logger = logging.getLogger(__name__)
     doc = {}
     doc["type"] = "clock_skew"
-    doc["server_name"] = name
+    doc["server_num"] = name
     doc["partners"] = {}
     doc["partners"][referal] = {}
     return doc
+

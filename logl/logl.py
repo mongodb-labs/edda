@@ -36,7 +36,7 @@ from parse_date import date_parser
 from datetime import datetime
 from filters import *
 from post.clock_skew import server_clock_skew
-from post.replace_clock_skew import fix_clock_skew
+from post.replace_clock_skew import replace_clock_skew
 from post.organize_servers import organize_servers
 
 
@@ -183,7 +183,7 @@ def main():
         logger.info("Attempting to resolve clock skew across servers")
         result = server_clock_skew(db, collName)
         logger.info("Attempting to Fix Clock_skews in original .entries documents")
-        fix_clock_skew(db, collName)
+        replace_clock_skew(db, collName)
         logger.info("Completed replacing skew values. ")
 
     logger.warning('Exiting.')
