@@ -25,7 +25,6 @@ from nose.plugins.skip import Skip, SkipTest
 
 
 def db_setup():
-    logger = logging.getLogger(__name__)
     """Set up a database for use by tests"""
     c = Connection()
     db = c["test"]
@@ -57,7 +56,6 @@ def test_organize_two_servers():
             logger.debug("Item list: {}".format(item))
             logger.debug("Item: {}".format(item))
             assert item
-    #there si something wrong here it ends up printing the letters of apple and pear
 
 
 def test_organizing_three_servers():
@@ -91,12 +89,45 @@ def test_organizing_three_servers():
                 continue
             current_date = item["date"]
             assert past_date <= current_date
-            past_date = current_date 
-            
+            past_date = current_date
+
             #ogger.debug("Item: {}".format(item))
 
-def generate_doc(type, server, label, code, target, date):
+def test_organize_same_times():
+    servers, entries, clock_skew, db = db_setup()
     logger = logging.getLogger(__name__)
+    original_date = datetime.now()
+
+
+    entries.insert(generate_doc("status", "apple", "STARTUP2", 5, "pear", original_date))
+    entries.insert(generate_doc("status", "apple", "STARTUP2", 5, "pear", original_date))
+    entries.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date))
+    entries.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date))
+    entries.insert(generate_doc("status", "plum", "STARTUP2", 5, "apple", original_date))
+    entries.insert(generate_doc("status", "plum", "STARTUP2", 5, "apple", original_date))
+
+
+    servers.insert(generate_doc("status", "plum", "STARTUP2", 5, "apple", original_date))
+    servers.insert(generate_doc("status", "apple", "STARTUP2", 5, "plum", original_date))
+    servers.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date))
+
+    organized_servers = organize_servers(db, "fruit")
+    logger.debug("Organized servers Printing: {}".format(organized_servers))
+    for server_name in organized_servers:
+        logger.debug("Server Name: {}".format(server_name))
+        first = True
+        for item in organized_servers[server_name]:
+            logger.debug("Item list: {}".format(item))
+            if first:
+                past_date = item["date"]
+                first = False
+                continue
+            current_date = item["date"]
+            assert past_date <= current_date
+            past_date = current_date
+
+
+def generate_doc(type, server, label, code, target, date):
     """Generate an entry"""
     doc = {}
     doc["type"] = type

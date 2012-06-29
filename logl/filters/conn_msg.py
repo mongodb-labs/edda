@@ -26,9 +26,9 @@ def criteria(msg):
     return -1
 
 
-def proces(msg, date):
+def process(msg, date):
     result = criteria(msg)
-    if result > 0:
+    if result < 0:
         return None
     doc = {}
     doc["date"] = date
@@ -37,12 +37,13 @@ def proces(msg, date):
     doc["msg"] = msg
 
     if result == 1:
-        accepted(msg, doc)
+        new_conn(msg, doc)
     if result == 2:
         ended(msg, doc)
+    return doc
 
 
-def accepted(msg, doc):
+def new_conn(msg, doc):
     """this server has accepted a new connection."""
     doc["info"]["subtype"] = "new_conn"
     logger = logging.getLogger(__name__)

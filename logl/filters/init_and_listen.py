@@ -30,8 +30,7 @@ def criteria(msg):
     if (string.find(msg, 'starting') >= 0):
         return 1
     # has this server accepted a new connection?
-    if (string.find(msg, 'connection accepted') >= 0):
-        return 2
+
     return -1
 
 def process(msg, date):
