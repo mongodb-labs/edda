@@ -101,8 +101,7 @@ def replace_clock_skew(db, collName):
                 cursor = entries.find({"origin_server": server["server_name"]})
             for entry in cursor:
                 logger.debug('Entry adjusted from: {0}'.format(entry["date"]))
-
-                entry["adjusted_date"] = entry["date"] + timedelta(seconds = adjustment_value)
+                entry["adjusted_date"] = entry["date"] + timedelta(seconds=adjustment_value)
                 entries.save(entry)
                 logger.debug('Entry adjusted to: {0}'.format(entry["adjusted_date"]))
                 logger.debug(entry["origin_server"])
