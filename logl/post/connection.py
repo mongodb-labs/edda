@@ -33,6 +33,7 @@ except ImportError:
     import simplejson as json
 import threading
 
+
 data = None
 
 class ThreadClass(threading.Thread):
@@ -52,7 +53,7 @@ def send_to_js(msg):
     client"""
 
     global data
-    data = msg
+    data = json.dumps(msg)
 
     # fork here!
     t = ThreadClass()
