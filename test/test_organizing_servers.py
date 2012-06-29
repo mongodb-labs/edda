@@ -37,25 +37,63 @@ def db_setup():
     db.drop_collection(clock_skew)
     return [servers, entries, clock_skew, db]
 
+
 def test_organize_two_servers():
     logger = logging.getLogger(__name__)
     servers, entries, clock_skew, db = db_setup()
     original_date = datetime.now()
 
     entries.insert(generate_doc("status", "apple", "STARTUP2", 5, "pear", original_date))
-    entries.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date + timedelta(seconds=0)))
+    entries.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date + timedelta(seconds=5)))
 
     servers.insert(generate_doc("status", "apple", "STARTUP2", 5, "pear", original_date))
-    servers.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date + timedelta(seconds=0)))
+    servers.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date + timedelta(seconds=6)))
 
     organized_servers = organize_servers(db, "fruit")
-    logger.debug(organized_servers)
+    logger.debug("Organized servers Printing: {}".format(organized_servers))
     for server_name in organized_servers:
-        for item in server_name:
-            print(item[0])
+        logger.debug("Server Name: {}".format(server_name))
+        for item in organized_servers[server_name]:
+            logger.debug("Item list: {}".format(item))
             logger.debug("Item: {}".format(item))
-    assert True
+            assert item
+    #there si something wrong here it ends up printing the letters of apple and pear
 
+
+def test_organizing_three_servers():
+    servers, entries, clock_skew, db = db_setup()
+    logger = logging.getLogger(__name__)
+    original_date = datetime.now()
+
+
+    entries.insert(generate_doc("status", "apple", "STARTUP2", 5, "pear", original_date))
+    entries.insert(generate_doc("status", "apple", "STARTUP2", 5, "pear", original_date + timedelta(seconds=14)))
+    entries.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date + timedelta(seconds=5)))
+    entries.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date + timedelta(seconds=15)))
+    entries.insert(generate_doc("status", "plum", "STARTUP2", 5, "apple", original_date + timedelta(seconds=9)))
+    entries.insert(generate_doc("status", "plum", "STARTUP2", 5, "apple", original_date + timedelta(seconds=11)))
+
+
+    servers.insert(generate_doc("status", "plum", "STARTUP2", 5, "apple", original_date))
+    servers.insert(generate_doc("status", "apple", "STARTUP2", 5, "plum", original_date + timedelta(seconds=9)))
+    servers.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date + timedelta(seconds=6)))
+
+    organized_servers = organize_servers(db, "fruit")
+    logger.debug("Organized servers Printing: {}".format(organized_servers))
+    for server_name in organized_servers:
+        logger.debug("Server Name: {}".format(server_name))
+        first = True
+        for item in organized_servers[server_name]:
+            logger.debug("Item list: {}".format(item))
+            if first:
+                past_date = item["date"]
+                first = False
+                continue
+            current_date = item["date"]
+            assert past_date <= current_date
+            past_date = current_date 
+            
+            #ogger.debug("Item: {}".format(item))
 
 def generate_doc(type, server, label, code, target, date):
     logger = logging.getLogger(__name__)
@@ -69,5 +107,3 @@ def generate_doc(type, server, label, code, target, date):
     doc["info"]["server"] = target
     doc["date"] = date
     return doc
-
-
