@@ -30,10 +30,17 @@ def address_matching(db, collName):
     already has been matched to an IP address and hostname, remove
     these addresses from mentioned_names.  Move to next server.
     - Else, make a list of the addresses (S) mentions, neighbors_of_s
-    - Find all neighbors of (S) and the addresses they mention (their neighbors)
-    - Make a list of addresses that ALL neighbors of (S) mention, neighbor_names
-    - By process of elimination between neighbors_of_s and neighbor_names, see if
-    there remains one address in neighbor_names which (S) has not
+    - If (S) has a known IP address or hostname:
+        (stronger algorithm)
+        - find all neighbors of (S) and the addresses they mention (their neighbors)
+        - Make a list of addresses that ALL neighbors of (S) mention, neighbor_neighbors
+        - By process of elimination between neighbors_of_s and neighbors_neighbors, see if
+    there remains one address in neighbors_neighbors that (S) has not
+    mentioned in its log entries.  This must be (S)'s address.  Remove this
+    address from mentioned_names.
+    - Else (weaker algorithm):
+        - By process of elimination between neighbors_of_s and mentioned_names,
+    see if there remains one address in mentioned_names that (S) has not
     mentioned in its log entries.  This must be (S)'s address.  Remove this
     address from mentioned_names.
     - Repeat this process until mentioned_names is empty trying each server
@@ -43,7 +50,123 @@ def address_matching(db, collName):
     This algorithm is only sound when the user provides a
     log file from every server in the network, and complete when
     the network graph was complete, or was a tree (connected and acyclic)"""
-    pass
+
+    # find a list of all unnamed servers being talked about
+    mentioned_names = []
+
+    servers = db[collName + ".servers"]
+    entries = db[collName + ".entries"]
+
+    cursor = entries.find().distinct("info.server")
+    for addr in cursor:
+        if addr == "self":
+            continue
+        if servers.find_one({"server_name" : addr}) or servers.find_one({"server_IP" : addr}):
+            # concerned that skipping these will make test fail
+            continue
+        mentioned_names.append(addr)
+
+    last_change = None
+    while mentioned_names:
+        for s in servers.find({"$or": [{"server_name": "unknown"}, {"server_IP": "unknown"}]}):
+
+            # extract server information
+            num = s["server_num"]
+            if s["server_name"] != "unknown":
+                name = s["server_name"]
+            elif s["server_IP"] != "unknown":
+                name = s["server_IP"]
+            else:
+                name = None
+
+            # get neighbors of s into list
+            c = entries.find({"origin_server": num}).distinct("info.server")
+            neighbors_of_s = []
+            for entry in c:
+                neighbors_of_s.append(c["info"]["server"])
+
+            # if possible, make a list of neighbors of s
+            # (stronger algorithm)
+            if name:
+                neighbors_neighbors = []
+                neighbors = entries.find({"info.server": name}).distinct("origin_server")
+                # for each server that mentions s
+                for n in neighbors:
+                    n_addr = n["origin_server"]
+                    n_num, n_name, n_IP = name_me(n_addr, servers)
+                    if n_num:
+                    # might not be able to find neighbors' lists
+                    # only able to if we have an origin_server number for that addr
+                        n_addrs = entries.find({"origin_server": n_num}).distinct("info.server")
+                    # find all servers they mention
+                # find the common addresses among all the neighbors
+                # put them in neighbors_neighbors
+                match = eliminate(neighbors_of_s, neighbors_neighbors)
+            else:
+                # (weaker algorithm)
+                match = eliminate(neighbors_of_s, mentioned_names)
+
+            if match:
+                if is_IP(match):
+                    # this code could be reorganized to be much more compact and efficient
+                    if s["server_IP"] == "unknown":
+                        s["server_IP"] = match
+                        servers.save(s)
+                        last_change = num
+                        mentioned_names.remove(match)
+                        logger.debug("IP {0} matched to server {1}".format(match, num))
+                    elif: s["server_IP"] == match:
+                        logger.debug("duplicate IP found for server {0}".format(match))
+                else:
+                    if s["server_name"] == "unknown":
+                        s["server_name"] = match
+                        logger.debug("hostname {0} matched to server {1}".format(match, num))
+                        servers.save(s)
+                        last_change = num
+                        mentioned_names.remove(match)
+                    elif s["server_name"] == match:
+                        logger.debug("duplicate hostname found for server {0}".format(match, num))
+                    else:
+                        logger.debug("Server {0}'s stored hostname {1} " +
+                                     "is different from match {2}".format(num, name, match))
+
+
+def name_me(s, servers):
+    """Given a string s (which can be a server_num,
+    server_name, or server_IP), method returns all info known
+    about the server in a tuple [server_num, server_name, server_IP]"""
+    name = None
+    IP = None
+    num = None
+    docs = []
+    docs.append(servers.find_one({"server_num": s}))
+    docs.append(servers.find_one({"server_name": s}))
+    docs.append(servers.find_one({"server_IP": s}))
+    for doc in docs:
+        if doc["server_name"] != "unknown":
+            name = doc["server_name"]
+        if doc["server_IP"] != "unknown":
+            IP = doc["server_IP"]
+        num = doc["server_num"]
+    return [nun, name, IP]
+
+
+def eliminate(s_list, n_list):
+    """See if, by process of elimination,
+    there is exactly one entry in n_list that
+    is not in s_list.  Return that entry, or None."""
+    # make copies of lists, because they are mutable
+    # and changes made here will alter the lists outside
+    s = s_list
+    n = n_list
+    for addr in s:
+        if not n:
+            return None
+        if addr in n:
+            n.remove(addr)
+    if len(n) == 1:
+        return n.pop()
+    return None
 
 
 def server_matchup(db, collName):
@@ -85,6 +208,7 @@ def server_matchup(db, collName):
         if servers.find_one({"server_name" : name}):
             continue
         unmatched_names.append(name)
+
     # if there are no free names and still unknown servers, failure.
     if len(unmatched_names) == 0:
         return -1
