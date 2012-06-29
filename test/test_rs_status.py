@@ -66,7 +66,7 @@ def test_startup_with_IP():
     assert doc
     assert doc["type"] == "status"
     assert doc["info"]["state_code"] == 0
-    assert doc["info"]["state"] == "STARTUP"
+    assert doc["info"]["state"] == "STARTUP1"
     assert doc["info"]["addr"] == "10.4.65.7:27018"
 
 
@@ -77,7 +77,7 @@ def test_startup_with_hostname():
     assert doc
     assert doc["type"] == "status"
     assert doc["info"]["state_code"] == 0
-    assert doc["info"]["state"] == "STARTUP"
+    assert doc["info"]["state"] == "STARTUP1"
     assert doc["info"]["addr"] == "sam@10gen.com:27018"
 
 

@@ -94,7 +94,7 @@ def process(msg, date):
     if n:
         if result == 0:
             doc["info"]["server"] = "self"
-            doc["info"]["IP"] = n.group(0)
+            doc["info"]["addr"] = n.group(0)
         else:
             doc["info"]["server"] = n.group(0)
     else:
