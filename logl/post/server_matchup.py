@@ -19,23 +19,30 @@ from clock_skew import server_clock_skew
 import operator
 
 
-def simple_IP_matching(db, collName):
-    """Runs a simple algorithm to match servers with their
-    corresponding IP numbers.  The algorithm works as follows:
-    - Make a list of all the IPs being talked about;
+def address_matching(db, collName):
+    """Runs an algorithm to match servers with their
+    corresponding hostnames/IP addresses.  The algorithm works as follows,
+    using replica set status messages from the logs to find addresses:
+
+    - Make a list, mentioned_names of all the IPs being talked about;
     these must be all the servers in the network.
-    - For each server (S) in the collName.servers collection,
-    make a list of the IPs it talks about (which must not belong to it)
-    - By process of elimination between the two lists, see if
-    there remains one IP in the first list which (S) has not
-    mentioned in its log entries.  This must be (S)'s IP address.
+    - For each server (S) in the collName.servers collection, if it
+    already has been matched to an IP address and hostname, remove
+    these addresses from mentioned_names.  Move to next server.
+    - Else, make a list of the addresses (S) mentions, neighbors_of_s
+    - Find all neighbors of (S) and the addresses they mention (their neighbors)
+    - Make a list of addresses that ALL neighbors of (S) mention, neighbor_names
+    - By process of elimination between neighbors_of_s and neighbor_names, see if
+    there remains one address in neighbor_names which (S) has not
+    mentioned in its log entries.  This must be (S)'s address.  Remove this
+    address from mentioned_names.
+    - Repeat this process until mentioned_names is empty trying each server
+    round-robin, or until all servers have been unsuccessfully tried since the last
+    change was made to mentioned_names.
 
     This algorithm is only sound when the user provides a
-    log file from every server in the network.
-
-    This algorithm is only complete when the user provides
-    a log file from every server in the network, and the network
-    was a fully connected system"""
+    log file from every server in the network, and complete when
+    the network graph was complete, or was a tree (connected and acyclic)"""
     pass
 
 
