@@ -160,15 +160,13 @@ def test_replacing_multiple():
         assert False
 
     docs = entries.find({"origin_server": "pear"})
-    
+
     for doc in docs:
         if not "adjusted_date" in doc:
             assert True
             continue
         assert False
 
-def insert_multiple():
-    assert False
 
 def generate_doc(type, server, label, code, target, date):
     logger = logging.getLogger(__name__)
