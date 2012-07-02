@@ -14,6 +14,8 @@
 
 # This module tracks requests from the server to lock or unlock its self from writes. 
 
+import string
+
 
 def criteria(msg):
     """Does the given log line fit the criteria for this filter?
@@ -23,11 +25,26 @@ def criteria(msg):
             return 0
         elif (string.find(msg, 'unlock') >= 0):
             return 1
+        elif (string.find(msg, 'CMD fsync')):
+            return 2
     return -1
 
 
 def process(msg, date):
-    message_type = criteria
+    """if the given log line fits the criteria for this filter,
+    processes the line and creates a document for it.
+    document = {
+       "date" : date,
+       "type" : "conn2",
+       "info" : {
+          "state_code" : messagetype
+          "state" : state
+          "sync_num" : sync_num
+          "lock_num" : lock_num
+       }
+       "oritinal_message" : msg 
+    }"""
+    message_type = criteria(msg)
     if message_type < 0:
         return None
 
@@ -35,9 +52,17 @@ def process(msg, date):
     doc["date"] = date
     doc["type"] = "conn2"
     doc["info"] = {}
-    doc["info"]["subtype"] = message_type
+    doc["info"]["state_code"] = message_type
+    doc["original_message"] = msg
+
     if message_type == 0:
         doc["info"]["state"] = "LOCKED"
-    else:
+    elif message_type == 1:
         doc["info"]["state"] = "UNLOCKED"
-    doc["original_message"] = msg
+    else:
+        doc["info"]["state"] = "FSYNC"
+        start = string.find(msg, " sync:")
+        doc["info"]["sync_num"] = int(msg[start + 6: start + 7])
+        start = string.find(msg, "lock:")
+        doc["info"]["lock_num"] = int(msg[start + 5: start + 6])
+    return doc
