@@ -15,11 +15,13 @@
 #!/usr/bin/env python
 import pymongo
 import logging
+from copy import deepcopy
 from clock_skew import server_clock_skew
 import operator
+import re
 
 
-def address_matching(db, collName):
+def address_matchup(db, collName):
     """Runs an algorithm to match servers with their
     corresponding hostnames/IP addresses.  The algorithm works as follows,
     using replica set status messages from the logs to find addresses:
@@ -51,24 +53,36 @@ def address_matching(db, collName):
     log file from every server in the network, and complete when
     the network graph was complete, or was a tree (connected and acyclic)"""
 
+    logger = logging.getLogger(__name__)
+
     # find a list of all unnamed servers being talked about
     mentioned_names = []
 
     servers = db[collName + ".servers"]
     entries = db[collName + ".entries"]
 
-    cursor = entries.find().distinct("info.server")
-    for addr in cursor:
+    all_servers_cursor = entries.find().distinct("info.server")
+    for addr in all_servers_cursor:
         if addr == "self":
             continue
-        if servers.find_one({"server_name" : addr}) or servers.find_one({"server_IP" : addr}):
+        if servers.find_one({"$or": [{"server_name" : addr}, {"server_IP": addr}]}):
             # concerned that skipping these will make test fail
             continue
         mentioned_names.append(addr)
 
-    last_change = None
+    last_change = -1
+    round = 0
     while mentioned_names:
-        for s in servers.find({"$or": [{"server_name": "unknown"}, {"server_IP": "unknown"}]}):
+        round += 1
+        unknowns = list(servers.find({"$or": [{"server_name": "unknown"}, {"server_IP": "unknown"}]}))
+
+        print "unknowns: {0}".format(len(unknowns))
+        print "round {0}".format(round)
+        print "last_change is: {0}".format(last_change)
+        if len(unknowns) == 0:
+            logger.debug("No unknowns, breaking")
+            break
+        for s in unknowns:
 
             # extract server information
             num = s["server_num"]
@@ -79,43 +93,66 @@ def address_matching(db, collName):
             else:
                 name = None
 
+            # break if we've exhausted algorithm
+            if last_change == num:
+                logger.debug("Algorithm exhausted, breaking")
+                break
+            if last_change == -1:
+                last_change = num
+
             # get neighbors of s into list
-            c = entries.find({"origin_server": num}).distinct("info.server")
+            c = list(entries.find({"origin_server": num}).distinct("info.server"))
+            logger.debug("Found {0} neighbors of (S)".format(len(c)))
             neighbors_of_s = []
             for entry in c:
-                neighbors_of_s.append(c["info"]["server"])
+                if entry != "self":
+                    neighbors_of_s.append(entry)
 
             # if possible, make a list of neighbors of s
             # (stronger algorithm)
             if name:
+                logger.debug("Server (S) is named! Running stronger algorithm")
+                logger.debug("finding neighbors of (S) referring to name {0}".format(name))
                 neighbors_neighbors = []
                 neighbors = entries.find({"info.server": name}).distinct("origin_server")
                 # for each server that mentions s
                 for n in neighbors:
+                    logger.debug("Find neighbors of (S)'s neighbor, {0}".format(n))
                     n_addr = n["origin_server"]
                     n_num, n_name, n_IP = name_me(n_addr, servers)
                     if n_num:
-                    # might not be able to find neighbors' lists
-                    # only able to if we have an origin_server number for that addr
+                        logger.debug("Succesfully found server number for server {0}".format(n))
                         n_addrs = entries.find({"origin_server": n_num}).distinct("info.server")
-                    # find all servers they mention
-                # find the common addresses among all the neighbors
-                # put them in neighbors_neighbors
+                        if not neighbors_neighbors:
+                            for addr in n_addrs:
+                                neighbors_neighbors.append(addr)
+                        else:
+                            n_n_copy = deepcopy(neighbors_neighbors)
+                            neighbors_neighbors = []
+                            for addr in n_addrs:
+                                if addr in n_n_copy:
+                                    neighbors_neighbors.append(addr)
+                    else:
+                        logger.debug("Unable to find server number for server {0}, skipping".format(n))
+                print "Examining for match:\n{0}\n{1}".format(neighbors_of_s, neighbors_neighbors)
                 match = eliminate(neighbors_of_s, neighbors_neighbors)
             else:
                 # (weaker algorithm)
+                logger.debug("Server {0} is unnamed.  Running weaker algorithm".format(num))
+                print "Examining for match:\n{0}\n{1}".format(neighbors_of_s, mentioned_names)
                 match = eliminate(neighbors_of_s, mentioned_names)
 
             if match:
                 if is_IP(match):
                     # this code could be reorganized to be much more compact and efficient
+                    # entries will ALWAYS be labeled with the server_num
                     if s["server_IP"] == "unknown":
                         s["server_IP"] = match
                         servers.save(s)
                         last_change = num
                         mentioned_names.remove(match)
                         logger.debug("IP {0} matched to server {1}".format(match, num))
-                    elif: s["server_IP"] == match:
+                    elif s["server_IP"] == match:
                         logger.debug("duplicate IP found for server {0}".format(match))
                 else:
                     if s["server_name"] == "unknown":
@@ -129,6 +166,34 @@ def address_matching(db, collName):
                     else:
                         logger.debug("Server {0}'s stored hostname {1} " +
                                      "is different from match {2}".format(num, name, match))
+            else:
+                print "No match found for server {0} this round".format(num)
+        else:
+            continue
+        break
+
+    if not mentioned_names:
+        # for logl to succeed, it needs to match logs to servers
+        # so, it would really just need mentioned_names to be empty,
+        # and for ever server to have either a hostname or IP
+        # (the idea being that any log lines could be matched to some server)
+        s = list(servers.find({"$and": [{"server_name": "unknown"}, {"server_IP": "unknown"}]}))
+        if len(s) == 0:
+            logger.debug("Successfully named all unnamed servers!")
+            return 1
+        logger.debug("Exhausted mentioned_names, but {0} servers remain unnamed".format(len(s)))
+        return -1
+    logger.debug("Could not match {0} addresses: {1}".format(len(mentioned_names), mentioned_names))
+    return -1
+
+
+def is_IP(s):
+    """Returns true if s is an IP address, false otherwise"""
+    pattern = re.compile("(([0|1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))(\.([0|1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5])){3}")
+    m = pattern.search(s)
+    if (m == None):
+        return False
+    return True
 
 
 def name_me(s, servers):
@@ -151,21 +216,23 @@ def name_me(s, servers):
     return [nun, name, IP]
 
 
-def eliminate(s_list, n_list):
+def eliminate(small, big):
     """See if, by process of elimination,
-    there is exactly one entry in n_list that
-    is not in s_list.  Return that entry, or None."""
+    there is exactly one entry in big that
+    is not in small.  Return that entry, or None."""
     # make copies of lists, because they are mutable
     # and changes made here will alter the lists outside
-    s = s_list
-    n = n_list
+    if not big:
+        return None
+    s = deepcopy(small)
+    b = deepcopy(big)
     for addr in s:
-        if not n:
+        if not b:
             return None
-        if addr in n:
-            n.remove(addr)
-    if len(n) == 1:
-        return n.pop()
+        if addr in b:
+            b.remove(addr)
+    if len(b) == 1:
+        return b.pop()
     return None
 
 
