@@ -46,7 +46,7 @@ def test_clock_skew_none():
 def test_clock_skew_one():
     """DB with entries from one server"""
     servers, entries, clock_skew, db = db_setup()
-    servers.insert(new_server(1, "Sam"))
+    assign_address(1, "Sam", servers)
     entries.insert(generate_doc("status", "Sam", "STARTUP2", 5, "Gaya", datetime.now()))
     entries.insert(generate_doc("status", "Sam", "PRIMARY", 1, "self", datetime.now()))
     server_clock_skew(db, "wildcats")
@@ -60,8 +60,8 @@ def test_clock_skew_two():
     """Two different servers"""
     servers, entries, clock_skew, db = db_setup()
     # fill in some servers
-    servers.insert(new_server(1, "Sam"))
-    servers.insert(new_server(2, "Nuni"))
+    assign_address(1, "Sam", servers)
+    assign_address(2, "Nuni", servers)
     # fill in some entries
     entries.insert(generate_doc("status", "Sam", "SECONDARY", 2, "Nuni", datetime.now()))
     entries.insert(generate_doc("status", "Sam", "DOWN", 8, "Nuni", datetime.now()))
@@ -118,8 +118,8 @@ def test_detect_simple():
     """A simple test of the detect() method in post.py"""
     servers, entries, clock_skew, db = db_setup()
     # fill in some servers
-    servers.insert(new_server(1, "Erica"))
-    servers.insert(new_server(2, "Alison"))
+    assign_address(1, "Erica", servers)
+    assign_address(2, "Alison", servers)
     # fill in some entries
     entries.insert(generate_doc("status", "Erica", "STARTUP2", 5, "Alison", datetime.now()))
     entries.insert(generate_doc("status", "Erica", "SECONDARY", 2, "Alison", datetime.now()))
@@ -165,8 +165,8 @@ def test_detect_a_has_more():
     entries about b than b has about itself"""
     servers, entries, clock_skew, db = db_setup()
     # fill in some servers
-    servers.insert(new_server(1, "Erica"))
-    servers.insert(new_server(2, "Alison"))
+    assign_address(1, "Erica", servers)
+    assign_address(2, "Alison", servers)
     # fill in some entries
     entries.insert(generate_doc("status", "Erica", "STARTUP2", 5, "Alison", datetime.now()))
     entries.insert(generate_doc("status", "Erica", "SECONDARY", 2, "Alison", datetime.now()))
@@ -211,8 +211,8 @@ def test_two_different_skews():
     # only tests a-b, not b-a
     servers, entries, clock_skew, db = db_setup()
     # fill in some servers
-    servers.insert(new_server(1, "Hannah"))
-    servers.insert(new_server(2, "Mel"))
+    assign_address(1, "Hannah", servers)
+    assign_address(2, "Mel", servers)
     # these are skewed by 3 seconds
     entries.insert(generate_doc("status", "Hannah", "PRIMARY", 1, "Mel", datetime.now()))
     sleep(3)
@@ -238,8 +238,8 @@ def test_detect_zero_skew():
     """Test the case where there is no clock skew."""
     servers, entries, clock_skew, db = db_setup()
     # fill in some servers
-    servers.insert(new_server(1, "Sam"))
-    servers.insert(new_server(2, "Gaya"))
+    assign_address(1, "Sam", servers)
+    assign_address(2, "Gaya", servers)
     # fill in some entries (a - b)
     entries.insert(generate_doc("status", "Sam", "STARTUP2", 5, "Gaya", datetime.now()))
     entries.insert(generate_doc("status", "Gaya", "STARTUP2", 5, "self", datetime.now()))
@@ -265,8 +265,8 @@ def test_detect_network_delay():
     too small to be considered clock skew"""
     servers, entries, clock_skew, db = db_setup()
     # fill in some servers
-    servers.insert(new_server(1, "Erica"))
-    servers.insert(new_server(2, "Alison"))
+    assign_address(1, "Erica", servers)
+    assign_address(2, "Alison", servers)
     # fill in some entries
     entries.insert(generate_doc("status", "Erica", "STARTUP2", 5, "Alison", datetime.now()))
     entries.insert(generate_doc("status", "Erica", "SECONDARY", 2, "Alison", datetime.now()))
