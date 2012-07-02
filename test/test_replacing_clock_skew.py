@@ -14,7 +14,7 @@
 
 
 from logl.post.replace_clock_skew import replace_clock_skew
-from logl.logl import new_server
+from logl.logl import assign_address
 import pymongo
 import logging
 from datetime import *
@@ -46,8 +46,8 @@ def test_replacing_none():
 
     entries.insert(generate_doc("status", "apple", "STARTUP2", 5, "pear", original_date))
     entries.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date))
-    servers.insert(new_server(5, "pear"))
-    servers.insert(new_server(6, "apple"))
+    assign_address(5, "pear", servers)
+    assign_address(new_server(6, "apple", servers)
     doc1 = generate_cs_doc("5", "6")
     doc1["partners"]["6"]["0"] = 5
     clock_skew.insert(doc1)
@@ -66,7 +66,7 @@ def test_replacing_none():
         if delta < timedelta(milliseconds=1):
             assert  True
             continue
-        assert False    
+        assert False
     #assert 4 == 5
     #assert original_date == entries.find().
 
@@ -79,8 +79,8 @@ def test_replacing_one_value():
     original_date = datetime.now()
     entries.insert(generate_doc("status", "apple", "STARTUP2", 5, "pear", original_date))
     entries.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date))
-    servers.insert(new_server(5, "pear"))
-    servers.insert(new_server(6, "apple"))
+    assign_address(5, "pear", servers)
+    assign_address(6, "apple", servers)
     doc1 = generate_cs_doc("5", "6")
     doc1["partners"]["6"]["5"] = skew1
     clock_skew.insert(doc1)
@@ -117,9 +117,9 @@ def test_replacing_multiple():
     entries.insert(generate_doc("status", "pear", "STARTUP2", 5, "plum", original_date))
     entries.insert(generate_doc("status", "plum", "STARTUP2", 5, "pear", original_date))
 
-    servers.insert(new_server(4, "apple"))
-    servers.insert(new_server(5, "pear"))
-    servers.insert(new_server(6, "plum"))
+    assign_address(4, "apple", servers)
+    assign_address(5, "pear", servers)
+    assign_address(6, "plum", servers)
 
     doc1 = generate_cs_doc("5", "4")
     doc1["partners"]["4"][skew] = weight
@@ -160,7 +160,7 @@ def test_replacing_multiple():
         assert False
 
     docs = entries.find({"origin_server": "pear"})
-    
+
     for doc in docs:
         if not "adjusted_date" in doc:
             assert True
