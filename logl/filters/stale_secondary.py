@@ -1,4 +1,4 @@
-# Copyright 2012 10gen, Inc.
+s# Copyright 2012 10gen, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -81,8 +81,4 @@ def process(msg, date):
             doc["info"]["server"] = host + ":" + port
         else:
             doc["info"]["server"] = None
-        #start = string.find(msg, " sync:")
-        #doc["info"]["sync_num"] = int(msg[start + 6: start + 7])
-        #start = string.find(msg, "lock:")
-        #doc["info"]["lock_num"] = int(msg[start + 5: start + 6])
     return doc
