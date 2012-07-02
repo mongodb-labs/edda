@@ -37,7 +37,7 @@ def test_process():
 def check_state(message, code, date, sync, lock):
     doc = process(message, date)
     assert doc
-    assert doc["type"] == "conn2"
+    assert doc["type"] == "conn"
     assert doc["original_message"] == message
     assert doc["info"]["state_code"] == code
     if sync != 0:

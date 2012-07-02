@@ -20,7 +20,7 @@ import string
 def criteria(msg):
     """Does the given log line fit the criteria for this filter?
     return an integer code if yes, -1 if not."""
-    if string.find(msg, 'conn2') >= 0:
+    if string.find(msg, 'conn') >= 0:
         if (string.find(msg, 'locked') >= 0):
             return 0
         elif (string.find(msg, 'unlock') >= 0):
@@ -35,7 +35,7 @@ def process(msg, date):
     processes the line and creates a document for it.
     document = {
        "date" : date,
-       "type" : "conn2",
+       "type" : "conn",
        "info" : {
           "state_code" : messagetype
           "state" : state
@@ -50,7 +50,7 @@ def process(msg, date):
 
     doc = {}
     doc["date"] = date
-    doc["type"] = "conn2"
+    doc["type"] = "conn"
     doc["info"] = {}
     doc["info"]["state_code"] = message_type
     doc["original_message"] = msg
