@@ -193,20 +193,24 @@ def server_in_db(origin_server, db, collName):
     return False
 
 
-def new_server(server_num, origin_server):
+def new_server(server_num, addr):
     """Creates and returns a document for the given server"""
     doc = {}
     doc["server_num"] = str(server_num)
-    if origin_server == str(server_num):
+    if addr == str(server_num):
         doc["server_name"] = "unknown"
         doc["server_IP"] = "unknown"
     else:
         # determine if we have a hostname or IP address
         pattern = re.compile("(([0|1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))(\.([0|1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5])){3}")
-        m = pattern.search(origin_server)
+        m = pattern.search(addr)
         if (m == None):
-            doc["server_name"] = origin_server
+            print "found hostname {0}".format(addr)
+            doc["server_name"] = addr
+            doc["server_IP"] = "unknown"
         else:
+            print "Found IP {0}".format(m.group(0))
+            doc["server_name"] = "unknown"
             doc["server_IP"] = m.group(0)
     return doc
 
@@ -239,6 +243,9 @@ def traffic_control(msg, date):
                         logger.info('Found {0} type message, storing to db'.format(fname))
                         return doc
                     # for now, this will only return the first module hit...
+                    # do we want to change this?
+                    # probably...
+
 
 if __name__ == "__main__":
     main()
