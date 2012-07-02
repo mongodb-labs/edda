@@ -294,3 +294,94 @@ def test_one_known_two_unknown_IPs():
     # check that entries were changed
     assert entries.find({"origin_server": "1"}).count() == 4
     assert entries.find({"origin_server": "3"}).count() == 4
+
+
+def test_known_names_unknown_IPs():
+    """Test on a db with three servers whose names
+    are known, IPs are unknown"""
+    pass
+
+
+def test_known_IPs_unknown_names():
+    """Test on db with three servers whose IPs
+    are known, names are unknown"""
+    pass
+
+
+def test_missing_four_two_one_one():
+    """Test on db with four total servers: two named,
+    one unnamed, one not present (simulates a missing log)"""
+    pass
+
+
+def test_missing_four_one_two_one():
+    """Test on a db with four total servers: one named,
+    one unnamed, two not present (simulates missing logs)"""
+    pass
+
+
+def test_missing_four_one_two_one():
+    """Test on a db with four total servers: one named,
+    two unnamed, one not present (simulates midding log)"""
+    pass
+
+
+def test_missing_three_total_one_present():
+    """Test on a db with three total servers, one unnamed,
+    two not present (missing logs)"""
+    pass
+
+
+def test_incomplete_graph_one():
+    """Test a network graph with three servers, A, B, C,
+    and the following edges:
+    A - B, B - C"""
+    pass
+
+
+def test_incomplete_graph_two():
+    """Test a network graph with four servers, A, B, C, D
+    with the following edges:
+    A - B, B - C, C - D, D - A"""
+    # this case contains a cycle, not possible for this algorithm to solve
+    pass
+
+
+def test_incomplete_graph_three():
+    """Test a network graph with four servers: A, B, C, D
+    and the following edges:
+    A - B, B - C, C - D, D - A, B - D"""
+    # this case should be doable.  It may take a few rounds of the
+    # algorithm to work, though
+    pass
+
+def test_incomplete_graph_four():
+    """Test a network graph with four servers: A, B, C, D
+    and the following edges:
+    B - A, B - C, B - D"""
+    # this is not a doable case
+    pass
+
+
+def test_incomplete_graph_five():
+    """Test a network graph with four servers: A, B, C, D, E
+    and the following edges:
+    A - B, B - C, C - D, D - E"""
+    # doable in a few rounds
+    pass
+
+
+def test_incomplete_graph_six():
+    """Test a graph with three servers: A, B, C
+    and the following edges:
+    A - B"""
+    # is doable for A and B, not C
+    pass
+
+
+def test_incomplete_graph_seven():
+    """Test a graph with four servers: A, B, C, D
+    and the following edges:
+    A - B, C - D"""
+    # is doable with strong algorithm, not weak algorithm
+    pass
