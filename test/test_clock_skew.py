@@ -14,7 +14,7 @@
 
 
 from logl.post.clock_skew import *
-from logl.logl import new_server
+from logl.logl import assign_address
 import pymongo
 from datetime import datetime
 from pymongo import Connection

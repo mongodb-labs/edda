@@ -15,7 +15,7 @@
 
 
 from logl.post.organize_servers import *
-from logl.logl import new_server
+from logl.logl import assign_address
 import pymongo
 import logging
 from datetime import datetime
