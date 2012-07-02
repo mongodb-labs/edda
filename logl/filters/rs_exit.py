@@ -16,7 +16,6 @@
 """This filter processes RSSYNC types of log lines"""
 
 import string
-import logging
 
 
 def criteria(msg):
