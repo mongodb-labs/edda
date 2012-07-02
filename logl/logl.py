@@ -35,6 +35,7 @@ from pymongo import Connection
 from parse_date import date_parser
 from datetime import datetime
 from filters import *
+from post.server_matchup import is_IP, address_matchup
 from post.clock_skew import server_clock_skew
 from post.replace_clock_skew import replace_clock_skew
 from post.organize_servers import organize_servers
@@ -153,8 +154,7 @@ def main():
                 if doc:
                     if reset and doc["type"] == "init" and doc["info"]["subtype"] == "startup":
                         origin_server = doc["info"]["server"]
-                        if not server_in_db(origin_server, db, collName):
-                            servers.insert(new_server(server_num, origin_server))
+                        assign_address(server_num, origin_server, servers)
                     if doc["type"] == "exit" and previous == "exit":
                         add_doc = False
                     reset = False
@@ -172,47 +172,45 @@ def main():
     logger.info('-' * 64)
     if len(namespace.filename) > 1:
         logger.info("Attempting to resolve server names")
-        #result = server_matchup(db, collName)
+        result = address_matchup(db, collName)
+        if result == 1:
+            logger.info("Server addresses successfully resolved")
+        else:
+            logger.warning("Server addresses could not be resolved")
         logger.info('-' * 64)
         logger.info("Attempting to resolve clock skew across servers")
         result = server_clock_skew(db, collName)
+        logger.info('-' * 64)
         logger.info("Attempting to Fix Clock_skews in original .entries documents")
-#        replace_clock_skew(db, collName)
-        logger.info("Completed replacing skew values. ")
-
-    logger.warning('Exiting.')
-
-
-def server_in_db(origin_server, db, collName):
-    """Checks if this server (by hostname or IP) is already
-    stored in the database."""
-    if db[collName + ".servers"].find({"server_name": origin_server}).count() > 0:
-        return True
-    if db[collName + ".servers"].find({"server_IP": origin_server}).count() > 0:
-        return True
-    return False
+        replace_clock_skew(db, collName)
+        logger.info("Completed replacing skew values.")
+    logger.info('=' * 64)
+    logger.warning('Completed post processing.\nExiting.')
 
 
-def new_server(server_num, addr):
-    """Creates and returns a document for the given server"""
-    doc = {}
-    doc["server_num"] = str(server_num)
-    if addr == str(server_num):
+def assign_address(num, addr, servers):
+    """Given this num and addr, sees if there exists a document
+    in the .servers collection for that server.  If so, adds addr, if
+    not already present, to the document.  If not, creates a new doc
+    for this server and saves to the db."""
+    doc = servers.find_one({"server_num": num})
+    if not doc:
+        doc = {}
+        doc["server_num"] = num
         doc["server_name"] = "unknown"
         doc["server_IP"] = "unknown"
+    if is_IP(addr):
+        if doc["server_IP"] != "unknown" and doc["server_IP"] != addr:
+            logger.warning("conflicting IPs found for server {0}:".format(num))
+            logger.warning("\n{0}\n{1}".format(addr, doc["server_IP"]))
+        doc["server_IP"] = addr
     else:
-        # determine if we have a hostname or IP address
-        pattern = re.compile("(([0|1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))(\.([0|1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5])){3}")
-        m = pattern.search(addr)
-        if (m == None):
-            print "found hostname {0}".format(addr)
-            doc["server_name"] = addr
-            doc["server_IP"] = "unknown"
-        else:
-            print "Found IP {0}".format(m.group(0))
-            doc["server_name"] = "unknown"
-            doc["server_IP"] = m.group(0)
-    return doc
+        if doc["server_name"] != "unknown" and doc["server_name"] != addr:
+            logger.warning("conflicting hostnames found for server {0}:".format(num))
+            logger.warning("\n{0}\n{1}".format(addr, doc["server_name"]))
+        doc["server_name"] = addr
+    servers.save(doc)
+    pass
 
 
 def traffic_control(msg, date):
