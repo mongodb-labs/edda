@@ -16,9 +16,6 @@ from logl.filters.stale_secondary import *
 from datetime import datetime
 
 
-# Mon Jul  2 10:00:11 [conn2] CMD fsync: sync:1 lock:1
-# Mon Jul  2 10:00:04 [conn2] command: unlock requested
-# Mon Jul  2 10:00:10 [conn2] db is now locked for snapshotting, no writes allowed. db.fsyncUnlock() to unlock
 def test_criteria():
     assert criteria("this should not pass") == -1
     assert criteria("Thu Sep 9 17:22:46 [rs_sync] replSet error RS102 too stale to catch up") == 0
@@ -39,12 +36,4 @@ def check_state(message, code, date, server):
     assert doc["original_message"] == message
     assert doc["info"]["state_code"] == code
     if server != None:
-        print "server:     *{}*".format(server)
-        print "comparison: *{}*".format(doc["info"]["server"])
         assert doc["info"]["server"] == server
-    #if sync != 0:
-    #	print "Sync Num: {}".format(doc["info"]["sync_num"])
-    # 	assert doc["info"]["sync_num"] == sync
-    #	assert doc["info"]["lock_num"] == lock
-
-    #print 'Server number is: *{0}*, testing against, *{1}*'.format(doc["info"]["server"], server)
