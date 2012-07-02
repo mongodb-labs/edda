@@ -210,7 +210,6 @@ def assign_address(num, addr, servers):
             logger.warning("\n{0}\n{1}".format(addr, doc["server_name"]))
         doc["server_name"] = addr
     servers.save(doc)
-    pass
 
 
 def traffic_control(msg, date):
