@@ -37,6 +37,7 @@ def db_setup():
     db.drop_collection(clock_skew)
     return [servers, entries, clock_skew, db]
 
+
 def test_organize_two_servers():
     logger = logging.getLogger(__name__)
     servers, entries, clock_skew, db = db_setup()
@@ -45,8 +46,8 @@ def test_organize_two_servers():
     entries.insert(generate_doc("status", "apple", "STARTUP2", 5, "pear", original_date))
     entries.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date + timedelta(seconds=0)))
 
-    servers.insert(generate_doc("status", "apple", "STARTUP2", 5, "pear", original_date))
-    servers.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date + timedelta(seconds=0)))
+    assign_address(1, "apple", servers)
+    assign_address(2, "pear", servers)
 
     organized_servers = organize_servers(db, "fruit")
 
