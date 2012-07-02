@@ -199,7 +199,9 @@ def assign_address(num, addr, servers):
         doc["server_num"] = num
         doc["server_name"] = "unknown"
         doc["server_IP"] = "unknown"
-    if is_IP(addr):
+    if addr == num:
+        pass
+    elif is_IP(addr):
         if doc["server_IP"] != "unknown" and doc["server_IP"] != addr:
             logger.warning("conflicting IPs found for server {0}:".format(num))
             logger.warning("\n{0}\n{1}".format(addr, doc["server_IP"]))
