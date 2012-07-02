@@ -94,21 +94,22 @@ def test_one_unknown():
     """Test on a database with one unknown server"""
     servers, entries, clock_skew, db = db_setup()
     # insert one unknown server
-    servers.insert(new_server(1, "1"))
+    assign_address(1, "1", servers)
+    assign_address(1, "1"))
     assert address_matchup(db, "hp") == -1
 
 
 def test_one_known():
     """Test on one named server (hostname)"""
     servers, entries, clock_skew, db = db_setup()
-    servers.insert(new_server(1, "Dumbledore"))
+    assign_address(1, "Dumbledore", servers)
     assert address_matchup(db, "hp") == 1
 
 
 def test_one_known_IP():
     """Test on one named server (IP)"""
     servers, entries, clock_skew, db = db_setup()
-    servers.insert(new_server(1, "100.54.24.66"))
+    assign_address(1, "100.54.24.66"))
     assert address_matchup(db, "hp") == 1
 
 
@@ -117,9 +118,9 @@ def test_all_servers_unknown():
     (neither hostname or IP)"""
     # this case could be handled, in the future
     servers, entries, clock_skew, db = db_setup()
-    servers.insert(new_server(1, "1"))
-    servers.insert(new_server(2, "2"))
-    servers.insert(new_server(3, "3"))
+    assign_address(1, "1", servers)
+    assign_address(2, "2", servers)
+    assign_address(3, "3", servers)
     assert address_matchup(db, "hp") == -1
 
 
@@ -127,9 +128,9 @@ def test_all_known():
     """Test on db where all servers' names
     are already known (hostnames only)"""
     servers, entries, clock_skew, db = db_setup()
-    servers.insert(new_server(1, "Harry"))
-    servers.insert(new_server(2, "Hermione"))
-    servers.insert(new_server(3, "Ron"))
+    assign_address(1, "Harry", servers)
+    assign_address(2, "Hermione", servers)
+    assign_address(3, "Rom", servers)
     assert address_matchup(db, "hp") == 1
 
 
@@ -137,9 +138,9 @@ def test_all_known_IPs():
     """Test on db where all servers' names
     are already known (IPs only)"""
     servers, entries, clock_skew, db = db_setup()
-    servers.insert(new_server(1, "1.1.1.1"))
-    servers.insert(new_server(2, "2.2.2.2"))
-    servers.insert(new_server(3, "3.3.3.3"))
+    assign_address(1, "1.1.1.1", servers)
+    assign_address(2, "2.2.2.2", servers)
+    assign_address(3, "3.3.3.3", servers)
     assert address_matchup(db, "hp") == 1
 
 
@@ -147,12 +148,12 @@ def test_all_known_mixed():
     """Test on db where all servers names,
     both IPs and hostnames, are known"""
     servers, entries, clock_skew, db = db_setup()
-    servers.insert(new_server(1, "1.1.1.1"))
-    servers.insert(new_server(1, "Harry"))
-    servers.insert(new_server(2, "2.2.2.2"))
-    servers.insert(new_server(2, "Hermione"))
-    servers.insert(new_server(3, "3.3.3.3"))
-    servers.insert(new_server(3, "Ron"))
+    assign_address(1, "1.1.1.1", servers)
+    assign_address(1, "Harry", servers)
+    assign_address(2, "2.2.2.2", servers)
+    assign_address(2, "Hermione", servers)
+    assign_address(3, "3.3.3.3", servers)
+    assign_address(3, "Ron", servers)
     assert address_matchup(db, "hp") == 1
 
 
@@ -160,8 +161,8 @@ def test_one_known_one_unknown():
     """Test on a db with two servers, one
     known and one unknown (hostnames only)"""
     servers, entries, clock_skew, db = db_setup()
-    servers.insert(new_server(1, "Parvati"))
-    servers.insert(new_server(2, "2"))
+    assign_address(1, "Parvati", servers)
+    assign_address(2, "2", servers)
     # add a few entries
     entries.insert(generate_doc("status", "Parvati", "PRIMARY", 1, "Padma", datetime.now()))
     entries.insert(generate_doc("status", "Parvati", "SECONDARY", 2, "Padma", datetime.now()))
@@ -180,8 +181,8 @@ def test_one_known_one_unknown_IPs():
     """Test on a db with two servers, one
     known and one unknown (IPs only)"""
     servers, entries, clock_skew, db = db_setup()
-    servers.insert(new_server(1, "1.1.1.1"))
-    servers.insert(new_server(2, "2"))
+    assign_address(1, "1.1.1.1", servers)
+    assign_address(2, "2", servers)
     # add a few entries
     entries.insert(generate_doc("status", "1.1.1.1", "PRIMARY", 1, "2.2.2.2", datetime.now()))
     entries.insert(generate_doc("status", "1.1.1.1", "SECONDARY", 2, "2.2.2.2", datetime.now()))
@@ -200,9 +201,9 @@ def test_two_known_one_unknown():
     """Test on a db with two known servers and one
     unknown server (hostnames only)"""
     servers, entries, clock_skew, db = db_setup()
-    servers.insert(new_server(1, "Moony"))
-    servers.insert(new_server(2, "Padfoot"))
-    servers.insert(new_server(3, "unknown"))
+    assign_address(1, "Moony", servers)
+    assign_address(2, "Padfoot", servers)
+    assign_address(3, "unknown", servers)
     entries.insert(generate_doc("status", "Moony", "PRIMARY", 1, "Prongs", datetime.now()))
     entries.insert(generate_doc("status", "Padfoot", "PRIMARY", 1, "Prongs", datetime.now()))
     entries.insert(generate_doc("status", "3", "PRIMARY", 1, "self", datetime.now()))
@@ -219,9 +220,9 @@ def test_two_known_one_unknown_IPs():
     """Test on a db with two known servers and one
     unknown server (IPs only)"""
     servers, entries, clock_skew, db = db_setup()
-    servers.insert(new_server(1, "1.1.1.1"))
-    servers.insert(new_server(2, "2.2.2.2"))
-    servers.insert(new_server(3, "unknown"))
+    assign_address(1, "1.1.1.1", servers)
+    assign_address(2, "2.2.2.2", servers)
+    assign_address(3, "unknown", servers)
     entries.insert(generate_doc("status", "1.1.1.1", "PRIMARY", 1, "3.3.3.3", datetime.now()))
     entries.insert(generate_doc("status", "2.2.2.2", "PRIMARY", 1, "3.3.3.3", datetime.now()))
     entries.insert(generate_doc("status", "3", "PRIMARY", 1, "self", datetime.now()))
@@ -239,9 +240,9 @@ def test_one_known_two_unknown():
     two unknown servers (hostnamess only)"""
     servers, entries, clock_skew, db = db_setup()
     # add servers
-    servers.insert(new_server(1, "unknown"))
-    servers.insert(new_server(2, "Luna"))
-    servers.insert(new_server(3, "unknown"))
+    assign_address(1, "unknown", servers)
+    assign_address(2, "Luna", servers)
+    assign_address(3, "unknown", servers)
     # add entries about server 1, Ginny
     entries.insert(generate_doc("status", "1", "UNKNOWN", 6, "self", datetime.now()))
     entries.insert(generate_doc("status", "Luna", "UNKNOWN", 6, "Ginny", datetime.now()))
@@ -270,9 +271,9 @@ def test_one_known_two_unknown_IPs():
     two unknown servers (IPs only)"""
     servers, entries, clock_skew, db = db_setup()
     # add servers
-    servers.insert(new_server(1, "unknown"))
-    servers.insert(new_server(2, "1.2.3.4"))
-    servers.insert(new_server(3, "unknown"))
+    assign_address(1, "unknown", servers)
+    assign_address(2, "1.2.3.4", servers)
+    assign_address(3, "unknown", servers)
     # add entries about server 1, Ginny
     entries.insert(generate_doc("status", "1", "UNKNOWN", 6, "self", datetime.now()))
     entries.insert(generate_doc("status", "1.2.3.4", "UNKNOWN", 6, "5.6.7.8", datetime.now()))
