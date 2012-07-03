@@ -98,6 +98,7 @@ def address_matchup(db, collName):
                 last_change = num
 
             # get neighbors of s into list
+            # (these are servers s mentions)
             c = list(entries.find({"origin_server": num}).distinct("info.server"))
             logger.debug("Found {0} neighbors of (S)".format(len(c)))
             neighbors_of_s = []
@@ -105,7 +106,8 @@ def address_matchup(db, collName):
                 if entry != "self":
                     neighbors_of_s.append(entry)
 
-            # if possible, make a list of neighbors of s
+            # if possible, make a list of servers who mention s
+            # and then, the servers they in turn mention
             # (stronger algorithm)
             if name:
                 logger.debug("Server (S) is named! Running stronger algorithm")
@@ -132,6 +134,10 @@ def address_matchup(db, collName):
                         logger.debug("Unable to find server number for server {0}, skipping".format(n_addr))
                 logger.debug("Examining for match:\n{0}\n{1}".format(neighbors_of_s, neighbors_neighbors))
                 match = eliminate(neighbors_of_s, neighbors_neighbors)
+                if not match:
+                    # (try weaker algorithm anyway, it catches some cases)
+                    logger.debug("No match found using strong algorith, running weak algorithm")
+                    match = eliminate(neighbors_of_s, mentioned_names)
             else:
                 # (weaker algorithm)
                 logger.debug("Server {0} is unnamed.  Running weaker algorithm".format(num))
