@@ -18,11 +18,11 @@
 import re
 import string
 import logging
-from ..parse_ip import *
 
 # Mon Jul  2 10:00:11 [conn2] CMD fsync: sync:1 lock:1
 # Mon Jul  2 10:00:04 [conn2] command: unlock requested
 # Mon Jul  2 10:00:10 [conn2] db is now locked for snapshotting, no writes allowed. db.fsyncUnlock() to unlock
+
 
 def criteria(msg):
     """Does the given log line fit the criteria for this filter?

@@ -13,7 +13,6 @@
 # limitations under the License.
 
 
-
 from logl.post.organize_servers import *
 from logl.logl import new_server
 import pymongo
@@ -45,8 +44,8 @@ def test_organize_two_servers():
     entries.insert(generate_doc("status", "apple", "STARTUP2", 5, "pear", original_date))
     entries.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date + timedelta(seconds=5)))
 
-    servers.insert(generate_doc("status", "apple", "STARTUP2", 5, "pear", original_date))
-    servers.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date + timedelta(seconds=6)))
+    servers.insert(generate_server_doc("status", "apple", "STARTUP2", 5, "pear", original_date))
+    servers.insert(generate_server_doc("status", "pear", "STARTUP2", 5, "apple", original_date + timedelta(seconds=6)))
 
     organized_servers = organize_servers(db, "fruit")
     logger.debug("Organized servers Printing: {}".format(organized_servers))
@@ -72,9 +71,9 @@ def test_organizing_three_servers():
     entries.insert(generate_doc("status", "plum", "STARTUP2", 5, "apple", original_date + timedelta(seconds=11)))
 
 
-    servers.insert(generate_doc("status", "plum", "STARTUP2", 5, "apple", original_date))
-    servers.insert(generate_doc("status", "apple", "STARTUP2", 5, "plum", original_date + timedelta(seconds=9)))
-    servers.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date + timedelta(seconds=6)))
+    servers.insert(generate_server_doc("status", "plum", "STARTUP2", 5, "apple", original_date))
+    servers.insert(generate_server_doc("status", "apple", "STARTUP2", 5, "plum", original_date + timedelta(seconds=9)))
+    servers.insert(generate_server_doc("status", "pear", "STARTUP2", 5, "apple", original_date + timedelta(seconds=6)))
 
     organized_servers = organize_servers(db, "fruit")
     logger.debug("Organized servers Printing: {}".format(organized_servers))
@@ -107,9 +106,9 @@ def test_organize_same_times():
     entries.insert(generate_doc("status", "plum", "STARTUP2", 5, "apple", original_date))
 
 
-    servers.insert(generate_doc("status", "plum", "STARTUP2", 5, "apple", original_date))
-    servers.insert(generate_doc("status", "apple", "STARTUP2", 5, "plum", original_date))
-    servers.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date))
+    servers.insert(generate_server_doc("status", "plum", "STARTUP2", 5, "apple", original_date))
+    servers.insert(generate_server_doc("status", "apple", "STARTUP2", 5, "plum", original_date))
+    servers.insert(generate_server_doc("status", "pear", "STARTUP2", 5, "apple", original_date))
 
     organized_servers = organize_servers(db, "fruit")
     logger.debug("Organized servers Printing: {}".format(organized_servers))
@@ -128,6 +127,19 @@ def test_organize_same_times():
 
 
 def generate_doc(type, server, label, code, target, date):
+    """Generate an entry"""
+    doc = {}
+    doc["type"] = type
+    doc["origin_server"] = server
+    doc["info"] = {}
+    doc["info"]["state"] = label
+    doc["info"]["state_code"] = code
+    doc["info"]["server"] = target
+    doc["date"] = date
+    return doc
+
+
+def generate_server_doc(type, server, label, code, target, date):
     """Generate an entry"""
     doc = {}
     doc["type"] = type
