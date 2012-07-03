@@ -65,8 +65,4 @@ def process(msg, date):
         doc["info"]["state"] = "UNLOCKED"
     else:
         doc["info"]["state"] = "FSYNC"
-        #start = string.find(msg, " sync:")
-        #doc["info"]["sync_num"] = int(msg[start + 6: start + 7])
-        #start = string.find(msg, "lock:")
-        #doc["info"]["lock_num"] = int(msg[start + 5: start + 6])
     return doc
