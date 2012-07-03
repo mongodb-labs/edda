@@ -30,7 +30,6 @@ def criteria(msg):
     """Does the given log line fit the criteria for this filter?
     return an integer code if yes, -1 if not."""
     if string.find(msg, 'replSetReconfig') >= 0:
-        print "I got through"
         return 0
     return -1
 
