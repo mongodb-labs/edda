@@ -14,7 +14,7 @@
 
 
 from logl.post.organize_servers import *
-from logl.logl import new_server
+from logl.logl import assign_address
 import pymongo
 import logging
 from datetime import datetime
@@ -44,8 +44,8 @@ def test_organize_two_servers():
     entries.insert(generate_doc("status", "apple", "STARTUP2", 5, "pear", original_date))
     entries.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date + timedelta(seconds=5)))
 
-    servers.insert(generate_server_doc("status", "apple", "STARTUP2", 5, "pear", original_date))
-    servers.insert(generate_server_doc("status", "pear", "STARTUP2", 5, "apple", original_date + timedelta(seconds=6)))
+    assign_address(1, "apple", servers)
+    assign_address(2, "pear", servers)
 
     organized_servers = organize_servers(db, "fruit")
     logger.debug("Organized servers Printing: {}".format(organized_servers))

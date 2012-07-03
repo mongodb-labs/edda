@@ -34,14 +34,10 @@ def organize_servers(db, collName):
     servers = db[collName + ".servers"]
 
     for server in servers.find():
-        servers_list[server["server_name"]] = []
-        cursor = entries.find({"origin_server": server["server_name"]})
-        #logger.debug("Origin Server: {}".format(server["origin_server"]))
+        num = server["server_num"]
+        servers_list[num] = []
+        cursor = entries.find({"origin_server": num})
         cursor.sort("date")
         for doc in cursor:
-            #logger.debug("Appending: {}".format(doc))
-            #servers_list[server["origin_server"]] = doc
-            #servers_list[len(servers_list):] = doc
-            servers_list[server["server_name"]].append(doc)
-            #logger.debug("Name of inserted: {}".format(servers_list[(len(servers_list) - 1)]))
+            servers_list[num].append(doc)
     return servers_list

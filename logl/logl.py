@@ -34,10 +34,12 @@ from bson import objectid
 from pymongo import Connection
 from parse_date import date_parser
 from datetime import datetime
-from filters import *
-from post.clock_skew import server_clock_skew
-from post.replace_clock_skew import replace_clock_skew
-from post.organize_servers import organize_servers
+from .filters import *
+from .post.server_matchup import address_matchup
+from .post.server_matchup import is_IP
+from .post.clock_skew import server_clock_skew
+from .post.replace_clock_skew import replace_clock_skew
+from .post.organize_servers import organize_servers
 
 
 def main():
@@ -151,18 +153,11 @@ def main():
                     continue
                 doc = traffic_control(line, date)
                 if doc:
-                    if reset:
-                        if doc["type"] == "init":
-                            if doc["info"]["subtype"] == "startup":
-                                if doc["info"]["server"]:
-                                    origin_server = doc["info"]["server"]
-                                    if not server_in_db(origin_server, db, collName):
-                                        servers.insert(new_server(server_num, origin_server))
-                    if doc["type"] == "exit":
-                        if previous == "exit":
-                            add_doc = False
-                        pass
-
+                    if reset and doc["type"] == "init" and doc["info"]["subtype"] == "startup":
+                        origin_server = doc["info"]["server"]
+                        assign_address(server_num, origin_server, servers)
+                    if doc["type"] == "exit" and previous == "exit":
+                        add_doc = False
                     reset = False
                     doc["origin_server"] = origin_server
                     if add_doc:
@@ -170,7 +165,6 @@ def main():
                         logger.debug('Stored line {0} of {1} to db'.format(counter, arg))
                         stored += 1
                     previous = doc["type"]
-
         logger.warning('-' * 64)
         logger.warning('Finished running on {0}'.format(arg))
         logger.info('Stored {0} of {1} log lines to db'.format(stored, counter))
@@ -179,34 +173,63 @@ def main():
     logger.info('-' * 64)
     if len(namespace.filename) > 1:
         logger.info("Attempting to resolve server names")
-        #result = server_matchup(db, collName)
+        result = address_matchup(db, collName)
+        if result == 1:
+            logger.info("Server addresses successfully resolved")
+        else:
+            logger.warning("Server addresses could not be resolved")
         logger.info('-' * 64)
         logger.info("Attempting to resolve clock skew across servers")
         result = server_clock_skew(db, collName)
+        logger.info('-' * 64)
         logger.info("Attempting to Fix Clock_skews in original .entries documents")
-#        replace_clock_skew(db, collName)
-        logger.info("Completed replacing skew values. ")
+        replace_clock_skew(db, collName)
+        logger.info("Completed replacing skew values.")
+    logger.info('=' * 64)
+    logger.warning('Completed post processing.\nExiting.')
 
-    logger.warning('Exiting.')
 
-
-def server_in_db(origin_server, db, collName):
-    """Checks if this server (hostaddr and port) is already
-    in the database."""
-    count = db[collName + ".servers"].find({"server_name": origin_server}).count()
-    if count > 0:
-        return True
-    return False
-
-def new_server(server_num, origin_server):
-    """Creates and returns a document for the given server"""
-    doc = {}
-    doc["server_num"] = str(server_num)
-    if origin_server == str(server_num):
+def assign_address(num, addr, servers):
+    """Given this num and addr, sees if there exists a document
+    in the .servers collection for that server.  If so, adds addr, if
+    not already present, to the document.  If not, creates a new doc
+    for this server and saves to the db."""
+    # in the case that two different addresses are found for the
+    # same server, this chooses to log a warning and ignore
+    # all but the first address found
+    # store all fields as strings, including server_num
+    # server doc = {
+    #    "server_num" : int
+    #    "server_name" : hostname
+    #    "server_IP" : IP
+    #    }
+    logger = logging.getLogger(__name__)
+    num = str(num)
+    addr = str(addr)
+    doc = servers.find_one({"server_num": num})
+    if not doc:
+        logger.debug("No doc found for this server, making one")
+        doc = {}
+        doc["server_num"] = num
         doc["server_name"] = "unknown"
+        doc["server_IP"] = "unknown"
     else:
-        doc["server_name"] = origin_server
-    return doc
+        logger.debug("Doc already exists for server {0}".format(num))
+    if addr == num:
+        pass
+    elif is_IP(addr):
+        if doc["server_IP"] != "unknown" and doc["server_IP"] != addr:
+            logger.warning("conflicting IPs found for server {0}:".format(num))
+            logger.warning("\n{0}\n{1}".format(addr, doc["server_IP"]))
+        else:
+            doc["server_IP"] = addr
+    else:
+        if doc["server_name"] != "unknown" and doc["server_name"] != addr:
+            logger.warning("conflicting hostnames found for server {0}:".format(num))
+            logger.warning("\n{0}\n{1}".format(addr, doc["server_name"]))
+        else:
+            doc["server_name"] = addr
+    servers.save(doc)
 
 
 def traffic_control(msg, date):
@@ -237,6 +260,9 @@ def traffic_control(msg, date):
                         logger.info('Found {0} type message, storing to db'.format(fname))
                         return doc
                     # for now, this will only return the first module hit...
+                    # do we want to change this?
+                    # probably...
+
 
 if __name__ == "__main__":
     main()
