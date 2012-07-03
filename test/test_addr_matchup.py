@@ -324,13 +324,56 @@ def test_known_names_unknown_IPs():
 def test_known_IPs_unknown_names():
     """Test on db with three servers whose IPs
     are known, names are unknown"""
-    pass
+    servers, entries, clock_skew, db = db_setup()
+    # add servers
+    assign_address(1, "1.1.1.1", servers)
+    assign_address(2, "2.2.2.2", servers)
+    assign_address(3, "3.3.3.3", servers)
+    # add entries
+    entries.insert(generate_doc("status", "1", "PRIMARY", 1, "Crabbe", datetime.now()))
+    entries.insert(generate_doc("status", "1", "SECONDARY", 2, "Goyle", datetime.now()))
+    entries.insert(generate_doc("status", "2", "ARBITER", 7, "Malfoy", datetime.now()))
+    entries.insert(generate_doc("status", "2", "RECOVERING", 3, "Goyle", datetime.now()))
+    entries.insert(generate_doc("status", "3", "DOWN", 8, "Malfoy", datetime.now()))
+    entries.insert(generate_doc("status", "3", "FATAL", 4, "Crabbe", datetime.now()))
+    # check name matching
+    assert address_matchup(db, "hp") == 1
+    assert servers.find_one({"server_num": "1"})["server_name"] == "Malfoy"
+    assert servers.find_one({"server_IP": "1.1.1.1"})["server_name"] == "Malfoy"
+    assert servers.find_one({"server_num": "2"})["server_name"] == "Crabbe"
+    assert servers.find_one({"server_IP": "2.2.2.2"})["server_name"] == "Crabbe"
+    assert servers.find_one({"server_num": "3"})["server_name"] == "Goyle"
+    assert servers.find_one({"server_IP": "3.3.3.3"})["server_name"] == "Goyle"
 
 
 def test_missing_four_two_one_one():
     """Test on db with four total servers: two named,
     one unnamed, one not present (simulates a missing log)"""
-    pass
+    servers, entries, clock_skew, db = db_setup()
+    assign_address(1, "Gryffindor", servers)
+    assign_address(1, "1.1.1.1", servers)
+    assign_address(2, "Ravenclaw", servers)
+    assign_address(2, "2.2.2.2", servers)
+    assign_address(3, "Slytherin", servers)
+    # this case should be possible with the strong algorithm (aka a complete graph)
+    # although we will be left with one unmatched name, "Hufflepuff" - "4.4.4.4"
+    # fill in entries
+    entries.insert(generate_doc("status", "1", "PRIMARY", 1, "2.2.2.2", datetime.now()))
+    entries.insert(generate_doc("status", "1", "PRIMARY", 1, "3.3.3.3", datetime.now()))
+    entries.insert(generate_doc("status", "1", "PRIMARY", 1, "4.4.4.4", datetime.now()))
+    entries.insert(generate_doc("status", "2", "PRIMARY", 1, "1.1.1.1", datetime.now()))
+    entries.insert(generate_doc("status", "2", "PRIMARY", 1, "3.3.3.3", datetime.now()))
+    entries.insert(generate_doc("status", "2", "PRIMARY", 1, "4.4.4.4", datetime.now()))
+    entries.insert(generate_doc("status", "3", "PRIMARY", 1, "1.1.1.1", datetime.now()))
+    entries.insert(generate_doc("status", "3", "PRIMARY", 1, "2.2.2.2", datetime.now()))
+    entries.insert(generate_doc("status", "3", "PRIMARY", 1, "4.4.4.4", datetime.now()))
+    # address_matchup will return -1
+    assert address_matchup(db, "hp") == -1
+    # but Slytherin should be named
+    assert servers.find_one({"server_num": "3"})["server_IP"] == "3.3.3.3"
+    assert servers.find_one({"server_name": "Slytherin"})["server_IP"] == "3.3.3.3"
+    assert not servers.find_one({"server_name": "Hufflepuff"})
+    assert not servers.find_one({"server_IP": "4.4.4.4"})
 
 
 def test_missing_four_one_two_one():
