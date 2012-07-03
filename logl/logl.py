@@ -34,12 +34,12 @@ from bson import objectid
 from pymongo import Connection
 from parse_date import date_parser
 from datetime import datetime
-from .filters import *
-from .post.server_matchup import address_matchup
-from .post.server_matchup import is_IP
-from .post.clock_skew import server_clock_skew
-from .post.replace_clock_skew import replace_clock_skew
-from .post.organize_servers import organize_servers
+from filters import *
+from post.server_matchup import address_matchup
+from post.server_matchup import is_IP
+from post.clock_skew import server_clock_skew
+from post.replace_clock_skew import replace_clock_skew
+from post.organize_servers import organize_servers
 
 
 def main():
