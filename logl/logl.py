@@ -34,11 +34,12 @@ from bson import objectid
 from pymongo import Connection
 from parse_date import date_parser
 from datetime import datetime
-from filters import *
-from post.server_matchup import is_IP, address_matchup
-from post.clock_skew import server_clock_skew
-from post.replace_clock_skew import replace_clock_skew
-from post.organize_servers import organize_servers
+from .filters import *
+from .post.server_matchup import address_matchup
+from .post.server_matchup import is_IP
+from .post.clock_skew import server_clock_skew
+from .post.replace_clock_skew import replace_clock_skew
+from .post.organize_servers import organize_servers
 
 
 def main():
@@ -193,12 +194,22 @@ def assign_address(num, addr, servers):
     in the .servers collection for that server.  If so, adds addr, if
     not already present, to the document.  If not, creates a new doc
     for this server and saves to the db."""
+    # store all fields as strings, including server_num
+    # server doc = {
+    #    "server_num" : int
+    #    "server_name" : hostname
+    #    "server_IP" : IP
+    #    }
+    logger = logging.getLogger(__name__)
     doc = servers.find_one({"server_num": num})
     if not doc:
+        logger.debug("No doc found for this server, making one")
         doc = {}
         doc["server_num"] = num
         doc["server_name"] = "unknown"
         doc["server_IP"] = "unknown"
+    else:
+        logger.debug("Doc already exists for server {0}".format(num))
     if addr == num:
         pass
     elif is_IP(addr):
