@@ -145,28 +145,17 @@ def address_matchup(db, collName):
 
             if match:
                 if is_IP(match):
-                    # this code could be reorganized to be much more compact and efficient
                     # entries will ALWAYS be labeled with the server_num
                     if s["server_IP"] == "unknown":
-                        s["server_IP"] = match
-                        servers.save(s)
                         last_change = num
                         mentioned_names.remove(match)
                         logger.debug("IP {0} matched to server {1}".format(match, num))
-                    elif s["server_IP"] == match:
-                        logger.debug("duplicate IP found for server {0}".format(match))
                 else:
                     if s["server_name"] == "unknown":
-                        s["server_name"] = match
                         logger.debug("hostname {0} matched to server {1}".format(match, num))
-                        servers.save(s)
                         last_change = num
                         mentioned_names.remove(match)
-                    elif s["server_name"] == match:
-                        logger.debug("duplicate hostname found for server {0}".format(match, num))
-                    else:
-                        logger.debug("Server {0}'s stored hostname {1} " +
-                                     "is different from match {2}".format(num, name, match))
+                assign_address(num, match, servers)
             else:
                 print "No match found for server {0} this round".format(num)
         else:
