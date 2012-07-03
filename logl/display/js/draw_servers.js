@@ -152,6 +152,47 @@ secondary = function(x, y, r, ctx) {
     circle(x, y, r, "#24B314", "#196E0F", 18, ctx);
 };
 
+rollback = function(x, y, r, ctx) {
+    // draw a blue circle with radius r centered at (x, y)
+    circle(x, y, r, "#3D57BF", "#8095E8", 18, ctx);
+};
+
+recovering = function(x, y, r, ctx) {
+    // draw a RECOVERING server
+    circle(x, y, r, "#167D6F", "#4CBAAC", 18, ctx);
+};
+
+startup = function(x, y, r, ctx) {
+    // draw a server in startup1
+    circle(x, y, r, "white", "blue", 18, ctx);
+};
+
+startup2 = function(x, y, r, ctx) {
+    // draw a server in startup2
+    circle(x, y, r, "white", "red", 18, ctx);
+};
+
+fatal = function(x, y, r, ctx) {
+    // draw a red circle with radius r centered at (x, y)
+    // this server is in a FATAL state
+    circle(x, y, r, "#FF0000", "#850404", 18, ctx);
+};
+
+removed = function(x, y, r, ctx) {
+    // draw a removed server
+    // empty with a dark brown outline
+    circle(x, y, r, "white", "#3B1E0B", 18, ctx);
+};
+
+unknown = function(x, y, r, ctx) {
+    // draw a server in an UNKNOWN state
+    // this is a light grey circle with a darker grey outline
+    // and a large question mark in the center
+    circle(x, y, r, "#BFBFBF", "#737373", 18, ctx);
+    ctx.font = "45pt Helvetica";
+    ctx.fillStyle = "#737373";
+    ctx.fillText("?", x - r/3, y + r/3);
+};
 
 crown = function(x, y, w, h, ctx) {
     // draw a crown with center spike at (x, y)
