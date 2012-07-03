@@ -275,23 +275,23 @@ def test_one_known_two_unknown_IPs():
     assign_address(3, "unknown", servers)
     # add entries about server 1, Ginny
     entries.insert(generate_doc("status", "1", "UNKNOWN", 6, "self", datetime.now()))
-    entries.insert(generate_doc("status", "1.2.3.4", "UNKNOWN", 6, "5.6.7.8", datetime.now()))
+    entries.insert(generate_doc("status", "2", "UNKNOWN", 6, "5.6.7.8", datetime.now()))
     entries.insert(generate_doc("status", "3", "UNKNOWN", 6, "5.6.7.8", datetime.now()))
     entries.insert(generate_doc("status", "1", "ARBITER", 7, "self", datetime.now()))
-    entries.insert(generate_doc("status", "1.2.3.4", "ARBITER", 7, "5.6.7.8", datetime.now()))
+    entries.insert(generate_doc("status", "2", "ARBITER", 7, "5.6.7.8", datetime.now()))
     entries.insert(generate_doc("status", "3", "ARBITER", 7, "5.6.7.8", datetime.now()))
     # add entries about server 3, Neville
     entries.insert(generate_doc("status", "1", "PRIMARY", 1, "3.3.3.3", datetime.now()))
-    entries.insert(generate_doc("status", "1.2.3.4", "PRIMARY", 1, "3.3.3.3", datetime.now()))
+    entries.insert(generate_doc("status", "2", "PRIMARY", 1, "3.3.3.3", datetime.now()))
     entries.insert(generate_doc("status", "3", "PRIMARY", 1, "self", datetime.now()))
     entries.insert(generate_doc("status", "1", "FATAL", 4, "3.3.3.3", datetime.now()))
-    entries.insert(generate_doc("status", "1.2.3.4", "FATAL", 4, "3.3.3.3", datetime.now()))
+    entries.insert(generate_doc("status", "2", "FATAL", 4, "3.3.3.3", datetime.now()))
     entries.insert(generate_doc("status", "3", "FATAL", 4, "self", datetime.now()))
     # check name matching
     assert address_matchup(db, "hp") == 1
     assert servers.find_one({"server_num": "1"})["server_IP"] == "5.6.7.8"
     assert servers.find_one({"server_num": "3"})["server_IP"] == "3.3.3.3"
-    # check that entries were changed
+    # check that entries were not changed
     assert entries.find({"origin_server": "1"}).count() == 4
     assert entries.find({"origin_server": "3"}).count() == 4
 
@@ -299,7 +299,26 @@ def test_one_known_two_unknown_IPs():
 def test_known_names_unknown_IPs():
     """Test on a db with three servers whose names
     are known, IPs are unknown"""
-    pass
+    servers, entries, clock_skew, db = db_setup()
+    # add servers
+    assign_address(1, "Grubblyplank", servers)
+    assign_address(2, "Hagrid", servers)
+    assign_address(3, "Trelawney", servers)
+    # add entries
+    entries.insert(generate_doc("status", "1", "PRIMARY", 1, "2.2.2.2", datetime.now()))
+    entries.insert(generate_doc("status", "1", "SECONDARY", 2, "3.3.3.3", datetime.now()))
+    entries.insert(generate_doc("status", "2", "ARBITER", 7, "1.1.1.1", datetime.now()))
+    entries.insert(generate_doc("status", "2", "RECOVERING", 3, "3.3.3.3", datetime.now()))
+    entries.insert(generate_doc("status", "3", "DOWN", 8, "1.1.1.1", datetime.now()))
+    entries.insert(generate_doc("status", "3", "FATAL", 4, "2.2.2.2", datetime.now()))
+    # check name matching
+    assert address_matchup(db, "hp") == 1
+    assert servers.find_one({"server_num": "1"})["server_IP"] == "1.1.1.1"
+    assert servers.find_one({"server_name": "Grubblyplank"})["server_IP"] == "1.1.1.1"
+    assert servers.find_one({"server_num": "2"})["server_IP"] == "2.2.2.2"
+    assert servers.find_one({"server_name": "Hagrid"})["server_IP"] == "2.2.2.2"
+    assert servers.find_one({"server_num": "3"})["server_IP"] == "3.3.3.3"
+    assert servers.find_one({"server_name": "Trelawney"})["server_IP"] == "3.3.3.3"
 
 
 def test_known_IPs_unknown_names():
