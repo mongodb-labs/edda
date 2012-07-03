@@ -13,10 +13,11 @@
 # limitations under the License.
 
 
-# Example messages: 
+# Example messages:
 
 # Tue Jul  3 10:20:15 [rsMgr] replset msgReceivedNewConfig version: version: 4
-# Tue Jul  3 10:20:15 [rsMgr] replSet info saving a newer config version to local.system.replset
+# Tue Jul  3 10:20:15 [rsMgr] replSet info saving a newer config version to loc
+    # al.system.replset
 # Tue Jul  3 10:20:15 [rsMgr] replSet saveConfigLocally done
 # Tue Jul  3 10:20:15 [rsMgr] replSet info : additive change to configuration
 # Tue Jul  3 10:20:15 [rsMgr] replSet replSetReconfig new config saved locally

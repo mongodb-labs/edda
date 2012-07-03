@@ -25,10 +25,7 @@
 #          }
 #     }
 
-import pdb
-import pymongo
 import logging
-from datetime import datetime
 from datetime import timedelta
 
 
@@ -63,7 +60,8 @@ def server_clock_skew(db, collName):
             if b_num in skew_a["partners"]:
                 logger.debug("Clock skew already found for this server")
                 continue
-            logger.info("Finding clock skew for {0} - {1}...".format(a_name, b_name))
+            logger.info("Finding clock skew "
+                "for {0} - {1}...".format(a_name, b_name))
             skew_a["partners"][b_num] = detect(a_name, b_name, db, collName)
             if not skew_a["partners"][b_num]:
                 continue
@@ -77,7 +75,7 @@ def server_clock_skew(db, collName):
             for t in skew_a["partners"][b_num]:
                 wt = skew_a["partners"][b_num][t]
                 t = str(-int(t))
-                logger.debug("flipped one");
+                logger.debug("flipped one")
                 skew_b["partners"][a_num][t] = wt
             clock_skew.save(skew_a)
             clock_skew.save(skew_b)
@@ -94,8 +92,17 @@ def detect(a, b, db, collName):
     entries = db[collName + ".entries"]
 
     # set up cursors
-    cursor_a = entries.find({"type" : "status", "origin_server" : a, "info.server" : b})
-    cursor_b = entries.find({"type" : "status", "origin_server" : b, "info.server" : "self"})
+    cursor_a = entries.find({
+        "type": "status",
+        "origin_server": a,
+        "info.server": b
+    })
+
+    cursor_b = entries.find({
+        "type": "status",
+        "origin_server": b,
+        "info.server": "self"
+    })
     cursor_a.sort("date")
     cursor_b.sort("date")
     logger = logging.getLogger(__name__)
@@ -125,14 +132,18 @@ def detect(a, b, db, collName):
                 if abs(td) > 2:
                     key = in_skews(td, skews)
                     if not key:
-                        logger.debug("inserting new weight for td {0} into skews {1}".format(td, skews))
+                        logger.debug(("inserting new weight "
+                            "for td {0} into skews {1}").format(td, skews))
                         skews[str(td)] = wt
                     else:
-                        logger.debug("adding additional weight for td {0} into skews {1}".format(td, skews))
+                        logger.debug(
+                            " adding additional weight for "
+                            "td {0} into skews {1}".format(td, skews))
                         skews[key] += wt
                 # could maybe fix redundant counting by taking
                 # each a analyzed here and comparing against all earlier b's.
-                # another option would be to keep a table of size[len(a)*len(b)] of booleans.
+                # another option would be to keep a table of
+                    # size[len(a)*len(b)] of booleans.
                 # or, just accept this bug as something that weights multiple
                 # matches in a row even higher.
 

@@ -13,8 +13,6 @@
 # limitations under the License.
 
 from logl.post.connection import *
-import os
-from nose.plugins.skip import Skip, SkipTest
 from datetime import datetime
 from copy import deepcopy
 

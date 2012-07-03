@@ -40,35 +40,36 @@
 
 from pymongo import *
 import logging
-import operator
-from datetime import datetime
 from datetime import timedelta
+
 
 def replace_clock_skew(db, collName):
     logger = logging.getLogger(__name__)
     fixed_servers = {}
     first = True
     """"Using clock skew values that we have recieved from the
-        clock skew method, fixes these values in the original DB, (.entries)."""""
+        clock skew method, fixes these values in the
+        original DB, (.entries)."""""
     #print 'I am here'
     entries = db[collName + ".entries"]
     clock_skew = db[collName + ".clock_skew"]
     servers = db[collName + ".servers"]
-    logger.debug("\n------------List of Collections------------\n".format(db.collection_names()))
+    logger.debug("\n------------List of Collections------------"
+        "\n".format(db.collection_names()))
 
-    
     for doc in clock_skew.find():
-        #the first thing that we suold do is make sure doc is not in fixed_servers. 
         #if !doc["name"] in fixed_servers:
         logger.debug("---------------Start of first Loop----------------")
         if first:
             fixed_servers[doc["server_num"]] = 0
             first = False
-            logger.debug("Our supreme leader is: {0}".format(doc["server_num"]))
+            logger.debug("Our supreme leader is: {0}".format(
+                doc["server_num"]))
         for server_num in doc["partners"]:
             if server_num in fixed_servers:
-                logger.debug("Server name already in list of fixed servers. EXITING: {}".format(server_num))
-                logger.debug("------------------------------------------------------   \n")
+                logger.debug("Server name already in list of fixed servers. "
+                    "EXITING: {}".format(server_num))
+                logger.debug("---------------------------------------------\n")
                 continue
 
             #could potentially use this
@@ -83,7 +84,8 @@ def replace_clock_skew(db, collName):
                 if abs(weight) > largest_weight:
                     largest_weight = weight
                     logger.debug("Skew value on list: {}".format(skew))
-                    largest_time = int(skew)#int(doc["partners"][server_name][skew])
+                    largest_time = int(skew)
+                        #int(doc["partners"][server_name][skew])
 
             adjustment_value = largest_time
             logger.debug("Skew value: {}".format(largest_time))
@@ -93,15 +95,21 @@ def replace_clock_skew(db, collName):
             logger.debug("Adjustment Value: {0}".format(adjustment_value))
             #weight = doc["partners"][server_num][skew]
             logger.debug("Server is added to list of fixed servers: {}")
-            fixed_servers[server_num] = adjustment_value + fixed_servers[doc["server_num"]]
-            logger.debug("Officially adding: {0} to fixed servers".format(server_num))
+            fixed_servers[server_num
+                ] = adjustment_value + fixed_servers[doc["server_num"]]
+            logger.debug("Officially adding: {0} to fixed "
+                "servers".format(server_num))
 
             server_cursor = servers.find({"server_num": server_num})
             for server in server_cursor:
                 cursor = entries.find({"origin_server": server["server_name"]})
             for entry in cursor:
                 logger.debug('Entry adjusted from: {0}'.format(entry["date"]))
-                entry["adjusted_date"] = entry["date"] + timedelta(seconds=adjustment_value)
+
+                entry["adjusted_date"
+                    ] = entry["date"] + timedelta(seconds=adjustment_value)
+
                 entries.save(entry)
-                logger.debug('Entry adjusted to: {0}'.format(entry["adjusted_date"]))
+                logger.debug("Entry adjusted to: {0}"
+                    "".format(entry["adjusted_date"]))
                 logger.debug(entry["origin_server"])

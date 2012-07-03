@@ -121,21 +121,33 @@ def test_detect_simple():
     assign_address(1, "Erica", servers)
     assign_address(2, "Alison", servers)
     # fill in some entries
-    entries.insert(generate_doc("status", "Erica", "STARTUP2", 5, "Alison", datetime.now()))
-    entries.insert(generate_doc("status", "Erica", "SECONDARY", 2, "Alison", datetime.now()))
-    entries.insert(generate_doc("status", "Erica", "PRIMARY", 1, "Alison", datetime.now()))
-    entries.insert(generate_doc("status", "Erica", "PRIMARY", 1, "self", datetime.now()))
-    entries.insert(generate_doc("status", "Erica", "SECONDARY", 2, "self", datetime.now()))
-    entries.insert(generate_doc("status", "Erica", "DOWN", 8, "self", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Erica", "STARTUP2", 5, "Alison", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Erica", "SECONDARY", 2, "Alison", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Erica", "PRIMARY", 1, "Alison", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Erica", "PRIMARY", 1, "self", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Erica", "SECONDARY", 2, "self", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Erica", "DOWN", 8, "self", datetime.now()))
     # wait for a bit (skew the clocks)
     sleep(3)
     # fill in more entries
-    entries.insert(generate_doc("status", "Alison", "STARTUP2", 5, "self", datetime.now()))
-    entries.insert(generate_doc("status", "Alison", "SECONDARY", 2, "self", datetime.now()))
-    entries.insert(generate_doc("status", "Alison", "PRIMARY", 1, "self", datetime.now()))
-    entries.insert(generate_doc("status", "Alison", "PRIMARY", 1, "Erica", datetime.now()))
-    entries.insert(generate_doc("status", "Alison", "SECONDARY", 2, "Erica", datetime.now()))
-    entries.insert(generate_doc("status", "Alison", "DOWN", 8, "Erica", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Alison", "STARTUP2", 5, "self", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Alison", "SECONDARY", 2, "self", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Alison", "PRIMARY", 1, "self", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Alison", "PRIMARY", 1, "Erica", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Alison", "SECONDARY", 2, "Erica", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Alison", "DOWN", 8, "Erica", datetime.now()))
     # check a - b
     skews1 = detect("Erica", "Alison", db, "wildcats")
     assert skews1
@@ -160,6 +172,7 @@ def test_detect_simple():
     assert wt1 == wt2
     assert wt1 == 6
 
+
 def test_detect_a_has_more():
     """Test the scenario where server a has more
     entries about b than b has about itself"""
@@ -168,14 +181,19 @@ def test_detect_a_has_more():
     assign_address(1, "Erica", servers)
     assign_address(2, "Alison", servers)
     # fill in some entries
-    entries.insert(generate_doc("status", "Erica", "STARTUP2", 5, "Alison", datetime.now()))
-    entries.insert(generate_doc("status", "Erica", "SECONDARY", 2, "Alison", datetime.now()))
-    entries.insert(generate_doc("status", "Erica", "PRIMARY", 1, "Alison", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Erica", "STARTUP2", 5, "Alison", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Erica", "SECONDARY", 2, "Alison", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Erica", "PRIMARY", 1, "Alison", datetime.now()))
     # wait for a bit (skew the clocks)
     sleep(3)
     # fill in more entries
-    entries.insert(generate_doc("status", "Alison", "SECONDARY", 2, "self", datetime.now()))
-    entries.insert(generate_doc("status", "Alison", "PRIMARY", 1, "self", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Alison", "SECONDARY", 2, "self", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Alison", "PRIMARY", 1, "self", datetime.now()))
     # first pair doesn't match
     skews1 = detect("Erica", "Alison", db, "wildcats")
     assert skews1
@@ -187,10 +205,14 @@ def test_detect_a_has_more():
     assert wt1 == 3
     assert abs(abs(t1) - 3) < .01
     # replace some entries
-    entries.remove({"origin_server" : "Alison"})
-    entries.insert(generate_doc("status", "Alison", "STARTUP2", 5, "self", datetime.now()))
-    entries.insert(generate_doc("status", "Alison", "STARTUP2", 5, "self", datetime.now()))
-    entries.insert(generate_doc("status", "Alison", "SECONDARY", 2, "self", datetime.now()))
+    entries.remove(
+        {"origin_server": "Alison"})
+    entries.insert(generate_doc(
+        "status", "Alison", "STARTUP2", 5, "self", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Alison", "STARTUP2", 5, "self", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Alison", "SECONDARY", 2, "self", datetime.now()))
     # second pair doesn't match
     skews2 = detect("Erica", "Alison", db, "wildcats")
     assert skews2
@@ -198,6 +220,7 @@ def test_detect_a_has_more():
     print skews2
     assert in_skews(3, skews2)
     assert skews2['3'] == 4
+
 
 def test_detect_b_has_more():
     """Test the case where server b has more
@@ -214,17 +237,22 @@ def test_two_different_skews():
     assign_address(1, "Hannah", servers)
     assign_address(2, "Mel", servers)
     # these are skewed by 3 seconds
-    entries.insert(generate_doc("status", "Hannah", "PRIMARY", 1, "Mel", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Hannah", "PRIMARY", 1, "Mel", datetime.now()))
     sleep(3)
-    entries.insert(generate_doc("status", "Mel", "PRIMARY", 1, "self", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Mel", "PRIMARY", 1, "self", datetime.now()))
     # one other message to break the matching pattern
     sleep(2)
-    entries.insert(generate_doc("status", "Hannah", "ARBITER", 7, "Mel", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Hannah", "ARBITER", 7, "Mel", datetime.now()))
     sleep(2)
     # these are skewed by 5 seconds
-    entries.insert(generate_doc("status", "Hannah", "SECONDARY", 2, "Mel", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Hannah", "SECONDARY", 2, "Mel", datetime.now()))
     sleep(5)
-    entries.insert(generate_doc("status", "Mel", "SECONDARY", 2, "self", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Mel", "SECONDARY", 2, "self", datetime.now()))
     skews = detect("Hannah", "Mel", db, "wildcats")
     print skews
     assert skews
@@ -234,6 +262,7 @@ def test_two_different_skews():
     assert in_skews(3, skews)
     assert skews['3'] == 1
 
+
 def test_detect_zero_skew():
     """Test the case where there is no clock skew."""
     servers, entries, clock_skew, db = db_setup()
@@ -241,19 +270,31 @@ def test_detect_zero_skew():
     assign_address(1, "Sam", servers)
     assign_address(2, "Gaya", servers)
     # fill in some entries (a - b)
-    entries.insert(generate_doc("status", "Sam", "STARTUP2", 5, "Gaya", datetime.now()))
-    entries.insert(generate_doc("status", "Gaya", "STARTUP2", 5, "self", datetime.now()))
-    entries.insert(generate_doc("status", "Sam", "ARBITER", 7, "Gaya", datetime.now()))
-    entries.insert(generate_doc("status", "Gaya", "ARBITER", 7, "self", datetime.now()))
-    entries.insert(generate_doc("status", "Sam", "DOWN", 8, "Gaya", datetime.now()))
-    entries.insert(generate_doc("status", "Gaya", "DOWN", 8, "self", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Sam", "STARTUP2", 5, "Gaya", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Gaya", "STARTUP2", 5, "self", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Sam", "ARBITER", 7, "Gaya", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Gaya", "ARBITER", 7, "self", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Sam", "DOWN", 8, "Gaya", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Gaya", "DOWN", 8, "self", datetime.now()))
     # fill in some entries (b - a)
-    entries.insert(generate_doc("status", "Gaya", "STARTUP2", 5, "Sam", datetime.now()))
-    entries.insert(generate_doc("status", "Sam", "STARTUP2", 5, "self", datetime.now()))
-    entries.insert(generate_doc("status", "Gaya", "STARTUP2", 5, "Sam", datetime.now()))
-    entries.insert(generate_doc("status", "Sam", "STARTUP2", 5, "self", datetime.now()))
-    entries.insert(generate_doc("status", "Gaya", "STARTUP2", 5, "Sam", datetime.now()))
-    entries.insert(generate_doc("status", "Sam", "STARTUP2", 5, "self", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Gaya", "STARTUP2", 5, "Sam", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Sam", "STARTUP2", 5, "self", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Gaya", "STARTUP2", 5, "Sam", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Sam", "STARTUP2", 5, "self", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Gaya", "STARTUP2", 5, "Sam", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Sam", "STARTUP2", 5, "self", datetime.now()))
     skews1 = detect("Sam", "Gaya", db, "wildcats")
     skews2 = detect("Gaya", "Sam", db, "wildcats")
     assert not skews1
@@ -268,21 +309,33 @@ def test_detect_network_delay():
     assign_address(1, "Erica", servers)
     assign_address(2, "Alison", servers)
     # fill in some entries
-    entries.insert(generate_doc("status", "Erica", "STARTUP2", 5, "Alison", datetime.now()))
-    entries.insert(generate_doc("status", "Erica", "SECONDARY", 2, "Alison", datetime.now()))
-    entries.insert(generate_doc("status", "Erica", "PRIMARY", 1, "Alison", datetime.now()))
-    entries.insert(generate_doc("status", "Erica", "PRIMARY", 1, "self", datetime.now()))
-    entries.insert(generate_doc("status", "Erica", "SECONDARY", 2, "self", datetime.now()))
-    entries.insert(generate_doc("status", "Erica", "DOWN", 8, "self", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Erica", "STARTUP2", 5, "Alison", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Erica", "SECONDARY", 2, "Alison", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Erica", "PRIMARY", 1, "Alison", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Erica", "PRIMARY", 1, "self", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Erica", "SECONDARY", 2, "self", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Erica", "DOWN", 8, "self", datetime.now()))
     # wait for a bit (skew the clocks)
     sleep(1)
     # fill in more entries
-    entries.insert(generate_doc("status", "Alison", "STARTUP2", 5, "self", datetime.now()))
-    entries.insert(generate_doc("status", "Alison", "SECONDARY", 2, "self", datetime.now()))
-    entries.insert(generate_doc("status", "Alison", "PRIMARY", 1, "self", datetime.now()))
-    entries.insert(generate_doc("status", "Alison", "PRIMARY", 1, "Erica", datetime.now()))
-    entries.insert(generate_doc("status", "Alison", "SECONDARY", 2, "Erica", datetime.now()))
-    entries.insert(generate_doc("status", "Alison", "DOWN", 8, "Erica", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Alison", "STARTUP2", 5, "self", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Alison", "SECONDARY", 2, "self", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Alison", "PRIMARY", 1, "self", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Alison", "PRIMARY", 1, "Erica", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Alison", "SECONDARY", 2, "Erica", datetime.now()))
+    entries.insert(generate_doc(
+        "status", "Alison", "DOWN", 8, "Erica", datetime.now()))
     # run detect()!
     skews1 = detect("Erica", "Alison", db, "wildcats")
     skews2 = detect("Alison", "Erica", db, "wildcats")

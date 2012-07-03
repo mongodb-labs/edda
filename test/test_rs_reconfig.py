@@ -29,13 +29,16 @@ from datetime import datetime
 
 def test_criteria():
     assert criteria("this should not pass") == -1
-    assert criteria("Tue Jul  3 10:20:15 [rsMgr] replSet replSetReconfig new config saved locally") == 0
-    assert criteria("Tue Jul  3 10:20:15 [rsMgr] replSet new config saved locally") == -1
+    assert criteria("Tue Jul  3 10:20:15 [rsMgr]"
+        " replSet replSetReconfig new config saved locally") == 0
+    assert criteria("Tue Jul  3 10:20:15 [rsMgr]"
+        " replSet new config saved locally") == -1
 
 
 def test_process():
     date = datetime.now()
-    check_state("Tue Jul  3 10:20:15 [rsMgr] replSet replSetReconfig new config saved locally", 0, date, None)
+    check_state("Tue Jul  3 10:20:15 [rsMgr] replSet"
+        " replSetReconfig new config saved locally", 0, date, None)
     assert process("This should fail", date) == None
 
 

@@ -49,7 +49,10 @@ def new_conn(msg, doc):
     logger = logging.getLogger(__name__)
 
     # this very long regex recognizes legal IP addresses
-    pattern = re.compile("(([0|1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))(\.([0|1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5])){3}")
+    pattern = re.compile("""
+        (([0|1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5])) # first part
+        (\.([0|1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5])){3} # second part
+    """, re.WHITESPACE)
     m = pattern.search(msg)
     if (m == None):
         logger.debug("malformed new_conn message: no IP address found")
@@ -72,15 +75,18 @@ def new_conn(msg, doc):
         logger.debug("malformed new_conn message: no connection number found")
         return None
     doc["info"]["conn_number"] = m.group(0)[1:]
-    logger.debug("Returning new doc for a message of type: initandlisten: new_conn")
+
+    debug = "Returning new doc for a message of type: initandlisten: new_conn"
+    logger.debug(debug)
     return doc
+
 
 def ended(msg, doc):
     """this server is ending a connections."""
     doc["info"]["subtype"] = "end_conn"
     logger = logging.getLogger(__name__)
 
-    # this very long regex recognizes legal IP addresses
+    # This very long regex recognizes legal IP addresses
     pattern = re.compile("(([0|1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))(\.([0|1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5])){3}")
     m = pattern.search(msg)
     if (m == None):
@@ -104,5 +110,8 @@ def ended(msg, doc):
         logger.debug("malformed new_conn message: no connection number found")
         return None
     doc["info"]["conn_number"] = m.group(0)[1:]
-    logger.debug("Returning new doc for a message of type: initandlisten: new_conn")
+
+    debug = "Returning new doc for a message of type: initandlisten: new_conn"
+    logger.debug(debug)
+
     return doc

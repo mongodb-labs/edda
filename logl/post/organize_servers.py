@@ -23,11 +23,10 @@
 
 
 from pymongo import *
-import logging
 from datetime import *
 
+
 def organize_servers(db, collName):
-    logger = logging.getLogger(__name__)
     servers_list = {}
 
     entries = db[collName + ".entries"]

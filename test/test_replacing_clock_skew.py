@@ -15,16 +15,12 @@
 
 from logl.post.replace_clock_skew import replace_clock_skew
 from logl.logl import assign_address
-import pymongo
 import logging
 from datetime import *
 from pymongo import Connection
-from time import sleep
-from nose.plugins.skip import Skip, SkipTest
 
 
 def db_setup():
-    logger = logging.getLogger(__name__)
     """Set up a database for use by tests"""
     c = Connection()
     db = c["test"]
@@ -36,6 +32,7 @@ def db_setup():
     db.drop_collection(clock_skew)
     return [servers, entries, clock_skew, db]
 
+
 def test_replacing_none():
     logger = logging.getLogger(__name__)
     """"Replaces servers without skews."""""
@@ -43,9 +40,10 @@ def test_replacing_none():
     servers, entries, clock_skew, db = db_setup()
     original_date = datetime.now()
 
-
-    entries.insert(generate_doc("status", "apple", "STARTUP2", 5, "pear", original_date))
-    entries.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date))
+    entries.insert(generate_doc(
+        "status", "apple", "STARTUP2", 5, "pear", original_date))
+    entries.insert(generate_doc(
+        "status", "pear", "STARTUP2", 5, "apple", original_date))
     assign_address(5, "pear", servers)
     assign_address(6, "apple", servers)
     doc1 = generate_cs_doc("5", "6")
@@ -77,8 +75,10 @@ def test_replacing_one_value():
     skew1 = 5
 
     original_date = datetime.now()
-    entries.insert(generate_doc("status", "apple", "STARTUP2", 5, "pear", original_date))
-    entries.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date))
+    entries.insert(generate_doc(
+        "status", "apple", "STARTUP2", 5, "pear", original_date))
+    entries.insert(generate_doc(
+        "status", "pear", "STARTUP2", 5, "apple", original_date))
     assign_address(5, "pear", servers)
     assign_address(6, "apple", servers)
     doc1 = generate_cs_doc("5", "6")
@@ -97,10 +97,11 @@ def test_replacing_one_value():
         logger.debug("Adjusted Date: {}".format(doc["adjusted_date"]))
         delta = abs(original_date - doc["adjusted_date"])
         logger.debug("Delta: {}".format(repr(delta)))
-        if delta - timedelta(seconds = skew1) < timedelta(milliseconds = 1):
+        if delta - timedelta(seconds=skew1) < timedelta(milliseconds=1):
             assert True
             continue
         assert False
+
 
 def test_replacing_multiple():
     logger = logging.getLogger(__name__)
@@ -110,12 +111,18 @@ def test_replacing_multiple():
     weight = 10
 
     original_date = datetime.now()
-    entries.insert(generate_doc("status", "apple", "STARTUP2", 5, "pear", original_date))
-    entries.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date))
-    entries.insert(generate_doc("status", "plum", "STARTUP2", 5, "apple", original_date))
-    entries.insert(generate_doc("status", "apple", "STARTUP2", 5, "plum", original_date))
-    entries.insert(generate_doc("status", "pear", "STARTUP2", 5, "plum", original_date))
-    entries.insert(generate_doc("status", "plum", "STARTUP2", 5, "pear", original_date))
+    entries.insert(generate_doc(
+        "status", "apple", "STARTUP2", 5, "pear", original_date))
+    entries.insert(generate_doc(
+        "status", "pear", "STARTUP2", 5, "apple", original_date))
+    entries.insert(generate_doc(
+        "status", "plum", "STARTUP2", 5, "apple", original_date))
+    entries.insert(generate_doc(
+        "status", "apple", "STARTUP2", 5, "plum", original_date))
+    entries.insert(generate_doc(
+        "status", "pear", "STARTUP2", 5, "plum", original_date))
+    entries.insert(generate_doc(
+        "status", "plum", "STARTUP2", 5, "pear", original_date))
 
     assign_address(4, "apple", servers)
     assign_address(5, "pear", servers)
@@ -169,7 +176,6 @@ def test_replacing_multiple():
 
 
 def generate_doc(type, server, label, code, target, date):
-    logger = logging.getLogger(__name__)
     """Generate an entry"""
     doc = {}
     doc["type"] = type
@@ -192,8 +198,8 @@ def generate_doc(type, server, label, code, target, date):
 #          }
 #     }
 
+
 def generate_cs_doc(name, referal):
-    logger = logging.getLogger(__name__)
     doc = {}
     doc["type"] = "clock_skew"
     doc["server_num"] = name

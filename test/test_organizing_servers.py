@@ -41,8 +41,10 @@ def test_organize_two_servers():
     servers, entries, clock_skew, db = db_setup()
     original_date = datetime.now()
 
-    entries.insert(generate_doc("status", "apple", "STARTUP2", 5, "pear", original_date))
-    entries.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date + timedelta(seconds=5)))
+    entries.insert(generate_doc(
+        "status", "apple", "STARTUP2", 5, "pear", original_date))
+    entries.insert(generate_doc("status", "pear", "STARTUP2"
+        "", 5, "apple", original_date + timedelta(seconds=5)))
 
     assign_address(1, "apple", servers)
     assign_address(2, "pear", servers)
@@ -62,18 +64,25 @@ def test_organizing_three_servers():
     logger = logging.getLogger(__name__)
     original_date = datetime.now()
 
+    entries.insert(generate_doc(
+        "status", "apple", "STARTUP2", 5, "pear", original_date))
+    entries.insert(generate_doc("status", "apple", "STARTUP2"
+        "", 5, "pear", original_date + timedelta(seconds=14)))
+    entries.insert(generate_doc("status", "pear", "STARTUP2"
+        "", 5, "apple", original_date + timedelta(seconds=5)))
+    entries.insert(generate_doc("status", "pear", "STARTUP2"
+        "", 5, "apple", original_date + timedelta(seconds=15)))
+    entries.insert(generate_doc("status", "plum", "STARTUP2"
+        "", 5, "apple", original_date + timedelta(seconds=9)))
+    entries.insert(generate_doc("status", "plum", "STARTUP2"
+        "", 5, "apple", original_date + timedelta(seconds=11)))
 
-    entries.insert(generate_doc("status", "apple", "STARTUP2", 5, "pear", original_date))
-    entries.insert(generate_doc("status", "apple", "STARTUP2", 5, "pear", original_date + timedelta(seconds=14)))
-    entries.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date + timedelta(seconds=5)))
-    entries.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date + timedelta(seconds=15)))
-    entries.insert(generate_doc("status", "plum", "STARTUP2", 5, "apple", original_date + timedelta(seconds=9)))
-    entries.insert(generate_doc("status", "plum", "STARTUP2", 5, "apple", original_date + timedelta(seconds=11)))
-
-
-    servers.insert(generate_server_doc("status", "plum", "STARTUP2", 5, "apple", original_date))
-    servers.insert(generate_server_doc("status", "apple", "STARTUP2", 5, "plum", original_date + timedelta(seconds=9)))
-    servers.insert(generate_server_doc("status", "pear", "STARTUP2", 5, "apple", original_date + timedelta(seconds=6)))
+    servers.insert(generate_server_doc(
+        "status", "plum", "STARTUP2", 5, "apple", original_date))
+    servers.insert(generate_server_doc("status", "apple", "STARTUP2"
+        "", 5, "plum", original_date + timedelta(seconds=9)))
+    servers.insert(generate_server_doc("status", "pear", "STARTUP2"
+        "", 5, "apple", original_date + timedelta(seconds=6)))
 
     organized_servers = organize_servers(db, "fruit")
     logger.debug("Organized servers Printing: {}".format(organized_servers))
@@ -92,23 +101,31 @@ def test_organizing_three_servers():
 
             #ogger.debug("Item: {}".format(item))
 
+
 def test_organize_same_times():
     servers, entries, clock_skew, db = db_setup()
     logger = logging.getLogger(__name__)
     original_date = datetime.now()
 
+    entries.insert(generate_doc(
+        "status", "apple", "STARTUP2", 5, "pear", original_date))
+    entries.insert(generate_doc(
+        "status", "apple", "STARTUP2", 5, "pear", original_date))
+    entries.insert(generate_doc(
+        "status", "pear", "STARTUP2", 5, "apple", original_date))
+    entries.insert(generate_doc(
+        "status", "pear", "STARTUP2", 5, "apple", original_date))
+    entries.insert(generate_doc(
+        "status", "plum", "STARTUP2", 5, "apple", original_date))
+    entries.insert(generate_doc(
+        "status", "plum", "STARTUP2", 5, "apple", original_date))
 
-    entries.insert(generate_doc("status", "apple", "STARTUP2", 5, "pear", original_date))
-    entries.insert(generate_doc("status", "apple", "STARTUP2", 5, "pear", original_date))
-    entries.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date))
-    entries.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date))
-    entries.insert(generate_doc("status", "plum", "STARTUP2", 5, "apple", original_date))
-    entries.insert(generate_doc("status", "plum", "STARTUP2", 5, "apple", original_date))
-
-
-    servers.insert(generate_server_doc("status", "plum", "STARTUP2", 5, "apple", original_date))
-    servers.insert(generate_server_doc("status", "apple", "STARTUP2", 5, "plum", original_date))
-    servers.insert(generate_server_doc("status", "pear", "STARTUP2", 5, "apple", original_date))
+    servers.insert(generate_server_doc(
+        "status", "plum", "STARTUP2", 5, "apple", original_date))
+    servers.insert(generate_server_doc(
+        "status", "apple", "STARTUP2", 5, "plum", original_date))
+    servers.insert(generate_server_doc(
+        "status", "pear", "STARTUP2", 5, "apple", original_date))
 
     organized_servers = organize_servers(db, "fruit")
     logger.debug("Organized servers Printing: {}".format(organized_servers))

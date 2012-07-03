@@ -33,6 +33,7 @@ def criteria(msg):
 
     return -1
 
+
 def process(msg, date):
     """If the given log line fits the criteria for this filter,
     processes the line and creates a document for it.
@@ -66,8 +67,6 @@ def process(msg, date):
         return starting_up(msg, doc)
 
 
-
-
 def starting_up(msg, doc):
     """this server is starting up.  Capture host information."""
     logger = logging.getLogger(__name__)
@@ -86,5 +85,6 @@ def starting_up(msg, doc):
     host = msg[start + 5:len(msg)]
 
     doc["info"]["server"] = host + ":" + port
-    logger.debug("Returning new doc for a message of type: initandlisten: starting_up")
+    deb = "Returning new doc for a message of type: initandlisten: starting_up"
+    logger.debug(deb)
     return doc

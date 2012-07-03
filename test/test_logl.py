@@ -14,8 +14,8 @@
 
 
 from logl.logl import assign_address
-import pymongo
 from pymongo import Connection
+
 
 def db_setup():
     """Set up a database for use by tests"""
