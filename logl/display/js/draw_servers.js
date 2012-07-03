@@ -66,6 +66,7 @@ primary = function(x, y, r, ctx) {
     crown(x, (y - 0.22*r), 0.6*r, 0.5*r, ctx);
 };
 
+
 down = function(x, y, r, ctx) {
     // draw a down server
     ctx.globalAlpha = 0.4; // 40% opacity

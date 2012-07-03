@@ -35,10 +35,11 @@ limitations under the License. /-->
   <script src="js/mouse_over.js"></script>
   <script src="js/arrows.js"></script>
   <script src="js/time.js"></script>
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.js"></script>
 </head>
 
-<body onload="serverSetup();sample_frames();time_setup()">
+<body onload="serverSetup();time_setup()">
 
   <script>
     <!--load necessary things/-->
@@ -46,7 +47,6 @@ limitations under the License. /-->
   </script>
     <div id="page">
       <br/>
-	<span id="msg">Message from Python</span>
       <div id="canvas">
 	<!--Canvas layers go in here/-->
 	<canvas id="background_layer" height="600" width="800"></canvas>
@@ -57,7 +57,7 @@ limitations under the License. /-->
 	<canvas id="message_layer" height="600" width="800"></canvas>
       </div>
       <br/><br/>
-      <input id="timescale" type="range" name="time" min="0" onchange="update_time()" width="400px" max="1"/>
+      <div id="slider"></div>
       <br/>
       <div id="timestamp">Time:</div>
       <br/>

@@ -14,9 +14,14 @@
 
 var slider;
 
-time_setup = function() {
-    slider = document.getElementById("timescale");
-    update_time();
+time_setup = function(max_time) {
+    $("#slider").slider({
+	    min: 0,
+	    max: max_time,
+	    step: 1,
+	});
+    $("slider").bind("slide", update_time(event, ui));
+//    update_time();
 };
 
 sample_frames = function() {
@@ -58,11 +63,10 @@ sample_frames = function() {
 };
 
 
-update_time = function() {
+update_time = function(event, ui) {
     // for now, simply updates the time printed
     // in the timestamp div
-    document.getElementById("timestamp").innerHTML = slider.value + " seconds";
-    render(slider.value);
+    render(ui.value);
 };
 
 
@@ -74,29 +78,26 @@ render = function(time) {
     // check that there exists a corresponding frame
     if (frames[time] != null) {
 
-	// wipe server layer and draw all bodies
+	// wipe server layer and draw all servers
 	server_canvas = document.getElementById("server_layer");
 	server_ctx = server_canvas.getContext("2d");
 	server_canvas.width = server_canvas.width;
 
-	for (var name in frames[time]["bodies"]) {
-	    var state = frames[time]["bodies"][name];
+	for (var name in frames[time]["servers"]) {
+	    var state = frames[time]["servers"][name];
 	    console.log(state);
 	    switch(state) {
-	    case "primary":
+	    case "PRIMARY":
 		primary(servers[name]["x"], servers[name]["y"], servers[name]["r"], server_ctx);
 		break;
-	    case "secondary":
+	    case "SECONDARY":
 		secondary(servers[name]["x"], servers[name]["y"], servers[name]["r"], server_ctx);
 		break;
-	    case "arbiter":
+	    case "ARBITER":
 		arbiter(servers[name]["x"], servers[name]["y"], servers[name]["r"], server_ctx);
 		break;
-	    case "down":
+	    case "DOWN":
 		down(servers[name]["x"], servers[name]["y"], servers[name]["r"], server_ctx);
-		break;
-	    case "user":
-		user(servers[name]["x"], servers[name]["y"], servers[name]["r"], server_ctx);
 		break;
 	    }
 	}

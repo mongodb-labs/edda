@@ -25,7 +25,27 @@ poll = function() {
 
     // receive information from server
     xmlhttp.onreadystatechange = function() {
-	console.log(xmlhttp.responseText);
-	document.getElementById("msg").innerHTML = xmlhttp.responseText;
+	frames = jQuery.parseJSON(xmlhttp.responseText);
+	var names = new Array();
+	console.log(frames["0"]);
+	for (var name in frames["0"]["servers"]) {
+	    names.push(name);
+	}
+	// change time values of slider
+	time_setup(frames.size);
+	generate_coords(frames["0"]["server_count"], names);
+	console.log(servers)
+	render("0");
+	// also, get rid of default drawing of first frame
+	// and get rid of the "Message from Python" line
     };
+};
+
+// thanks http://stackoverflow.com/questions/5223/length-of-javascript-object-ie-associative-array
+Object.size = function(obj) {
+    var size = 0, key;
+    for (key in obj) {
+	if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
 };
