@@ -20,8 +20,11 @@ time_setup = function(max_time) {
 	    max: max_time,
 	    step: 1,
 	});
-    $("slider").bind("slide", update_time(event, ui));
-//    update_time();
+    $("slider").bind("slide", function(event, ui){
+	    render(ui.value);
+	    // and update the time in the timestamp div
+	    document.getElementById("timestamp").innerHTML = frames[ui.value]["date"]
+	});
 };
 
 sample_frames = function() {
@@ -60,13 +63,6 @@ sample_frames = function() {
 
     // render first frame
     render(0);
-};
-
-
-update_time = function(event, ui) {
-    // for now, simply updates the time printed
-    // in the timestamp div
-    render(ui.value);
 };
 
 
