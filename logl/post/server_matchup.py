@@ -13,9 +13,11 @@
 # limitations under the License.
 
 #!/usr/bin/env python
+import pymongo
 import logging
 from copy import deepcopy
 from .clock_skew import server_clock_skew
+import operator
 import re
 
 
@@ -63,11 +65,7 @@ def address_matchup(db, collName):
     for addr in all_servers_cursor:
         if addr == "self":
             continue
-        if servers.find_one(
-            {"$or": [
-            {"server_name": addr},
-            {"server_IP": addr}]
-        }):
+        if servers.find_one({"$or": [{"server_name" : addr}, {"server_IP": addr}]}):
             # concerned that skipping these will make test fail
             continue
         mentioned_names.append(addr)
@@ -76,13 +74,7 @@ def address_matchup(db, collName):
     round = 0
     while mentioned_names:
         round += 1
-
-        unknowns = list(servers.find(
-            {"$or": [
-            {"server_name": "unknown"},
-            {"server_IP": "unknown"}
-            ]
-        }))
+        unknowns = list(servers.find({"$or": [{"server_name": "unknown"}, {"server_IP": "unknown"}]}))
 
         if len(unknowns) == 0:
             logger.debug("No unknowns, breaking")
@@ -106,34 +98,29 @@ def address_matchup(db, collName):
                 last_change = num
 
             # get neighbors of s into list
-            c = list(entries.find(
-                {"origin_server": num}).distinct("info.server"))
+            # (these are servers s mentions)
+            c = list(entries.find({"origin_server": num}).distinct("info.server"))
             logger.debug("Found {0} neighbors of (S)".format(len(c)))
             neighbors_of_s = []
             for entry in c:
                 if entry != "self":
                     neighbors_of_s.append(entry)
 
-            # if possible, make a list of neighbors of s
+            # if possible, make a list of servers who mention s
+            # and then, the servers they in turn mention
             # (stronger algorithm)
             if name:
                 logger.debug("Server (S) is named! Running stronger algorithm")
-                logger.debug("finding neighbors of (S) referring to name "
-                    "{0}".format(name))
+                logger.debug("finding neighbors of (S) referring to name {0}".format(name))
                 neighbors_neighbors = []
-                neighbors = entries.find(
-                    {"info.server": name}).distinct("origin_server")
+                neighbors = entries.find({"info.server": name}).distinct("origin_server")
                 # for each server that mentions s
                 for n_addr in neighbors:
-                    logger.debug("Find neighbors of (S)'s neighbor, "
-                        "{0}".format(n_addr))
+                    logger.debug("Find neighbors of (S)'s neighbor, {0}".format(n_addr))
                     n_num, n_name, n_IP = name_me(n_addr, servers)
                     if n_num:
-                        logger.debug("Succesfully found server number for "
-                            "server {0}".format(n_addr))
-
-                        n_addrs = entries.find(
-                            {"origin_server": n_num}).distinct("info.server")
+                        logger.debug("Succesfully found server number for server {0}".format(n_addr))
+                        n_addrs = entries.find({"origin_server": n_num}).distinct("info.server")
                         if not neighbors_neighbors:
                             for addr in n_addrs:
                                 neighbors_neighbors.append(addr)
@@ -144,20 +131,17 @@ def address_matchup(db, collName):
                                 if addr in n_n_copy:
                                     neighbors_neighbors.append(addr)
                     else:
-                        logger.debug("Unable to find server number for server "
-                            "{0}, skipping".format(n_addr))
-
-                logger.debug("Examining for match:\n{0}\n{1}".format(
-                    neighbors_of_s, neighbors_neighbors))
+                        logger.debug("Unable to find server number for server {0}, skipping".format(n_addr))
+                logger.debug("Examining for match:\n{0}\n{1}".format(neighbors_of_s, neighbors_neighbors))
                 match = eliminate(neighbors_of_s, neighbors_neighbors)
+                if not match:
+                    # (try weaker algorithm anyway, it catches some cases)
+                    logger.debug("No match found using strong algorith, running weak algorithm")
+                    match = eliminate(neighbors_of_s, mentioned_names)
             else:
                 # (weaker algorithm)
-                logger.debug("Server {0} is unnamed. "
-                    "Running weaker algorithm".format(num))
-
-                logger.debug("Examining for match:"
-                    "\n{0}\n{1}".format(neighbors_of_s, mentioned_names))
-
+                logger.debug("Server {0} is unnamed.  Running weaker algorithm".format(num))
+                logger.debug("Examining for match:\n{0}\n{1}".format(neighbors_of_s, mentioned_names))
                 match = eliminate(neighbors_of_s, mentioned_names)
 
             if match:
@@ -166,18 +150,15 @@ def address_matchup(db, collName):
                     if s["server_IP"] == "unknown":
                         last_change = num
                         mentioned_names.remove(match)
-                        logger.debug("IP {0} matched to server "
-                            "{1}".format(match, num))
+                        logger.debug("IP {0} matched to server {1}".format(match, num))
                 else:
                     if s["server_name"] == "unknown":
-                        logger.debug("hostname {0} matched to "
-                            "server {1}".format(match, num))
+                        logger.debug("hostname {0} matched to server {1}".format(match, num))
                         last_change = num
                         mentioned_names.remove(match)
                 assign_address(num, match, servers)
             else:
-                logger.debug("No match found for server "
-                    "{0} this round".format(num))
+                logger.debug("No match found for server {0} this round".format(num))
         else:
             continue
         break
@@ -187,26 +168,19 @@ def address_matchup(db, collName):
         # so, it would really just need mentioned_names to be empty,
         # and for ever server to have either a hostname or IP
         # (the idea being that any log lines could be matched to some server)
-        s = list(servers.find(
-            {"$and": [
-            {"server_name": "unknown"},
-            {"server_IP": "unknown"}
-        ]}))
+        s = list(servers.find({"$and": [{"server_name": "unknown"}, {"server_IP": "unknown"}]}))
         if len(s) == 0:
             logger.debug("Successfully named all unnamed servers!")
             return 1
-        logger.debug("Exhausted mentioned_names, but "
-            "{0} servers remain unnamed".format(len(s)))
+        logger.debug("Exhausted mentioned_names, but {0} servers remain unnamed".format(len(s)))
         return -1
-    logger.debug("Could not match {0} addresses: "
-        "{1}".format(len(mentioned_names), mentioned_names))
+    logger.debug("Could not match {0} addresses: {1}".format(len(mentioned_names), mentioned_names))
     return -1
 
 
 def is_IP(s):
     """Returns true if s is an IP address, false otherwise"""
-    pattern = re.compile("(([0|1]?[0-9]{1,2})|(2[0-4][0-9])|"
-        "(25[0-5]))(\.([0|1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5])){3}")
+    pattern = re.compile("(([0|1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))(\.([0|1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5])){3}")
     m = pattern.search(s)
     if (m == None):
         return False
@@ -214,8 +188,6 @@ def is_IP(s):
 
 # we are having some trouble with imports right now.
 # eventually this function will only be in one place!
-
-
 def assign_address(num, addr, servers):
     """Given this num and addr, sees if there exists a document
     in the .servers collection for that server.  If so, adds addr, if
@@ -240,8 +212,7 @@ def assign_address(num, addr, servers):
         doc["server_IP"] = addr
     else:
         if doc["server_name"] != "unknown" and doc["server_name"] != addr:
-            logger.warning("conflicting hostnames found for server "
-                "{0}:".format(num))
+            logger.warning("conflicting hostnames found for server {0}:".format(num))
             logger.warning("\n{0}\n{1}".format(addr, doc["server_name"]))
         doc["server_name"] = addr
     servers.save(doc)
@@ -308,16 +279,14 @@ def server_matchup(db, collName):
         return 1
 
     # no unknown servers
-    unknowns = servers.find(
-        {"server_name": "unknown"})
+    unknowns = servers.find({"server_name" : "unknown"})
     unknown_count = unknowns.count()
     if unknown_count == 0:
         return 1
 
     # all servers are unknown
     # this case could probably be handled for cases where server_count > 1
-    logger.debug("attempting to name "
-        "{0} unnamed servers".format(unknown_count))
+    logger.debug("attempting to name {0} unnamed servers".format(unknown_count))
     if server_count == unknown_count:
         return -1
 
@@ -327,7 +296,7 @@ def server_matchup(db, collName):
     for name in cursor:
         if name == "self":
             continue
-        if servers.find_one({"server_name": name}):
+        if servers.find_one({"server_name" : name}):
             continue
         unmatched_names.append(name)
 
@@ -346,39 +315,26 @@ def server_matchup(db, collName):
             candidates[iter(unmatched_names).next()] = 1
         else:
             for name in unmatched_names:
-                logger.debug("Trying name {0} for server "
-                    "{1}".format(name, num))
-                # in the .servers coll,replace server_name for unknown with name
+                logger.debug("Trying name {0} for server {1}".format(name, num))
+                # in the .servers coll, replace server_name for unknown with name
                 unknown["server_name"] = name
                 servers.save(unknown)
                 # in the .entries coll, replace origin_server from unknown["server_num"] to name
-                entries.update(
-                    {"origin_server": num},
-                    {"$set": {"origin_server": name}
-                    }, multi=True
-                )
+                entries.update({"origin_server": num}, {"$set": {"origin_server": name}}, multi=True)
                 # run the clock skew algorithm
-                clock_skew.remove(
-                    {"server_num": num})
+                clock_skew.remove({"server_num" : num})
                 server_clock_skew(db, collName)
                 # store name and highest weight clock skew from this round (with first named server)
-                doc = clock_skew.find_one(
-                    {"server_num": num})
+                doc = clock_skew.find_one({"server_num" : num})
                 wt = 0
                 for partner in doc["partners"]:
                     for skew in doc["partners"][partner]:
                         if doc["partners"][partner][skew] > wt:
                             wt = doc["partners"][partner][skew]
                 candidates[name] = wt
-                logger.debug("storing candidate {0} with weight "
-                    "{1}".format(name, wt))
+                logger.debug("storing candidate {0} with weight {1}".format(name, wt))
                 # set the entries back to the original server_num
-                entries.update(
-                    {"origin_server": name},
-                    {"$set":
-                    {"origin_server": num}
-                    }, multi=True
-                )
+                entries.update({"origin_server": name}, {"$set": {"origin_server": num}}, multi=True)
         # select candidate with highest weight!
         wt = 0
         winner = ""
@@ -389,24 +345,16 @@ def server_matchup(db, collName):
         # update db entries accordingly with winning name
         unknown["server_name"] = winner
         servers.save(unknown)
-        entries.update(
-            {"origin_server": num},
-            {"$set":
-            {"origin_server": winner}
-            }, multi=True
-        )
+        entries.update({"origin_server" : num}, {"$set" : {"origin_server" : winner}}, multi=True)
         # run clock skew algorithm anew
         server_clock_skew(db, collName)
-        logger.info("Naming this server {0}, removing {0} from list"
-            "".format(winner, winner))
+        logger.info("Naming this server {0}, removing {0} from list".format(winner, winner))
         unmatched_names.remove(winner)
         candidates = {}
 
     if failures > 0:
-        logger.info("Unable to match names for {0} of {1} unnamed servers"
-            "".format(failures, unknown_count))
+        logger.info("Unable to match names for {0} of {1} unnamed servers".format(failures, unknown_count))
         return -1
-    logger.info("Successfully named {0} of {0} unnamed servers"
-        "".format(unknown_count))
+    logger.info("Successfully named {0} of {0} unnamed servers".format(unknown_count))
     return 1
 

@@ -143,7 +143,6 @@ def main():
             if (string.find(line, '*****') >= 0):
                 reset = True
                 server_num += 1
-                origin_server = str(server_num)
                 continue
             # skip blank lines
             if (len(line) > 1):
@@ -154,12 +153,11 @@ def main():
                 doc = traffic_control(line, date)
                 if doc:
                     if reset and doc["type"] == "init" and doc["info"]["subtype"] == "startup":
-                        origin_server = doc["info"]["server"]
-                        assign_address(server_num, origin_server, servers)
+                        assign_address(server_num, str(doc["info"]["server"]), servers)
                     if doc["type"] == "exit" and previous == "exit":
                         add_doc = False
                     reset = False
-                    doc["origin_server"] = origin_server
+                    doc["origin_server"] = str(server_num)
                     if add_doc:
                         entries.insert(doc)
                         logger.debug('Stored line {0} of {1} to db'.format(counter, arg))
