@@ -15,6 +15,8 @@
 from logl.post.connection import *
 from datetime import datetime
 from copy import deepcopy
+from nose.plugins.skip import Skip, SkipTest
+
 
 def test_send_to_js():
     """Test the send_to_js() method"""

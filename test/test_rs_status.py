@@ -82,7 +82,7 @@ def test_startup_with_hostname():
     """Test that program captures hostnames from
     STARTUP messages as well as IP addresses"""
     check_state_with_addr("Mon Jun 11 15:56:16 [rsStart]"
-        ]" replSet I am sam@10gen.com:27018", "STARTUP1", 0, "sam@10gen.com:27018")
+        " replSet I am sam@10gen.com:27018", "STARTUP1", 0, "sam@10gen.com:27018")
 
 
 def check_state_with_addr(msg, state, code, server):
