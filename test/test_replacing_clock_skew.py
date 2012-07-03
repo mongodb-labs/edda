@@ -47,7 +47,7 @@ def test_replacing_none():
     entries.insert(generate_doc("status", "apple", "STARTUP2", 5, "pear", original_date))
     entries.insert(generate_doc("status", "pear", "STARTUP2", 5, "apple", original_date))
     assign_address(5, "pear", servers)
-    assign_address(new_server(6, "apple", servers)
+    assign_address(6, "apple", servers)
     doc1 = generate_cs_doc("5", "6")
     doc1["partners"]["6"]["0"] = 5
     clock_skew.insert(doc1)
@@ -193,6 +193,7 @@ def generate_doc(type, server, label, code, target, date):
 #                "skew_2" : weight...
 #          }
 #     }
+
 def generate_cs_doc(name, referal):
     logger = logging.getLogger(__name__)
     doc = {}

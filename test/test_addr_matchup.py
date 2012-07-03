@@ -95,7 +95,6 @@ def test_one_unknown():
     servers, entries, clock_skew, db = db_setup()
     # insert one unknown server
     assign_address(1, "1", servers)
-    assign_address(1, "1"))
     assert address_matchup(db, "hp") == -1
 
 
@@ -109,7 +108,7 @@ def test_one_known():
 def test_one_known_IP():
     """Test on one named server (IP)"""
     servers, entries, clock_skew, db = db_setup()
-    assign_address(1, "100.54.24.66"))
+    assign_address(1, "100.54.24.66", servers)
     assert address_matchup(db, "hp") == 1
 
 
