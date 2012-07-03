@@ -194,6 +194,9 @@ def assign_address(num, addr, servers):
     in the .servers collection for that server.  If so, adds addr, if
     not already present, to the document.  If not, creates a new doc
     for this server and saves to the db."""
+    # in the case that two different addresses are found for the
+    # same server, this chooses to log a warning and ignore
+    # all but the first address found
     # store all fields as strings, including server_num
     # server doc = {
     #    "server_num" : int
@@ -201,6 +204,8 @@ def assign_address(num, addr, servers):
     #    "server_IP" : IP
     #    }
     logger = logging.getLogger(__name__)
+    num = str(num)
+    addr = str(addr)
     doc = servers.find_one({"server_num": num})
     if not doc:
         logger.debug("No doc found for this server, making one")
@@ -216,12 +221,14 @@ def assign_address(num, addr, servers):
         if doc["server_IP"] != "unknown" and doc["server_IP"] != addr:
             logger.warning("conflicting IPs found for server {0}:".format(num))
             logger.warning("\n{0}\n{1}".format(addr, doc["server_IP"]))
-        doc["server_IP"] = addr
+        else:
+            doc["server_IP"] = addr
     else:
         if doc["server_name"] != "unknown" and doc["server_name"] != addr:
             logger.warning("conflicting hostnames found for server {0}:".format(num))
             logger.warning("\n{0}\n{1}".format(addr, doc["server_name"]))
-        doc["server_name"] = addr
+        else:
+            doc["server_name"] = addr
     servers.save(doc)
 
 
