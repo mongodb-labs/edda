@@ -76,9 +76,6 @@ def address_matchup(db, collName):
         round += 1
         unknowns = list(servers.find({"$or": [{"server_name": "unknown"}, {"server_IP": "unknown"}]}))
 
-        print "unknowns: {0}".format(len(unknowns))
-        print "round {0}".format(round)
-        print "last_change is: {0}".format(last_change)
         if len(unknowns) == 0:
             logger.debug("No unknowns, breaking")
             break
@@ -116,12 +113,11 @@ def address_matchup(db, collName):
                 neighbors_neighbors = []
                 neighbors = entries.find({"info.server": name}).distinct("origin_server")
                 # for each server that mentions s
-                for n in neighbors:
-                    logger.debug("Find neighbors of (S)'s neighbor, {0}".format(n))
-                    n_addr = n["origin_server"]
+                for n_addr in neighbors:
+                    logger.debug("Find neighbors of (S)'s neighbor, {0}".format(n_addr))
                     n_num, n_name, n_IP = name_me(n_addr, servers)
                     if n_num:
-                        logger.debug("Succesfully found server number for server {0}".format(n))
+                        logger.debug("Succesfully found server number for server {0}".format(n_addr))
                         n_addrs = entries.find({"origin_server": n_num}).distinct("info.server")
                         if not neighbors_neighbors:
                             for addr in n_addrs:
@@ -133,13 +129,13 @@ def address_matchup(db, collName):
                                 if addr in n_n_copy:
                                     neighbors_neighbors.append(addr)
                     else:
-                        logger.debug("Unable to find server number for server {0}, skipping".format(n))
-                print "Examining for match:\n{0}\n{1}".format(neighbors_of_s, neighbors_neighbors)
+                        logger.debug("Unable to find server number for server {0}, skipping".format(n_addr))
+                logger.debug("Examining for match:\n{0}\n{1}".format(neighbors_of_s, neighbors_neighbors))
                 match = eliminate(neighbors_of_s, neighbors_neighbors)
             else:
                 # (weaker algorithm)
                 logger.debug("Server {0} is unnamed.  Running weaker algorithm".format(num))
-                print "Examining for match:\n{0}\n{1}".format(neighbors_of_s, mentioned_names)
+                logger.debug("Examining for match:\n{0}\n{1}".format(neighbors_of_s, mentioned_names))
                 match = eliminate(neighbors_of_s, mentioned_names)
 
             if match:
@@ -156,7 +152,7 @@ def address_matchup(db, collName):
                         mentioned_names.remove(match)
                 assign_address(num, match, servers)
             else:
-                print "No match found for server {0} this round".format(num)
+                logger.debug("No match found for server {0} this round".format(num))
         else:
             continue
         break
@@ -228,12 +224,14 @@ def name_me(s, servers):
     docs.append(servers.find_one({"server_name": s}))
     docs.append(servers.find_one({"server_IP": s}))
     for doc in docs:
+        if not doc:
+            continue
         if doc["server_name"] != "unknown":
             name = doc["server_name"]
         if doc["server_IP"] != "unknown":
             IP = doc["server_IP"]
         num = doc["server_num"]
-    return [nun, name, IP]
+    return [num, name, IP]
 
 
 def eliminate(small, big):
