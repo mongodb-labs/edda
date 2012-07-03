@@ -143,6 +143,7 @@ def generate_server_doc(type, server, label, code, target, date):
     """Generate an entry"""
     doc = {}
     doc["type"] = type
+    doc["server_num"] = server
     doc["origin_server"] = server
     doc["info"] = {}
     doc["info"]["state"] = label
