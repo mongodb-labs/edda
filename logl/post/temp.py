@@ -25,10 +25,7 @@
 #          }
 #     }
 
-import pdb
-import pymongo
 import logging
-from datetime import datetime
 from datetime import timedelta
 
 
@@ -63,7 +60,7 @@ def server_clock_skew(db, collName):
                 logger.debug("Clock skew already found for this server")
                 continue
             skew_a["partners"][b] = detect(a, b, db, collName)
-            skew_b = db[collName + ".clock_skew"].find_one({"server_name":b})
+            skew_b = db[collName + ".clock_skew"].find_one({"server_name": b})
             if not skew_b:
                 skew_b = clock_skew_doc(b)
             # flip according to sign convention for other server:
@@ -74,7 +71,7 @@ def server_clock_skew(db, collName):
                 for t in skew_a["partners"][b]:
                     wt = skew_a["partners"][b][t]
                     t = str(-int(t))
-                    logger.debug("flipped one");
+                    logger.debug("flipped one")
                     skew_b["partners"][a][t] = wt
             db[collName + ".clock_skew"].save(skew_a)
             db[collName + ".clock_skew"].save(skew_b)
@@ -91,8 +88,11 @@ def detect(a, b, db, collName):
     entries = db[collName + ".entries"]
 
     # set up cursors
-    cursor_a = entries.find({"type" : "status", "origin_server" : a, "info.server" : b})
-    cursor_b = entries.find({"type" : "status", "origin_server" : b, "info.server" : "self"})
+    cursor_a = entries.find(
+        {"type": "status", "origin_server": a, "info.server": b})
+    cursor_b = entries.find(
+        {"type": "status", "origin_server": b, "info.server": "self"})
+
     cursor_a.sort("date")
     cursor_b.sort("date")
     logger = logging.getLogger(__name__)
@@ -121,7 +121,7 @@ def detect(a, b, db, collName):
                     if (wt + i >= len(list_a)) or (wt + j >= len(list_b)):
                         break
                     # if we have a majority of the messages, break
-                    if wt > len(list_a)/2 or wt > len(list_b)/2:
+                    if wt > len(list_a) / 2 or wt > len(list_b) / 2:
                         majority = True
                         break
                 # calculate time skew, save with weight
@@ -130,10 +130,12 @@ def detect(a, b, db, collName):
                 if abs(td) > 2:
                     key = in_skews(td, skews)
                     if not key:
-                        logger.debug("inserting new weight for td {0} into skews {1}".format(td, skews))
+                        logger.debug("inserting new weight for td {0} into "
+                            "skews {1}".format(td, skews))
                         skews[str(td)] = wt
                     else:
-                        logger.debug("adding additional weight for td {0} into skews {1}".format(td, skews))
+                        logger.debug("adding additional weight for td {0} "
+                            "into skews {1}".format(td, skews))
                         skews[key] += wt
                 if majority:
                     break
@@ -195,4 +197,3 @@ def clock_skew_doc(name):
     doc["type"] = "clock_skew"
     doc["partners"] = {}
     return doc
-

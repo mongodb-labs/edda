@@ -12,14 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This module tracks requests from the server to lock or unlock its self from writes. 
+# This module tracks requests from the server to lock or unlock its self from 
+    # writes. 
 
 import string
 
 
 # Mon Jul  2 10:00:11 [conn2] CMD fsync: sync:1 lock:1
 # Mon Jul  2 10:00:04 [conn2] command: unlock requested
-# Mon Jul  2 10:00:10 [conn2] db is now locked for snapshotting, no writes allowed. db.fsyncUnlock() to unlock
+# Mon Jul  2 10:00:10 [conn2] db is now locked for snapshotting, no writes allo
+    # wed. db.fsyncUnlock() to unlock
 
 def criteria(msg):
     """Does the given log line fit the criteria for this filter?
@@ -29,7 +31,7 @@ def criteria(msg):
             return 0
         elif (string.find(msg, 'command: unlock requested') >= 0):
             return 1
-        elif (string.find(msg, 'CMD fsync: sync:1 lock:1')):
+        elif (string.find(msg, 'CMD fsync: sync:1 lock:1') >= 0):
             return 2
     return -1
 
@@ -46,7 +48,7 @@ def process(msg, date):
           "sync_num" : sync_num
           "lock_num" : lock_num
        }
-       "oritinal_message" : msg 
+       "oritinal_message" : msg
     }"""
     message_type = criteria(msg)
     if message_type < 0:

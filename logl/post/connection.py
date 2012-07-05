@@ -15,16 +15,9 @@
 #!/usr/bin/env python
 
 import os
-from SocketServer import BaseServer
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 
-try:
-    from OpenSSL import SSL
-except ImportError:
-    pass
-
 import socket
-import sys
 import webbrowser
 
 try:
@@ -36,8 +29,8 @@ import threading
 
 data = None
 
-class ThreadClass(threading.Thread):
 
+class ThreadClass(threading.Thread):
 
     def run(self):
         """Open page and send GET request to server"""
@@ -83,15 +76,15 @@ def send_to_js(msg):
 
 class LoglHTTPRequest(BaseHTTPRequestHandler):
 
-    mimetypes = mimetypes = { "html" : "text/html",
-                  "htm" : "text/html",
-                  "gif" : "image/gif",
-                  "jpg" : "image/jpeg",
-                  "png" : "image/png",
-                  "json" : "application/json",
-                  "css" : "text/css",
-                  "js" : "text/javascript",
-                  "ico" : "image/vnd.microsoft.icon" }
+    mimetypes = mimetypes = {"html": "text/html",
+                  "htm": "text/html",
+                  "gif": "image/gif",
+                  "jpg": "image/jpeg",
+                  "png": "image/png",
+                  "json": "application/json",
+                  "css": "text/css",
+                  "js": "text/javascript",
+                  "ico": "image/vnd.microsoft.icon"}
 
     docroot = str(os.path.dirname(os.path.abspath(__file__)))
     docroot += "/../display/"
@@ -115,7 +108,6 @@ class LoglHTTPRequest(BaseHTTPRequestHandler):
             type = ""
 
         return (uri, args, type)
-
 
     def do_GET(self):
         # do nothing with message

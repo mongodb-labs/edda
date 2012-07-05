@@ -1,3 +1,6 @@
+// This file is only for scratch code. They are the commands in order for
+// generating replsets
+
 sudo rm -R /data/rs1
 sudo rm -R /data/rs2
 sudo rm -R /data/rs3

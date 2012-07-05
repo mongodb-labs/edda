@@ -20,14 +20,19 @@ def test_criteria():
     """Test the criteria() method of this module"""
     # these should not pass
     assert criteria("this should not pass") == -1
-    assert criteria("Mon Jun 11 15:56:40 [conn5] end connection 127.0.0.1:55224 (2 connections now open)") == -1
-    assert criteria("Mon Jun 11 15:56:16 [initandlisten] ** WARNING: soft rlimits too low. Number of files is 256, should be at least 1000") == -1
+    assert criteria("Mon Jun 11 15:56:40 [conn5] end connection "
+        "127.0.0.1:55224 (2 connections now open)") == -1
+    assert criteria("Mon Jun 11 15:56:16 [initandlisten] ** WARNING: soft "
+        "rlimits too low. Number of files is 256, should be at least 1000"
+        "") == -1
     assert criteria("init and listen starting") == -1
     assert criteria("[initandlisten]") == -1
     assert criteria("starting") == -1
     assert criteria("connection accepted") == -1
     # these should pass
-    assert criteria("Mon Jun 11 15:56:16 [initandlisten] MongoDB starting : pid=7029 port=27018 dbpath=/data/rs2 64-bit host=Kaushals-MacBook-Air.local") == 1
+    assert criteria("Mon Jun 11 15:56:16 [initandlisten] MongoDB starting "
+        ": pid=7029 port=27018 dbpath=/data/rs2 64-bit "
+        "host=Kaushals-MacBook-Air.local") == 1
     #assert criteria("Mon Jun 11 15:56:24 [initandlisten] connection accepted from 127.0.0.1:55227 #6 (4 connections now open)") == 2
     return
 
@@ -38,7 +43,9 @@ def test_process():
     # non-valid message
     assert process("this is an invalid message", date) == None
     # these should pass
-    doc = process("Mon Jun 11 15:56:16 [initandlisten] MongoDB starting : pid=7029 port=27018 dbpath=/data/rs2 64-bit host=Kaushals-MacBook-Air.local", date)
+    doc = process("Mon Jun 11 15:56:16 [initandlisten] MongoDB starting : "
+        "pid=7029 port=27018 dbpath=/data/rs2 64-bit host=Kaushals-MacBook-Air"
+        ".local", date)
     assert doc
     assert doc["type"] == "init"
     assert doc["info"]["server"] == "Kaushals-MacBook-Air.local:27018"
@@ -53,9 +60,12 @@ def test_starting_up():
     doc["info"] = {}
     # non-valid message
     assert starting_up("this is a nonvalid message", doc) == None
-    assert starting_up("Mon Jun 11 15:56:16 [initandlisten] MongoDB starting : 64-bit host=Kaushals-MacBook-Air.local", doc) == None
+    assert starting_up("Mon Jun 11 15:56:16 [initandlisten] MongoDB starting "
+        ": 64-bit host=Kaushals-MacBook-Air.local", doc) == None
     # valid messages
-    doc = starting_up("Mon Jun 11 15:56:16 [initandlisten] MongoDB starting : pid=7029 port=27018 dbpath=/data/rs2 64-bit host=Kaushals-MacBook-Air.local", doc)
+    doc = starting_up("Mon Jun 11 15:56:16 [initandlisten] MongoDB starting : "
+        "pid=7029 port=27018 dbpath=/data/rs2 64-bit "
+        "host=Kaushals-MacBook-Air.local", doc)
     assert doc
     assert doc["type"] == "init"
     assert doc["info"]["subtype"] == "startup"
@@ -70,11 +80,15 @@ def new_conn():
     doc["info"] = {}
     # non-valid messages
     assert new_conn("this is an invalid message", doc) == None
-    assert new_conn("Mon Jun 11 15:56:16 [initandlisten] connection accepted from 127.0.0.1:55224 (4 connections now open)", doc) == None
-    assert new_conn("Mon Jun 11 15:56:16 [initandlisten] connection #5 (4 connections now open)", doc) == None
-    assert new_conn("Mon Jun 11 15:56:16 [initandlisten] connection accepted from 127.0.0.1 #5 (4 connections now open)", doc) == None
+    assert new_conn("Mon Jun 11 15:56:16 [initandlisten] connection accepted "
+        "from 127.0.0.1:55224 (4 connections now open)", doc) == None
+    assert new_conn("Mon Jun 11 15:56:16 [initandlisten] connection #5 (4 "
+        "connections now open)", doc) == None
+    assert new_conn("Mon Jun 11 15:56:16 [initandlisten] connection accepted "
+        "from 127.0.0.1 #5 (4 connections now open)", doc) == None
     # valid messages
-    doc = new_conn("Mon Jun 11 15:56:16 [initandlisten] connection accepted from 127.0.0.1:55224 #5", doc)
+    doc = new_conn("Mon Jun 11 15:56:16 [initandlisten] connection accepted "
+        "from 127.0.0.1:55224 #5", doc)
     assert doc
     assert doc["type"] == "init"
     assert doc["info"]["subtype"] == "new_conn"

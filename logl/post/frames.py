@@ -40,4 +40,3 @@ def generate_frames():
     # amiss between two or more servers, it will set the 'flag'
     # to true, but will do nothing further.
     pass
-

@@ -21,16 +21,22 @@ from datetime import datetime
 # Mon Jul  2 10:00:10 [conn2] db is now locked for snapshotting, no writes allowed. db.fsyncUnlock() to unlock
 def test_criteria():
     assert criteria("this should not pass") == -1
-    assert criteria("Mon Jul  2 10:00:10 [conn2] db is now locked for snapshotting, no writes allowed. db.fsyncUnlock() to unlock") == 0
-    assert criteria("Mon Jul  2 10:00:04 [conn2] command: unlock requested") == 1
-    assert criteria("Mon Jul  2 10:00:11 [conn2] CMD fsync: sync:1 lock:1") == 2
+    assert criteria("Mon Jul  2 10:00:10 [conn2] db is now locked for "
+        "snapshotting, no writes allowed. db.fsyncUnlock() to unlock") == 0
+    assert criteria("Mon Jul  2 10:00:04 [conn2] command: "
+        "unlock requested") == 1
+    assert criteria("Mon Jul  2 10:00:11 [conn2] "
+        "CMD fsync: sync:1 lock:1") == 2
 
 
 def test_process():
     date = datetime.now()
-    check_state("Mon Jul  2 10:00:10 [conn2] db is now locked for snapshotting, no writes allowed. db.fsyncUnlock() to unlock", 0, date, 0, 0)
-    check_state("Mon Jul  2 10:00:04 [conn2] command: unlock requested", 1, date, 0, 0)
-    check_state("Mon Jul  2 10:00:11 [conn2] CMD fsync: sync:1 lock:1", 2, date, 1, 1)
+    check_state("Mon Jul  2 10:00:10 [conn2] db is now locked for snapshotting"
+        ", no writes allowed. db.fsyncUnlock() to unlock", 0, date, 0, 0)
+    check_state("Mon Jul  2 10:00:04 [conn2] command: unlock requested"
+        "", 1, date, 0, 0)
+    check_state("Mon Jul  2 10:00:11 [conn2] CMD fsync: sync:1 lock:1"
+        "", 2, date, 1, 1)
     assert process("This should fail", date) == None
 
 

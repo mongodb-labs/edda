@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This module tracks requests from the server to lock or unlock its self from writes. 
+# This module tracks requests from the server to lock or unlock its self from
+    # writes.
 
 
 import re
@@ -21,7 +22,8 @@ import logging
 
 # Mon Jul  2 10:00:11 [conn2] CMD fsync: sync:1 lock:1
 # Mon Jul  2 10:00:04 [conn2] command: unlock requested
-# Mon Jul  2 10:00:10 [conn2] db is now locked for snapshotting, no writes allowed. db.fsyncUnlock() to unlock
+# Mon Jul  2 10:00:10 [conn2] db is now locked for snapshotting, no writes
+    # allowed. db.fsyncUnlock() to unlock
 
 
 def criteria(msg):
@@ -43,7 +45,7 @@ def process(msg, date):
           "state" : "STALE"
           "server" : host:port
        }
-       "oritinal_message" : msg 
+       "oritinal_message" : msg
     }"""
     message_type = criteria(msg)
     if message_type < 0:
@@ -62,7 +64,8 @@ def process(msg, date):
         logger = logging.getLogger(__name__)
 
         # this very long regex recognizes legal IP addresses
-        pattern = re.compile("(([0|1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))(\.([0|1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5])){3}")
+        pattern = re.compile("(([0|1]?[0-9]{1,2})|(2[0-4][0-9])|"
+            "(25[0-5]))(\.([0|1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5])){3}")
         m = pattern.search(msg)
         if (m == None):
             logger.debug("malformed new_conn message: no IP address found")
@@ -74,8 +77,9 @@ def process(msg, date):
             pattern = re.compile(":[0-9]{1,5}")
             n = pattern.search(msg[21:])
             if n is None:
-                logger.debug("malformed new_conn message: no port number found")
-                ip = false
+                deb = "malformed new_conn message: no port number found"
+                logger.debug(deb)
+                ip = False
             port = n.group(0)[1:]
         if ip:
             doc["info"]["server"] = host + ":" + port
