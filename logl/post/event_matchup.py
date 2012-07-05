@@ -57,5 +57,23 @@ def generate_summary(event):
     """Given an event, generates and returns a one-line,
     mnemonic summary for that event"""
     pass
+def organize_servers(db, collName):
+    """Organizes entries from .entries collection into lists
+    sorted by date, one per origin server, as follows:
+    { "server1" : [doc1, doc2, doc3...]}
+    { "server2" : [doc1, doc2, doc3...]} and
+    returns these lists in one larger list, with the server-
+    specific lists indexed by server_num"""
+    servers_list = {}
 
+    entries = db[collName + ".entries"]
+    servers = db[collName + ".servers"]
 
+    for server in servers.find():
+        num = server["server_num"]
+        servers_list[num] = []
+        cursor = entries.find({"origin_server": num})
+        cursor.sort("date")
+        for doc in cursor:
+            servers_list[num].append(doc)
+    return servers_list
