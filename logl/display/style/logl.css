@@ -1,3 +1,4 @@
+
 body {
      background-color: #e0e0e0;
 }
@@ -55,6 +56,14 @@ body {
 	   width: 400px;
 	   margin-right: auto;
 	   margin-left: 30%;
+}
+
+#slider {
+	position: absolute;
+	margin-bottom: 10px;
+	background: #459902;
+	width: 400px;
+	height: 40px;
 }
 
 #timestamp {

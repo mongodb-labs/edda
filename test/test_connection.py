@@ -20,7 +20,7 @@ from copy import deepcopy
 
 def test_send_to_js():
     """Test the send_to_js() method"""
-    raise SkipTest
+#    raise SkipTest
     send_to_js(generate_msg())
 
 
