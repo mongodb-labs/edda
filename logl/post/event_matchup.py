@@ -114,28 +114,75 @@ def next_event(servers, server_entries):
                 break
             if entry["type"] != first["type"]:
                 continue
-            if not target_server_match(entry, first):
+            if not target_server_match(entry, first, db[collName + ".servers"]):
                 continue
     event = {}
     event["summary"] = generate_summary(event)
     return event
 
 
-def target_server_match(a, b):
+def target_server_match(entry_a, entry_b, servers):
     """Given two .entries documents, are they talking about the
     same sever?"""
-    # are they talking about the same server?
-    # handle case where server talks about itself
-    # cases:
-    # both entries reference 'self' (not a match)
-    # one entry says 'self', other uses IP (match if IP matches)
-    # one entry says 'self', other uses IP, no IP stored (assume match and store IP?)
-    # one entry says 'self', other uses hostname (match if hostname matches)
-    # one entry says 'self', other uses hostname, no hostname stored (assume match and store hostname?)
-    if ((a["info"]["server"] == b["info"]["server"])
-        and (a["info"]["server"] != "self")):
+    logger = logging.getLogger(__name__)
+
+    a = entry_a["info"]["server"]
+    b = entry_b["info"]["server"]
+
+    if a == "self" and b == "self":
+        return False
+    if a == b:
         return True
-    return False
+
+    a_doc = servers.find_one({"server_num": entry_a["origin_server"]})
+    b_doc = servers.find_one({"server_num": entry_b["origin_server"]})
+
+    # one says "self", other uses address, address is known
+    if a == "self":
+        if (b == a_doc["server_name"] or
+            b == a_doc["server_IP"]):
+            return True
+    if b == "self":
+        if (a == b_doc["server_name"] or
+            a == b_doc["server_IP"]):
+            return True
+
+    # one says "self", other uses address, address not known
+    # in this case, we will assume that the address does belong
+    # to the unnamed server and name it.
+    if a == "self":
+        if is_IP(b):
+            if a_doc["server_IP"] == "unknown":
+                logger.debug("Assigning IP {0} to server {1}".format(b, a))
+                a_doc["server_IP"] == b
+                servers.save(a_doc)
+                return True
+            return False
+        else:
+            if a_doc["server_name"] == "unknown":
+                logger.debug("Assigning hostname {0} to server {1}".format(b, a))
+                a_doc["server_name"] == b
+                servers.save(a_doc)
+                return True
+            return False
+
+    # why, yes, it is rather silly to code this here twice.
+    # clean me up please!!
+    if b == "self":
+        if is_IP(a):
+            if b_doc["server_IP"] == "unknown":
+                logger.debug("Assigning IP {0} to server {1}".format(a, b))
+                b_doc["server_IP"] == a
+                servers.save(b_doc)
+                return True
+            return False
+        else:
+            if b_doc["server_name"] == "unknown":
+                logger.debug("Assigning hostname {0} to server {1}".format(a, b))
+                b_doc["server_name"] == a
+                servers.save(b_doc)
+                return True
+            return False
 
 
 def resolve_dissenters(events):
