@@ -20,7 +20,7 @@ from nose.plugins.skip import Skip, SkipTest
 
 def test_send_to_js():
     """Test the send_to_js() method"""
-#    raise SkipTest
+    #raise SkipTest
     send_to_js(generate_msg())
 
 
@@ -30,16 +30,22 @@ def generate_msg():
     frame = {}
     # first frame
     frame["time"] = str(datetime.now())
-    frame["server_count"] = 4
+    frame["server_count"] = 15
     frame["user_count"] = 1
     frame["flag"] = False
     frame["servers"] = {}
     frame["users"] = {}
     frame["servers"]["samantha@home:27017"] = "PRIMARY"
-    frame["servers"]["matthew@home:45234"] = "SECONDARY"
+    frame["servers"]["matthew@home:45234"] = "ARBITER"
     frame["servers"]["stewart@home:00981"] = "SECONDARY"
-    frame["servers"]["carin@home:27017"] = "ARBITER"
-    frame["users"]["benjamin@home:10098"] = "USER"
+    frame["servers"]["carin@home:27017"] = "PRIMARY"
+    frame["servers"]["kaushal@home:27017"] = "ARBITER"
+    frame["servers"]["waterbottle@home:27017"] = "SECONDARY"
+    frame["servers"]["cellphone@home:27017"] = "ARBITER"
+    frame["servers"]["notepad@home:27017"] = "SECONDARY"
+    frame["servers"]["laptop@home:27017"] = "ARBITER"
+    frame["servers"]["p@home:27017"] = "SECONDARY"
+    frame["users"]["benjamin@home:10098"] = "ARBITER"
     frame["syncs"] = {}
     frame["syncs"]["samantha@home:27017"] = "matthew@home:45234"
     frame["connections"] = {}
