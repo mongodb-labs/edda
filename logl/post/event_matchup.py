@@ -74,7 +74,7 @@ def event_matchup(db, collName):
 
 def next_event(servers, server_entries):
     """Given lists of entries from servers ordered by date,
-v    separates out a new entry and returns it.  Returns None
+    separates out a new entry and returns it.  Returns None
     if out of entries"""
     # NOTE: this method makes no attempt to adjust for clock skew,
     # only normal network delay.
@@ -93,6 +93,7 @@ v    separates out a new entry and returns it.  Returns None
 
     # some kinds of messages won't have any corresponding messages:
     # like user connections
+    # redundant code... rewrite me please!!
     if first["type"] == "conn":
         event["type"] = first["info"]["subtype"]
         event["date"] = first["date"]
@@ -101,6 +102,7 @@ v    separates out a new entry and returns it.  Returns None
         event["conn_IP"] = first["info"]["server"]
         event["conn_number"] = first["info"]["conn_number"]
         event["summary"] = generate_summary(event)
+        return event
 
     matches = []
     for s in servers:
@@ -110,10 +112,30 @@ v    separates out a new entry and returns it.  Returns None
             # if we are outside of network margin, break
             if entry["date"] - first["date"] > delay:
                 break
-
+            if entry["type"] != first["type"]:
+                continue
+            if not target_server_match(entry, first):
+                continue
     event = {}
     event["summary"] = generate_summary(event)
     return event
+
+
+def target_server_match(a, b):
+    """Given two .entries documents, are they talking about the
+    same sever?"""
+    # are they talking about the same server?
+    # handle case where server talks about itself
+    # cases:
+    # both entries reference 'self' (not a match)
+    # one entry says 'self', other uses IP (match if IP matches)
+    # one entry says 'self', other uses IP, no IP stored (assume match and store IP?)
+    # one entry says 'self', other uses hostname (match if hostname matches)
+    # one entry says 'self', other uses hostname, no hostname stored (assume match and store hostname?)
+    if ((a["info"]["server"] == b["info"]["server"])
+        and (a["info"]["server"] != "self")):
+        return True
+    return False
 
 
 def resolve_dissenters(events):
@@ -131,7 +153,8 @@ def generate_summary(event):
     summary = ""
 
     # for reconfig messages
-    return "All servers received a reconfig message"
+    if event["type"] == "reconfig":
+        return "All servers received a reconfig message"
 
     summary += "Server " + event["target"]
 
