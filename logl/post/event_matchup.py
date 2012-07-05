@@ -80,6 +80,9 @@ def next_event(servers, server_entries):
     # only normal network delay.
     # find the first entry from any server
     delay = timedelta(seconds=2)
+    event = {}
+    event["witnesses"] = []
+    event["dissenters"] = []
 
     # be careful about datetimes stored as strings!
 
@@ -90,33 +93,38 @@ def next_event(servers, server_entries):
         if first and server_entries[s].pop(0)["date"] > first:
             continue
         first = server_entries[s].pop(0)
+    if not first:
+        return None
+
+    event["date"] = first["date"]
 
     # some kinds of messages won't have any corresponding messages:
-    # like user connections
-    # redundant code... rewrite me please!!
     if first["type"] == "conn":
         event["type"] = first["info"]["subtype"]
-        event["date"] = first["date"]
-        event["dissenters"] = []
-        event["witnesses"] = first["origin_server"]
+        event["witnesses"].append(first["origin_server"])
         event["conn_IP"] = first["info"]["server"]
         event["conn_number"] = first["info"]["conn_number"]
         event["summary"] = generate_summary(event)
         return event
 
-    matches = []
+    # find corresponding messages
     for s in servers:
         if s == first["origin_server"]:
             continue
         for entry in server_entries[s]:
-            # if we are outside of network margin, break
-            if entry["date"] - first["date"] > delay:
+            if abs(entry["date"] - first["date"]) > delay:
                 break
             if entry["type"] != first["type"]:
                 continue
             if not target_server_match(entry, first, db[collName + ".servers"]):
                 continue
-    event = {}
+            # add some type-specific checks:
+            # passed all checks! must match.
+            server_entries[s].remove(entry)
+            event["witnesses"].append(s)
+        if s not in event["witnesses"]:
+            event["dissenters"].append(s)
+
     event["summary"] = generate_summary(event)
     return event
 
@@ -137,7 +145,7 @@ def target_server_match(entry_a, entry_b, servers):
     a_doc = servers.find_one({"server_num": entry_a["origin_server"]})
     b_doc = servers.find_one({"server_num": entry_b["origin_server"]})
 
-    # one says "self", other uses address, address is known
+    # address is known
     if a == "self":
         if (b == a_doc["server_name"] or
             b == a_doc["server_IP"]):
@@ -147,7 +155,7 @@ def target_server_match(entry_a, entry_b, servers):
             a == b_doc["server_IP"]):
             return True
 
-    # one says "self", other uses address, address not known
+    # address not known
     # in this case, we will assume that the address does belong
     # to the unnamed server and name it.
     if a == "self":
