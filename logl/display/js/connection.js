@@ -33,7 +33,13 @@ poll = function() {
 	}
 	// change time values of slider
 	time_setup(frames.size);
-	generate_coords(frames["0"]["server_count"], names);
+
+	var count = 0;
+	for (var server in frames["0"]["servers"]) {
+		count++;
+	}
+
+	generate_coords(count, names);
 	console.log(servers)
 	render("0");
 	// also, get rid of default drawing of first frame

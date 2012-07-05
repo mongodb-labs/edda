@@ -1,11 +1,16 @@
 // test 2: draw basic servers
 
 var canvas;
+var server_ctx;
+var arrows_ctx;
 
 
 serverSetup = function() {
     canvas = document.getElementById("background_layer");
     var ctx = canvas.getContext("2d");
+    canvas = document.getElementById("server_layer");
+    server_ctx = canvas.getContext("2d");
+    arrows_ctx = document.getElementById("arrow_layer").getContext("2d");
     ctx.beginPath();
     ctx.rect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "#4E3629";
@@ -16,45 +21,62 @@ serverSetup = function() {
 
 generate_coords = function(count, names) {
 
-    var r = 50;
+    var r = 200;
     var w = canvas.width;
+    var centerw = w/2;
     var h = canvas.height;
+    var centerh = h/2;
+
+    var xVal = 0;
+    var yVal = 0;
+
+    var even = false;
+
+    var prevX = 0;
+    var prevY = 0;
 
     switch(count) {
     case 0:
-    break;
+    return;
     case 1:
-	// one centered server
-	servers[names[0]] = { "x" : w/2, "y" : h/2, "r" : r, "on" : false, "type" : "primary" };
-	break;
+    // one centered server
+    servers[names[0]] = { "x" : w/2, "y" : h/2, "r" : r, "on" : false, "type" : "primary" };
+    return;
     case 2:
-	// two servers, one on either side
-	servers[names[0]] = {"x" : w/3, "y" : h/2, "r" : r, "on" : false, "type" : "primary"};
-	servers[names[1]] = {"x" : (0.66)*w, "y" : h/2, "r" : r, "on" : false, "type" : "primary"};
-	break;
-    case 3:
-	// three servers in a triangle
-	servers[names[0]] = {"x" : w/2, "y" : h/3, "r" : r, "on" : false, "type" : "primary"};
-	servers[names[1]] = {"x" : w/3, "y" : (0.66)*h, "r" : r, "on" : false, "type" : "primary"};
-	servers[names[2]] = {"x" : (0.66)*w, "y" : (0.66)*h, "r" : r, "on" : false, "type" : "primary"};
-	break;
-    case 4:
-	// four servers in a square
-	servers[names[0]] = {"x" : w/3, "y" : h/3, "r" : r, "on" : false, "type" : "primary"};
-	servers[names[1]] = {"x" : w/3, "y" : (0.66)*h, "r" : r, "on" : false, "type" : "primary"};
-	servers[names[2]] = {"x" : (0.66)*w, "y" : (0.66)*h, "r" : r, "on" : false, "type" : "primary"};
-	servers[names[3]] = {"x" : (0.66)*w, "y" : h/3, "r" : r, "on" : false, "type" : "primary"};
-	break;
-    case 5:
-	// five servers in a pentagon
-	break;
-    case 6:
-	// six servers in a wheel
-	break;
-    case 7:
-	// seven servers in a wheel
-	break;
+    // two servers, one on either side
+    servers[names[0]] = {"x" : w/3, "y" : h/2, "r" : r, "on" : false, "type" : "primary"};
+    servers[names[1]] = {"x" : (0.66)*w, "y" : h/2, "r" : r, "on" : false, "type" : "primary"};
+    return;
     }
+
+    if (count % 2 === 0)
+        start_angle = -45;
+    else
+        start_angle = -90;
+
+    for (var i = 0; i < count; i++) {
+        if (i % 2 === 0)
+            r /= 2;
+        else
+            r *= 2;
+        r = 200;
+        xVal = (r * Math.cos(start_angle * (Math.PI)/180)) + centerw;
+        yVal = (r * Math.sin(start_angle * (Math.PI)/180)) + centerh;
+
+        servers[names[i]] = { "x" : xVal, "y" : yVal, "r" : 35, "on" : false, "type" : "primary"};
+        start_angle += 360/count;
+        if (prevX === 0 || prevY === 0) {
+            prevX = xVal;
+            prevY = yVal;
+        }
+        else {
+            one_arrow(150, 150, 300, 300, server_ctx);
+            one_arrow(prevX, prevY, xVal, yVal, arrows_ctx);
+            prevX = xVal;
+            prevY = yVal;
+        }
+    }
+    return;
 };
 
 
