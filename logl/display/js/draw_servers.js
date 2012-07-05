@@ -65,16 +65,7 @@ generate_coords = function(count, names) {
 
         servers[names[i]] = { "x" : xVal, "y" : yVal, "r" : 35, "on" : false, "type" : "primary"};
         start_angle += 360/count;
-        if (prevX === 0 || prevY === 0) {
-            prevX = xVal;
-            prevY = yVal;
-        }
-        else {
-            one_arrow(150, 150, 300, 300, server_ctx);
-            one_arrow(prevX, prevY, xVal, yVal, arrows_ctx);
-            prevX = xVal;
-            prevY = yVal;
-        }
+
     }
     return;
 };
