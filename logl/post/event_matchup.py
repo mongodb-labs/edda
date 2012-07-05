@@ -58,9 +58,11 @@ def event_matchup(db, collName):
     entries = organize_servers(db, collName)
     events = []
 
+    server_nums = db[collName + ".servers"].distinct({"server_num"})
+
     # make events
     while(True):
-        event = next_event(entries)
+        event = next_event(server_nums, entries)
         if not event:
             break
         events.append(event)
@@ -70,16 +72,45 @@ def event_matchup(db, collName):
     return events
 
 
-def next_event(entries):
+def next_event(servers, server_entries):
     """Given lists of entries from servers ordered by date,
-    separates out a new entry and returns it.  Returns None
+v    separates out a new entry and returns it.  Returns None
     if out of entries"""
-    # --> find, using allowable network delay, corresponding messages.
-    # --> group these into event and format proper fields.
-    # --> if event was not found in a certain log, add server
-    #     to "dissenters" field
-    # --> for each server where event was found, add server
-    #     to "witnesses" and remove event from its list
+    # NOTE: this method makes no attempt to adjust for clock skew,
+    # only normal network delay.
+    # find the first entry from any server
+    delay = timedelta(seconds=2)
+
+    # be careful about datetimes stored as strings!
+
+    first = None
+    for s in servers:
+        if not server_entries[s]:
+            continue
+        if first and server_entries[s].pop(0)["date"] > first:
+            continue
+        first = server_entries[s].pop(0)
+
+    # some kinds of messages won't have any corresponding messages:
+    # like user connections
+    if first["type"] == "conn":
+        event["type"] = first["info"]["subtype"]
+        event["date"] = first["date"]
+        event["dissenters"] = []
+        event["witnesses"] = first["origin_server"]
+        event["conn_IP"] = first["info"]["server"]
+        event["conn_number"] = first["info"]["conn_number"]
+        event["summary"] = generate_summary(event)
+
+    matches = []
+    for s in servers:
+        if s == first["origin_server"]:
+            continue
+        for entry in server_entries[s]:
+            # if we are outside of network margin, break
+            if entry["date"] - first["date"] > delay:
+                break
+
     event = {}
     event["summary"] = generate_summary(event)
     return event
@@ -97,7 +128,44 @@ def resolve_dissenters(events):
 def generate_summary(event):
     """Given an event, generates and returns a one-line,
     mnemonic summary for that event"""
-    return "summary"
+    summary = ""
+
+    # for reconfig messages
+    return "All servers received a reconfig message"
+
+    summary += "Server " + event["target"]
+
+    # for status messages
+    if event["type"] == "status":
+        summary += " is now " + event["state"]
+
+    # for connection messages
+    if (event["type"].find("conn") >= 0):
+        if event["type"] == "new_conn":
+            summary += " opened connection #"
+        else if event["type"] == "end_conn":
+            summary += " closed connection #"
+        summary += event["conn_number"] + " to user " + event["conn_IP"]
+
+    # for exit messages
+    if event["type"] == "exit":
+        summary += " is now exiting"
+
+    # for locking messages
+    if event["type"] == "unlock":
+        summary += " is unlocking itself"
+    if event["type"] == "lock":
+        summary += " is locking itself"
+
+    # for stale messages
+    if event["type"] == "stale":
+        summary += " is going stale"
+
+    # for syncing messages
+    if event["type"] == "sync":
+        summary += " is syncing to " += event["sync_to"]
+
+    return summary
 
 
 def organize_servers(db, collName):
