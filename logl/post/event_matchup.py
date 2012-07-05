@@ -14,25 +14,28 @@
 
 #!/usr/bin/env python
 
+
 import pymongo
+
 
 def event_matchup(db, collName):
     """This method sorts through the db's entries to
     find discrete events that happen across servers.  It will
-    organize these events into a list of "events", which are
+    organize these entries into a list of "events", which are
     each a dictionary built as follows:
     event = {
         "type"       = type of event, see list below
         "date"       = datetime, as string
         "target"     = affected server
+        "witnesses"  = servers who agree on this event
         "dissenters" = servers who did not see this event
                        (not for connection or sync messages)
         "summary"    = a mnemonic summary of the event
     (event-specific additional fields:)
-        "sync_to"    = for sync type messages only
-        "conn_IP"    = for new_conn or end_conn messages only
-        "conn_num"   = for new_conn or end_conn messages only
-        "state"      = for status type messages only (label, not code)
+        "sync_to"    = for sync type messages
+        "conn_IP"    = for new_conn or end_conn messages
+        "conn_num"   = for new_conn or end_conn messages
+        "state"      = for status type messages (label, not code)
         }
 
     possible event types include:
@@ -47,16 +50,56 @@ def event_matchup(db, collName):
     "reconfig" : new config information was received
 
     This module assumes that normal network delay can account
-    for up to 4 seconds of lag between server logs.  Beyond this margin,
-    module assumes that servers are no longer in sync.
+    for up to 4 seconds of lag between server logs.  Beyond this
+    margin, module assumes that servers are no longer in sync.
     """
-    pass
+    # put events in ordered lists by date, one per origin_server
+    # last communication with the db!
+    entries = organize_servers(db, collName)
+    events = []
+
+    # make events
+    while(True):
+        event = next_event(entries)
+        if not event:
+            break
+        events.append(event)
+
+    # attempt to resolve any undetected skew in events
+    events = resolve_dissenters(events)
+    return events
+
+
+def next_event(entries):
+    """Given lists of entries from servers ordered by date,
+    separates out a new entry and returns it.  Returns None
+    if out of entries"""
+    # --> find, using allowable network delay, corresponding messages.
+    # --> group these into event and format proper fields.
+    # --> if event was not found in a certain log, add server
+    #     to "dissenters" field
+    # --> for each server where event was found, add server
+    #     to "witnesses" and remove event from its list
+    event = {}
+    event["summary"] = generate_summary(event)
+    return event
+
+
+def resolve_dissenters(events):
+    """Goes over the list of events and for each event where
+    the number of dissenters > the number of witnesses,
+    attempts to match that event to another corresponding
+    event outside the margin of allowable network delay"""
+    # useful for cases with undetected clock skew
+    return events
 
 
 def generate_summary(event):
     """Given an event, generates and returns a one-line,
     mnemonic summary for that event"""
-    pass
+    return "summary"
+
+
 def organize_servers(db, collName):
     """Organizes entries from .entries collection into lists
     sorted by date, one per origin server, as follows:
