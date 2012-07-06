@@ -14,8 +14,9 @@
 
 
 on_canvas_mouseover = function(e) {
-    var x = e.clientX;
-    var y = e.clientY;
+    var offset = $("#shadow_layer").offset();
+    var x = e.clientX - offset.left;
+    var y = e.clientY - offset.top;
 
     // check if mouse was over server
     for (server in servers) {
@@ -26,33 +27,36 @@ on_canvas_mouseover = function(e) {
 	distance = Math.sqrt(Math.pow(diffX,2) + Math.pow(diffY,2));
 	console.log("Distance is: %d", distance);
 	console.log("Xcenter: %d, Ycenter: %d", servers[server]["x"], servers[server]["y"]);
-	console.log("Xactual: %d, Yactual: %d",x, y);
-		// is it within radius?
-		if (distance <= servers[server]["r"]) {
-			// check if that server is set to "true" for mouseover
-			if (!servers[server]["on"]) {
-			    // make a shadow under server, and a sound
-			    servers[server]["on"] = true;
-			    var shadow = contexts["shadow"]
+	console.log("Xactual: %d, Yactual: %d", x, y);
+	// is it within radius?
+	if (distance <= servers[server]["r"]) {
+	    // check if that server is set to "true" for mouseover
+	    if (!servers[server]["on"]) {
+		// make a shadow under server, and a sound
+		servers[server]["on"] = true;
+		var shadow = contexts["shadow"];
 
-				// draw the drop shadow
-				shadow.beginPath();
-			    shadow.arc(servers[server]["x"], servers[server]["y"], servers[server]["r"], 0, 360, false);
-			    shadow.strokeStyle = "red";
-			    shadow.fillStyle = "rgba(10, 10, 10, 1)";
-			    shadow.lineWidth = 10;
-			    shadow.shadowColor = "black";
-			    shadow.shadowBlur = servers[server]["r"] + 50;
-			    shadow.fill();
-			    shadow.shadowBlur = 0;
+		// draw the drop shadow
+		shadow.beginPath();
+		shadow.arc(servers[server]["x"], servers[server]["y"], servers[server]["r"], 0, 360, false);
+		shadow.strokeStyle = "red";
+		shadow.fillStyle = "rgba(10, 10, 10, 1)";
+		shadow.lineWidth = 10;
+		shadow.shadowColor = "black";
+		shadow.shadowBlur = servers[server]["r"] + 30;
+		shadow.fill();
+		shadow.shadowBlur = 0;
 
-			    // text box over
-			    var message = contexts["message"];
-			    message.fillStyle = "black";
-			    message.rect(x, y, 100, 100);
-			}
-		}
-		// also make sure that we turn the mousing-over off!!
-		// add this back in
+		// text box over
+		var message = contexts["message"];
+		message.fillStyle = "black";
+		message.rect(x, y, 100, 100);
+	    }
+	}
+	// if not in radius:
+	else if (servers[server]["on"] == true){
+	    servers[server]["on"] = false;
+	    canvases["shadow"].width = canvases["shadow"].width;
+	}
     }
 };
