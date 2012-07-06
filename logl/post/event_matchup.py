@@ -199,6 +199,39 @@ def resolve_dissenters(events):
     attempts to match that event to another corresponding
     event outside the margin of allowable network delay"""
     # useful for cases with undetected clock skew
+    events_b = events[:]
+    logger = logging.getLogger(__name__)
+    i = 0
+    for a in events:
+        logger.debug("Checking event {0}".format(i))
+        if len(a["dissenters"]) > len(a["witnesses"]):
+            logger.debug("this event has more dissenters than witnesses")
+            logger.debug("Attempting to find corresponding event")
+            for b in events_b:
+                if a["summary"] == b["summary"]:
+                    logger.debug("Summary match found! Checking witnesses")
+                    for wit_a in a["witnesses"]:
+                        if wit_a in b["witnesses"]:
+                            logger.debug("Overlapping witness found, no match")
+                            break
+                    # concerned about this loop breaking thing
+                    # also, concerned about mutability of lists?
+                    # check that removing something from b also removes it from a!
+                    else:
+                        logger.debug("match found, merging events")
+                        logger.debug("skew is {0}".format(a["date"] - b["date"]))
+                        events.remove(a)
+                        print "a:\n{0}\n".format(events)
+                        print "b:\n{0}\n".format(events_b)
+                        b["witnesses"].append(a["witnesses"])
+                        for wit_a in a["witnesses"]:
+                            if wit_a in b["dissenters"]:
+                                logger.debug("Removing {0} from b's dissenters".format(wit_a))
+                                b["dissenters"].remove(wit_a)
+                        continue
+                    logger.debug("match not found with this event")
+                    continue
+        i += 1
     return events
 
 
