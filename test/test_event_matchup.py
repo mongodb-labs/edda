@@ -19,6 +19,7 @@ from pymongo import Connection
 from logl.logl import assign_address
 from logl.post.event_matchup import *
 import pymongo
+from datetime import datetime
 
 
 def db_setup():
@@ -30,6 +31,19 @@ def db_setup():
     db.drop_collection(servers)
     db.drop_collection(entries)
     return [servers, entries, db]
+
+
+def generate_entries(x, y):
+    """Generate two entries with server fields x and y"""
+    a, b = {}, {}
+    a["info"], b["info"] = {}, {}
+    a["info"]["server"], b["info"]["server"] = x, y
+    return [a, b]
+
+
+def one_entry(type, )
+    """Generate an entry with the specified fields"""
+    return e
 
 
 def test_event_matchup_empty():
@@ -203,10 +217,5 @@ def test_target_server_match_unknown_hostname():
 # -------------------------------------
 
 
-def generate_entries(x, y):
-    """Generate two entries with server fields x and y"""
-    a, b = {}, {}
-    a["info"], b["info"] = {}, {}
-    a["info"]["server"], b["info"]["server"] = x, y
-    return [a, b]
+
 
