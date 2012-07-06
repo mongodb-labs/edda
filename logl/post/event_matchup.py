@@ -80,6 +80,9 @@ def next_event(servers, server_entries):
     # only normal network delay.
     # find the first entry from any server
     delay = timedelta(seconds=2)
+    event = {}
+    event["witnesses"] = []
+    event["dissenters"] = []
 
     # be careful about datetimes stored as strings!
 
@@ -90,33 +93,38 @@ def next_event(servers, server_entries):
         if first and server_entries[s].pop(0)["date"] > first:
             continue
         first = server_entries[s].pop(0)
+    if not first:
+        return None
+
+    event["date"] = first["date"]
 
     # some kinds of messages won't have any corresponding messages:
-    # like user connections
-    # redundant code... rewrite me please!!
     if first["type"] == "conn":
         event["type"] = first["info"]["subtype"]
-        event["date"] = first["date"]
-        event["dissenters"] = []
-        event["witnesses"] = first["origin_server"]
+        event["witnesses"].append(first["origin_server"])
         event["conn_IP"] = first["info"]["server"]
         event["conn_number"] = first["info"]["conn_number"]
         event["summary"] = generate_summary(event)
         return event
 
-    matches = []
+    # find corresponding messages
     for s in servers:
         if s == first["origin_server"]:
             continue
         for entry in server_entries[s]:
-            # if we are outside of network margin, break
-            if entry["date"] - first["date"] > delay:
+            if abs(entry["date"] - first["date"]) > delay:
                 break
             if entry["type"] != first["type"]:
                 continue
             if not target_server_match(entry, first, db[collName + ".servers"]):
                 continue
-    event = {}
+            # add some type-specific checks:
+            # passed all checks! must match.
+            server_entries[s].remove(entry)
+            event["witnesses"].append(s)
+        if s not in event["witnesses"]:
+            event["dissenters"].append(s)
+
     event["summary"] = generate_summary(event)
     return event
 
@@ -137,7 +145,7 @@ def target_server_match(entry_a, entry_b, servers):
     a_doc = servers.find_one({"server_num": entry_a["origin_server"]})
     b_doc = servers.find_one({"server_num": entry_b["origin_server"]})
 
-    # one says "self", other uses address, address is known
+    # address is known
     if a == "self":
         if (b == a_doc["server_name"] or
             b == a_doc["server_IP"]):
@@ -147,7 +155,7 @@ def target_server_match(entry_a, entry_b, servers):
             a == b_doc["server_IP"]):
             return True
 
-    # one says "self", other uses address, address not known
+    # address not known
     # in this case, we will assume that the address does belong
     # to the unnamed server and name it.
     if a == "self":
@@ -191,6 +199,39 @@ def resolve_dissenters(events):
     attempts to match that event to another corresponding
     event outside the margin of allowable network delay"""
     # useful for cases with undetected clock skew
+    events_b = events[:]
+    logger = logging.getLogger(__name__)
+    i = 0
+    for a in events:
+        logger.debug("Checking event {0}".format(i))
+        if len(a["dissenters"]) > len(a["witnesses"]):
+            logger.debug("this event has more dissenters than witnesses")
+            logger.debug("Attempting to find corresponding event")
+            for b in events_b:
+                if a["summary"] == b["summary"]:
+                    logger.debug("Summary match found! Checking witnesses")
+                    for wit_a in a["witnesses"]:
+                        if wit_a in b["witnesses"]:
+                            logger.debug("Overlapping witness found, no match")
+                            break
+                    # concerned about this loop breaking thing
+                    # also, concerned about mutability of lists?
+                    # check that removing something from b also removes it from a!
+                    else:
+                        logger.debug("match found, merging events")
+                        logger.debug("skew is {0}".format(a["date"] - b["date"]))
+                        events.remove(a)
+                        print "a:\n{0}\n".format(events)
+                        print "b:\n{0}\n".format(events_b)
+                        b["witnesses"].append(a["witnesses"])
+                        for wit_a in a["witnesses"]:
+                            if wit_a in b["dissenters"]:
+                                logger.debug("Removing {0} from b's dissenters".format(wit_a))
+                                b["dissenters"].remove(wit_a)
+                        continue
+                    logger.debug("match not found with this event")
+                    continue
+        i += 1
     return events
 
 
