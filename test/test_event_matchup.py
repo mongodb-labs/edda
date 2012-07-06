@@ -15,6 +15,23 @@
 # testing file for logl/post/event_matchup.py
 
 
+from pymongo import Connection
+from logl.logl import assign_address
+from logl.post.event_matchup import *
+import pymongo
+
+
+def db_setup():
+    """Set up necessary server connections"""
+    c = Connection()
+    db = c["test_event_matchup"]
+    servers = db["AdventureTime.servers"]
+    entries = db["AdventureTime.entries"]
+    db.drop_collection(servers)
+    db.drop_collection(entries)
+    return [servers, entries, db]
+
+
 def test_event_matchup_empty():
     """Test event_matchup on an empty database"""
     pass
@@ -62,49 +79,134 @@ def test_next_event_two():
 def test_target_server_match_both_self():
     """Test method on two entries whose info.server
     field is 'self'"""
-    pass
+    servers, entries, db = db_setup()
+    a, b = generate_entries("self", "self")
+    assert not target_server_match(a, b, servers)
 
 
-def test_target_server_match_both_same():
+def test_target_server_match_both_same_IP():
     """Test method on two entries with corresponding
-    info.server fields"""
-    pass
+    info.server fields, using IP addresses"""
+    servers, entries, db = db_setup()
+    a, b = generate_entries("1.2.3.4", "1.2.3.4")
+    assert target_server_match(a, b, servers)
 
 
-def test_target_server_match_both_different():
+def test_target_server_match_both_same_hostname():
+    """Test method on two entries with corresponding
+    info.server fields, using hostnames"""
+    servers, entries, db = db_setup()
+    a, b = generate_entries("sam@10gen.com", "sam@10gen.com")
+    assert target_server_match(a, b, servers)
+
+
+def test_target_server_match_both_different_hostnames():
     """Test method on two entries with different
-    info.server fields"""
-    pass
+    info.server fields, both hostnames"""
+    servers, entries, db = db_setup()
+    a, b = generate_entries("sam@10gen.com", "kaushal@10gen.com")
+    a["origin_server"] = "1"
+    b["origin_server"] = "2"
+    assign_address(1, "finn@adventure.time", servers)
+    assign_address(2, "jake@adventure.time", servers)
+    assert not target_server_match(a, b, servers)
+
+
+def test_target_server_match_both_different_IPs():
+    """Test method on two entries with different
+    info.server fields, both IP addresses"""
+    servers, entries, db = db_setup()
+    a, b = generate_entries("1.2.3.4", "5.6.7.8")
+    a["origin_server"] = "1"
+    b["origin_server"] = "2"
+    assign_address(1, "1.1.1.1", servers)
+    assign_address(2, "2.2.2.2", servers)
+    assert not target_server_match(a, b, servers)
 
 
 def test_target_server_match_IP():
     """Test method on entries where one cites 'self',
     other cites IP address"""
-    pass
+    servers, entries, db = db_setup()
+    a, b = generate_entries("self", "1.1.1.1")
+    a["origin_server"] = "1"
+    b["origin_server"] = "2"
+    assign_address(1, "1.1.1.1", servers)
+    assign_address(2, "2.2.2.2", servers)
+    assert target_server_match(a, b, servers)
 
 
 def test_target_server_match_hostname():
     """Test method on entries where one cites 'self',
     other cites hostname"""
-    pass
+    servers, entries, db = db_setup()
+    a, b = generate_entries("jake@adventure.time", "self")
+    a["origin_server"] = "1"
+    b["origin_server"] = "2"
+    assign_address(1, "finn@adventure.time", servers)
+    assign_address(2, "jake@adventure.time", servers)
+    assert target_server_match(a, b, servers)
+
+
+def test_target_server_match_IP_no_match():
+    """Test method on entries where one cites 'self',
+    other cites incorrect IP"""
+    servers, entries, db = db_setup()
+    a, b = generate_entries("self", "4.4.4.4")
+    a["origin_server"] = "1"
+    b["origin_server"] = "2"
+    assign_address(1, "1.1.1.1", servers)
+    assign_address(2, "2.2.2.2", servers)
+    assert not target_server_match(a, b, servers)
+
+
+def test_target_server_match_hostname_no_match():
+    """Test method on entries where one cites 'self',
+    other cites incorrect hostname"""
+    servers, entries, db = db_setup()
+    a, b = generate_entries("self", "marcelene@adventure.time")
+    a["origin_server"] = "1"
+    b["origin_server"] = "2"
+    assign_address(1, "iceking@adventure.time", servers)
+    assign_address(2, "bubblegum@adventure.time", servers)
+    assert not target_server_match(a, b, servers)
 
 
 def test_target_server_match_unknown_IP():
     """Test method on entries where one cites 'self',
     other cites first server's true IP, but IP is not yet
     recorded in the .servers collection"""
-    pass
+    servers, entries, db = db_setup()
+    a, b = generate_entries("self", "1.1.1.1")
+    a["origin_server"] = "1"
+    b["origin_server"] = "2"
+    assign_address(1, "unknown", servers)
+    assign_address(2, "2.2.2.2", servers)
+    assert target_server_match(a, b, servers)
 
 
 def test_target_server_match_unknown_hostname():
     """Test method on entries where one cites 'self',
     other cites first server's true hostname, but
     hostname is not yet recorded in the .servers collection"""
-    pass
+    servers, entries, db = db_setup()
+    a, b = generate_entries("treetrunks@adventure.time", "self")
+    a["origin_server"] = "1"
+    b["origin_server"] = "2"
+    assign_address(1, "LSP@adventure.time", servers)
+    assign_address(2, "unknown", servers)
+    assert target_server_match(a, b, servers)
 
 
 # -------------------------------------
 # test the resolve_dissenters() method
 # -------------------------------------
 
+
+def generate_entries(x, y):
+    """Generate two entries with server fields x and y"""
+    a, b = {}, {}
+    a["info"], b["info"] = {}, {}
+    a["info"]["server"], b["info"]["server"] = x, y
+    return [a, b]
 
