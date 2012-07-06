@@ -254,7 +254,7 @@ def generate_summary(event):
     if (event["type"].find("conn") >= 0):
         if event["type"] == "new_conn":
             summary += " opened connection #"
-        else if event["type"] == "end_conn":
+        elif event["type"] == "end_conn":
             summary += " closed connection #"
         summary += event["conn_number"] + " to user " + event["conn_IP"]
 
@@ -274,7 +274,7 @@ def generate_summary(event):
 
     # for syncing messages
     if event["type"] == "sync":
-        summary += " is syncing to " += event["sync_to"]
+        summary += " is syncing to " + event["sync_to"]
 
     return summary
 
