@@ -52,14 +52,12 @@ body {
 
 /* slider element */
 
-#timescale {
-	   width: 400px;
-	   margin-right: auto;
-	   margin-left: 30%;
-}
+.oSliderContainer { width: 100px;}
 
-#slider {
-	
+#slider_box {
+	margin-right: auto;
+	margin-left: auto;
+	width: 800px;
 }
 
 #timestamp {
