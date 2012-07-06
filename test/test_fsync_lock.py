@@ -27,25 +27,36 @@ def test_criteria():
         "unlock requested") == 1
     assert criteria("Mon Jul  2 10:00:11 [conn2] "
         "CMD fsync: sync:1 lock:1") == 2
+    assert criteria("Thu Jun 14 11:25:18 [conn2] replSet RECOVERING") == -1
 
 
 def test_process():
     date = datetime.now()
     check_state("Mon Jul  2 10:00:10 [conn2] db is now locked for snapshotting"
-        ", no writes allowed. db.fsyncUnlock() to unlock", 0, date, 0, 0)
+        ", no writes allowed. db.fsyncUnlock() to unlock", "LOCKED", date, 0, 0)
     check_state("Mon Jul  2 10:00:04 [conn2] command: unlock requested"
-        "", 1, date, 0, 0)
+        "", "UNLOCKED", date, 0, 0)
     check_state("Mon Jul  2 10:00:11 [conn2] CMD fsync: sync:1 lock:1"
-        "", 2, date, 1, 1)
+        "", "FSYNC", date, 1, 1)
+
+    # All of the following should return None
+    assert process("Thu Jun 14 11:25:18 [conn2] replSet RECOVERING", date) == None
     assert process("This should fail", date) == None
+    assert process("Thu Jun 14 11:26:05 [conn7] replSet info voting yea for localhost:27019 (2)\n", date) == None
+    assert process("Thu Jun 14 11:26:10 [rsHealthPoll] couldn't connect to localhost:27017: couldn't connect to server localhost:27017\n", date) == None
+    assert process("Thu Jun 14 11:28:57 [websvr] admin web console waiting for connections on port 28020\n", date) == None
+
+
+
+
 
 
 def check_state(message, code, date, sync, lock):
     doc = process(message, date)
     assert doc
-    assert doc["type"] == "conn"
+    assert doc["type"] == "fsync"
     assert doc["original_message"] == message
-    assert doc["info"]["state_code"] == code
+    assert doc["info"]["state"] == code
     #if sync != 0:
     #	print "Sync Num: {}".format(doc["info"]["sync_num"])
     # 	assert doc["info"]["sync_num"] == sync
