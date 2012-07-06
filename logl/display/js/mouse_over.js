@@ -2,9 +2,10 @@
 
 var canvas;
 var ctx;
+var server_layer;
 
 mouse_over_setup = function() {
-    canvas = document.getElementById("server_layer");
+    canvas = document.getElementById("background_layer");
     server_layer = canvas.getContext("2d");
 
     canvas2 = document.getElementById("shadow_layer");
@@ -21,7 +22,7 @@ mouse_over_setup = function() {
 
     // draw server(s)
     var randomnumber;
-    var xval, yval;
+    var xval, yval;/*
     for(var i = 0; i < 10; i++) {
 		randomnumber = Math.floor(Math.random()*5);
 		xval = Math.floor(Math.random()*800);
@@ -47,7 +48,7 @@ mouse_over_setup = function() {
 			servers[i] = { "x" : xval, "y" : yval, "r" : r, "on" : false, "type" : "down"};
 			down(xval, yval, r, server_layer);
 		}
-    }
+    }*/
 };
 
 
@@ -83,8 +84,10 @@ on_canvas_mouseover = function(e) {
 			//canvas.width = canvas.width;
 			most_foreground.fillStyle = "black";
 			most_foreground.rect(x, y, 100, 100);
-			most_foreground.fill();
+			//most_foreground.fill();
 
+
+			/*
 			if(servers[server]["type"] == "primary")
 				primary(servers[server]["x"], servers[server]["y"], servers[server]["r"], most_foreground);
 			else if(servers[server]["type"] == "arbiter")
@@ -95,16 +98,16 @@ on_canvas_mouseover = function(e) {
 				secondary(servers[server]["x"], servers[server]["y"], servers[server]["r"], most_foreground);
 			else if(servers[server]["type"] == "down")
 				down(servers[server]["type"], servers[server]["y"], servers[server]["r"], most_foreground);
-
+			*/
 		}
 	}
-		else {
+		/*else {
 			if(servers[server]["on"]){
 				canvas3.width = canvas3.width;
 				canvas2.width = canvas2.width;
 				message.width = message.width;
 				servers[server]["on"] = false;
 			}
-		}
+		}*/
 	}
 };
