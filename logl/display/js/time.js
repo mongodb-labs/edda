@@ -16,15 +16,15 @@ var slider;
 
 time_setup = function(max_time) {
     $("#slider").slider({
-	    min: 0,
-	    max: max_time,
-	    step: 1,
-	});
+        min: 0,
+        max: max_time,
+        step: 1
+    });
     $("slider").bind("slide", function(event, ui){
-	    render(ui.value);
-	    // and update the time in the timestamp div
-	    document.getElementById("timestamp").innerHTML = frames[ui.value]["date"]
-	});
+        render(ui.value);
+        // and update the time in the timestamp div
+        document.getElementById("timestamp").innerHTML = frames[ui.value]["date"];
+    });
 };
 
 sample_frames = function() {
@@ -48,7 +48,7 @@ sample_frames = function() {
     frame_2["body_count"] = 1;
     frame_2["flag"] = false;
     frame_2["bodies"] = {};
-    frame_2["bodies"]["Abe"] = "secondary"
+    frame_2["bodies"]["Abe"] = "secondary";
     frame_2["bodies"]["Lucy"] = "primary";
     frame_2["syncs"] = {};
     frame_2["user_conns"] = {};
@@ -72,34 +72,34 @@ render = function(time) {
     // could be more efficient than wiping everything every time...
 
     // check that there exists a corresponding frame
-    if (frames[time] != null) {
+    if (frames[time] !== null) {
 
-	// wipe server layer and draw all servers
-	server_canvas = document.getElementById("server_layer");
-	server_ctx = server_canvas.getContext("2d");
-	server_canvas.width = server_canvas.width;
+    // wipe server layer and draw all servers
+    server_canvas = document.getElementById("server_layer");
+    server_ctx = server_canvas.getContext("2d");
+    server_canvas.width = server_canvas.width;
 
-	for (var name in frames[time]["servers"]) {
-	    var state = frames[time]["servers"][name];
-	    console.log(state);
-	    switch(state) {
-	    case "PRIMARY":
-		primary(servers[name]["x"], servers[name]["y"], servers[name]["r"], server_ctx);
-		break;
-	    case "SECONDARY":
-		secondary(servers[name]["x"], servers[name]["y"], servers[name]["r"], server_ctx);
-		break;
-	    case "ARBITER":
-		arbiter(servers[name]["x"], servers[name]["y"], servers[name]["r"], server_ctx);
-		break;
-	    case "DOWN":
-		down(servers[name]["x"], servers[name]["y"], servers[name]["r"], server_ctx);
-		break;
-	    }
-	}
+    for (var name in frames[time]["servers"]) {
+        var state = frames[time]["servers"][name];
+        console.log(state);
+        switch(state) {
+        case "PRIMARY":
+        primary(servers[name]["x"], servers[name]["y"], servers[name]["r"], server_ctx);
+        break;
+        case "SECONDARY":
+        secondary(servers[name]["x"], servers[name]["y"], servers[name]["r"], server_ctx);
+        break;
+        case "ARBITER":
+        arbiter(servers[name]["x"], servers[name]["y"], servers[name]["r"], server_ctx);
+        break;
+        case "DOWN":
+        down(servers[name]["x"], servers[name]["y"], servers[name]["r"], server_ctx);
+        break;
+        }
+    }
 
-	// wipe arrow layer and redraw all arrows
-	arrow_canvas = document.getElementById("arrow_layer");
-	arrow_canvas.width = arrow_canvas.width;
+    // wipe arrow layer and redraw all arrows
+    arrow_canvas = document.getElementById("arrow_layer");
+    arrow_canvas.width = arrow_canvas.width;
     }
 };
