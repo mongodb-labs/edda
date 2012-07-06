@@ -16,6 +16,18 @@
 
 
 import pymongo
+import logging
+import re
+
+
+# put this somewhere else!!
+def is_IP(s):
+    """Returns true if s is an IP address, false otherwise"""
+    pattern = re.compile("(([0|1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))(\.([0|1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5])){3}")
+    m = pattern.search(s)
+    if (m == None):
+        return False
+    return True
 
 
 def event_matchup(db, collName):
@@ -74,8 +86,8 @@ def event_matchup(db, collName):
 
 def next_event(servers, server_entries):
     """Given lists of entries from servers ordered by date,
-    separates out a new entry and returns it.  Returns None
-    if out of entries"""
+    and a list of server numbers, finds a new event
+    and returns it.  Returns None if out of entries"""
     # NOTE: this method makes no attempt to adjust for clock skew,
     # only normal network delay.
     # find the first entry from any server
@@ -131,7 +143,7 @@ def next_event(servers, server_entries):
 
 def target_server_match(entry_a, entry_b, servers):
     """Given two .entries documents, are they talking about the
-    same sever?"""
+    same sever?  Return True if yes, False if no"""
     logger = logging.getLogger(__name__)
 
     a = entry_a["info"]["server"]
