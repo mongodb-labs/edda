@@ -12,33 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// test 2: draw basic servers
-
-var canvas;
-var server_ctx;
-var arrows_ctx;
-
-
-serverSetup = function() {
-    canvas = document.getElementById("background_layer");
-    var ctx = canvas.getContext("2d");
-    canvas = document.getElementById("server_layer");
-    server_ctx = canvas.getContext("2d");
-    arrows_ctx = document.getElementById("arrow_layer").getContext("2d");
-    ctx.beginPath();
-    ctx.rect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "#4E3629";
-    ctx.fill();
-
-};
-
 
 generate_coords = function(count, names) {
 
     var r = 200;
-    var w = canvas.width;
+    var w = canvases["server"].width;
     var centerw = w/2;
-    var h = canvas.height;
+    var h = canvases["server"].height;
     var centerh = h/2;
 
     var xVal = 0;
@@ -64,9 +44,9 @@ generate_coords = function(count, names) {
     }
 
     if (count % 2 === 0)
-        start_angle = -45;
+        start_angle = 45;
     else
-        start_angle = -90;
+        start_angle = 90;
 
     for (var i = 0; i < count; i++) {
         if (i % 2 === 0)
@@ -75,7 +55,7 @@ generate_coords = function(count, names) {
             r *= 2;
         r = 200;
         xVal = (r * Math.cos(start_angle * (Math.PI)/180)) + centerw;
-        yVal = (r * Math.sin(start_angle * (Math.PI)/180)) + centerh;
+	yVal = (r * Math.sin(start_angle * (Math.PI)/180)) + centerh;
 
         servers[names[i]] = { "x" : xVal, "y" : yVal, "r" : 360/(count*1.5), "on" : false, "type" : "primary"};
         start_angle += 360/count;

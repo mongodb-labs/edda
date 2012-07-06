@@ -23,36 +23,29 @@ limitations under the License. /-->
   <!--Import style files/-->
   <link rel="stylesheet" type="text/css" href="style/logl.css"/>
 
-  <!--Declare global variables/-->
-  <script>
-    var servers = {};
-    var frames = {};
-  </script>
-
   <!--Import JS files/-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.js"></script>
+  <script src="js/setup.js"></script>
   <script src="js/draw_servers.js"></script>
   <script src="js/connection.js"></script>
   <script src="js/mouse_over.js"></script>
   <script src="js/arrows.js"></script>
   <script src="js/time.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.js"></script>
+
 </head>
 
-<body onload="serverSetup();time_setup()">
+<body onload="logl_setup()">
 
-  <script>
-    <!--load necessary things/-->
-    poll();
-  </script>
     <div id="page">
       <br/>
       <div id="canvas">
 	<!--Canvas layers go in here/-->
 	<canvas id="background_layer" height="600" width="800"></canvas>
 	<canvas id="shadow_layer" height="600" width="800"></canvas>
-	<canvas id="server_layer" height="600" width="800"></canvas>
+	<canvas id="connection_layer" height="600" width="800"></canvas>
 	<canvas id="arrow_layer" height="600" width="800"></canvas>
+	<canvas id="server_layer" height="600" width="800"></canvas>
 	<canvas id="text_layer" height="600" width="800"></canvas>
 	<canvas id="message_layer" height="600" width="800"></canvas>
       </div>
