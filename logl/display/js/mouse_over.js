@@ -4,6 +4,7 @@ var canvas;
 var ctx;
 var server_layer;
 
+
 mouse_over_setup = function() {
     canvas = document.getElementById("background_layer");
     server_layer = canvas.getContext("2d");
