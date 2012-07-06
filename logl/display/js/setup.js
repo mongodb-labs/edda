@@ -43,7 +43,7 @@ function canvases_and_contexts() {
 
 // set up mouse-over functionality
 function mouse_over_setup() {
-    canvases["shadow"].addEventListener("mousemove", on_canvas_mouseover, false);
+    canvases["message"].addEventListener("mousemove", on_canvas_mouseover, false);
 };
 
 
