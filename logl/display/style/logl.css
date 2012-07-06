@@ -59,11 +59,7 @@ body {
 }
 
 #slider {
-	position: absolute;
-	margin-bottom: 10px;
-	background: #459902;
-	width: 400px;
-	height: 40px;
+	
 }
 
 #timestamp {

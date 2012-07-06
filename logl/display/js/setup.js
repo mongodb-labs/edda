@@ -19,7 +19,7 @@ var layers = new Array("background", "shadow", "connection", "arrow", "server", 
 var canvases = {};
 var contexts = {};
 var servers = {};
-var frames = {};
+var frames;
 var slider = {};
 
 
@@ -30,21 +30,21 @@ function logl_setup() {
     connect();  // see connection.js
     time_setup(frames.size);
     visual_setup();
-};
+}
 
 // set up canvases and associated contexts
 function canvases_and_contexts() {
     for (var i in layers) {
-	canvases[layers[i]] = document.getElementById(layers[i] + "_layer");
-	contexts[layers[i]] = canvases[layers[i]].getContext("2d");
+    canvases[layers[i]] = document.getElementById(layers[i] + "_layer");
+    contexts[layers[i]] = canvases[layers[i]].getContext("2d");
     }
-};
+}
 
 
 // set up mouse-over functionality
 function mouse_over_setup() {
     canvases["shadow"].addEventListener("mousemove", on_canvas_mouseover, false);
-};
+}
 
 
 // set up display-related things from frames
@@ -53,17 +53,17 @@ function mouse_over_setup() {
 function visual_setup() {
     var names = new Array();
     if (frames) {
-	if (frames["0"]) {
-	    for (var name in frames["0"]["servers"]) {
-		names.push(name);
-	    }
-	    generate_coords(names.length, names);
-	}
+    if (frames["0"]) {
+        for (var name in frames["0"]["servers"]) {
+        names.push(name);
+        }
+        generate_coords(names.length, names);
+    }
     }
 
     // clear all layers
     for (var name in layers) {
-	canvases[layers[name]].width = canvases[layers[name]].width;
+    canvases[layers[name]].width = canvases[layers[name]].width;
     }
 
     // color background
@@ -82,10 +82,11 @@ function visual_setup() {
 
 // set up slider functionality
 function time_setup(max_time) {
+    
     $("#slider").slider({ slide: function(event, ui) {
-		render(ui.value);
-		document.getElementById("timestamp").innerHTML = frames[ui.value]["date"];
-	    }});
+        render(ui.value);
+        document.getElementById("timestamp").innerHTML = frames[ui.value]["date"];
+        }});
     $("#slider").slider( "option", "min", 0 );
     $("#slider").slider( "option", "max", max_time );
     $("#slider").slider( "option", "step", 1 );
@@ -97,7 +98,7 @@ function time_setup(max_time) {
 Object.size = function(obj) {
     var size = 0, key;
     for (key in obj) {
-	if (obj.hasOwnProperty(key)) size++;
+    if (obj.hasOwnProperty(key)) size++;
     }
     return size;
 };

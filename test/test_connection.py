@@ -12,7 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
 from logl.post.connection import *
+from time import sleep
 from datetime import datetime
 from copy import deepcopy
 from nose.plugins.skip import Skip, SkipTest
@@ -63,4 +65,29 @@ def generate_msg():
     frames["1"] = frame1
     frames["2"] = frame2
     frames["3"] = frame3
+    frames["4"] = frame
+    frames["5"] = frame1
+    frames["6"] = frame2
+    frames["7"] = frame3
+    frames["8"] = frame
+    frames["9"] = frame1
+    frames["10"] = frame2
+    frames["11"] = frame3
+    frames["12"] = frame
+    frames["13"] = frame1
+    frames["14"] = frame2
+    frames["15"] = frame3
+    frames["16"] = frame
+    frames["17"] = frame1
+    frames["18"] = frame2
+    frames["19"] = frame3
+    frames["20"] = frame
+    count = 0
+    while True:
+        if count < 21:
+            sleep(1)
+            frames[str(count)]["date"] = str(datetime.now())
+            count += 1
+            continue
+        break
     return frames
