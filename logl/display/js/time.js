@@ -12,20 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-var slider;
-
-time_setup = function(max_time) {
-    $("#slider").slider({
-        min: 0,
-        max: max_time,
-        step: 1
-    });
-    $("slider").bind("slide", function(event, ui){
-        render(ui.value);
-        // and update the time in the timestamp div
-        document.getElementById("timestamp").innerHTML = frames[ui.value]["date"];
-    });
-};
 
 sample_frames = function() {
 
