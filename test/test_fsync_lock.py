@@ -47,10 +47,6 @@ def test_process():
     assert process("Thu Jun 14 11:28:57 [websvr] admin web console waiting for connections on port 28020\n", date) == None
 
 
-
-
-
-
 def check_state(message, code, date, sync, lock):
     doc = process(message, date)
     assert doc
