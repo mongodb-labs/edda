@@ -34,6 +34,5 @@ def check_state(message, code, date, server):
     assert doc
     assert doc["type"] == "stale"
     assert doc["original_message"] == message
-    assert doc["info"]["state_code"] == code
     if server != None:
         assert doc["info"]["server"] == server
