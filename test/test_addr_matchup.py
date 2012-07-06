@@ -15,7 +15,6 @@
 from logl.post.server_matchup import *
 from test_clock_skew import generate_doc
 from logl.logl import assign_address
-import pymongo
 from pymongo import Connection
 from datetime import datetime
 from time import sleep

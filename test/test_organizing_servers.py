@@ -13,11 +13,11 @@
 # limitations under the License.
 
 
-from logl.post.organize_servers import *
+from logl.post.event_matchup import organize_servers
 from logl.logl import assign_address
 import pymongo
 import logging
-from datetime import datetime
+from datetime import *
 from pymongo import Connection
 from time import sleep
 from nose.plugins.skip import Skip, SkipTest

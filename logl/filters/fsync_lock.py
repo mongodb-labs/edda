@@ -41,12 +41,9 @@ def process(msg, date):
     processes the line and creates a document for it.
     document = {
        "date" : date,
-       "type" : "conn",
+       "type" : "fsync",
        "info" : {
-          "state_code" : messagetype
           "state" : state
-          "sync_num" : sync_num
-          "lock_num" : lock_num
        }
        "oritinal_message" : msg
     }"""
@@ -56,9 +53,8 @@ def process(msg, date):
 
     doc = {}
     doc["date"] = date
-    doc["type"] = "conn"
+    doc["type"] = "fsync"
     doc["info"] = {}
-    doc["info"]["state_code"] = message_type
     doc["original_message"] = msg
 
     if message_type == 0:

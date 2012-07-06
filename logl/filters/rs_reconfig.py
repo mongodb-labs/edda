@@ -54,7 +54,6 @@ def process(msg, date):
     doc["date"] = date
     doc["type"] = "re_sync"
     doc["info"] = {}
-    doc["info"]["state_code"] = message_type
     doc["original_message"] = msg
 
     return doc

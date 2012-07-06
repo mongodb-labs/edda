@@ -33,6 +33,7 @@ def test_criteria():
         " replSet replSetReconfig new config saved locally") == 0
     assert criteria("Tue Jul  3 10:20:15 [rsMgr]"
         " replSet new config saved locally") == -1
+    assert criteria("Tue Jul  3 10:20:15 [rsMgr] replSet info : additive change to configuration") == -1
 
 
 def test_process():
@@ -49,4 +50,3 @@ def check_state(message, code, date, server):
     assert doc["date"] == date
     assert doc["type"] == "re_sync"
     assert doc["original_message"] == message
-    assert doc["info"]["state_code"] == code
