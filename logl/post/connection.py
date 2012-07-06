@@ -26,6 +26,7 @@ except ImportError:
     import simplejson as json
 import threading
 
+from time import sleep
 
 data = None
 
@@ -36,9 +37,11 @@ class ThreadClass(threading.Thread):
         """Open page and send GET request to server"""
         # open the JS page
         url = "http://localhost:28018"
-        webbrowser.open(url, 1, True)
-        print "child thread exiting"
-        return
+        try:
+            webbrowser.open(url, 1, True)
+        except webbrowser.Error:
+            print "Error: Unable to launch webpage"
+            print "Please try again with a different default browser"
 
 
 def send_to_js(msg):
@@ -54,12 +57,14 @@ def send_to_js(msg):
     # parent starts a server listening on localhost:27080
     # child opens page to send GET request to server
     # open socket, bind and listen
-    print "Opening server"
+    print "==========================================================="
+    print "Opening server, kill with Ctrl+C once logl.html has opened"
+    print "==========================================================="
     try:
         server = HTTPServer(('', 28018), LoglHTTPRequest)
     except socket.error, (value, message):
         if value == 98:
-            print "could not bind to localhost:28018"
+            print "Error: could not bind to localhost:28018"
         else:
             print message
             return
@@ -112,15 +117,11 @@ class LoglHTTPRequest(BaseHTTPRequestHandler):
     def do_GET(self):
         # do nothing with message
         # return data
-        print 'got a GET request'
-
         (uri, args, type) = self.process_uri("GET")
-        print self.docroot + uri
 
         if len(type) != 0:
 
             if type == "please":
-                print "got a data request"
                 self.wfile.write(data)
 
             elif type in self.mimetypes and os.path.exists(self.docroot + uri):
