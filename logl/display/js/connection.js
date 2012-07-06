@@ -12,46 +12,32 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-poll = function() {
-    // the python server always listens at localhost:28018
-
-    // should probably check browser compatability
-    var xmlhttp;
-
-    // send a phony "GET" request
-    xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("GET", "http://localhost:28018/data.please", true);
-    xmlhttp.send();
-
-    // receive information from server
-    xmlhttp.onreadystatechange = function() {
-	frames = jQuery.parseJSON(xmlhttp.responseText);
-	var names = new Array();
-	console.log(frames["0"]);
-	for (var name in frames["0"]["servers"]) {
-	    names.push(name);
-	}
-	// change time values of slider
-	time_setup(frames.size);
-
-	var count = 0;
-	for (var server in frames["0"]["servers"]) {
-		count++;
-	}
-
-	generate_coords(count, names);
-	console.log(servers)
-	render("0");
-	// also, get rid of default drawing of first frame
-	// and get rid of the "Message from Python" line
-    };
+// without the async messing things up?
+function connect() {
+    $.ajax({
+	    async: false,
+		url: "http://localhost:28018/data.please",
+		dataType: "json",
+		success: function(data) {
+		frames = data;
+	    }
+	});
 };
 
-// thanks http://stackoverflow.com/questions/5223/length-of-javascript-object-ie-associative-array
-Object.size = function(obj) {
-    var size = 0, key;
-    for (key in obj) {
-	if (obj.hasOwnProperty(key)) size++;
-    }
-    return size;
+
+// get frames from python using jquery
+// this method is asynchronous!!
+function connect_async() {
+    $.getJSON("http://localhost:28018/data.please",
+	      function(data) {
+		  console.log("got data from the server:");
+		  console.log(data);
+		  frames = data;
+		  console.log(frames);
+		  console.log(frames["0"]);
+		  render("0");
+	      });
+    //    render("0");
+    //console.log(frames["0"]);
 };
+
