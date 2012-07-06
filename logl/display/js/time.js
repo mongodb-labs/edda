@@ -62,7 +62,7 @@ sample_frames = function() {
     frames["1"] = frame_2;
 
     // render first frame
-    render(0);
+    render("0");
 };
 
 
@@ -72,34 +72,44 @@ render = function(time) {
     // could be more efficient than wiping everything every time...
 
     // check that there exists a corresponding frame
-    if (frames[time] !== null) {
+    if (frames[time]) {
 
-    // wipe server layer and draw all servers
-    server_canvas = document.getElementById("server_layer");
-    server_ctx = server_canvas.getContext("2d");
-    server_canvas.width = server_canvas.width;
+	// wipe server layer and draw all servers
+	canvases["server"].width = canvases["server"].width;
 
-    for (var name in frames[time]["servers"]) {
-        var state = frames[time]["servers"][name];
-        console.log(state);
-        switch(state) {
-        case "PRIMARY":
-        primary(servers[name]["x"], servers[name]["y"], servers[name]["r"], server_ctx);
-        break;
-        case "SECONDARY":
-        secondary(servers[name]["x"], servers[name]["y"], servers[name]["r"], server_ctx);
-        break;
-        case "ARBITER":
-        arbiter(servers[name]["x"], servers[name]["y"], servers[name]["r"], server_ctx);
-        break;
-        case "DOWN":
-        down(servers[name]["x"], servers[name]["y"], servers[name]["r"], server_ctx);
-        break;
-        }
-    }
+	for (var name in frames[time]["servers"]) {
+	    var state = frames[time]["servers"][name];
+	    console.log(state);
+	    switch(state) {
+	    case "PRIMARY":
+		primary(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+		break;
+	    case "SECONDARY":
+		secondary(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+		break;
+	    case "ARBITER":
+		arbiter(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+		break;
+	    case "DOWN":
+		down(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+		break;
+	    case "RECOVERING":
+		recovering(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+		break;
+	    case "ROLLBACK":
+		rollback(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+		break;
+	    case "FATAL":
+		fatal(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+		break;
+	    case "UNKNOWN":
+		unknown(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+		break;
+	    case "REMOVED":
+		removed(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+		break;
+	    }
+	}
 
-    // wipe arrow layer and redraw all arrows
-    arrow_canvas = document.getElementById("arrow_layer");
-    arrow_canvas.width = arrow_canvas.width;
     }
 };
