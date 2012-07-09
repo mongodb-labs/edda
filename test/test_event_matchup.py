@@ -21,6 +21,12 @@ from logl.post.event_matchup import *
 import pymongo
 from datetime import datetime
 from datetime import timedelta
+from copy import deepcopy
+
+# -----------------------------
+# helper methods for testing
+# -----------------------------
+
 
 def db_setup():
     """Set up necessary server connections"""
@@ -64,6 +70,29 @@ def one_entry(type, o_s, date, info):
     e["date"] = date
     e["info"] = info
     return e
+
+
+def one_event(type, target, date):
+    """Generates and returns an event with
+    the specified fields"""
+    e = {}
+    e["type"] = type
+    if e["type"] == "status":
+        e["state"] = "UNKNOWN"
+    if e["type"] == "sync":
+        e["sync_to"] = "jake@adventure.time"
+    if e["type"] == "new_conn" or e["type"] == "end_conn":
+        e["conn_number"] = "3"
+        e["conn_IP"] = "jake@adventure.time"
+    e["target"] = target
+    e["date"] = date
+    e["summary"] = generate_summary(e)
+    return e
+
+
+# -------------------------------
+# test the event_matchup() method
+# -------------------------------
 
 
 def test_event_matchup_empty():
@@ -520,10 +549,112 @@ def test_target_server_match_unknown_hostname():
     assert target_server_match(a, b, servers) == "treetrunks@adventure.time"
 
 
+# add some tests for the way that next_event handles
+# certain types of entries, namely "conn", "sync", and "fsync"
+
+# add some tests for generate_summary()
+
 # -------------------------------------
 # test the resolve_dissenters() method
 # -------------------------------------
 
+def test_resolve_dissenters_no_lag():
+    """Test on a list of events where there
+    were no problems due to excessive network delay
+    or skewed clocks"""
+    e1 = one_event("status", "finn@adventure.time", datetime.now())
+    e2 = one_event("status", "me@10.gen", datetime.now())
+    e3 = one_event("status", "you@10.gen", datetime.now())
+    e1["dissenters"] = []
+    e2["dissenters"] = []
+    e3["dissenters"] = []
+    e1["witnesses"] = ["1", "2", "3"]
+    e2["witnesses"] = ["1", "2", "3"]
+    e3["witnesses"] = ["1", "2", "3"]
+    events = [e1, e2, e3]
+    events2 = resolve_dissenters(deepcopy(events))
+    assert events2 == events
 
 
+def test_resolve_dissenters_empty_list():
+    """Test resolve_dissenters() on an empty
+    list of events"""
+    events = []
+    assert not resolve_dissenters(events)
 
+
+def test_resolve_dissenters_two_matching():
+    """Test resolve_dissenters() on a list
+    of two events that do correspond, but were
+    separated in time for next_event()"""
+    date = datetime.now()
+    e1 = one_event("status", "finn@adventure.time", date)
+    e2 = one_event("status", "finn@adventure.time",
+                   date + timedelta(seconds=5))
+    e1["dissenters"] = ["2"]
+    e1["witnesses"] = ["1"]
+    e2["dissenters"] = ["1"]
+    e2["witnesses"] = ["2"]
+    events = [e1, e2]
+    events = resolve_dissenters(events)
+    assert len(events) == 1
+    e = events.pop(0)
+    assert e
+    assert not e["dissenters"]
+    assert e["witnesses"]
+    assert len(e["witnesses"]) == 2
+    assert "1" in e["witnesses"]
+    assert "2" in e["witnesses"]
+    assert e["date"] == date + timedelta(seconds=5)
+
+
+def test_resolve_dissenters_three_servers():
+    """Test two events from three different servers,
+    with one at a lag"""
+    date = datetime.now()
+    e1 = one_event("status", "finn@adventure.time", date)
+    e2 = one_event("status", "finn@adventure.time",
+                   date + timedelta(seconds=5))
+    e1["dissenters"] = ["2"]
+    e1["witnesses"] = ["1", "3"]
+    e2["dissenters"] = ["1", "3"]
+    e2["witnesses"] = ["2"]
+    events = [e1, e2]
+    events = resolve_dissenters(events)
+    assert len(events) == 1
+    e = events.pop(0)
+    assert e
+    assert not e["dissenters"]
+    assert e["witnesses"]
+    assert len(e["witnesses"]) == 3
+    assert "1" in e["witnesses"]
+    assert "2" in e["witnesses"]
+    assert "3" in e["witnesses"]
+    assert e["date"] == date
+
+
+def test_resolve_dissenters_five_servers():
+    """Test events from five servers, three on one
+    event, and two on a later event"""
+    date = datetime.now()
+    e1 = one_event("status", "finn@adventure.time", date)
+    e2 = one_event("status", "finn@adventure.time",
+                   date + timedelta(seconds=5))
+    e2["dissenters"] = ["4", "5"]
+    e2["witnesses"] = ["1", "2", "3"]
+    e1["dissenters"] = ["1", "2", "3"]
+    e1["witnesses"] = ["4", "5"]
+    events = [e1, e2]
+    events = resolve_dissenters(events)
+    assert len(events) == 1
+    e = events.pop(0)
+    assert e
+    assert not e["dissenters"]
+    assert e["witnesses"]
+    assert len(e["witnesses"]) == 5
+    assert "1" in e["witnesses"]
+    assert "2" in e["witnesses"]
+    assert "3" in e["witnesses"]
+    assert "4" in e["witnesses"]
+    assert "5" in e["witnesses"]
+    assert e["date"] == date + timedelta(seconds=5)
