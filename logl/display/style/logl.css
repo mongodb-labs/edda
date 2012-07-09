@@ -35,11 +35,14 @@ body {
 }
 
 #server_layer {
-	     z-index: 6;
+	     z-index: 7;
 }
 
+#link_layer {
+		z-index: 10;
+}
 #arrow_layer {
-	     z-index: 7;
+	     z-index: 6;
 }
 
 #text_layer {
