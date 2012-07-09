@@ -38,7 +38,6 @@ def process(msg, date):
        "date" : date,
        "type" : "exit",
        "info" : {
-          "state_code" : messagetype
           "state" : state
        }
        "oritinal_message" : msg
@@ -54,7 +53,6 @@ def process(msg, date):
     doc["date"] = date
     doc["type"] = "exit"
     doc["info"] = {}
-    doc["info"]["state_code"] = messagetype
     doc["info"]["state"] = labels[messagetype]
     doc["original_message"] = msg
     if(messagetype == 0):
