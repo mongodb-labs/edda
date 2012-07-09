@@ -267,7 +267,7 @@ def resolve_dissenters(events):
     i = 0
     for a in events:
         logger.debug("Checking event {0}".format(i))
-        if len(a["dissenters"]) > len(a["witnesses"]):
+        if len(a["dissenters"]) >= len(a["witnesses"]):
             logger.debug("this event has more dissenters than witnesses")
             logger.debug("Attempting to find corresponding event")
             for b in events_b:
@@ -286,8 +286,9 @@ def resolve_dissenters(events):
                         events.remove(a)
                         print "a:\n{0}\n".format(events)
                         print "b:\n{0}\n".format(events_b)
-                        b["witnesses"].append(a["witnesses"])
+                        # resolve witnesses and dissenters lists
                         for wit_a in a["witnesses"]:
+                            b["witnesses"].append(wit_a)
                             if wit_a in b["dissenters"]:
                                 logger.debug("Removing {0} from b's dissenters".format(wit_a))
                                 b["dissenters"].remove(wit_a)
