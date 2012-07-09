@@ -194,7 +194,8 @@ removed = function(x, y, r, ctx) {
 undiscovered = function(x, y, r, ctx) {
     // draw an UNDISCOVERED server
     // brown background, thin black outline
-    circle(x, y, r, "#4E3629", "3B1E0B", 5, ctx);
+    //    circle(x, y, r, "#4E3629", "3B1E0B", 5, ctx);
+    circle(x, y, r, "#4E3629", "#3B1E0B", 5, ctx);
 };
 
 

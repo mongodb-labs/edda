@@ -60,7 +60,7 @@ render = function(time) {
 	    unknown(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
 	    break;
 	case "UNDISCOVERED":
-	    undiscovered(servers[name]["x"], servers[name]["y"], servers["name"]["r"], contexts["server"]);
+	    undiscovered(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
 	    break;
         case "REMOVED":
 	    removed(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
