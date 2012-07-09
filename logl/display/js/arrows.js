@@ -23,7 +23,8 @@ one_arrow = function(x1, y1, x2, y2, ctx) {
 
     ctx.moveTo(x1, y1);
     ctx.lineWidth = 3;
-    ctx.quadraticCurveTo(cx, cy, x2, y2);
+    //ctx.quadraticCurveTo(0, 0, x2, y2);
+    ctx.lineTo(x2, y2);
     ctx.stroke();
 
     // adapted from http://stackoverflow.com/questions/808826/draw-arrow-on-canvas-tag
