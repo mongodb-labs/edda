@@ -15,7 +15,7 @@
 // A centralized file for all the JS setup details
 
 // define program-wide global variables
-var layers = new Array("background", "shadow", "connection", "arrow", "server", "text", "message");
+var layers = new Array("background", "shadow", "link", "arrow", "server", "text", "message");
 var canvases = {};
 var contexts = {};
 var servers = {};
