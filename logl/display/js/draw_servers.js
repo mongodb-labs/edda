@@ -90,11 +90,11 @@ down = function(x, y, r, ctx) {
     var a = 0;
     var b = 0.05;
     while (b <= 2) {
-	ctx.beginPath();
-	ctx.arc(x, y, r, a*Math.PI, b*Math.PI, false);
-	ctx.stroke();
-	a += 0.08;
-	b += 0.08;
+    ctx.beginPath();
+    ctx.arc(x, y, r, a*Math.PI, b*Math.PI, false);
+    ctx.stroke();
+    a += 0.08;
+    b += 0.08;
         }
 };
 
