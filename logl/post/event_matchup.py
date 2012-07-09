@@ -18,6 +18,7 @@
 import pymongo
 import logging
 import re
+from datetime import timedelta
 
 
 # put this somewhere else!!
@@ -74,7 +75,7 @@ def event_matchup(db, collName):
 
     # make events
     while(True):
-        event = next_event(server_nums, entries)
+        event = next_event(server_nums, entries, db, collName)
         if not event:
             break
         events.append(event)
@@ -84,7 +85,7 @@ def event_matchup(db, collName):
     return events
 
 
-def next_event(servers, server_entries):
+def next_event(servers, server_entries, db, collName):
     """Given lists of entries from servers ordered by date,
     and a list of server numbers, finds a new event
     and returns it.  Returns None if out of entries"""
@@ -95,64 +96,114 @@ def next_event(servers, server_entries):
     event = {}
     event["witnesses"] = []
     event["dissenters"] = []
+    logger = logging.getLogger(__name__)
 
     # be careful about datetimes stored as strings!
 
+    logger.debug("looking for a good first")
     first = None
     for s in servers:
         if not server_entries[s]:
+            logger.debug("No server_entries list for this server, skipping")
             continue
-        if first and server_entries[s].pop(0)["date"] > first:
+        if first and server_entries[s][0]["date"] > first["date"]:
             continue
         first = server_entries[s].pop(0)
     if not first:
         return None
 
+    logger.debug("found first from server {0}".format(first["origin_server"]))
+
+    # define event fields
+    event["target"] = first["info"]["server"]
+    if event["target"] == "self":
+        event["target"] = first["origin_server"] # meh
+    event["type"] = first["type"]
     event["date"] = first["date"]
+    if event["type"] == "status":
+        event["state"] = first["info"]["state"]
+    event["witnesses"].append(first["origin_server"])
+
 
     # some kinds of messages won't have any corresponding messages:
     if first["type"] == "conn":
+        logger.debug("handling a connection message")
         event["type"] = first["info"]["subtype"]
         event["witnesses"].append(first["origin_server"])
         event["conn_IP"] = first["info"]["server"]
+        event["target"] = first["origin_server"]
         event["conn_number"] = first["info"]["conn_number"]
         event["summary"] = generate_summary(event)
         return event
 
+    # fsync locking/unlocking messages only come from
+    # a server talking about itself
+    if first["type"] == "fsync":
+        pass
+
+    # sync messages, also
+    if first["type"] == "sync":
+        pass
+
     # find corresponding messages
     for s in servers:
+        logger.debug("checking server {0}'s entries".format(s))
         if s == first["origin_server"]:
+            logger.debug("this is the same server, skipping")
             continue
         for entry in server_entries[s]:
             if abs(entry["date"] - first["date"]) > delay:
+                logger.debug("entry is outside range of network delay, breaking")
                 break
-            if entry["type"] != first["type"]:
+            target = target_server_match(entry, first, db[collName + ".servers"])
+            if not target:
+                logger.debug("entries' target servers do not agree, skipping")
                 continue
-            if not target_server_match(entry, first, db[collName + ".servers"]):
+            event["target"] = target
+            if not type_check(first, entry):
+                logger.debug("specific type checking failed, skipping")
                 continue
-            # add some type-specific checks:
             # passed all checks! must match.
+            logger.debug("Found a match!  Adding to event's witnesses")
             server_entries[s].remove(entry)
             event["witnesses"].append(s)
+            # organize me better please...
         if s not in event["witnesses"]:
+            logger.debug("No matches found for server {0}, adding to dissenters".format(s))
             event["dissenters"].append(s)
 
+    logger.debug("Done searching for corresponding events")
     event["summary"] = generate_summary(event)
     return event
 
 
+def type_check(entry_a, entry_b):
+    """Given two .entries documents, perform checks specific to
+    their type to see if they refer to corresponding events"""
+    # handle exit messages carefully
+    if entry_a["type"] != entry_b["type"]:
+        return False
+    type = entry_a["type"]
+    if type == "status":
+        if entry_a["info"]["state_code"] != entry_b["info"]["state_code"]:
+            return False
+    elif type == "stale":
+        pass
+    return True
+
+
 def target_server_match(entry_a, entry_b, servers):
     """Given two .entries documents, are they talking about the
-    same sever?  Return True if yes, False if no"""
+    same sever?  Return target server if yes, None if no"""
     logger = logging.getLogger(__name__)
 
     a = entry_a["info"]["server"]
     b = entry_b["info"]["server"]
 
     if a == "self" and b == "self":
-        return False
+        return None
     if a == b:
-        return True
+        return a
 
     a_doc = servers.find_one({"server_num": entry_a["origin_server"]})
     b_doc = servers.find_one({"server_num": entry_b["origin_server"]})
@@ -161,11 +212,11 @@ def target_server_match(entry_a, entry_b, servers):
     if a == "self":
         if (b == a_doc["server_name"] or
             b == a_doc["server_IP"]):
-            return True
+            return b
     if b == "self":
         if (a == b_doc["server_name"] or
             a == b_doc["server_IP"]):
-            return True
+            return a
 
     # address not known
     # in this case, we will assume that the address does belong
@@ -176,15 +227,15 @@ def target_server_match(entry_a, entry_b, servers):
                 logger.debug("Assigning IP {0} to server {1}".format(b, a))
                 a_doc["server_IP"] == b
                 servers.save(a_doc)
-                return True
-            return False
+                return b
+            return None
         else:
             if a_doc["server_name"] == "unknown":
                 logger.debug("Assigning hostname {0} to server {1}".format(b, a))
                 a_doc["server_name"] == b
                 servers.save(a_doc)
-                return True
-            return False
+                return b
+            return None
 
     # why, yes, it is rather silly to code this here twice.
     # clean me up please!!
@@ -194,15 +245,15 @@ def target_server_match(entry_a, entry_b, servers):
                 logger.debug("Assigning IP {0} to server {1}".format(a, b))
                 b_doc["server_IP"] == a
                 servers.save(b_doc)
-                return True
-            return False
+                return a
+            return None
         else:
             if b_doc["server_name"] == "unknown":
                 logger.debug("Assigning hostname {0} to server {1}".format(a, b))
                 b_doc["server_name"] == a
                 servers.save(b_doc)
-                return True
-            return False
+                return a
+            return None
 
 
 def resolve_dissenters(events):
