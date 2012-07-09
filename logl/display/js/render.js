@@ -79,6 +79,7 @@ render = function(time) {
     for(var i = 0; i < count; i++) {
         for(var j = 0; j < count; j++) {
             one_line(xvals[i], yvals[i], xvals2[j], yvals2[j], contexts["arrow"]);
+            one_arrow(100, 100, 200, 200, contexts["arrow"]);
         }
     }
 
