@@ -52,7 +52,7 @@ def check_state(message, code, date, sync, lock):
     assert doc
     assert doc["type"] == "fsync"
     assert doc["original_message"] == message
-    assert doc["info"]["state"] == code
+    assert doc["info"]["server"] == "self"
     #if sync != 0:
     #	print "Sync Num: {}".format(doc["info"]["sync_num"])
     # 	assert doc["info"]["sync_num"] == sync

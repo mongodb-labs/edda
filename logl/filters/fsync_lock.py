@@ -43,7 +43,8 @@ def process(msg, date):
        "date" : date,
        "type" : "fsync",
        "info" : {
-          "state" : state
+          "state"  : state
+          "server" : "self"
        }
        "oritinal_message" : msg
     }"""
@@ -63,4 +64,5 @@ def process(msg, date):
         doc["info"]["state"] = "UNLOCKED"
     else:
         doc["info"]["state"] = "FSYNC"
+    doc["info"]["server"] = "self"
     return doc
