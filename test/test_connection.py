@@ -61,6 +61,12 @@ def generate_msg():
     frame2["servers"]["samantha@home:27017"] = "DOWN"
     frame3["servers"]["samantha@home:27017"] = "SECONDARY"
     frame3["servers"]["matthew@home:45234"] = "PRIMARY"
+
+    frame["servers"]["waterbottle@home:27017"] = "PRIMARY"
+    frame["servers"]["cellphone@home:27017"] = "PRIMARY"
+    frame["servers"]["notepad@home:27017"] = "SECONDARY"
+    frame["servers"]["laptop@home:27017"] = "ROLLBACK"
+    frame["servers"]["p@home:27017"] = "DOWN"
     frames["0"] = frame
     frames["1"] = frame1
     frames["2"] = frame2
@@ -85,7 +91,7 @@ def generate_msg():
     count = 0
     while True:
         if count < 21:
-#            sleep(1)
+            sleep(1)
             frames[str(count)]["date"] = str(datetime.now())
             count += 1
             continue
