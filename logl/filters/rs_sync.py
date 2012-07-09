@@ -40,7 +40,8 @@ def process(msg, date):
        "info" structure below:
        "info" : {
           "subtype" : "reSyncing",
-          "server" : "host:port"
+          "sync_server" : "host:port"
+          "server" : "self
           }
     }"""
     messageType = criteria(msg)
@@ -66,7 +67,8 @@ def syncing_diff(msg, doc):
     start = string.find(msg, "to: ")
     if (start < 0):
         return None
-    doc["info"]["server"] = msg[start + 4: len(msg)]
+    doc["info"]["sync_server"] = msg[start + 4: len(msg)]
+    doc["info"]["server"] = "self"
     logger = logging.getLogger(__name__)
     logger.debug(doc)
     return doc
