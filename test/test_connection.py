@@ -91,7 +91,7 @@ def generate_msg():
     count = 0
     while True:
         if count < 21:
-            sleep(1)
+            #sleep(1)
             frames[str(count)]["date"] = str(datetime.now())
             count += 1
             continue
