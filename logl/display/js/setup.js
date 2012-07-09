@@ -38,6 +38,7 @@ function canvases_and_contexts() {
     canvases[layers[i]] = document.getElementById(layers[i] + "_layer");
     contexts[layers[i]] = canvases[layers[i]].getContext("2d");
     }
+    contexts["link"].lineWidth = 10;
 }
 
 
