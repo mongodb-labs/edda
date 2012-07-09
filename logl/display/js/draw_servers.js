@@ -191,6 +191,13 @@ removed = function(x, y, r, ctx) {
     circle(x, y, r, "white", "#3B1E0B", 18, ctx);
 };
 
+undiscovered = function(x, y, r, ctx) {
+    // draw an UNDISCOVERED server
+    // brown background, thin black outline
+    circle(x, y, r, "#4E3629", "3B1E0B", 5, ctx);
+};
+
+
 unknown = function(x, y, r, ctx) {
     // draw a server in an UNKNOWN state
     // this is a light grey circle with a darker grey outline
@@ -199,6 +206,10 @@ unknown = function(x, y, r, ctx) {
     ctx.font = "45pt Helvetica";
     ctx.fillStyle = "#737373";
     ctx.fillText("?", x - r/3, y + r/3);
+};
+
+lock = function(x, y, r, ctx) {
+    // draw a lock over a locked server
 };
 
 crown = function(x, y, w, h, ctx) {

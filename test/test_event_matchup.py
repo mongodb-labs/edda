@@ -658,3 +658,23 @@ def test_resolve_dissenters_five_servers():
     assert "4" in e["witnesses"]
     assert "5" in e["witnesses"]
     assert e["date"] == date + timedelta(seconds=5)
+
+
+def test_resolve_dissenters_same_witnesses_no_match():
+    """Test a case where events have corresponding
+    lists of witnesses and dissenters, but the events
+    themselves are not a match"""
+    pass
+
+
+def test_resolve_dissenters_same_event_overlapping_viewers():
+    """Test a case where events correspond, but lists
+    of witnesses and dissenters do not"""
+    pass
+
+
+def test_resolve_dissenters_one_skew_in_list():
+    """Test a list where one event must be resolved,
+    but there are also many other events in the list
+    that should remain unchanged by resolve_dissenters()"""
+    pass
