@@ -29,7 +29,11 @@ render = function(time) {
 
     for (var name in frames[time]["servers"]) {
         var state = frames[time]["servers"][name];
-        console.log(state);
+	// add logic to parse out ".LOCKED"
+	// to capture actual server state
+	var n = state.split(".");
+	state = n[0];
+	console.log(state);
         switch(state) {
         case "PRIMARY":
 	    primary(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
@@ -63,6 +67,10 @@ render = function(time) {
 	    break;
         }
 
+	// add lock, if necessary
+	if (n.length == 2) {
+	    lock(servers[name]["x"], servers[name]["y"], servers[name]["r"]);
+	}
         xvals[count] = servers[name]["x"];
         yvals[count] = servers[name]["y"];
         count++;
