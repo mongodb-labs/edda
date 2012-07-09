@@ -42,7 +42,7 @@ def process(msg, date):
        "date" : date,
        "type" : "reconfig",
        "info" : {
-          "state_code" : messagetype
+          "server" : self
        }
        "oritinal_message" : msg
     }"""
@@ -54,6 +54,6 @@ def process(msg, date):
     doc["date"] = date
     doc["type"] = "re_sync"
     doc["info"] = {}
-    doc["original_message"] = msg
+    doc["info"]["server"] = "self"
 
     return doc
