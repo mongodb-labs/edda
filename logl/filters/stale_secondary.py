@@ -41,8 +41,6 @@ def process(msg, date):
        "date" : date,
        "type" : "stale",
        "info" : {
-          "state_code" : messagetype
-          "state" : "STALE"
           "server" : host:port
        }
        "oritinal_message" : msg
