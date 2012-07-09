@@ -61,4 +61,5 @@ def check_state(message, server):
     assert doc["type"] == "sync"
     assert doc["info"]["subtype"] == "reSyncing"
     #print 'Server number is: *{0}*, testing against, *{1}*'.format(doc["info"]["server"], server)
-    assert doc["info"]["server"] == server
+    assert doc["info"]["sync_server"] == server
+    assert doc["info"]["server"] == "self"
