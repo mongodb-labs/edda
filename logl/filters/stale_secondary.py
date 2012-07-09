@@ -39,7 +39,7 @@ def process(msg, date):
     processes the line and creates a document for it.
     document = {
        "date" : date,
-       "type" : "conn",
+       "type" : "stale",
        "info" : {
           "state_code" : messagetype
           "state" : "STALE"
