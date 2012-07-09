@@ -55,7 +55,7 @@ generate_coords = function(count, names) {
             r *= 2;
         r = 200;
         xVal = (r * Math.cos(start_angle * (Math.PI)/180)) + centerw;
-	yVal = (r * Math.sin(start_angle * (Math.PI)/180)) + centerh;
+        yVal = (r * Math.sin(start_angle * (Math.PI)/180)) + centerh;
 
         servers[names[i]] = { "x" : xVal, "y" : yVal, "r" : 360/(count*1.5), "on" : false, "type" : "primary"};
         start_angle += 360/count;
