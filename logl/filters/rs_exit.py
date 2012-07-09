@@ -39,8 +39,9 @@ def process(msg, date):
        "type" : "exit",
        "info" : {
           "state" : state
+          "server": "self"
        }
-       "oritinal_message" : msg
+       "oritinal_message" : msg,
        "exit_message" : exit_message
     }"""
 
@@ -63,6 +64,6 @@ def process(msg, date):
         doc["exit_message"] = msg[start + 11: len(msg)]
     elif(messagetype == 2):
         doc["exit_message"] = "dbexit"
-
+    doc["info"]["server"] = "self"
     #Has the member begun syncing to a different place
     return doc

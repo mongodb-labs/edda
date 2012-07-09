@@ -45,5 +45,5 @@ def check_state(message, code, date):
     assert doc
     assert doc["type"] == "exit"
     assert doc["original_message"] == message
-    assert doc["info"]["state_code"] == code
+    assert doc["info"]["server"] == "self"
     #print 'Server number is: *{0}*, testing against, *{1}*'.format(doc["info"]["server"], server)
