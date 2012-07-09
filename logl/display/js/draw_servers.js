@@ -208,6 +208,10 @@ unknown = function(x, y, r, ctx) {
     ctx.fillText("?", x - r/3, y + r/3);
 };
 
+lock = function(x, y, r, ctx) {
+    // draw a lock over a locked server
+};
+
 crown = function(x, y, w, h, ctx) {
     // draw a crown with center spike at (x, y)
     // with width w and height h
