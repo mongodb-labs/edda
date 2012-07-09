@@ -44,8 +44,7 @@ function canvases_and_contexts() {
 // set up mouse-over functionality
 function mouse_over_setup() {
     canvases["message"].addEventListener("mousemove", on_canvas_mouseover, false);
-};
-
+}
 
 
 // set up display-related things from frames
@@ -78,7 +77,7 @@ function visual_setup() {
     // render first frame
     render("0");
 
-};
+}
 
 
 // set up slider functionality
@@ -88,10 +87,10 @@ function time_setup(max_time) {
         render(ui.value);
         document.getElementById("timestamp").innerHTML = frames[ui.value]["date"];
         }});
-    $("#slider").slider( "option", "min", 0 );
-    $("#slider").slider( "option", "max", max_time );
-    $("#slider").slider( "option", "step", 1 );
-};
+    //$("#slider").slider( "option", "min", 0 );
+    //$("#slider").slider( "option", "max", max_time );
+    $("#slider").slider( "option", "step", 0.5 );
+}
 
 
 // define .size function for object
