@@ -32,32 +32,35 @@ render = function(time) {
         console.log(state);
         switch(state) {
         case "PRIMARY":
-        primary(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
-        break;
+	    primary(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+	    break;
         case "SECONDARY":
-        secondary(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
-        break;
+	    secondary(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+	    break;
         case "ARBITER":
-        arbiter(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
-        break;
+	    arbiter(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+	    break;
         case "DOWN":
-        down(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
-        break;
+	    down(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+	    break;
         case "RECOVERING":
-        recovering(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
-        break;
+	    recovering(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+	    break;
         case "ROLLBACK":
-        rollback(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
-        break;
+	    rollback(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+	    break;
         case "FATAL":
-        fatal(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
-        break;
+	    fatal(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+	    break;
         case "UNKNOWN":
-        unknown(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
-        break;
+	    unknown(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+	    break;
+	case "UNDISCOVERED":
+	    undiscovered(servers[name]["x"], servers[name]["y"], servers["name"]["r"], contexts["server"]);
+	    break;
         case "REMOVED":
-        removed(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
-        break;
+	    removed(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+	    break;
         }
 
         xvals[count] = servers[name]["x"];
