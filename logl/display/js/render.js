@@ -20,42 +20,57 @@ render = function(time) {
     // check that there exists a corresponding frame
     if (frames[time]) {
 
-	// wipe server layer and draw all servers
-	canvases["server"].width = canvases["server"].width;
+    // wipe server layer and draw all servers
+    canvases["server"].width = canvases["server"].width;
+    var first = false;
+    var prevx, prevy;
+    var count = 0;
+    var xvals = [], yvals = [];
 
-	for (var name in frames[time]["servers"]) {
-	    var state = frames[time]["servers"][name];
-	    console.log(state);
-	    switch(state) {
-	    case "PRIMARY":
-		primary(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
-		break;
-	    case "SECONDARY":
-		secondary(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
-		break;
-	    case "ARBITER":
-		arbiter(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
-		break;
-	    case "DOWN":
-		down(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
-		break;
-	    case "RECOVERING":
-		recovering(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
-		break;
-	    case "ROLLBACK":
-		rollback(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
-		break;
-	    case "FATAL":
-		fatal(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
-		break;
-	    case "UNKNOWN":
-		unknown(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
-		break;
-	    case "REMOVED":
-		removed(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
-		break;
-	    }
-	}
+    for (var name in frames[time]["servers"]) {
+        var state = frames[time]["servers"][name];
+        console.log(state);
+        switch(state) {
+        case "PRIMARY":
+        primary(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+        break;
+        case "SECONDARY":
+        secondary(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+        break;
+        case "ARBITER":
+        arbiter(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+        break;
+        case "DOWN":
+        down(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+        break;
+        case "RECOVERING":
+        recovering(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+        break;
+        case "ROLLBACK":
+        rollback(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+        break;
+        case "FATAL":
+        fatal(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+        break;
+        case "UNKNOWN":
+        unknown(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+        break;
+        case "REMOVED":
+        removed(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+        break;
+        }
+
+        xvals[count] = servers[name]["x"];
+        yvals[count] = servers[name]["y"];
+        count++;
+    }
+    var xvals2 = xvals, yvals2 = yvals;
+    for(var i = 0; i < count; i++) {
+        for(var j = 0; j < count; j++) {
+            one_line(xvals[i], yvals[i], xvals2[j], yvals2[j], contexts["arrow"]);
+        }
+    }
+
 
     }
 };
