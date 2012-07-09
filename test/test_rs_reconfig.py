@@ -50,3 +50,4 @@ def check_state(message, code, date, server):
     assert doc["date"] == date
     assert doc["type"] == "re_sync"
     assert doc["original_message"] == message
+    assert doc["info"]["server"] == "self"
