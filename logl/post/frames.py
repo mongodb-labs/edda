@@ -65,24 +65,16 @@ def generate_frames(unsorted_events, db, collName):
     s_count = len(servers)
 
     for e in events:
-        frame = {}
+        frame = new_frame(servers)
         # fill in various fields
-        frame["server_count"] = s_count
         frame["date"] = str(e["date"])
         frame["summary"] = e["summary"]
         # see what data we can glean from the last frame
         if last_frame:
-            frame["servers"] = last_frame["servers"]
-            frame["links"] = last_frame["links"]
-            frame["users"] = last_frame["users"]
-            frame["syncs"] = last_frame["syncs"]
-        else:
-            for server in servers:
-                frame["servers"][server] = "UNDISCOVERED"
-                frame["links"] = {}
-                frame["syncs"] = {}
-                frame["users"] = {}
-                frame["servers"] = {}
+            frame["servers"] = deepcopy(last_frame["servers"])
+            frame["links"] = deepcopy(last_frame["links"])
+            frame["users"] = deepcopy(last_frame["users"])
+            frame["syncs"] = deepcopy(last_frame["syncs"])
         frame = info_by_type(frame, event)
         frame = witnesses_dissenters(frame, event)
         last_frame = frame
@@ -91,7 +83,27 @@ def generate_frames(unsorted_events, db, collName):
     return frames
 
 
-def witnesses_dissenters(frame, e):
+def new_frame(servers):
+    """Given a list of servers, generates an empty frame
+    with no links, syncs, users, or broken_links, and
+    all servers set to UNDISCOVERED.  Does not
+    generate 'summary' or 'date' field"""
+    f = {}
+    f["server_count"] = len(servers)
+    f["flag"] = False
+    f["links"] = {}
+    f["broken_links"] = {}
+    f["syncs"] = {}
+    f["users"] = {}
+    for s in servers:
+        f["servers"][s] = "UNDISCOVERED"
+        f["links"][s] = []
+        f["broken_links"][s] = []
+        f["users"][s] = []
+        f["syncs"][s] = []
+    return f
+
+
     """Using the witnesses and dissenters
     lists in event e, determine links that should
     exist in frame, and if this frame should be flagged"""
