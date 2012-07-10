@@ -27,21 +27,18 @@ import logging
 # witnesses : (list of server_nums)
 # dissenters : (list of server_nums)
 # flag : (something conflicted about this view of the world? boolean)
-# servers: {
-       # server : (state as string)...
-# }
-# links: {
-       # server : [ list of servers ]
-# }
-# broken_links: {
-       # server : [ list of servers ]
-# }
-# syncs: {
-       # server : [ list of servers ]
-# }
-# users: {
-       # server : [ list of users ]
-# }
+# servers: [
+       # name : (state, string)...
+# ]
+# links: [
+       # from_1 : to_1...
+# ]
+# syncs: [
+       # from_1 : to_1...
+# ]
+# users: [
+       # from_1 : to_1...
+# ]
 
 
 def generate_frames(unsorted_events, db, collName):
@@ -108,25 +105,36 @@ def witnesses_dissenters(frame, e):
     return frame
 
 
-def info_by_type(frame, e):
+
+def info_by_type(f, e):
     # add in information from this event
     # by type:
     if e["type"] == "status":
-        frame["servers"][e["target"]] = e["state"]
+        f["servers"][e["target"]] = e["state"]
+        # if server went down, change links and syncs
+        if (e["state"] == "DOWN" or
+            e["state"] == "REMOVED" or
+            e["state"] == "FATAL"):
+            f = break_links(e["target"], f)
+
     elif e["type"] == "reconfig":
         # nothing to do for a reconfig?
         pass
     elif e["type"] == "new_conn":
-        frame["users"][e["conn_IP"]] = e["target"]
+        if not e["conn_IP"] in f["users"][e["target"]]:
+            f["users"][e["target"]].append(e["conn_IP"])
     elif e["type"] == "end_conn":
-        frame["users"][e["conn_IP"]] = None
+        if e["conn_IP"] in f["users"][e["target"]]:
+            f["users"][e["target"]].remove(e["conn_IP"])
     elif e["type"] == "sync":
-        frame["syncs"][e["target"]] = e["sync_to"]
+        if not e["sync_to"] in f["syncs"][e["target"]]:
+            f["syncs"][e["target"]].append(e["sync_to"])
     elif e["type"] == "exit":
-        frame["servers"][e["target"]] == "DOWN"
+        f["servers"][e["target"]] == "DOWN"
+        f = break_links(e["target"], f)
     elif e["type"] == "lock":
-        frame["servers"][e["target"]] += ".LOCKED"
+        f["servers"][e["target"]] += ".LOCKED"
     elif e["type"] == "unlock":
-        s = string.find(frame["servers"][e["target"]], ".LOCKED")
-        frame["servers"][e["target"]] = frame["servers"][e["target"][:s]
-    return frame
+        s = string.find(f["servers"][e["target"]], ".LOCKED")
+        f["servers"][e["target"]] = f["servers"][e["target"][:s]]
+    return f
