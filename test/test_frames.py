@@ -77,7 +77,7 @@ def new_frame(servers):
 
 def test_info_by_type_status():
     """Test method on status type event"""
-    e = generate_event("3", "status", {"state": "PRIMARY"}, "3", None)
+    e = generate_event("3", "status", {"state": "PRIMARY"}, ["3"], None)
     f = info_by_type(new_frame(["3"]), e)
     assert f
     assert f["servers"]["3"] == "PRIMARY"
@@ -85,7 +85,7 @@ def test_info_by_type_status():
 
 def test_info_by_type_reconfig():
     """Test method on reconfig type event"""
-    e = generate_event("1", "reconfig", None, "1", None)
+    e = generate_event("1", "reconfig", None, ["1"], None)
     f = info_by_type(new_frame(["1"]), e)
     assert f
 
@@ -94,7 +94,7 @@ def test_info_by_type_new_conn():
     """Test method on new_conn type event"""
     e = generate_event("1", "new_conn",
                        {"conn_IP": "1.2.3.4",
-                        "conn_number": 14}, "1", None)
+                        "conn_number": 14}, ["1"], None)
     f = info_by_type(new_frame(["1"]), e)
     assert f
     assert f["users"]["1"]
@@ -107,7 +107,7 @@ def test_info_by_type_end_conn():
     # first, when there was no user stored
     e = generate_event("1", "end_conn",
                        {"conn_IP": "1.2.3.4",
-                        "conn_number": 14}, "1", None)
+                        "conn_number": 14}, ["1"], None)
     f = info_by_type(new_frame(["1"]), e)
     assert f
     assert not f["users"]["1"]
@@ -121,12 +121,44 @@ def test_info_by_type_end_conn():
 
 def test_info_by_type_sync():
     """Test method on sync type event"""
-    pass
+    e = generate_event("4", "sync", {"sync_to":"3"}, ["4"], None)
+    f = info_by_type(new_frame(["4"]), e)
+    assert f
+    assert f["syncs"]["4"]
+    assert len(f["syncs"]["4"]) == 1
+    assert "3" in f["syncs"]["4"]
 
 
 def test_info_by_type_exit():
     """Test method on exit type event"""
-    pass
+    # no links established
+    e = generate_event("3", "status", {"state": "DOWN"}, ["3"], None)
+    f = info_by_type(new_frame(["3"]), e)
+    assert f
+    assert not f["links"]["3"]
+    assert not f["broken_links"]["3"]
+    # only broken links established
+    f = new_frame(["3"])
+    f["broken_links"]["3"] = ["1", "2"]
+    f = info_by_type(f, e)
+    assert f
+    assert not f["links"]["3"]
+    assert f["broken_links"]["3"]
+    assert len(f["broken_links"]["3"]) == 2
+    assert "1" in f["broken_links"]["3"]
+    assert "2" in f["broken_links"]["3"]
+    # links and syncs established
+    f = new_frame(["3"])
+    f["links"]["3"] = ["1", "2"]
+    f["syncs"]["3"] = ["4"]
+    f = info_by_type(f, e)
+    assert f
+    assert not f["links"]["3"]
+    assert not f["syncs"]["3"]
+    assert f["broken_links"]["3"]
+    assert len(f["broken_links"]["3"]) == 2
+    assert "1" in f["broken_links"]["3"]
+    assert "2" in f["broken_links"]["3"]
 
 
 def test_info_by_type_lock():
@@ -151,6 +183,12 @@ def test_info_by_type_down_server():
 
 
 #----------------------------
+# test break_links()
+#----------------------------
+
+
+
+#----------------------------
 # test witnesses_dissenters()
 #----------------------------
 
@@ -163,7 +201,25 @@ def test_w_d_no_dissenters():
 def test_w_d_equal_w_d():
     """Test method an an entry with an
     equal number of witnesses and dissenters"""
-    pass
+    e = generate_event("1", "status", {"state":"ARBITER"}, ["1", "2"], ["3", "4"])
+    f = new_frame(["1", "2", "3", "4"])
+    f = witnesses_dissenters(f, e)
+    assert f
+    # assert only proper links were added, to target's queue
+    assert f["links"]["1"]
+    assert len(f["links"]["1"]) == 1
+    assert "2" in f["links"]["1"]
+    assert not "1" in f["links"]["1"]
+    assert not "3" in f["links"]["1"]
+    assert not "4" in f["links"]["1"]
+    assert not f["links"]["2"]
+    assert not f["links"]["3"]
+    assert not f["links"]["4"]
+    # make sure no broken links were wrongly added
+    assert not f["broken_links"]["1"]
+    assert not f["broken_links"]["2"]
+    assert not f["broken_links"]["3"]
+    assert not f["broken_links"]["4"]
 
 
 def test_w_d_more_witnesses():
