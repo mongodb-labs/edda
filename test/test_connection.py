@@ -20,16 +20,57 @@ from copy import deepcopy
 from nose.plugins.skip import Skip, SkipTest
 
 
-def test_send_to_js():
+def dont_run_send_to_js():
     """Test the send_to_js() method"""
     #raise SkipTest
     send_to_js(generate_msg())
+
+
+def test_sending_one_frame():
+    frame = {}
+    servers = ['sam', 'kaushal', 'kristina']
+    frame = new_frame(servers)
+    frame['links']['kaushal'] = ['kristina']
+    frame["links"]['sam'] = ['kaushal', 'kristina']
+    
+    frame["servers"]["sam"] = "PRIMARY"
+    frame["servers"]["kaushal"] = "SECONDARY"
+    frame["servers"]["kristina"] = "DOWN"
+    frames = {}
+    frames["0"] = frame
+    send_to_js(frames)
+
+
+def new_frame(servers):
+    """Generate a new frame, with no links, broken_links,
+    syncs, or users, and all servers set to UNDISCOVERED
+    does not set the 'summary' field"""
+    f = {}
+    f["date"] = str(datetime.now())
+    f["server_count"] = len(servers)
+    f["witnesses"] = []
+    f["dissenters"] = []
+    f["flag"] = False
+    f["links"] = {}
+    f["broken_links"] = {}
+    f["syncs"] = {}
+    f["users"] = {}
+    f["servers"] = {}
+    for s in servers:
+        f["servers"][s] = "UNDISCOVERED"
+        f["links"][s] = []
+        f["broken_links"][s] = []
+        f["users"][s] = []
+        f["syncs"][s] = []
+    return f
 
 
 def generate_msg():
     # these are sample frames, just for testing
     frames = {}
     frame = {}
+
+
     # first frame
     frame["time"] = str(datetime.now())
     frame["server_count"] = 15
@@ -67,30 +108,30 @@ def generate_msg():
     frame["servers"]["notepad@home:27017"] = "SECONDARY"
     frame["servers"]["laptop@home:27017"] = "ROLLBACK"
     frame["servers"]["p@home:27017"] = "DOWN"
-    frames["0"] = deepcopy(frame)
-    frames["1"] = deepcopy(frame1)
-    frames["2"] = deepcopy(frame2)
-    frames["3"] = deepcopy(frame3)
-    frames["4"] = deepcopy(frame)
-    frames["5"] = deepcopy(frame1)
-    frames["6"] = deepcopy(frame2)
-    frames["7"] = deepcopy(frame3)
-    frames["8"] = deepcopy(frame)
-    frames["9"] = deepcopy(frame1)
-    frames["10"] = deepcopy(frame2)
-    frames["11"] = deepcopy(frame3)
-    frames["12"] = deepcopy(frame)
-    frames["13"] = deepcopy(frame1)
-    frames["14"] = deepcopy(frame2)
-    frames["15"] = deepcopy(frame3)
-    frames["16"] = deepcopy(frame)
-    frames["17"] = deepcopy(frame1)
-    frames["18"] = deepcopy(frame2)
-    frames["19"] = deepcopy(frame3)
-    frames["20"] = deepcopy(frame)
+    frames["0"] = frame
+    frames["1"] = frame1
+    frames["2"] = frame2
+    frames["3"] = frame3
+    frames["4"] = frame
+    frames["5"] = frame1
+    frames["6"] = frame2
+    frames["7"] = frame3
+    frames["8"] = frame
+    frames["9"] = frame1
+    frames["10"] = frame2
+    frames["11"] = frame3
+    frames["12"] = frame
+    frames["13"] = frame1
+    frames["14"] = frame2
+    frames["15"] = frame3
+    frames["16"] = frame
+    frames["17"] = frame1
+    frames["18"] = frame2
+    frames["19"] = frame3
+    frames["20"] = frame
     count = 0
     while True:
-        if count < 21:
+        if count < 4:
             #sleep(1)
             frames[str(count)]["date"] = str(datetime.now())
             count += 1
