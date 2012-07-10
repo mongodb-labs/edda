@@ -58,6 +58,18 @@ def process(msg, date):
     return doc
 
 
+def capture_address(msg):
+    """Given a message, extracts and returns the address,
+    be it a hostname or an IP address, in the form
+    'address:port#'"""
+    # capture the address, be it hostname or IP
+    pattern = re.compile("\S+:[0-9]{1,5}")
+    m = pattern.search(msg[20:]) # skip date field
+    if not m:
+        return None
+    return m.group(0)
+
+
 def new_conn(msg, doc):
     """this server has accepted a new connection."""
     doc["info"]["subtype"] = "new_conn"
