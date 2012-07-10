@@ -38,7 +38,6 @@ function canvases_and_contexts() {
     canvases[layers[i]] = document.getElementById(layers[i] + "_layer");
     contexts[layers[i]] = canvases[layers[i]].getContext("2d");
     }
-    contexts["link"].lineWidth = 10;
 }
 
 
@@ -90,7 +89,7 @@ function time_setup(max_time) {
         }});
     //$("#slider").slider( "option", "min", 0 );
     //$("#slider").slider( "option", "max", max_time );
-    $("#slider").slider( "option", "step", 0.5 );
+    $("#slider").slider( "option", "step", 1 );
 }
 
 
