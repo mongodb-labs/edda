@@ -104,20 +104,36 @@ def new_frame(servers):
     return f
 
 
+def witnesses_dissenters(f, e):
     """Using the witnesses and dissenters
     lists in event e, determine links that should
     exist in frame, and if this frame should be flagged"""
-    frame["witnesses"] = e["witnesses"]
-    frame["dissenters"] = e["dissenters"]
+    f["witnesses"] = e["witnesses"]
+    f["dissenters"] = e["dissenters"]
     if e["witnesses"] <= e["dissenters"]:
-        frame["flag"] = True
+        f["flag"] = True
     # a witness means a new link
     for w in e["witnesses"]:
-        frame["links"][w] = e["target"]
+        if (not e["target"] in f["links"][w] and
+            not w in f["links"][e["target"]]):
+            f["links"][w].append(e["target"])
+        # fix any broken links
+        if w in f["broken_links"][e["target"]]:
+            f["broken_links"][e["target"]].remove(w)
+        if e["target"] in f["broken_links"][w]:
+            f["broken_links"][w].remove(e["target"])
     # a dissenter means that link should be removed
     for d in e["dissenters"]:
-        frame["links"][d] = []
-    return frame
+        if e["target"] in f["links"][d]:
+            f["links"][d].remove(e["target"])
+        if d in f["links"][e["target"]]:
+            f["links"][e["target"]].remove(d)
+        # add broken link
+        if (not e["target"] in f["broken_links"][d] and
+            not d in f["broken_links"][e["target"]]):
+            f["broken_links"][d].append(e["target"])
+    return f
+
 
 def break_links(me, f):
     # find my links and make them broken links
