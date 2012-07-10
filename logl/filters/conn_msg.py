@@ -29,6 +29,19 @@ def criteria(msg):
 
 
 def process(msg, date):
+    """Turn this message into a properly formatted
+    connection type document:
+    doc = {
+       "type" : "conn"
+       "date" : datetime
+       "msg"  : msg
+       "info" : {
+              "subtype"   : "new_conn" or "end_conn"
+              "conn_addr" : "addr:port"
+              "conn_num"  : int
+              "server"    : "self"
+              }
+    }"""
     result = criteria(msg)
     if result < 0:
         return None
