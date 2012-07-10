@@ -30,6 +30,49 @@ def is_IP(s):
         return False
     return True
 
+# put this somewhere else, too!!
+def assign_address(num, addr, servers):
+    """Given this num and addr, sees if there exists a document
+    in the .servers collection for that server.  If so, adds addr, if
+    not already present, to the document.  If not, creates a new doc
+    for this server and saves to the db."""
+    # in the case that two different addresses are found for the
+    # same server, this chooses to log a warning and ignore
+    # all but the first address found
+    # store all fields as strings, including server_num
+    # server doc = {
+    #    "server_num" : int
+    #    "server_name" : hostname
+    #    "server_IP" : IP
+    #    }
+    logger = logging.getLogger(__name__)
+    num = str(num)
+    addr = str(addr)
+    doc = servers.find_one({"server_num": num})
+    if not doc:
+        logger.debug("No doc found for this server, making one")
+        doc = {}
+        doc["server_num"] = num
+        doc["server_name"] = "unknown"
+        doc["server_IP"] = "unknown"
+    else:
+        logger.debug("Doc already exists for server {0}".format(num))
+    if addr == num:
+        pass
+    elif is_IP(addr):
+        if doc["server_IP"] != "unknown" and doc["server_IP"] != addr:
+            logger.warning("conflicting IPs found for server {0}:".format(num))
+            logger.warning("\n{0}\n{1}".format(addr, doc["server_IP"]))
+        else:
+            doc["server_IP"] = addr
+    else:
+        if doc["server_name"] != "unknown" and doc["server_name"] != addr:
+            logger.warning("conflicting hostnames found for server {0}:".format(num))
+            logger.warning("\n{0}\n{1}".format(addr, doc["server_name"]))
+        else:
+            doc["server_name"] = addr
+    servers.save(doc)
+
 
 def event_matchup(db, collName):
     """This method sorts through the db's entries to
@@ -46,7 +89,7 @@ def event_matchup(db, collName):
         "summary"    = a mnemonic summary of the event
     (event-specific additional fields:)
         "sync_to"    = for sync type messages
-        "conn_IP"    = for new_conn or end_conn messages
+        "conn_addr"    = for new_conn or end_conn messages
         "conn_num"   = for new_conn or end_conn messages
         "state"      = for status type messages (label, not code)
         }
@@ -71,7 +114,8 @@ def event_matchup(db, collName):
     entries = organize_servers(db, collName)
     events = []
 
-    server_nums = db[collName + ".servers"].distinct({"server_num"})
+    server_coll = db[collName + ".servers"]
+    server_nums = server_coll.distinct("server_num")
 
     # make events
     while(True):
@@ -114,10 +158,28 @@ def next_event(servers, server_entries, db, collName):
 
     logger.debug("found first from server {0}".format(first["origin_server"]))
 
+    servers_coll = db[collName + ".servers"]
     # define event fields
-    event["target"] = first["info"]["server"]
-    if event["target"] == "self":
-        event["target"] = first["origin_server"] # meh
+    if first["info"]["server"] == "self":
+        event["target"] = str(first["origin_server"]) # meh
+    else:
+        # there is definitely a better way to write this
+        # feel like we might have a better method somewhere to handle this?
+        # get the server number
+        num = None
+        if is_IP(first["info"]["server"]):
+            num = servers_coll.find_one({"server_IP": first["info"]["server"]})
+        # or, if one does not exist for this server,
+        else:
+            num = servers_coll.find_one({"server_addr": first["info"]["server"]})
+        if not num:
+            # make sure that we do not overwrite an existing server
+            for i in range(1, 50):
+                if not servers_coll.find_one({"server_num":i}):
+                    assign_address(str(i), first["info"]["server"], servers_coll)
+                    num = i
+                    break
+        event["target"] = str(num)
     event["type"] = first["type"]
     event["date"] = first["date"]
     if event["type"] == "status":
@@ -130,8 +192,9 @@ def next_event(servers, server_entries, db, collName):
         logger.debug("handling a connection message")
         event["type"] = first["info"]["subtype"]
         event["witnesses"].append(first["origin_server"])
-        event["conn_IP"] = first["info"]["server"]
+        event["conn_addr"] = first["info"]["conn_addr"]
         event["target"] = first["origin_server"]
+        print first["info"]
         event["conn_number"] = first["info"]["conn_number"]
         event["summary"] = generate_summary(event)
         return event
@@ -143,6 +206,7 @@ def next_event(servers, server_entries, db, collName):
 
     # sync messages, also
     if first["type"] == "sync":
+        event["sync_to"] = first["info"]["sync_server"]
         pass
 
     # find corresponding messages
@@ -284,15 +348,14 @@ def resolve_dissenters(events):
                         logger.debug("match found, merging events")
                         logger.debug("skew is {0}".format(a["date"] - b["date"]))
                         events.remove(a)
-                        print "a:\n{0}\n".format(events)
-                        print "b:\n{0}\n".format(events_b)
                         # resolve witnesses and dissenters lists
                         for wit_a in a["witnesses"]:
                             b["witnesses"].append(wit_a)
                             if wit_a in b["dissenters"]:
                                 logger.debug("Removing {0} from b's dissenters".format(wit_a))
                                 b["dissenters"].remove(wit_a)
-                        continue
+                        # we've already found a match, stop looking
+                        break
                     logger.debug("match not found with this event")
                     continue
         i += 1
@@ -320,7 +383,7 @@ def generate_summary(event):
             summary += " opened connection #"
         elif event["type"] == "end_conn":
             summary += " closed connection #"
-        summary += event["conn_number"] + " to user " + event["conn_IP"]
+        summary += event["conn_number"] + " to user " + event["conn_addr"]
 
     # for exit messages
     if event["type"] == "exit":

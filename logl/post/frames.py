@@ -15,6 +15,7 @@
 #!/usr/bin/env python
 from operator import itemgetter
 from datetime import datetime
+from copy import deepcopy
 import pymongo
 import logging
 
@@ -22,7 +23,6 @@ import logging
 # generates will include the following information:
 
 # date : (string)
-# server_count : (int)
 # summary : (string)
 # witnesses : (list of server_nums)
 # dissenters : (list of server_nums)
@@ -61,41 +61,43 @@ def generate_frames(unsorted_events, db, collName):
     events = sorted(unsorted_events, key=itemgetter("date"))
 
     # get all servers
-    servers = list(db[collName + ".servers"].find())
-    s_count = len(servers)
+    servers = list(db[collName + ".servers"].distinct("server_num"))
 
     for e in events:
-        frame = new_frame(servers)
+        f = new_frame(servers)
         # fill in various fields
-        frame["date"] = str(e["date"])
-        frame["summary"] = e["summary"]
+        f["date"] = str(e["date"])
+        f["summary"] = e["summary"]
         # see what data we can glean from the last frame
         if last_frame:
-            frame["servers"] = deepcopy(last_frame["servers"])
-            frame["links"] = deepcopy(last_frame["links"])
-            frame["users"] = deepcopy(last_frame["users"])
-            frame["syncs"] = deepcopy(last_frame["syncs"])
-        frame = info_by_type(frame, event)
-        frame = witnesses_dissenters(frame, event)
-        last_frame = frame
-        frames[str(i)] = frame
+            f["servers"] = deepcopy(last_frame["servers"])
+            f["links"] = deepcopy(last_frame["links"])
+            f["users"] = deepcopy(last_frame["users"])
+            f["syncs"] = deepcopy(last_frame["syncs"])
+        f = info_by_type(f, e)
+        f = witnesses_dissenters(f, e)
+        last_frame = f
+        frames[str(i)] = f
         i += 1
     return frames
 
 
-def new_frame(servers):
+def new_frame(server_nums):
     """Given a list of servers, generates an empty frame
     with no links, syncs, users, or broken_links, and
     all servers set to UNDISCOVERED.  Does not
     generate 'summary' or 'date' field"""
     f = {}
-    f["server_count"] = len(servers)
+    f["server_count"] = len(server_nums)
     f["flag"] = False
     f["links"] = {}
     f["broken_links"] = {}
     f["syncs"] = {}
     f["users"] = {}
-    for s in servers:
+    f["servers"] = {}
+    for s in server_nums:
+        # ensure servers are given as strings
+        s = str(s)
         f["servers"][s] = "UNDISCOVERED"
         f["links"][s] = []
         f["broken_links"][s] = []
@@ -167,32 +169,34 @@ def break_links(me, f):
 def info_by_type(f, e):
     # add in information from this event
     # by type:
+    # make sure it is a string!
+    s = str(e["target"])
     if e["type"] == "status":
-        f["servers"][e["target"]] = e["state"]
+        f["servers"][s] = e["state"]
         # if server went down, change links and syncs
         if (e["state"] == "DOWN" or
             e["state"] == "REMOVED" or
             e["state"] == "FATAL"):
-            f = break_links(e["target"], f)
+            f = break_links(s, f)
 
     elif e["type"] == "reconfig":
         # nothing to do for a reconfig?
         pass
     elif e["type"] == "new_conn":
-        if not e["conn_IP"] in f["users"][e["target"]]:
-            f["users"][e["target"]].append(e["conn_IP"])
+        if not e["conn_addr"] in f["users"][s]:
+            f["users"][s].append(e["conn_addr"])
     elif e["type"] == "end_conn":
-        if e["conn_IP"] in f["users"][e["target"]]:
-            f["users"][e["target"]].remove(e["conn_IP"])
+        if e["conn_addr"] in f["users"][s]:
+            f["users"][s].remove(e["conn_addr"])
     elif e["type"] == "sync":
-        if not e["sync_to"] in f["syncs"][e["target"]]:
-            f["syncs"][e["target"]].append(e["sync_to"])
+        if not e["sync_to"] in f["syncs"][s]:
+            f["syncs"][s].append(e["sync_to"])
     elif e["type"] == "exit":
-        f["servers"][e["target"]] == "DOWN"
-        f = break_links(e["target"], f)
+        f["servers"][s] == "DOWN"
+        f = break_links(s, f)
     elif e["type"] == "lock":
-        f["servers"][e["target"]] += ".LOCKED"
+        f["servers"][s] += ".LOCKED"
     elif e["type"] == "unlock":
-        s = string.find(f["servers"][e["target"]], ".LOCKED")
-        f["servers"][e["target"]] = f["servers"][e["target"][:s]]
+        n = string.find(f["servers"][s], ".LOCKED")
+        f["servers"][s] = f["servers"][s[:n]]
     return f
