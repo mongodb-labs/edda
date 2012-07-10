@@ -25,9 +25,6 @@ on_canvas_mouseover = function(e) {
 	diffX = x - servers[server]["x"];
 	diffY = y - servers[server]["y"];
 	distance = Math.sqrt(Math.pow(diffX,2) + Math.pow(diffY,2));
-	console.log("Distance is: %d", distance);
-	console.log("Xcenter: %d, Ycenter: %d", servers[server]["x"], servers[server]["y"]);
-	console.log("Xactual: %d, Yactual: %d", x, y);
 	// is it within radius?
 	if (distance <= servers[server]["r"]) {
 	    // check if that server is set to "true" for mouseover
