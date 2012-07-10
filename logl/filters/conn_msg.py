@@ -47,9 +47,9 @@ def process(msg, date):
         return None
     doc = {}
     doc["date"] = date
-    doc["type"] = "conn"
     doc["info"] = {}
     doc["msg"] = msg
+    doc["type"] = "conn"
 
     if result == 1:
         new_conn(msg, doc)
@@ -75,25 +75,12 @@ def new_conn(msg, doc):
     doc["info"]["subtype"] = "new_conn"
     logger = logging.getLogger(__name__)
 
-    # this very long regex recognizes legal IP addresses
-    pattern = re.compile("""
-        (([0|1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5])) # first part
-        (\.([0|1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5])){3} # second part
-    """, re.WHITESPACE)
-    m = pattern.search(msg)
-    if (m == None):
-        logger.debug("malformed new_conn message: no IP address found")
+    addr = capture_address(msg)
+    if not addr:
+        logger.warning("No hostname or IP found for this server")
         return None
-    host = m.group(0)
-
-    # isolate port number
-    pattern = re.compile(":[0-9]{1,5}")
-    n = pattern.search(msg[21:])
-    if n is None:
-        logger.debug("malformed new_conn message: no port number found")
-        return None
-    port = n.group(0)[1:]
-    doc["info"]["server"] = host + ":" + port
+    doc["info"]["server"] = "self"
+    doc["info"]["conn_addr"] = addr
 
     # isolate connection number
     pattern2 = re.compile("#[0-9]+")
@@ -113,30 +100,23 @@ def ended(msg, doc):
     doc["info"]["subtype"] = "end_conn"
     logger = logging.getLogger(__name__)
 
-    # This very long regex recognizes legal IP addresses
-    pattern = re.compile("(([0|1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))(\.([0|1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5])){3}")
-    m = pattern.search(msg)
-    if (m == None):
-        logger.debug("malformed new_conn message: no IP address found")
+    addr = capture_address(msg)
+    if not addr:
+        logger.warning("No hostname or IP found for this server")
         return None
-    host = m.group(0)
-
-    # isolate port number
-    pattern = re.compile(":[0-9]{1,5}")
-    n = pattern.search(msg[21:])
-    if n is None:
-        logger.debug("malformed new_conn message: no port number found")
-        return None
-    port = n.group(0)[1:]
-    doc["info"]["server"] = host + ":" + port
+    doc["info"]["server"] = "self"
+    doc["info"]["conn_addr"] = addr
 
     # isolate connection number
-    pattern2 = re.compile("#[0-9]+")
-    m = pattern2.search(msg)
+    pattern = re.compile("\[conn[0-9]+\]")
+    m = pattern.search(msg)
     if m is None:
-        logger.debug("malformed new_conn message: no connection number found")
+        logger.warning("malformed new_conn message: no connection number found")
         return None
-    doc["info"]["conn_number"] = m.group(0)[1:]
+    # do a second search for the actual number
+    pattern = re.compile("[0-9]+")
+    n = pattern.search(m.group(0))
+    doc["info"]["conn_number"] = n.group(0)
 
     debug = "Returning new doc for a message of type: initandlisten: new_conn"
     logger.debug(debug)
