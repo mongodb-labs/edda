@@ -34,19 +34,19 @@ generate_coords = function(count, names) {
     return;
     case 1:
     // one centered server
-    servers[names[0]] = { "x" : w/2, "y" : h/2, "r" : 50, "on" : false, "type" : "primary" };
+    servers[names[0]] = { "x" : w/2, "y" : h/2, "r" : 50, "on" : false, "type" : "UNDISCOVERED" };
     return;
     case 2:
     // two servers, one on either side
-    servers[names[0]] = {"x" : w/3, "y" : h/2, "r" : 50, "on" : false, "type" : "primary"};
-    servers[names[1]] = {"x" : (0.66)*w, "y" : h/2, "r" : 50, "on" : false, "type" : "primary"};
+    servers[names[0]] = {"x" : w/3, "y" : h/2, "r" : 50, "on" : false, "type" : "UNDISCOVERED"};
+    servers[names[1]] = {"x" : (0.66)*w, "y" : h/2, "r" : 50, "on" : false, "type" : "UNDISCOVERED"};
     return;
     }
 
     if (count % 2 === 0)
-        start_angle = 45;
+        start_angle = -45;
     else
-        start_angle = 90;
+        start_angle = -90;
 
     for (var i = 0; i < count; i++) {
         if (i % 2 === 0)
@@ -57,7 +57,7 @@ generate_coords = function(count, names) {
         xVal = (r * Math.cos(start_angle * (Math.PI)/180)) + centerw;
         yVal = (r * Math.sin(start_angle * (Math.PI)/180)) + centerh;
 
-        servers[names[i]] = { "x" : xVal, "y" : yVal, "r" : 360/(count*2), "on" : false, "type" : "primary"};
+        servers[names[i]] = { "x" : xVal, "y" : yVal, "r" : 360/(count*2), "on" : false, "type" : "UNDISCOVERED"};
         start_angle += 360/count;
 
     }
