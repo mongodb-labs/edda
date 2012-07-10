@@ -27,6 +27,18 @@ render = function(time) {
     var count = 0;
     var xvals = [], yvals = [];
 
+    console.log(frames[time]["links"]);
+    for (var origin_server in frames[time]["links"]) {
+        console.log(origin_server);
+        console.log(frames[time]["links"][origin_server]);
+
+        var list = frames[time]["links"][origin_server];
+        console.log(list);
+        for (var i = 0; i < list.length; i++) {
+            one_arrow(servers[origin_server]["x"], servers[origin_server]["y"], servers[list[i]]["x"], servers[list[i]]["y"], contexts["arrow"]);
+        }
+    }
+
     for (var name in frames[time]["servers"]) {
         var state = frames[time]["servers"][name];
     // add logic to parse out ".LOCKED"
@@ -74,14 +86,14 @@ render = function(time) {
         xvals[count] = servers[name]["x"];
         yvals[count] = servers[name]["y"];
         count++;
-    }
+    }/*
     var xvals2 = xvals, yvals2 = yvals;
     for(var i = 0; i < count; i++) {
         for(var j = 0; j < count; j++) {
             if (xvals[i] != xvals[j])
-                one_arrow(xvals[i], yvals[i], xvals2[j], yvals2[j], contexts["link"]);
+                one_arrow(xvals[i], yvals[i], xvals2[j], yvals2[j], contexts["arrow"]);
         }
-    }
+    }*/
     //one_arrow(100, 100, 200, 200, contexts["arrow"]);
     //one_line(120, 100, 220, 200, contexts["link"]);
 
