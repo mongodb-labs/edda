@@ -19,6 +19,8 @@ import logging
 
 
 def criteria(msg):
+    """Determing if the given message is an instance
+    of a connection type message"""
     if string.find(msg, 'connection accepted') >= 0:
         return 1
     if string.find(msg, 'end connection') >= 0:
