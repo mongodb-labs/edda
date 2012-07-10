@@ -27,18 +27,21 @@ import logging
 # witnesses : (list of server_nums)
 # dissenters : (list of server_nums)
 # flag : (something conflicted about this view of the world? boolean)
-# servers: [
-       # name : (state, string)...
-# ]
-# links: [
-       # from_1 : to_1...
-# ]
-# syncs: [
-       # from_1 : to_1...
-# ]
-# users: [
-       # from_1 : to_1...
-# ]
+# servers: {
+       # server : (state as string)...
+# }
+# links: {
+       # server : [ list of servers ]
+# }
+# broken_links: {
+       # server : [ list of servers ]
+# }
+# syncs: {
+       # server : [ list of servers ]
+# }
+# users: {
+       # server : [ list of users ]
+# }
 
 
 def generate_frames(unsorted_events, db, collName):
