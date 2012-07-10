@@ -18,13 +18,6 @@ one_arrow = function(x1, y1, x2, y2, ctx) {
     dx = Math.abs(x2 - x1);
     dy = Math.abs(y2 - y1);
 
-    console.log("dx: ");
-    console.log(dx);
-    console.log("dy: ");
-    console.log(dy);
-
-    console.log("Original values: ");
-    console.log(x1, x2, y1, y2);
 
     cx = x1 + dx/2 - dy/4;
     cy = y1 + dy/2 + dx/4;
@@ -33,21 +26,12 @@ one_arrow = function(x1, y1, x2, y2, ctx) {
     //ctx.quadraticCurveTo(cx, cy, x2, y2);
 
     var h = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
-    console.log("h: ");
-    console.log(h);
-    var h_prime = 30.0000;
-    console.log("h_prime: ");
-    console.log(h_prime);
+    var h_prime = 32.0000;
     var ratio = h_prime / h;
-    console.log("ratio: ");
-    console.log(ratio);
     var x_difference, y_difference;
 
     x_difference = dx * ratio;
     y_difference = dy * ratio;
-
-    console.log("X, Y, Differences");
-    console.log(x_difference, y_difference);
 
 
     //There are 4 cases for the adjustments that need to be made. Arrows going in each diagonal dirrection.
@@ -83,11 +67,10 @@ one_arrow = function(x1, y1, x2, y2, ctx) {
             y2 += y_difference;
         }
     }
-    console.log("New values: ");
-    console.log(x1, x2, y1, y2);
 
     ctx.moveTo(x1, y1);
-    ctx.lineWidth = 2;
+    ctx.strokeStyle = "#3B1E0D";//3B1EOB
+    ctx.lineWidth = 1;
     ctx.lineTo(x2, y2);
     ctx.stroke();
 
