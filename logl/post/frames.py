@@ -113,10 +113,13 @@ def witnesses_dissenters(f, e):
     if e["witnesses"] <= e["dissenters"]:
         f["flag"] = True
     # a witness means a new link
+    # links are always added to the TARGET's queue.
     for w in e["witnesses"]:
+        if w == e["target"]:
+            continue
         if (not e["target"] in f["links"][w] and
             not w in f["links"][e["target"]]):
-            f["links"][w].append(e["target"])
+            f["links"][e["target"]].append(w)
         # fix any broken links
         if w in f["broken_links"][e["target"]]:
             f["broken_links"][e["target"]].remove(w)
@@ -126,12 +129,14 @@ def witnesses_dissenters(f, e):
     for d in e["dissenters"]:
         if e["target"] in f["links"][d]:
             f["links"][d].remove(e["target"])
+            f["broken_links"][e["target"]].append(d)
         if d in f["links"][e["target"]]:
             f["links"][e["target"]].remove(d)
-        # add broken link
-        if (not e["target"] in f["broken_links"][d] and
-            not d in f["broken_links"][e["target"]]):
-            f["broken_links"][d].append(e["target"])
+            f["broken_links"][e["target"]].append(d)
+        # add broken link only if link existed
+#        if (not e["target"] in f["broken_links"][d] and
+ #           not d in f["broken_links"][e["target"]]):
+ #           f["broken_links"][e["target"]].append(d)
     return f
 
 
