@@ -119,6 +119,28 @@ def new_frame(servers):
         frame["links"][d] = []
     return frame
 
+def break_links(me, f):
+    # find my links and make them broken links
+    for link in f["links"][me]:
+        f["broken_links"][me].append(link)
+    f["links"][me] = []
+    f["syncs"][me] = []
+    # find links that reference me and make them broken links
+    for s in f["servers"].keys():
+        if s != me:
+            continue
+        # remove links that reference me
+        for link in f["links"][s]:
+            if link == me:
+                f["links"][s].remove(link)
+                f["broken_links"][s].append(link)
+        # remove syncs that reference me
+        for sync in f["syncs"][s]:
+            if link == me:
+                f["syncs"][s].remove(link)
+    # remove all of my user connections
+    f["users"][me] = []
+    return f
 
 
 def info_by_type(f, e):
