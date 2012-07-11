@@ -12,11 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This module tracks requests from the server to lock or unlock its self from 
-    # writes. 
+# This module tracks requests from the server to lock or unlock its self from
+    # writes.
 
 import string
-
 
 # Mon Jul  2 10:00:11 [conn2] CMD fsync: sync:1 lock:1
 # Mon Jul  2 10:00:04 [conn2] command: unlock requested
