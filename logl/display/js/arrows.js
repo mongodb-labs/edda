@@ -74,16 +74,50 @@ one_arrow = function(x1, y1, x2, y2, ctx) {
     ctx.lineWidth = 3;
     ctx.lineTo(x2, y2);
     ctx.stroke();
+    draw_arrow_head(x1, x2, y1, y2, ctx);
+    //console.log("Drawing arrow head!");
 
-    /*
-    // adapted from http://stackoverflow.com/questions/808826/draw-arrow-on-canvas-tag
-    var headlen = 20;   // length of head in pixels
-    var angle = Math.atan2(y2 - y1,x2 - x1);
+    // Logic needs to be added here to generate arrow heads.
+    // I am thinking that I should take the angle between the to point and the from point, and then increment that arrow. 
+    // And use polar coordinates to draw a line to a point a certain distance away from the point and that certain arrow. 
+    // 30 degrees and 20-30 pixels should suffice.
+};
+
+draw_arrow_head = function (x1, x2, y1, y2, ctx) {
+     // adapted from http://stackoverflow.com/questions/808826/draw-arrow-on-canvas-tag
+    console.log("Drawing arrow head.");
+
     ctx.beginPath();
+
+
+    var headlen = 20;   // length of head in pixels
+    
+    var angle = Math.atan2(y2 - y1,x2 - x1, y2) - Math.PI/8;
+
+    console.log("Angle: ");
+    console.log(angle);
+    console.log("Old x: ");
+    console.log(x2);
+    console.log("Old y: ");
+    console.log(y2);
+    console.log("New x: ");
+    console.log(x2-headlen*Math.cos(angle));
+    console.log("New y: ");
+    console.log(y2-headlen*Math.sin(angle));
+
+
     ctx.moveTo(x2, y2);
-    ctx.lineTo(x2-headlen*Math.cos(angle),y2-headlen*Math.sin(angle));
-    ctx.lineTo(x2-headlen*Math.cos(angle),y2-headlen*Math.sin(angle));
-    ctx.lineTo(x2, y2);
+    ctx.lineTo(x2-headlen*Math.cos(angle-Math.PI/8),y2-headlen*Math.sin(angle-Math.PI/8));
+    ctx.moveTo(x2, y2);
+    ctx.lineTo(x2-headlen*Math.cos(angle+Math.PI/8),y2-headlen*Math.sin(angle+Math.PI/8));
+
+
+    ctx.strokeStyle = "#F0E92F";
+    ctx.lineWidth = 3;
+    //ctx.lineTo(x2-headlen*Math.cos(angle),y2-headlen*Math.sin(angle));
+    ctx.moveTo(x2, y2);
+    //ctx.lineTo(x2-headlen*Math.cos(angle + Math.PI * 2),y2-headlen*Math.sin(angle + Math.PI));
+    //ctx.lineTo(x2-headlen*Math.sin(angle + Math.PI * 7/4),y2-headlen*Math.cos(angle + Math.PI * 7/4));
+    //ctx.lineTo(x2, y2);
     ctx.stroke();
-    ctx.fill();*/
 };
