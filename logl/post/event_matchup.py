@@ -30,6 +30,7 @@ def is_IP(s):
         return False
     return True
 
+
 # put this somewhere else, too!!
 def assign_address(num, addr, servers):
     """Given this num and addr, sees if there exists a document
@@ -50,15 +51,16 @@ def assign_address(num, addr, servers):
     addr = str(addr)
     doc = servers.find_one({"server_num": num})
     if not doc:
-        # couldn't find with server_num, try using addr as IP
-        doc = servers.find_one({"server_IP": addr})
-        if not doc:
-            # couldn't find with server_IP, try using addr as hostname
-            doc = servers.find_one({"server_name": addr})
-        if doc:
-            # nothing to do, return
-            logger.debug("Entry already exists for server {0}".format(addr))
-            return
+        if addr != "unknown":
+            # couldn't find with server_num, try using addr as IP
+            doc = servers.find_one({"server_IP": addr})
+            if not doc:
+                # couldn't find with server_IP, try using addr as hostname
+                doc = servers.find_one({"server_name": addr})
+            if doc:
+                # nothing to do, return
+                logger.debug("Entry already exists for server {0}".format(addr))
+                return
         logger.debug("No doc found for this server, making one")
         doc = {}
         doc["server_num"] = num
