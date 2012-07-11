@@ -50,6 +50,15 @@ def assign_address(num, addr, servers):
     addr = str(addr)
     doc = servers.find_one({"server_num": num})
     if not doc:
+        # couldn't find with server_num, try using addr as IP
+        doc = servers.find_one({"server_IP": addr})
+        if not doc:
+            # couldn't find with server_IP, try using addr as hostname
+            doc = servers.find_one({"server_name": addr})
+        if doc:
+            # nothing to do, return
+            logger.debug("Entry already exists for server {0}".format(addr))
+            return
         logger.debug("No doc found for this server, making one")
         doc = {}
         doc["server_num"] = num
@@ -142,21 +151,15 @@ def next_event(servers, server_entries, db, collName):
     event["dissenters"] = []
     logger = logging.getLogger(__name__)
 
-    # be careful about datetimes stored as strings!
-
-    logger.debug("looking for a good first")
     first = None
     for s in servers:
         if not server_entries[s]:
-            logger.debug("No server_entries list for this server, skipping")
             continue
         if first and server_entries[s][0]["date"] > first["date"]:
             continue
         first = server_entries[s].pop(0)
     if not first:
         return None
-
-    logger.debug("found first from server {0}".format(first["origin_server"]))
 
     servers_coll = db[collName + ".servers"]
     # define event fields
@@ -165,6 +168,8 @@ def next_event(servers, server_entries, db, collName):
     else:
         # there is definitely a better way to write this
         # feel like we might have a better method somewhere to handle this?
+        # consider adding some of this code to assign_address and having it handle
+        # lookup better
         # get the server number
         num = None
         if is_IP(first["info"]["server"]):
@@ -172,12 +177,17 @@ def next_event(servers, server_entries, db, collName):
         # or, if one does not exist for this server,
         else:
             num = servers_coll.find_one({"server_addr": first["info"]["server"]})
-        if not num:
-            # make sure that we do not overwrite an existing server
+        if num:
+            num = num["server_num"]
+        else:
+            # no .servers entry found for this target, make a new one
+            # make sure that we do not overwrite an existing server's index
             for i in range(1, 50):
                 if not servers_coll.find_one({"server_num":i}):
+                    logger.info("No server entry found for target server {0}".format(first["info"]["server"]))
+                    logger.info("Adding {0} to the .servers collection".format(first["info"]["server"]))
                     assign_address(str(i), first["info"]["server"], servers_coll)
-                    num = i
+                    num = str(i)
                     break
         event["target"] = str(num)
     event["type"] = first["type"]
@@ -194,7 +204,6 @@ def next_event(servers, server_entries, db, collName):
         event["witnesses"].append(first["origin_server"])
         event["conn_addr"] = first["info"]["conn_addr"]
         event["target"] = first["origin_server"]
-        print first["info"]
         event["conn_number"] = first["info"]["conn_number"]
         event["summary"] = generate_summary(event)
         return event
@@ -211,33 +220,28 @@ def next_event(servers, server_entries, db, collName):
 
     # find corresponding messages
     for s in servers:
-        logger.debug("checking server {0}'s entries".format(s))
         if s == first["origin_server"]:
-            logger.debug("this is the same server, skipping")
             continue
         for entry in server_entries[s]:
             if abs(entry["date"] - first["date"]) > delay:
-                logger.debug("entry is outside range of network delay, breaking")
+                #logger.debug("entry is outside range of network delay, breaking")
                 break
             target = target_server_match(entry, first, db[collName + ".servers"])
             if not target:
-                logger.debug("entries' target servers do not agree, skipping")
                 continue
             event["target"] = target
             if not type_check(first, entry):
-                logger.debug("specific type checking failed, skipping")
                 continue
             # passed all checks! must match.
-            logger.debug("Found a match!  Adding to event's witnesses")
+            #logger.debug("Found a match!  Adding to event's witnesses")
             server_entries[s].remove(entry)
             event["witnesses"].append(s)
             # organize me better please...
         if s not in event["witnesses"]:
             logger.debug("No matches found for server {0}, adding to dissenters".format(s))
             event["dissenters"].append(s)
-
-    logger.debug("Done searching for corresponding events")
     event["summary"] = generate_summary(event)
+    logger.debug("Matched all corresponding entries for event:\n\n****{0}****\n\n".format(event["summary"]))
     return event
 
 
@@ -288,14 +292,14 @@ def target_server_match(entry_a, entry_b, servers):
     if a == "self":
         if is_IP(b):
             if a_doc["server_IP"] == "unknown":
-                logger.debug("Assigning IP {0} to server {1}".format(b, a))
+                logger.info("Assigning IP {0} to server {1}".format(b, a))
                 a_doc["server_IP"] == b
                 servers.save(a_doc)
                 return b
             return None
         else:
             if a_doc["server_name"] == "unknown":
-                logger.debug("Assigning hostname {0} to server {1}".format(b, a))
+                logger.info("Assigning hostname {0} to server {1}".format(b, a))
                 a_doc["server_name"] == b
                 servers.save(a_doc)
                 return b
@@ -306,14 +310,14 @@ def target_server_match(entry_a, entry_b, servers):
     if b == "self":
         if is_IP(a):
             if b_doc["server_IP"] == "unknown":
-                logger.debug("Assigning IP {0} to server {1}".format(a, b))
+                logger.info("Assigning IP {0} to server {1}".format(a, b))
                 b_doc["server_IP"] == a
                 servers.save(b_doc)
                 return a
             return None
         else:
             if b_doc["server_name"] == "unknown":
-                logger.debug("Assigning hostname {0} to server {1}".format(a, b))
+                logger.info("Assigning hostname {0} to server {1}".format(a, b))
                 b_doc["server_name"] == a
                 servers.save(b_doc)
                 return a
@@ -329,17 +333,14 @@ def resolve_dissenters(events):
     events_b = events[:]
     logger = logging.getLogger(__name__)
     i = 0
+    logger.info("------------------Attempting to resolve dissenters--------------------")
     for a in events:
-        logger.debug("Checking event {0}".format(i))
         if len(a["dissenters"]) >= len(a["witnesses"]):
-            logger.debug("this event has more dissenters than witnesses")
-            logger.debug("Attempting to find corresponding event")
+            logger.debug("Event {0} has more dissenters than witnesses".format(i))
             for b in events_b:
                 if a["summary"] == b["summary"]:
-                    logger.debug("Summary match found! Checking witnesses")
                     for wit_a in a["witnesses"]:
                         if wit_a in b["witnesses"]:
-                            logger.debug("Overlapping witness found, no match")
                             break
                     # concerned about this loop breaking thing
                     # also, concerned about mutability of lists?
@@ -352,11 +353,10 @@ def resolve_dissenters(events):
                         for wit_a in a["witnesses"]:
                             b["witnesses"].append(wit_a)
                             if wit_a in b["dissenters"]:
-                                logger.debug("Removing {0} from b's dissenters".format(wit_a))
                                 b["dissenters"].remove(wit_a)
                         # we've already found a match, stop looking
                         break
-                    logger.debug("match not found with this event")
+                    logger.debug("Match not found for this event")
                     continue
         i += 1
     return events

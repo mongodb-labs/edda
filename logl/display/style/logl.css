@@ -69,5 +69,11 @@ body {
 	   width: 200px;
 }
 
+#summary {
+	 margin-left: auto;
+	 margin-right: auto;
+	 width: 800px;
+}
+
 
 
