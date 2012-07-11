@@ -32,7 +32,6 @@ def test_sending_one_frame():
     frame = new_frame(servers)
     frame['links']['kaushal'] = ['kristina']
     frame["links"]['sam'] = ['kaushal', 'kristina']
-    
     frame["servers"]["sam"] = "PRIMARY"
     frame["servers"]["kaushal"] = "SECONDARY"
     frame["servers"]["kristina"] = "DOWN"
