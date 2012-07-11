@@ -28,15 +28,27 @@ def dont_run_send_to_js():
 
 def test_sending_one_frame():
     frame = {}
+    frame2 = {}
     servers = ['sam', 'kaushal', 'kristina']
     frame = new_frame(servers)
-    frame['links']['kaushal'] = ['kristina']
+    frame2 = new_frame(servers)
+    frame['broken_links']['kaushal'] = ['kristina']
     frame["links"]['sam'] = ['kaushal', 'kristina']
     frame["servers"]["sam"] = "PRIMARY"
     frame["servers"]["kaushal"] = "SECONDARY"
     frame["servers"]["kristina"] = "DOWN"
+    frame["summary"] = "This is a summary of the frame one."
     frames = {}
     frames["0"] = frame
+
+    frame2["links"]["kaushal"] = ["sam"]
+    frame2["broken_links"]["kristina"] = ["sam", "kaushal"]
+    frame2["servers"]["sam"] = "PRIMARY"
+    frame2["servers"]["kaushal"] = "DOWN"
+    frame2["servers"]["kristina"] = "DOWN"
+    frame2["syncs"]["kaushal"] = ["sam", "kristina"]
+    frame2["summary"] = "This is a summary of frame two."
+    frames["1"] = frame2
     send_to_js(frames)
 
 
@@ -48,6 +60,7 @@ def new_frame(servers):
     f["date"] = str(datetime.now())
     f["server_count"] = len(servers)
     f["witnesses"] = []
+    f["summary"] = []
     f["dissenters"] = []
     f["flag"] = False
     f["links"] = {}
