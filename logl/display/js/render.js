@@ -28,21 +28,42 @@ render = function(time) {
     var xvals = [], yvals = [];
     var list, i;
 
+    clear_layers();
+
     for (var origin_server in frames[time]["links"]) {
         list = frames[time]["links"][origin_server];
         for (i = 0; i < list.length; i++) {
             one_line(servers[origin_server]["x"], servers[origin_server]["y"], servers[list[i]]["x"], servers[list[i]]["y"], contexts["arrow"]);
+            console.log("from: ");
+            console.log(origin_server);
+            console.log("to: ");
+            console.log(list[i]);
         }
     }
 
     for (origin_server in frames[time]["broken_links"]) {
-        list = frames[time]["broken_links"][origin_server];
-        for (i = 0; i < list.length; i++) {
-            one_arrow(servers[origin_server]["x"], servers[origin_server]["y"], servers[list[i]]["x"], servers[list[i]]["y"], contexts["arrow"]);
+        var list2 = frames[time]["broken_links"][origin_server];
+        for (i = 0; i < list2.length; i++) {
+            broken_link(servers[origin_server]["x"], servers[origin_server]["y"], servers[list2[i]]["x"], servers[list2[i]]["y"], contexts["arrow"]);
+            console.log("_________broken_links_____________");
+            console.log("from: ");
+            console.log(origin_server);
+            console.log("to: ");
+            console.log(list[i]);
         }
     }
 
-
+        for (origin_server in frames[time]["syncs"]) {
+            list = frames[time]["syncs"][origin_server];
+        for (i = 0; i < list.length; i++) {
+            one_arrow(servers[origin_server]["x"], servers[origin_server]["y"], servers[list[i]]["x"], servers[list[i]]["y"], contexts["arrow"]);
+            console.log("_________syncs_____________");
+            console.log("from: ");
+            console.log(origin_server);
+            console.log("to: ");
+            console.log(list[i]);
+        }
+    }
 
     for (var name in frames[time]["servers"]) {
         var state = frames[time]["servers"][name];
@@ -100,8 +121,12 @@ render = function(time) {
         }
     }*/
     //one_arrow(100, 100, 200, 200, contexts["arrow"]);
-    //one_line(120, 100, 220, 200, contexts["link"]);
-
+    //one_line(120, 100, 220, 200, contexts["link"])
 
     }
+};
+
+clear_layers = function() {
+    canvases["arrow"].width = canvases["arrow"].width;
+    canvases["server"].width = canvases["server"].width;
 };
