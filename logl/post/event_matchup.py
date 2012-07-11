@@ -116,7 +116,7 @@ def next_event(servers, server_entries, db, collName):
 
     # these are messages that do not involve
     # corresponding messages across servers
-    loners = ["conn", "fsync", "sync"]
+    loners = ["conn", "LOCKED", "UNLOCKED", "FSYNC", "sync"]
     logger = logging.getLogger(__name__)
 
     first = None
@@ -148,6 +148,10 @@ def next_event(servers, server_entries, db, collName):
     # status events
     if event["type"] == "status":
         event["state"] = first["info"]["state"]
+
+    # locking messages
+    if event["type"] == "fsync":
+        event["type"] = first["info"]["state"]
 
     # sync events
     if event["type"] == "sync":
@@ -343,10 +347,12 @@ def generate_summary(event):
         summary += " is now exiting"
 
     # for locking messages
-    if event["type"] == "unlock":
+    if event["type"] == "UNLOCK":
         summary += " is unlocking itself"
-    if event["type"] == "lock":
+    if event["type"] == "LOCK":
         summary += " is locking itself"
+    if event["type"] == "FSYNC":
+        summary += " is in FSYNC"
 
     # for stale messages
     if event["type"] == "stale":
