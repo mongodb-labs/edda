@@ -15,6 +15,7 @@
 
 one_arrow = function(x1, y1, x2, y2, ctx) {
 
+    ctx.beginPath();
     dx = Math.abs(x2 - x1);
     dy = Math.abs(y2 - y1);
 
@@ -26,7 +27,7 @@ one_arrow = function(x1, y1, x2, y2, ctx) {
     //ctx.quadraticCurveTo(cx, cy, x2, y2);
 
     var h = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
-    var h_prime = 32.0000;
+    var h_prime = 75.0000;
     var ratio = h_prime / h;
     var x_difference, y_difference;
 
@@ -69,8 +70,8 @@ one_arrow = function(x1, y1, x2, y2, ctx) {
     }
 
     ctx.moveTo(x1, y1);
-    ctx.strokeStyle = "#3B1E0D";//3B1EOB
-    ctx.lineWidth = 1;
+    ctx.strokeStyle = "#F0E92F";//3B1EOB
+    ctx.lineWidth = 3;
     ctx.lineTo(x2, y2);
     ctx.stroke();
 
