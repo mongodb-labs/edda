@@ -85,6 +85,7 @@ function time_setup(max_time) {
 
     $("#slider").slider({ slide: function(event, ui) {
         render(ui.value);
+        console.log("I have rendered something!")
         document.getElementById("timestamp").innerHTML = frames[ui.value]["date"];
         }});
     //$("#slider").slider( "option", "min", 0 );
