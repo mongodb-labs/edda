@@ -138,6 +138,36 @@ def event_matchup(db, collName):
     return events
 
 
+def get_server_num(addr, servers):
+    """Gets and returns a server_num for an
+    existing .servers entry with addr, or creates a new .servers
+    entry and returns the new server_num, as a string"""
+    # this method is largely redundant, considering what assign_address
+    # does.  However, it does some things that assign_address does not do
+    # consider merging this method with assign_address() in logl.py
+    # and using them both more efficiently, here and across
+    # logl (especially in server_matchup)
+    logger = logging.getLogger(__name__)
+    num = None
+    if is_IP(addr):
+        num = servers.find_one({"server_IP": addr})
+    else:
+        num = servers.find_one({"server_name": addr})
+    # Did we find it?  If not, insert a new entry, and return the server number
+    if num:
+        logger.debug("Found server number {0} for address {1}".format(num["server_num"], addr))
+        return str(num["server_num"])
+    else:
+        # no .servers entry found for this target, make a new one
+        # make sure that we do not overwrite an existing server's index
+        for i in range(1, 50):
+            if not servers.find_one({"server_num" : str(i)}):
+                logger.info("No server entry found for target server {0}".format(addr))
+                logger.info("Adding {0} to the .servers collection with server_num {1}".format(addr, i))
+                assign_address(str(i), addr, servers)
+                return str(i)
+
+
 def next_event(servers, server_entries, db, collName):
     """Given lists of entries from servers ordered by date,
     and a list of server numbers, finds a new event
