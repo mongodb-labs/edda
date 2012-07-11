@@ -196,32 +196,10 @@ def next_event(servers, server_entries, db, collName):
     servers_coll = db[collName + ".servers"]
     # define event fields
     if first["info"]["server"] == "self":
-        event["target"] = str(first["origin_server"]) # meh
+        event["target"] = str(first["origin_server"])
     else:
-        # there is definitely a better way to write this
-        # feel like we might have a better method somewhere to handle this?
-        # consider adding some of this code to assign_address and having it handle
-        # lookup better
-        # get the server number
-        num = None
-        if is_IP(first["info"]["server"]):
-            num = servers_coll.find_one({"server_IP": first["info"]["server"]})
-        # or, if one does not exist for this server,
-        else:
-            num = servers_coll.find_one({"server_addr": first["info"]["server"]})
-        if num:
-            num = num["server_num"]
-        else:
-            # no .servers entry found for this target, make a new one
-            # make sure that we do not overwrite an existing server's index
-            for i in range(1, 50):
-                if not servers_coll.find_one({"server_num":i}):
-                    logger.info("No server entry found for target server {0}".format(first["info"]["server"]))
-                    logger.info("Adding {0} to the .servers collection".format(first["info"]["server"]))
-                    assign_address(str(i), first["info"]["server"], servers_coll)
-                    num = str(i)
-                    break
-        event["target"] = str(num)
+        event["target"] = get_server_num(first["info"]["server"],
+                                         servers_coll)
     event["type"] = first["type"]
     event["date"] = first["date"]
     if event["type"] == "status":
