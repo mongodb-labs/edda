@@ -17,6 +17,7 @@ import pymongo
 import logging
 from copy import deepcopy
 from .clock_skew import server_clock_skew
+from supporting_methods import *
 import operator
 import re
 
@@ -179,46 +180,6 @@ def address_matchup(db, collName):
         return -1
     logger.debug("Could not match {0} addresses: {1}".format(len(mentioned_names), mentioned_names))
     return -1
-
-
-def is_IP(s):
-    """Returns true if s is an IP address, false otherwise"""
-    pattern = re.compile("(([0|1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))(\.([0|1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5])){3}")
-    m = pattern.search(s)
-    if (m == None):
-        return False
-    return True
-
-# we are having some trouble with imports right now.
-# eventually this function will only be in one place!
-def assign_address(num, addr, servers):
-    """Given this num and addr, sees if there exists a document
-    in the .servers collection for that server.  If so, adds addr, if
-    not already present, to the document.  If not, creates a new doc
-    for this server and saves to the db."""
-    logger = logging.getLogger(__name__)
-    doc = servers.find_one({"server_num": num})
-    if not doc:
-        logger.debug("No doc found for this server, making one")
-        doc = {}
-        doc["server_num"] = num
-        doc["server_name"] = "unknown"
-        doc["server_IP"] = "unknown"
-    else:
-        logger.debug("Doc already exists for server {0}".format(num))
-    if addr == num:
-        pass
-    elif is_IP(addr):
-        if doc["server_IP"] != "unknown" and doc["server_IP"] != addr:
-            logger.warning("conflicting IPs found for server {0}:".format(num))
-            logger.warning("\n{0}\n{1}".format(addr, doc["server_IP"]))
-        doc["server_IP"] = addr
-    else:
-        if doc["server_name"] != "unknown" and doc["server_name"] != addr:
-            logger.warning("conflicting hostnames found for server {0}:".format(num))
-            logger.warning("\n{0}\n{1}".format(addr, doc["server_name"]))
-        doc["server_name"] = addr
-    servers.save(doc)
 
 
 def name_me(s, servers):
