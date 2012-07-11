@@ -16,7 +16,7 @@
 import re
 import string
 import logging
-
+from supporting_methods import capture_address
 
 def criteria(msg):
     """Determing if the given message is an instance
@@ -56,18 +56,6 @@ def process(msg, date):
     if result == 2:
         ended(msg, doc)
     return doc
-
-
-def capture_address(msg):
-    """Given a message, extracts and returns the address,
-    be it a hostname or an IP address, in the form
-    'address:port#'"""
-    # capture the address, be it hostname or IP
-    pattern = re.compile("\S+:[0-9]{1,5}")
-    m = pattern.search(msg[20:]) # skip date field
-    if not m:
-        return None
-    return m.group(0)
 
 
 def new_conn(msg, doc):
