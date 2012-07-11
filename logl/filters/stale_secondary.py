@@ -12,19 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This module tracks requests from the server to lock or unlock its self from
-    # writes.
-
 
 import re
 import string
 import logging
-
-# Mon Jul  2 10:00:11 [conn2] CMD fsync: sync:1 lock:1
-# Mon Jul  2 10:00:04 [conn2] command: unlock requested
-# Mon Jul  2 10:00:10 [conn2] db is now locked for snapshotting, no writes
-    # allowed. db.fsyncUnlock() to unlock
-
+from supporting_methods import capture_address
 
 def criteria(msg):
     """Does the given log line fit the criteria for this filter?
@@ -55,31 +47,14 @@ def process(msg, date):
     doc["info"] = {}
     doc["original_message"] = msg
 
-    ip = True
     if message_type == 0:
         doc["info"]["state"] = "STALE"
         logger = logging.getLogger(__name__)
 
-        # this very long regex recognizes legal IP addresses
-        pattern = re.compile("(([0|1]?[0-9]{1,2})|(2[0-4][0-9])|"
-            "(25[0-5]))(\.([0|1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5])){3}")
-        m = pattern.search(msg)
-        if (m == None):
-            logger.debug("malformed new_conn message: no IP address found")
-            ip = False
-        if ip:
-            host = m.group(0)
+        addr = capture_address(msg[20:])
+        if not addr:
+            logger.debug("Unable to find target server going stale")
+            return None
+        doc["info"]["server"] = addr
 
-            # isolate port number
-            pattern = re.compile(":[0-9]{1,5}")
-            n = pattern.search(msg[21:])
-            if n is None:
-                deb = "malformed new_conn message: no port number found"
-                logger.debug(deb)
-                ip = False
-            port = n.group(0)[1:]
-        if ip:
-            doc["info"]["server"] = host + ":" + port
-        else:
-            doc["info"]["server"] = None
     return doc
