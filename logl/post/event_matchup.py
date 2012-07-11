@@ -19,7 +19,7 @@ import pymongo
 import logging
 import re
 from datetime import timedelta
-
+#from logl import assign_address
 
 # put this somewhere else!!
 def is_IP(s):
@@ -177,10 +177,10 @@ def next_event(servers, server_entries, db, collName):
     # NOTE: this method makes no attempt to adjust for clock skew,
     # only normal network delay.
     # find the first entry from any server
-    delay = timedelta(seconds=2)
-    event = {}
-    event["witnesses"] = []
-    event["dissenters"] = []
+
+    # these are messages that do not involve
+    # corresponding messages across servers
+    loners = ["conn", "fsync", "sync"]
     logger = logging.getLogger(__name__)
 
     first = None
@@ -194,64 +194,71 @@ def next_event(servers, server_entries, db, collName):
         return None
 
     servers_coll = db[collName + ".servers"]
-    # define event fields
+    event = {}
+    event["witnesses"] = []
+    event["dissenters"] = []
+
+    # get and use server number for the target
     if first["info"]["server"] == "self":
         event["target"] = str(first["origin_server"])
     else:
         event["target"] = get_server_num(first["info"]["server"],
                                          servers_coll)
+    # define other event fields
     event["type"] = first["type"]
     event["date"] = first["date"]
+
+    # some messages need specific fields set:
+    # status events
     if event["type"] == "status":
         event["state"] = first["info"]["state"]
-    event["witnesses"].append(first["origin_server"])
 
-
-    # some kinds of messages won't have any corresponding messages:
-    if first["type"] == "conn":
-        logger.debug("handling a connection message")
-        event["type"] = first["info"]["subtype"]
-        event["witnesses"].append(first["origin_server"])
-        event["conn_addr"] = first["info"]["conn_addr"]
-        event["target"] = first["origin_server"]
-        event["conn_number"] = first["info"]["conn_number"]
-        event["summary"] = generate_summary(event)
-        return event
-
-    # fsync locking/unlocking messages only come from
-    # a server talking about itself
-    if first["type"] == "fsync":
-        pass
-
-    # sync messages, also
-    if first["type"] == "sync":
+    # sync events
+    if event["type"] == "sync":
         event["sync_to"] = first["info"]["sync_server"]
-        pass
 
+    # conn messages
+    if first["type"] == "conn":
+        event["type"] = first["info"]["subtype"]
+        event["conn_addr"] = first["info"]["conn_addr"]
+        event["conn_number"] = first["info"]["conn_number"]
+
+    # handle corresponding messages
+    event["witnesses"].append(first["origin_server"])
+    if not first["type"] in loners:
+        event = get_corresponding_events(servers, server_entries,
+                                         event, first, servers_coll)
+    event["summary"] = generate_summary(event)
+    return event
+
+
+def get_corresponding_events(servers, server_entries,
+                             event, first, servers_coll):
+    """Given a list of server names and entries
+    organized by server, find all events that correspond to
+    this one and combine them"""
+    logger = logging.getLogger(__name__)
+    delay = timedelta(seconds=2)
     # find corresponding messages
     for s in servers:
         if s == first["origin_server"]:
             continue
         for entry in server_entries[s]:
-            if abs(entry["date"] - first["date"]) > delay:
+            if abs(entry["date"] - event["date"]) > delay:
                 #logger.debug("entry is outside range of network delay, breaking")
                 break
-            target = target_server_match(entry, first, db[collName + ".servers"])
-            if not target:
+            if not target_server_match(entry, first, servers_coll):
                 continue
-            event["target"] = target
+            # here
+            # event["target"] = target
             if not type_check(first, entry):
                 continue
-            # passed all checks! must match.
-            #logger.debug("Found a match!  Adding to event's witnesses")
+            logger.debug("Found a match!  Adding to event's witnesses")
             server_entries[s].remove(entry)
             event["witnesses"].append(s)
-            # organize me better please...
         if s not in event["witnesses"]:
             logger.debug("No matches found for server {0}, adding to dissenters".format(s))
             event["dissenters"].append(s)
-    event["summary"] = generate_summary(event)
-    logger.debug("Matched all corresponding entries for event:\n\n****{0}****\n\n".format(event["summary"]))
     return event
 
 
