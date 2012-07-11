@@ -292,17 +292,17 @@ def type_check(entry_a, entry_b):
 
 def target_server_match(entry_a, entry_b, servers):
     """Given two .entries documents, are they talking about the
-    same sever?  Return target server if yes, None if no"""
+    same sever?  (these should never be from the same
+    origin_server) Return True or False"""
     logger = logging.getLogger(__name__)
 
     a = entry_a["info"]["server"]
     b = entry_b["info"]["server"]
 
     if a == "self" and b == "self":
-        return None
+        return False
     if a == b:
-        return a
-
+        return True
     a_doc = servers.find_one({"server_num": entry_a["origin_server"]})
     b_doc = servers.find_one({"server_num": entry_b["origin_server"]})
 
@@ -310,11 +310,11 @@ def target_server_match(entry_a, entry_b, servers):
     if a == "self":
         if (b == a_doc["server_name"] or
             b == a_doc["server_IP"]):
-            return b
+            return True
     if b == "self":
         if (a == b_doc["server_name"] or
             a == b_doc["server_IP"]):
-            return a
+            return True
 
     # address not known
     # in this case, we will assume that the address does belong
@@ -325,15 +325,15 @@ def target_server_match(entry_a, entry_b, servers):
                 logger.info("Assigning IP {0} to server {1}".format(b, a))
                 a_doc["server_IP"] == b
                 servers.save(a_doc)
-                return b
-            return None
+                return True
+            return False
         else:
             if a_doc["server_name"] == "unknown":
                 logger.info("Assigning hostname {0} to server {1}".format(b, a))
                 a_doc["server_name"] == b
                 servers.save(a_doc)
-                return b
-            return None
+                return True
+            return False
 
     # why, yes, it is rather silly to code this here twice.
     # clean me up please!!
@@ -343,15 +343,15 @@ def target_server_match(entry_a, entry_b, servers):
                 logger.info("Assigning IP {0} to server {1}".format(a, b))
                 b_doc["server_IP"] == a
                 servers.save(b_doc)
-                return a
-            return None
+                return True
+            return False
         else:
             if b_doc["server_name"] == "unknown":
                 logger.info("Assigning hostname {0} to server {1}".format(a, b))
                 b_doc["server_name"] == a
                 servers.save(b_doc)
-                return a
-            return None
+                return True
+            return False
 
 
 def resolve_dissenters(events):
