@@ -194,9 +194,12 @@ def info_by_type(f, e):
     elif e["type"] == "exit":
         f["servers"][s] == "DOWN"
         f = break_links(s, f)
-    elif e["type"] == "lock":
+    elif e["type"] == "LOCKED":
         f["servers"][s] += ".LOCKED"
-    elif e["type"] == "unlock":
+    elif e["type"] == "UNLOCKED":
         n = string.find(f["servers"][s], ".LOCKED")
         f["servers"][s] = f["servers"][s[:n]]
+    elif e["type"] == "FSYNC":
+        # nothing to do for fsync?
+        pass
     return f
