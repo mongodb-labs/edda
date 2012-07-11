@@ -32,7 +32,7 @@ import argparse
 import getpass
 from bson import objectid
 from pymongo import Connection
-from parse_date import date_parser
+from supporting_methods import *
 from datetime import datetime
 from filters import *
 from post.server_matchup import address_matchup
@@ -203,61 +203,6 @@ def main():
         logger.info('-' * 64)
     logger.info('=' * 64)
     logger.warning('Completed post processing.\nExiting.')
-
-
-def assign_address(num, addr, servers):
-    """Given this num and addr, sees if there exists a document
-    in the .servers collection for that server.  If so, adds addr, if
-    not already present, to the document.  If not, creates a new doc
-    for this server and saves to the db."""
-    # in the case that two different addresses are found for the
-    # same server, this chooses to log a warning and ignore
-    # all but the first address found
-    # store all fields as strings, including server_num
-    # server doc = {
-    #    "server_num" : int
-    #    "server_name" : hostname
-    #    "server_IP" : IP
-    #    }
-    logger = logging.getLogger(__name__)
-
-    num = str(num)
-    addr = str(addr)
-    doc = servers.find_one({"server_num": num})
-    if not doc:
-        if addr != "unknown":
-            # couldn't find with server_num, try using addr as IP
-            doc = servers.find_one({"server_IP": addr})
-            if not doc:
-                # couldn't find with server_IP, try using addr as hostname
-                doc = servers.find_one({"server_name": addr})
-            if doc:
-                # nothing to do, return
-                logger.debug("Entry already exists for server {0}".format(addr))
-                return
-        logger.debug("No doc found for this server, making one")
-        doc = {}
-        doc["server_num"] = num
-        doc["server_name"] = "unknown"
-        doc["server_IP"] = "unknown"
-    else:
-        logger.debug("Doc already exists for server {0}".format(num))
-    if addr == num or addr == "self":
-        # let server_name and server_IP remain unknown
-        pass
-    elif is_IP(addr):
-        if doc["server_IP"] != "unknown" and doc["server_IP"] != addr:
-            logger.warning("conflicting IPs found for server {0}:".format(num))
-            logger.warning("\n{0}\n{1}".format(addr, doc["server_IP"]))
-        else:
-            doc["server_IP"] = addr
-    else:
-        if doc["server_name"] != "unknown" and doc["server_name"] != addr:
-            logger.warning("conflicting hostnames found for server {0}:".format(num))
-            logger.warning("\n{0}\n{1}".format(addr, doc["server_name"]))
-        else:
-            doc["server_name"] = addr
-    servers.save(doc)
 
 
 def traffic_control(msg, date):
