@@ -34,6 +34,8 @@ def test_sending_one_frame():
     frame2 = new_frame(servers)
     frame['broken_links']['kaushal'] = ['kristina']
     frame["links"]['sam'] = ['kaushal', 'kristina']
+    frame["links"]["water"] = ["kaushal", "sam", "kristina"]
+    frame["servers"]["water"] = "PRIMARY"
     frame["servers"]["sam"] = "PRIMARY"
     frame["servers"]["kaushal"] = "SECONDARY"
     frame["servers"]["kristina"] = "DOWN"
@@ -42,10 +44,13 @@ def test_sending_one_frame():
     frames["0"] = frame
 
     frame2["links"]["kaushal"] = ["sam"]
-    frame2["broken_links"]["kristina"] = ["sam", "kaushal"]
+    frame2["links"]["water"] = ["kaushal", "sam", "kristina"]
+
+    frame2["broken_links"]["kristina"] = ["sam", "kaushal", "water"]
     frame2["servers"]["sam"] = "PRIMARY"
     frame2["servers"]["kaushal"] = "DOWN"
     frame2["servers"]["kristina"] = "DOWN"
+    frame2["servers"]["water"] = "PRIMARY"
     frame2["syncs"]["kaushal"] = ["sam", "kristina"]
     frame2["summary"] = "This is a summary of frame two."
     frames["1"] = frame2
