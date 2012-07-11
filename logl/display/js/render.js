@@ -26,18 +26,23 @@ render = function(time) {
     var prevx, prevy;
     var count = 0;
     var xvals = [], yvals = [];
+    var list, i;
 
-    console.log(frames[time]["links"]);
     for (var origin_server in frames[time]["links"]) {
-        console.log(origin_server);
-        console.log(frames[time]["links"][origin_server]);
+        list = frames[time]["links"][origin_server];
+        for (i = 0; i < list.length; i++) {
+            one_line(servers[origin_server]["x"], servers[origin_server]["y"], servers[list[i]]["x"], servers[list[i]]["y"], contexts["arrow"]);
+        }
+    }
 
-        var list = frames[time]["links"][origin_server];
-        console.log(list);
-        for (var i = 0; i < list.length; i++) {
+    for (origin_server in frames[time]["broken_links"]) {
+        list = frames[time]["broken_links"][origin_server];
+        for (i = 0; i < list.length; i++) {
             one_arrow(servers[origin_server]["x"], servers[origin_server]["y"], servers[list[i]]["x"], servers[list[i]]["y"], contexts["arrow"]);
         }
     }
+
+
 
     for (var name in frames[time]["servers"]) {
         var state = frames[time]["servers"][name];
