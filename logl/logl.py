@@ -220,10 +220,20 @@ def assign_address(num, addr, servers):
     #    "server_IP" : IP
     #    }
     logger = logging.getLogger(__name__)
+
     num = str(num)
     addr = str(addr)
     doc = servers.find_one({"server_num": num})
     if not doc:
+        # couldn't find with server_num, try using addr as IP
+        doc = servers.find_one({"server_IP": addr})
+        if not doc:
+            # couldn't find with server_IP, try using addr as hostname
+            doc = servers.find_one({"server_name": addr})
+        if doc:
+            # nothing to do, return
+            logger.debug("Entry already exists for server {0}".format(addr))
+            return
         logger.debug("No doc found for this server, making one")
         doc = {}
         doc["server_num"] = num
@@ -231,7 +241,8 @@ def assign_address(num, addr, servers):
         doc["server_IP"] = "unknown"
     else:
         logger.debug("Doc already exists for server {0}".format(num))
-    if addr == num:
+    if addr == num or addr == "self":
+        # let server_name and server_IP remain unknown
         pass
     elif is_IP(addr):
         if doc["server_IP"] != "unknown" and doc["server_IP"] != addr:
