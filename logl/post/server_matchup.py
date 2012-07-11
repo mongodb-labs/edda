@@ -122,8 +122,11 @@ def address_matchup(db, collName):
                         logger.debug("Succesfully found server number for server {0}".format(n_addr))
                         n_addrs = entries.find({"origin_server": n_num}).distinct("info.server")
                         if not neighbors_neighbors:
+                            # n_addr: the server name
+                            # n_addrs: the names that n_addr mentions
                             for addr in n_addrs:
-                                neighbors_neighbors.append(addr)
+                                if addr != "self":
+                                    neighbors_neighbors.append(addr)
                         else:
                             n_n_copy = deepcopy(neighbors_neighbors)
                             neighbors_neighbors = []
