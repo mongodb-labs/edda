@@ -55,7 +55,11 @@ body {
 
 /* slider element */
 
-.oSliderContainer { width: 100px;}
+/*.oSliderContainer { width: 100px; }*/
+
+.ui-slider-horizontal .ui-slider-handle {
+	      padding: 0px 0 0 0;
+}
 
 #slider_box {
 	margin-right: auto;
