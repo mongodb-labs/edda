@@ -80,7 +80,7 @@ draw_names = function() {
     // use this to draw text, or place a user
     contexts["background"].font = "11pt Courier New";
     contexts["background"].fillStyle = "white";
-
+    w = canvases["background"].width;
     // for each server:
     for (var s in servers) {
 	var r = servers[s]["r"];
@@ -92,11 +92,18 @@ draw_names = function() {
         }
         else {label = server_names["hostname"][s];}
 
-	// draw name, but only 15 characters per line
+	// figure out which side of the circle to
+	// write labels
 	var i = 0;
+	var y = servers[s]["y"];
+	var x = servers[s]["x"];
+	if (x < w/2){
+	    x = servers[s]["x"] - (1.5*r) - 180;
+	}
+	// draw name, but only 15 characters per line
 	while (true) {
 	    sub_label = label.substring(15 * i, 15 * (i + 1));
-	    contexts["background"].fillText(sub_label, servers[s]["x"] + (1.5*r), servers[s]["y"] + (15 * i));
+	    contexts["background"].fillText(sub_label, x + (1.5*r), y + (15 * i));
 	    i++;
 	    if ((15 * i) > label.length) {
 		break;
