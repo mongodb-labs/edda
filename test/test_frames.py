@@ -35,7 +35,7 @@ def generate_event(target, type, more, w, d):
     elif type == "sync":
         e["sync_to"] = more["sync_to"]
     elif (string.find(type, "conn") >= 0):
-        e["conn_IP"] = more["conn_IP"]
+        e["conn_addr"] = more["conn_addr"]
         e["conn_number"] = more["conn_number"]
     e["target"] = target
     if not w:
@@ -93,7 +93,7 @@ def test_info_by_type_reconfig():
 def test_info_by_type_new_conn():
     """Test method on new_conn type event"""
     e = generate_event("1", "new_conn",
-                       {"conn_IP": "1.2.3.4",
+                       {"conn_addr": "1.2.3.4",
                         "conn_number": 14}, ["1"], None)
     f = info_by_type(new_frame(["1"]), e)
     assert f
@@ -106,7 +106,7 @@ def test_info_by_type_end_conn():
     """Test method on end_conn type event"""
     # first, when there was no user stored
     e = generate_event("1", "end_conn",
-                       {"conn_IP": "1.2.3.4",
+                       {"conn_addr": "1.2.3.4",
                         "conn_number": 14}, ["1"], None)
     f = info_by_type(new_frame(["1"]), e)
     assert f
@@ -122,10 +122,16 @@ def test_info_by_type_end_conn():
 def test_info_by_type_sync():
     """Test method on sync type event"""
     e = generate_event("4", "sync", {"sync_to":"3"}, ["4"], None)
+    e2 = generate_event("2", "sync", {"sync_to":"1"}, ["2"], None)
     f = info_by_type(new_frame(["4"]), e)
+    f2 = info_by_type(new_frame(["2"]), e2)
     assert f
+    assert f2
     assert f["syncs"]["4"]
+    assert f2["syncs"]["2"]
+    assert len(f2["syncs"]["2"]) == 1
     assert len(f["syncs"]["4"]) == 1
+    assert "1" in f2["syncs"]["2"]
     assert "3" in f["syncs"]["4"]
 
 

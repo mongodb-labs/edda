@@ -182,18 +182,24 @@ def info_by_type(f, e):
     elif e["type"] == "reconfig":
         # nothing to do for a reconfig?
         pass
+
+    # connections
     elif e["type"] == "new_conn":
         if not e["conn_addr"] in f["users"][s]:
             f["users"][s].append(e["conn_addr"])
     elif e["type"] == "end_conn":
         if e["conn_addr"] in f["users"][s]:
             f["users"][s].remove(e["conn_addr"])
+    # syncs
     elif e["type"] == "sync":
         if not e["sync_to"] in f["syncs"][s]:
             f["syncs"][s].append(e["sync_to"])
+    # exits
     elif e["type"] == "exit":
         f["servers"][s] == "DOWN"
         f = break_links(s, f)
+
+    # fsync and locking
     elif e["type"] == "LOCKED":
         f["servers"][s] += ".LOCKED"
     elif e["type"] == "UNLOCKED":

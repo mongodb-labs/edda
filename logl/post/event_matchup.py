@@ -20,6 +20,8 @@ import logging
 import re
 from datetime import timedelta
 from supporting_methods import *
+# for nosetests:
+#from logl.supporting_methods import *
 
 def event_matchup(db, collName):
     """This method sorts through the db's entries to
@@ -155,7 +157,9 @@ def next_event(servers, server_entries, db, collName):
 
     # sync events
     if event["type"] == "sync":
-        event["sync_to"] = first["info"]["sync_server"]
+        # must have a server number for this server
+        num = get_server_num(first["info"]["sync_server"], servers_coll)
+        event["sync_to"] = num
 
     # conn messages
     if first["type"] == "conn":
