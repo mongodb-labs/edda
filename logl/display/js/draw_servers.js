@@ -268,6 +268,24 @@ unknown = function(x, y, r, ctx) {
 
 lock = function(x, y, r, ctx) {
     // draw a lock over a locked server
+    // decide on a width and height
+    var w = r/4;
+    var h = .7*r;
+    var radius = h/4;
+    var theta = Math.PI/8; // radians
+
+    // draw the top circle
+    ctx.beginPath();
+    ctx.lineWidth = 10;
+    ctx.arc(x, y - radius, radius, .5*Math.PI - theta, .5*Math.PI + theta, true);
+    y = y - h/2;
+    ctx.moveTo(x + (radius*Math.sin(theta)), y + h/2 - (radius - radius*Math.cos(theta)));
+    ctx.lineTo(x + w, y + h);
+    ctx.lineTo(x - w, y + h);
+    ctx.lineTo(x - (radius*Math.sin(theta)), y + h/2 - (radius - radius*Math.cos(theta)));
+    ctx.stroke();
+    ctx.fillStyle = "#2D1F1C";
+    ctx.fill();
 };
 
 crown = function(x, y, w, h, ctx) {
