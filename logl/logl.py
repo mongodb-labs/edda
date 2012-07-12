@@ -170,37 +170,37 @@ def main():
         logger.warning('=' * 64)
     logger.info("Finished reading from log files, performing post processing")
     logger.info('-' * 64)
-    if len(namespace.filename) > 1:
-        logger.info("Attempting to resolve server names")
-        result = address_matchup(db, collName)
-        if result == 1:
-            logger.info("Server addresses successfully resolved")
-        else:
-            logger.warning("Server addresses could not be resolved")
-        logger.info('-' * 64)
-        # clock skew
-        #logger.info("Attempting to resolve clock skew across servers")
-        #result = server_clock_skew(db, collName)
-        #logger.info("Completed clock skew detection")
-        logger.info('-' * 64)
-        #logger.info("Attempting to Fix Clock_skews in original .entries documents")
-        #replace_clock_skew(db, collName)
-        #logger.info("Completed replacing skew values.")
-        logger.info('-' * 64)
+#    if len(namespace.filename) > 1:
+    logger.info("Attempting to resolve server names")
+    result = address_matchup(db, collName)
+    if result == 1:
+        logger.info("Server addresses successfully resolved")
+    else:
+        logger.warning("Server addresses could not be resolved")
+    logger.info('-' * 64)
+    # clock skew
+    #logger.info("Attempting to resolve clock skew across servers")
+    #result = server_clock_skew(db, collName)
+    #logger.info("Completed clock skew detection")
+    logger.info('-' * 64)
+    #logger.info("Attempting to Fix Clock_skews in original .entries documents")
+    #replace_clock_skew(db, collName)
+    #logger.info("Completed replacing skew values.")
+    logger.info('-' * 64)
         # event matchup
-        logger.info("Matching events across documents and logs...")
-        events = event_matchup(db, collName)
-        logger.info("Completed event matchup")
-        logger.info('-' * 64)
+    logger.info("Matching events across documents and logs...")
+    events = event_matchup(db, collName)
+    logger.info("Completed event matchup")
+    logger.info('-' * 64)
         # generate frames
-        logger.info("Converting events into frames...")
-        frames = generate_frames(events, db, collName)
-        logger.info("Completed frame conversion")
-        logger.info('-' * 64)
+    logger.info("Converting events into frames...")
+    frames = generate_frames(events, db, collName)
+    logger.info("Completed frame conversion")
+    logger.info('-' * 64)
         # send to server
-        logger.info("Sending frames to server...")
-        send_to_js(frames, get_server_names(db, collName))
-        logger.info('-' * 64)
+    logger.info("Sending frames to server...")
+    send_to_js(frames, get_server_names(db, collName))
+    logger.info('-' * 64)
     logger.info('=' * 64)
     logger.warning('Completed post processing.\nExiting.')
 
