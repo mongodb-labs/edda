@@ -57,6 +57,7 @@ on_canvas_mouseover = function(e) {
         servers[server]["on"] = false;
         canvases["shadow"].width = canvases["shadow"].width;
         canvases["message"].width = canvases["message"].width;
+        canvases["text"].width = canvases["text"].width;
     }
     }
 };
@@ -88,8 +89,8 @@ on_canvas_click = function(e) {
 
 
         // text box over
-        var message = contexts["message"];
-        message.fillStyle = "black";
+        var message = contexts["text"];
+        message.fillStyle = "#1C0E0B";
         message.rect(x, y, 120, 200);
         message.fill();
         console.log("I am in the clicking method.");
@@ -129,6 +130,8 @@ on_canvas_clicks = function(e) {
         var message = contexts["message"];
         message.fillStyle = "black";
         message.rect(x, y, 120, 200);
+        message.fillStyle = "rgba(0, 0, 200, 0.75)";
+        //setOpacity (message, .5);
         message.fill();
         }
     }
@@ -142,3 +145,11 @@ on_canvas_clicks = function(e) {
     }
 
 };
+
+function setOpacity (myElement, opacityValue) {
+    if (window.ActiveXObject) {
+        myElement.style.filter = "alpha(opacity=" + opacityValue*100 + ")"; // IE
+    } else {
+        myElement.style.opacity = opacityValue; // Gecko/Opera
+    }
+}
