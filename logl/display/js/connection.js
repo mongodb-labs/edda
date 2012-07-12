@@ -36,3 +36,19 @@ function connect() {
 	});
 };
 
+// this function is not finished
+function get_single_frame(index) {
+    // poll for a single frame
+    $.ajax({
+	    async: false,
+		url: "http://localhost:28018/" + index + ".one_frame",
+		dataType: "json",
+		success: function(data) {
+		if (data != "no frame") {
+		    frames[index] = data;
+		    render(index);
+		}
+	    }
+	});
+};
+

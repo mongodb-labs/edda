@@ -126,8 +126,13 @@ class LoglHTTPRequest(BaseHTTPRequestHandler):
             if type == "please":
                 self.wfile.write(json.dumps(data))
 
-            elif type == "oneframe":
-                index = 0 # change to be dynamic
+            elif type == "one_frame":
+                index = uri[:(len(uri) - 10)]
+                print "index is {0}".format(index)
+                # handle the case where we'd get a key error
+                if not index in data:
+                    # send nothing
+                    self.wfile.write(json.dumps("no frame"))
                 self.wfile.write(json.dumps(data[index]))
 
             elif type == "servers":
