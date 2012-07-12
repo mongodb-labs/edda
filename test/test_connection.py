@@ -54,7 +54,12 @@ def test_sending_one_frame():
     frame2["syncs"]["kaushal"] = ["sam", "kristina"]
     frame2["summary"] = "This is a summary of frame two."
     frames["1"] = frame2
-    send_to_js(frames)
+    server_names = {}
+    server_names["hostname"] = {}
+    server_names["hostname"]["1"] = "sam"
+    server_names["hostname"]["2"] = "UNKNOWN"
+    server_names["hostname"]["3"] = "kristina"
+    send_to_js(frames, server_names)
 
 
 def new_frame(servers):
