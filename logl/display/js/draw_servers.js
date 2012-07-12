@@ -89,6 +89,9 @@ draw_names = function() {
 	// use hostname, or IP if unknown
 	if (server_names["hostname"][s] == "unknown") {
 	    label = server_names["IP"][s];
+	    if (label == "unknown") {
+		label += "#" + s;
+	    }
         }
         else {label = server_names["hostname"][s];}
 
