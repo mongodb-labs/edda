@@ -198,6 +198,7 @@ def name_me(s, servers):
             continue
         if doc["server_name"] != "unknown":
             name = doc["server_name"]
+            name = name.replace('\n', "")
         if doc["server_IP"] != "unknown":
             IP = doc["server_IP"]
         num = doc["server_num"]

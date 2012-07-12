@@ -89,6 +89,7 @@ def get_server_num(addr, servers):
     # logl (especially in server_matchup)
     logger = logging.getLogger(__name__)
     num = None
+    addr = addr.replace('\n', "")
     if is_IP(addr):
         num = servers.find_one({"server_IP": addr})
     else:

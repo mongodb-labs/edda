@@ -65,6 +65,8 @@ def assign_address(num, addr, servers):
     logger = logging.getLogger(__name__)
     num = str(num)
     addr = str(addr)
+    addr = addr.replace('\n', "")
+    print(addr)
     doc = servers.find_one({"server_num": num})
     if not doc:
         if addr != "unknown":
