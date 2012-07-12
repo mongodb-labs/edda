@@ -90,6 +90,8 @@ def get_server_num(addr, servers):
     logger = logging.getLogger(__name__)
     num = None
     addr = addr.replace('\n', "")
+    addr = addr.replace(" ", "")
+
     if is_IP(addr):
         num = servers.find_one({"server_IP": addr})
     else:
