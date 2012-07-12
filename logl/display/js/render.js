@@ -53,15 +53,18 @@ render = function(time) {
         }
     }
 
-        for (origin_server in frames[time]["syncs"]) {
-            list = frames[time]["syncs"][origin_server];
-        for (i = 0; i < list.length; i++) {
-            one_arrow(servers[origin_server]["x"], servers[origin_server]["y"], servers[list[i]]["x"], servers[list[i]]["y"], contexts["arrow"]);
+    for (origin_server in frames[time]["syncs"]) {
+        var list3 = frames[time]["syncs"][origin_server];
+        for (i = 0; i < list3.length; i++) {
+            console.log(servers[origin_server]["x"]);
+            //console.log(servers[list3[i]]["x"]);
             console.log("_________syncs_____________");
             console.log("from: ");
             console.log(origin_server);
             console.log("to: ");
             console.log(list[i]);
+            one_arrow(servers[origin_server]["x"], servers[origin_server]["y"], servers[list3[i]]["x"], servers[list3[i]]["y"], contexts["arrow"]);
+            
         }
     }
 
