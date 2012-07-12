@@ -56,9 +56,9 @@ def test_sending_one_frame():
     frames["1"] = frame2
     server_names = {}
     server_names["hostname"] = {}
-    server_names["hostname"]["1"] = "sam"
-    server_names["hostname"]["2"] = "UNKNOWN"
-    server_names["hostname"]["3"] = "kristina"
+    server_names["hostname"]["sam"] = "sam"
+    server_names["hostname"]["kaushal"] = "UNKNOWN"
+    server_names["hostname"]["kristina"] = "kristina"
     send_to_js(frames, server_names)
 
 

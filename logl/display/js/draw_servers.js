@@ -36,14 +36,17 @@ generate_coords = function(count, names) {
     case 1:
     // one centered server
     servers[names[0]] = { "x" : w/2, "y" : h/2, "r" : 50, "on" : false, "type" : "UNDISCOVERED" };
-    name = draw_names(servers[names[0]]);
+    name = draw_names(names[0]);
+    contexts["background"].font = "45pt Georgia";
+    contexts["background"].fillStyle = "#9D7E51";
+    contexts["background"].fillText(name, w/2, h/2);
     return;
     case 2:
     // two servers, one on either side
     servers[names[0]] = {"x" : w/3, "y" : h/2, "r" : 50, "on" : false, "type" : "UNDISCOVERED"};
-    name = draw_names(servers[names[0]]);
+    name = draw_names(names[0]);
     servers[names[1]] = {"x" : (0.66)*w, "y" : h/2, "r" : 50, "on" : false, "type" : "UNDISCOVERED"};
-    name = draw_names(servers[names[1]]);
+    name = draw_names(names[1]);
     
     return;
     }
@@ -64,7 +67,12 @@ generate_coords = function(count, names) {
 
         servers[names[i]] = { "x" : xVal, "y" : yVal, "r" : 360/(count*2), "on" : false, "type" : "UNDISCOVERED"};
         start_angle += 360/count;
-        name = draw_names(servers[names[i]]);
+        name = draw_names(names[i]);
+        contexts["background"].font = "45pt Georgia";
+        contexts["background"].fillStyle = "#FFFFFF";
+        contexts["background"].fillText(name, w/2, h/2);
+        contexts["background"].stroke();
+        console.log("Drew Name!!");
     }
     
     return;
@@ -72,7 +80,7 @@ generate_coords = function(count, names) {
 
 draw_names = function(name) {
     console.log("________________________________________________________________________________________");
-    if (server_names["hostname"][name] == "UNKNOWN") {
+    if (server_names["hostname"][name] == "unknown") {
         for (var num in name_reference["IP"]) {
             if (num == name) {
                 console.log(server_names["IP"][name]);
@@ -83,6 +91,7 @@ draw_names = function(name) {
         return server_names["hostname"][name]; // Unknown
     }
     else
+        console.log(name)
         console.log(server_names["hostname"][name]);
         return server_names["hostname"][name]; // Not Unknown
 };
