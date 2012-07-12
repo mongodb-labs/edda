@@ -14,6 +14,8 @@
 
 // without the async messing things up?
 function connect() {
+
+    // poll for the frames
     $.ajax({
 	    async: false,
 		url: "http://localhost:28018/data.please",
@@ -23,5 +25,14 @@ function connect() {
 	    }
 	});
 
+    // poll for the server names
+    $.ajax({
+	    async: false,
+		url: "http://localhost:28018/data.servers",
+		dataType: "json",
+		success: function(data) {
+		server_names = data;
+	    }
+	});
 };
 
