@@ -82,7 +82,7 @@ def starting_up(msg, doc):
 
     # isolate host address
     start = string.find(msg, 'host=')
-    host = msg[start + 5:len(msg)]
+    host = msg[start + 5:len(msg) - 1]
 
     doc["info"]["server"] = host + ":" + port
     deb = "Returning new doc for a message of type: initandlisten: starting_up"

@@ -25,6 +25,7 @@ def test_criteria():
         "[interruptThread] shutdown: going to close listening sockets...") == 1
 
     assert criteria("Thu Jun 14 11:43:28 dbexit: really exiting now") == 2
+    
     assert criteria("Foo bar") == -1
 
 
