@@ -16,21 +16,39 @@
 one_line = function(x1, y1, x2, y2, ctx) {
     ctx.beginPath();
     ctx.moveTo(x1, y1);
-    ctx.lineWidth = 3;
-    //ctx.quadraticCurveTo(cx, cy, x2, y2);
-    ctx.strokeStyle = "#78561c";//3B1EOB
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = "#1C0E0B";//3B1EOB
     ctx.lineTo(x2, y2);
     ctx.stroke();
-
-
 };
 
-broken_link = function(x1, y1, x2, y2, ctx){
+broken_link = function(x1, y1, x2, y2, ctx) {
+    // draw a dotted line from x1,y1 to x2,y2
+    var dy = y2 - y1;
+    var dx = x2 - x1;
+    var slope = dy/dx;
+    var l = 10;
+    var x = x1;
+    var y = y1;
+    var distRemaining = Math.sqrt(dx*dx + dy*dy);
+    var xStep = Math.sqrt(l*l / (1 + slope*slope));
+
+    // set the sign of xStep:
+    if (x1 > x2) { xStep = -xStep; }
+    var yStep = slope * xStep;
+
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = "#9D7E51";//3B1EOB
     ctx.beginPath();
-    ctx.moveTo(x1, y1);
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = "#E9E9E9";//3B1EOB
-    //ctx.quadraticCurveTo(cx, cy, x2, y2);
-    ctx.lineTo(x2, y2);
+    // adapted from http://stackoverflow.com/questions/4576724/dotted-stroke-in-canvas
+    while (distRemaining >= 0.1) {
+	ctx.moveTo(x, y);
+	x += xStep;
+	y += yStep;
+	ctx.lineTo(x, y);
+	x += xStep;
+	y += yStep;
+	distRemaining -= (2 * l);
+    }
     ctx.stroke();
 };
