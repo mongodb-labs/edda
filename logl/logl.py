@@ -199,7 +199,7 @@ def main():
         logger.info('-' * 64)
         # send to server
         logger.info("Sending frames to server...")
-        send_to_js(frames)
+        send_to_js(frames, get_server_names(db, collName))
         logger.info('-' * 64)
     logger.info('=' * 64)
     logger.warning('Completed post processing.\nExiting.')
@@ -235,6 +235,19 @@ def traffic_control(msg, date):
                     # for now, this will only return the first module hit...
                     # do we want to change this?
                     # probably...
+
+
+def get_server_names(db, collName):
+    """Format the information in the .servers collection
+    into a data structure to be sent to the JavaScript client"""
+    server_names = {}
+    server_names["hostname"] = {}
+    server_names["IP"] = {}
+    cursor = db[collName + ".servers"].find()
+    for doc in cursor:
+        server_names["hostname"][doc["server_num"]] = doc["server_name"]
+        server_names["IP"][doc["server_num"]] = doc["server_IP"]
+    return server_names
 
 
 if __name__ == "__main__":
