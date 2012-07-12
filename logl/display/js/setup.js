@@ -19,6 +19,7 @@ var layers = new Array("background", "shadow", "link", "arrow", "server", "text"
 var canvases = {};
 var contexts = {};
 var servers = {};
+var server_names;
 var frames;
 var slider = {};
 
