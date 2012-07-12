@@ -54,12 +54,12 @@ function mouse_over_setup() {
 function visual_setup() {
     var names = new Array();
     if (frames) {
-    if (frames["0"]) {
-        for (var name in frames["0"]["servers"]) {
-        names.push(name);
+        if (frames["0"]) {
+            for (var name in frames["0"]["servers"]) {
+                names.push(name);
+            }
+            generate_coords(names.length, names);
         }
-        generate_coords(names.length, names);
-    }
     }
 
     // clear all layers
