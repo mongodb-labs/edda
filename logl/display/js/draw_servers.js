@@ -47,7 +47,7 @@ generate_coords = function(count, names) {
     name = draw_names(names[0]);
     servers[names[1]] = {"x" : (0.66)*w, "y" : h/2, "r" : 50, "on" : false, "type" : "UNDISCOVERED"};
     name = draw_names(names[1]);
-    
+
     return;
     }
 
@@ -67,33 +67,42 @@ generate_coords = function(count, names) {
 
         servers[names[i]] = { "x" : xVal, "y" : yVal, "r" : 360/(count*2), "on" : false, "type" : "UNDISCOVERED"};
         start_angle += 360/count;
-        name = draw_names(names[i]);
-        contexts["background"].font = "45pt Georgia";
-        contexts["background"].fillStyle = "#FFFFFF";
-        contexts["background"].fillText(name, w/2, h/2);
-        contexts["background"].stroke();
-        console.log("Drew Name!!");
     }
-    
+    draw_names();
     return;
 };
 
-draw_names = function(name) {
-    console.log("________________________________________________________________________________________");
-    if (server_names["hostname"][name] == "unknown") {
-        for (var num in name_reference["IP"]) {
-            if (num == name) {
-                console.log(server_names["IP"][name]);
-                return server_names["IP"][name];
-            }
+draw_names = function() {
+    // for each server, figure out their location
+    // find out where the "outside" of the circle is
+    // get a point on the line from this server to the center
+    // 3/2*r distance away from the server's center
+    // use this to draw text, or place a user
+    contexts["background"].font = "11pt Courier New";
+    contexts["background"].fillStyle = "white";
+
+    // for each server:
+    for (var s in servers) {
+	var r = servers[s]["r"];
+	console.log(s)
+	var label;
+	// use hostname, or IP if unknown
+	if (server_names["hostname"][s] == "unknown") {
+	    label = server_names["IP"][s];
         }
-        console.log(server_names["hostname"][name]);
-        return server_names["hostname"][name]; // Unknown
+        else {label = server_names["hostname"][s];}
+
+	// draw name, but only 15 characters per line
+	var i = 0;
+	while (true) {
+	    sub_label = label.substring(15 * i, 15 * (i + 1));
+	    contexts["background"].fillText(sub_label, servers[s]["x"] + (1.5*r), servers[s]["y"] + (15 * i));
+	    i++;
+	    if ((15 * i) > label.length) {
+		break;
+	    }
+	}
     }
-    else
-        console.log(name)
-        console.log(server_names["hostname"][name]);
-        return server_names["hostname"][name]; // Not Unknown
 };
 
 

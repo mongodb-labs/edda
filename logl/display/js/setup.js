@@ -54,14 +54,6 @@ function mouse_over_setup() {
 // set background to brown
 function visual_setup() {
     var names = new Array();
-    if (frames) {
-        if (frames["0"]) {
-            for (var name in frames["0"]["servers"]) {
-                names.push(name);
-            }
-            generate_coords(names.length, names);
-        }
-    }
 
     // clear all layers
     for (var name in layers) {
@@ -75,6 +67,15 @@ function visual_setup() {
     b_ctx.rect(0, 0, b_cvs.width, b_cvs.height);
     b_ctx.fillStyle = "#4E3629";
     b_ctx.fill();
+
+    if (frames) {
+        if (frames["0"]) {
+            for (var name in frames["0"]["servers"]) {
+                names.push(name);
+            }
+            generate_coords(names.length, names);
+        }
+    }
 
     // render first frame
     render("0");
