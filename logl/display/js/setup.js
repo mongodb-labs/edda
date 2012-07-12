@@ -22,7 +22,7 @@ var servers = {};
 var server_names;
 var frames;
 var slider = {};
-
+var current_frame = 0;
 
 // call various setup functions
 function logl_setup() {
@@ -45,7 +45,7 @@ function canvases_and_contexts() {
 // set up mouse-over functionality
 function mouse_over_setup() {
     canvases["message"].addEventListener("mousemove", on_canvas_mouseover, false);
-    canvases["message"].addEventListener("click", on_canvas_click, false);
+    canvases["message"].addEventListener("click", new_click, false);
 }
 
 
@@ -91,6 +91,7 @@ function time_setup(max_time) {
         console.log(ui.value);
         document.getElementById("timestamp").innerHTML = frames[ui.value]["date"];
         document.getElementById("summary").innerHTML = ui.value + ": " + frames[ui.value]["summary"];
+	current_frame = ui.value;
         }});
     //$("#slider").slider( "option", "min", 0 );
     //$("#slider").slider( "option", "max", max_time );
