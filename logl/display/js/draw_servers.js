@@ -76,17 +76,23 @@ primary = function(x, y, r, ctx) {
 
 down = function(x, y, r, ctx) {
     // draw a down server
-    ctx.globalAlpha = 0.4; // 40% opacity
+    //ctx.globalAlpha = 0.4; // 40% opacity
     ctx.beginPath();
     ctx.arc(x, y, r, 0, 360, false);
     ctx.lineWidth = 9;
-    ctx.strokeStyle = "#9A9A9A";
-    ctx.fillStyle = "#515151";
+    ctx.fillStyle = "#4E3629";
     ctx.fill();
-    ctx.globalAlpha = 1; // full opacity
+    //ctx.globalAlpha = 1; // full opacity
     //ctx.stroke();
 
+    dotted_circle(x, y, r, "#9D7E51", 9, ctx);
+};
+
+
+dotted_circle = function(x, y, r, color, wt, ctx) {
     // generate dotted outline
+    ctx.strokeStyle = color;
+    ctx.lineWidth = wt;
     var a = 0;
     var b = 0.05;
     while (b <= 2) {
@@ -161,34 +167,36 @@ secondary = function(x, y, r, ctx) {
 
 rollback = function(x, y, r, ctx) {
     // draw a blue circle with radius r centered at (x, y)
-    circle(x, y, r, "#3D57BF", "#8095E8", 18, ctx);
+    circle(x, y, r, "#3F308F", "#1D0C37", 18, ctx);
 };
 
 recovering = function(x, y, r, ctx) {
     // draw a RECOVERING server
-    circle(x, y, r, "#167D6F", "#4CBAAC", 18, ctx);
+    circle(x, y, r, "#3FA5A9", "#2B4E66", 18, ctx);
 };
 
-startup = function(x, y, r, ctx) {
+startup1 = function(x, y, r, ctx) {
     // draw a server in startup1
-    circle(x, y, r, "white", "blue", 18, ctx);
+    circle(x, y, r, "#4E3629", "#E1E2E5", 18, ctx);
 };
 
 startup2 = function(x, y, r, ctx) {
     // draw a server in startup2
-    circle(x, y, r, "white", "red", 18, ctx);
+    circle(x, y, r, "#85807D", "#E1E2E5", 18, ctx);
 };
 
 fatal = function(x, y, r, ctx) {
     // draw a red circle with radius r centered at (x, y)
     // this server is in a FATAL state
-    circle(x, y, r, "#FF0000", "#850404", 18, ctx);
+    circle(x, y, r, "#722714", "#722714", 1, ctx);
+    dotted_circle(x, y, r, "#ED451B", 9, ctx);
 };
 
 removed = function(x, y, r, ctx) {
     // draw a removed server
     // empty with a dark brown outline
-    circle(x, y, r, "white", "#3B1E0B", 18, ctx);
+    circle(x, y, r, "#1C0E0B", "#1C0E0B", 1, ctx);
+    dotted_circle(x, y, r, "#9D7E51", 9, ctx);
 };
 
 undiscovered = function(x, y, r, ctx) {
@@ -203,10 +211,11 @@ unknown = function(x, y, r, ctx) {
     // draw a server in an UNKNOWN state
     // this is a light grey circle with a darker grey outline
     // and a large question mark in the center
-    circle(x, y, r, "#BFBFBF", "#737373", 18, ctx);
-    ctx.font = "45pt Helvetica";
-    ctx.fillStyle = "#737373";
-    ctx.fillText("?", x - r/3, y + r/3);
+    circle(x, y, r, "#4E3629", "#4E3629", 1, ctx);
+    dotted_circle(x, y, r, "#9D7E51", 9, ctx);
+    ctx.font = "45pt Georgia";
+    ctx.fillStyle = "#9D7E51";
+    ctx.fillText("?", x - r/4, y + ((.4)*r));
 };
 
 lock = function(x, y, r, ctx) {
