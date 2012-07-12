@@ -34,10 +34,6 @@ render = function(time) {
         list = frames[time]["links"][origin_server];
         for (i = 0; i < list.length; i++) {
             one_line(servers[origin_server]["x"], servers[origin_server]["y"], servers[list[i]]["x"], servers[list[i]]["y"], contexts["arrow"]);
-            console.log("from: ");
-            console.log(origin_server);
-            console.log("to: ");
-            console.log(list[i]);
         }
     }
 
@@ -45,26 +41,13 @@ render = function(time) {
         var list2 = frames[time]["broken_links"][origin_server];
         for (i = 0; i < list2.length; i++) {
             broken_link(servers[origin_server]["x"], servers[origin_server]["y"], servers[list2[i]]["x"], servers[list2[i]]["y"], contexts["arrow"]);
-            console.log("_________broken_links_____________");
-            console.log("from: ");
-            console.log(origin_server);
-            console.log("to: ");
-            console.log(list[i]);
         }
     }
 
     for (origin_server in frames[time]["syncs"]) {
-        var list3 = frames[time]["syncs"][origin_server];
-        for (i = 0; i < list3.length; i++) {
-            console.log(servers[origin_server]["x"]);
-            //console.log(servers[list3[i]]["x"]);
-            console.log("_________syncs_____________");
-            console.log("from: ");
-            console.log(origin_server);
-            console.log("to: ");
-            console.log(list[i]);
-            one_arrow(servers[origin_server]["x"], servers[origin_server]["y"], servers[list3[i]]["x"], servers[list3[i]]["y"], contexts["arrow"]);
-            
+    	list = frames[time]["syncs"][origin_server];
+        for (i = 0; i < list.length; i++) {
+            one_arrow(servers[origin_server]["x"], servers[origin_server]["y"], servers[list[i]]["x"], servers[list[i]]["y"], contexts["arrow"]);
         }
     }
 

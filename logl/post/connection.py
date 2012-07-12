@@ -29,7 +29,7 @@ import threading
 from time import sleep
 
 data = None
-
+server_list = None
 
 class ThreadClass(threading.Thread):
 
@@ -44,12 +44,14 @@ class ThreadClass(threading.Thread):
             print "Please try again with a different default browser"
 
 
-def send_to_js(msg):
+def send_to_js(frames, servers):
     """Sends information to the JavaScript
     client"""
 
     global data
-    data = json.dumps(msg)
+    global server_list
+    data = frames
+    server_list = servers
 
     # fork here!
     t = ThreadClass()
@@ -122,7 +124,14 @@ class LoglHTTPRequest(BaseHTTPRequestHandler):
         if len(type) != 0:
 
             if type == "please":
-                self.wfile.write(data)
+                self.wfile.write(json.dumps(data))
+
+            elif type == "oneframe":
+                index = 0 # change to be dynamic
+                self.wfile.write(json.dumps(data[index]))
+
+            elif type == "servers":
+                self.wfile.write(json.dumps(server_list))
 
             elif type in self.mimetypes and os.path.exists(self.docroot + uri):
                 f = open(self.docroot + uri, 'r')

@@ -14,6 +14,8 @@
 
 // without the async messing things up?
 function connect() {
+
+    // poll for the frames
     $.ajax({
 	    async: false,
 		url: "http://localhost:28018/data.please",
@@ -22,22 +24,15 @@ function connect() {
 		frames = data;
 	    }
 	});
-};
 
-
-// get frames from python using jquery
-// this method is asynchronous!!
-function connect_async() {
-    $.getJSON("http://localhost:28018/data.please",
-	      function(data) {
-		  console.log("got data from the server:");
-		  console.log(data);
-		  frames = data;
-		  console.log(frames);
-		  console.log(frames["0"]);
-		  render("0");
-	      });
-    //    render("0");
-    //console.log(frames["0"]);
+    // poll for the server names
+    $.ajax({
+	    async: false,
+		url: "http://localhost:28018/data.servers",
+		dataType: "json",
+		success: function(data) {
+		server_names = data;
+	    }
+	});
 };
 

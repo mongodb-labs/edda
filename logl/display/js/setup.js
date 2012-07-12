@@ -19,6 +19,7 @@ var layers = new Array("background", "shadow", "link", "arrow", "server", "text"
 var canvases = {};
 var contexts = {};
 var servers = {};
+var server_names;
 var frames;
 var slider = {};
 
@@ -85,7 +86,7 @@ function visual_setup() {
 function time_setup(max_time) {
 
     $("#slider").slider({ slide: function(event, ui) {
-        render(ui.value);
+		render(ui.value);
         console.log(ui.value);
         document.getElementById("timestamp").innerHTML = frames[ui.value]["date"];
         document.getElementById("summary").innerHTML = frames[ui.value]["summary"];
