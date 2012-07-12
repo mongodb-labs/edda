@@ -79,5 +79,19 @@ body {
 	 width: 800px;
 }
 
+/* message box!! */
 
+#message_box {
+	     font-family: "Monaco";
+	     font-size: 12px;
+	     position: absolute;
+	     opacity:0.8;
+	     filter:alpha(opacity=80);
+	     background-color: #1C0E0B;
+	     visibility: "hidden";
+	     color: #FFFFFF;
+	     z-index: 11;
+	     padding: 10px;
+	     max-width: 150px;
+}
 
