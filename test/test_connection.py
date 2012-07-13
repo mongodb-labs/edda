@@ -22,11 +22,12 @@ from nose.plugins.skip import Skip, SkipTest
 
 def dont_run_send_to_js():
     """Test the send_to_js() method"""
-    #raise SkipTest
+    raise SkipTest
     send_to_js(generate_msg())
 
 
 def test_sending_one_frame():
+    raise SkipTest
     frame = {}
     frame2 = {}
     servers = ['sam', 'kaushal', 'kristina']
