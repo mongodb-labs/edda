@@ -64,9 +64,16 @@ function visual_setup() {
     var b_cvs = canvases["background"];
     var b_ctx = contexts["background"];
     b_ctx.beginPath();
-    b_ctx.rect(0, 0, b_cvs.width, b_cvs.height);
-    b_ctx.fillStyle = "#4E3629";
+    var w = b_cvs.width;
+    var h = b_cvs.height;
+    var grad = b_ctx.createRadialGradient(w/2, h/2, 180, w/2, h/2, h);
+    grad.addColorStop(0, "#4E3629");
+    grad.addColorStop(1, "#000000");
+    b_ctx.rect(0, 0, w, h);
+    b_ctx.fillStyle = grad;
+	//    b_ctx.fillStyle = "#4E3629";
     b_ctx.fill();
+
 
     if (frames) {
         if (frames["0"]) {
