@@ -23,14 +23,10 @@ import logging
 def criteria(msg):
     """does the given log line fit the criteria for this filter?
     return an integer code if yes, -1 if no."""
-    # maybe we should fix this later...
     if (string.find(msg, '[initandlisten]') < 0):
         return -1
-    # is it this server starting up?
     if (string.find(msg, 'starting') >= 0):
         return 1
-    # has this server accepted a new connection?
-
     return -1
 
 
@@ -73,7 +69,7 @@ def starting_up(msg, doc):
     doc["info"]["subtype"] = "startup"
 
     # isolate port number
-    pattern = re.compile("port=[0-9]+")
+    pattern = re.compile("port=[0-9]{1,5}")
     m = pattern.search(msg)
     if m is None:
         logger.debug("malformed starting_up message: no port number found")
@@ -82,9 +78,13 @@ def starting_up(msg, doc):
 
     # isolate host address
     start = string.find(msg, 'host=')
-    host = msg[start + 5:len(msg) - 1]
+    host = msg[start + 5:len(msg)]
 
-    doc["info"]["server"] = host + ":" + port
+    doc["info"]["server"] = "self"
+    addr = host + ":" + port
+    addr = addr.replace('\n', "")
+    addr = addr.replace(" ", "")
+    doc["info"]["addr"] = addr
     deb = "Returning new doc for a message of type: initandlisten: starting_up"
     logger.debug(deb)
     return doc
