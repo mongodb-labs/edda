@@ -18,7 +18,7 @@ function connect() {
     // poll for the frames
     $.ajax({
 	    async: false,
-		url: "http://localhost:28018/data.please",
+		url: "http://localhost:28000/data.all_frames",
 		dataType: "json",
 		success: function(data) {
 		frames = data;
