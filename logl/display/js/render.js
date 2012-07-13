@@ -47,7 +47,7 @@ render = function(time) {
     for (origin_server in frames[time]["syncs"]) {
     	list = frames[time]["syncs"][origin_server];
         for (i = 0; i < list.length; i++) {
-            one_arrow(servers[origin_server]["x"], servers[origin_server]["y"], servers[list[i]]["x"], servers[list[i]]["y"], contexts["arrow"]);
+            one_arrow(servers[list[i]]["x"], servers[list[i]]["y"], servers[origin_server]["x"], servers[origin_server]["y"], contexts["arrow"]);
         }
     }
 
@@ -101,23 +101,10 @@ render = function(time) {
 	}
 
     // add lock, if necessary
-    if (n.length == 2) {
-        lock(servers[name]["x"], servers[name]["y"], servers[name]["r"]);
+	if (n.length == 2) {
+	    lock(servers[name]["x"], servers[name]["y"], servers[name]["r"]);
+	}
     }
-        xvals[count] = servers[name]["x"];
-        yvals[count] = servers[name]["y"];
-        count++;
-    }/*
-    var xvals2 = xvals, yvals2 = yvals;
-    for(var i = 0; i < count; i++) {
-        for(var j = 0; j < count; j++) {
-            if (xvals[i] != xvals[j])
-                one_arrow(xvals[i], yvals[i], xvals2[j], yvals2[j], contexts["arrow"]);
-        }
-    }*/
-    //one_arrow(100, 100, 200, 200, contexts["arrow"]);
-    //one_line(120, 100, 220, 200, contexts["link"])
-
     }
 };
 
