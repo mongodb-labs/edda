@@ -21,11 +21,7 @@ import string
 def criteria(msg):
     """Does the given log line fit the criteria for this filter?
     return an integer code if yes, -1 if not."""
-    if (string.find(msg, '[interruptThread] closing') >= 0):
-        return 0
-    elif (string.find(msg, '[interruptThread] shutdown') >= 0):
-        return 1
-    elif (string.find(msg, 'dbexit: really exiting now') >= 0):
+    if (string.find(msg, 'dbexit: really exiting now') >= 0):
         return 2
 
     return -1
@@ -41,8 +37,7 @@ def process(msg, date):
           "state" : state
           "server": "self"
        }
-       "oritinal_message" : msg,
-       "exit_message" : exit_message
+       "oritinal_message" : msg
     }"""
 
     messagetype = criteria(msg)
@@ -56,14 +51,6 @@ def process(msg, date):
     doc["info"] = {}
     doc["info"]["state"] = labels[messagetype]
     doc["original_message"] = msg
-    if(messagetype == 0):
-        start = string.find(msg, 'closing')
-        doc["exit_message"] = msg[start: len(msg)]
-    elif(messagetype == 1):
-        start = string.find(msg, 'shutdown: ')
-        doc["exit_message"] = msg[start + 11: len(msg)]
-    elif(messagetype == 2):
-        doc["exit_message"] = "dbexit"
     #print doc["exit_message"]
     doc["info"]["server"] = "self"
     #Has the member begun syncing to a different place
