@@ -18,6 +18,7 @@ from datetime import datetime
 from copy import deepcopy
 import pymongo
 import logging
+import string
 
 # The documents this module
 # generates will include the following information:
@@ -161,6 +162,7 @@ def break_links(me, f):
         for sync in f["syncs"][s]:
             if link == me:
                 f["syncs"][s].remove(link)
+                f["broken_links"][s].append(link)
     # remove all of my user connections
     f["users"][me] = []
     return f
@@ -192,8 +194,21 @@ def info_by_type(f, e):
             f["users"][s].remove(e["conn_addr"])
     # syncs
     elif e["type"] == "sync":
-        if not e["sync_to"] in f["syncs"][s]:
-            f["syncs"][s].append(e["sync_to"])
+        s_to = e["sync_to"]
+        s_from = s
+        # do not allow more than one sync per server
+        if not s_to in f["syncs"][s_from]:
+            f["syncs"][s_from] = []
+            f["syncs"][s_from].append(s_to)
+        # if links do not exist, add
+        if (not s_to in f["links"][s_from] or
+            not s_from in f["links"][s_to]):
+            f["links"][s_from].append(s_to)
+        # remove broken links
+        if s_to in f["broken_links"][s_from]:
+            f["broken_links"][s_from].remove(s_to)
+        if s_from in f["broken_links"][s_to]:
+            f["broken_links"][s_to].remove(s_from)
     # exits
     elif e["type"] == "exit":
         f["servers"][s] == "DOWN"
@@ -207,5 +222,6 @@ def info_by_type(f, e):
         f["servers"][s] = f["servers"][s[:n]]
     elif e["type"] == "FSYNC":
         # nothing to do for fsync?
-        pass
+        # render a lock?
+        f["servers"][s] += ".LOCKED"
     return f
