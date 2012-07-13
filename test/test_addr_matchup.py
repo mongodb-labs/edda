@@ -16,8 +16,7 @@ from logl.post.server_matchup import *
 from test_clock_skew import generate_doc
 from logl.logl import assign_address
 from pymongo import Connection
-from datetime import datetime
-from time import sleep
+from datetime import datetime, timedelta
 import logging
 
 
@@ -75,7 +74,6 @@ def test_eliminate_different_lists():
 
 def test_eliminate_different_lists_b_one():
     """s and b have no overlap, b only has one entry"""
-    print eliminate(["a", "b", "c"], ["fish"])
     assert eliminate(["a", "b", "c"], ["fish"]) == "fish"
 
 
@@ -95,7 +93,7 @@ def test_one_unknown():
     """Test on a database with one unknown server"""
     servers, entries, clock_skew, db = db_setup()
     # insert one unknown server
-    assign_address(1, "1", servers)
+    assign_address(1, "unknown", servers)
     assert address_matchup(db, "hp") == -1
 
 
@@ -118,9 +116,9 @@ def test_all_servers_unknown():
     (neither hostname or IP)"""
     # this case could be handled, in the future
     servers, entries, clock_skew, db = db_setup()
-    assign_address(1, "1", servers)
-    assign_address(2, "2", servers)
-    assign_address(3, "3", servers)
+    assign_address(1, "unknown", servers)
+    assign_address(2, "unknown", servers)
+    assign_address(3, "unknown", servers)
     assert address_matchup(db, "hp") == -1
 
 
@@ -162,7 +160,7 @@ def test_one_known_one_unknown():
     known and one unknown (hostnames only)"""
     servers, entries, clock_skew, db = db_setup()
     assign_address(1, "Parvati", servers)
-    assign_address(2, "2", servers)
+    assign_address(2, "unknown", servers)
     # add a few entries
 
     entries.insert(generate_doc(
@@ -172,14 +170,14 @@ def test_one_known_one_unknown():
     entries.insert(generate_doc(
         "status", "Parvati", "ARBITER", 2, "Padma", datetime.now()))
 
-    sleep(3)
+    date = datetime.now() + timedelta(seconds=3)
 
     entries.insert(generate_doc(
-        "status", "2", "PRIMARY", 1, "self", datetime.now()))
+        "status", "2", "PRIMARY", 1, "self", date))
     entries.insert(generate_doc(
-        "status", "2", "SECONDARY", 2, "self", datetime.now()))
+        "status", "2", "SECONDARY", 2, "self", date))
     entries.insert(generate_doc(
-        "status", "2", "ARBITER", 7, "self", datetime.now()))
+        "status", "2", "ARBITER", 7, "self", date))
 
     assert address_matchup(db, "hp") == 1
     assert servers.find_one({"server_num": "2"})["server_name"] == "Padma"
@@ -191,8 +189,8 @@ def test_one_known_one_unknown_IPs():
     """Test on a db with two servers, one
     known and one unknown (IPs only)"""
     servers, entries, clock_skew, db = db_setup()
-    assign_address(1, "1.1.1.1", servers)
-    assign_address(2, "2", servers)
+    assign_address("1", "1.1.1.1", servers)
+    assign_address("2", "unknown", servers)
     # add a few entries
     entries.insert(generate_doc(
         "status", "1.1.1.1", "PRIMARY", 1, "2.2.2.2", datetime.now()))
@@ -200,15 +198,13 @@ def test_one_known_one_unknown_IPs():
         "status", "1.1.1.1", "SECONDARY", 2, "2.2.2.2", datetime.now()))
     entries.insert(generate_doc(
         "status",  "1.1.1.1", "ARBITER", 2, "2.2.2.2", datetime.now()))
-
-    sleep(3)
-
+    date = datetime.now() + timedelta(seconds=3)
     entries.insert(generate_doc(
-        "status", "2", "PRIMARY", 1, "self", datetime.now()))
+        "status", "2", "PRIMARY", 1, "self", date))
     entries.insert(generate_doc(
-        "status", "2", "SECONDARY", 2, "self", datetime.now()))
+        "status", "2", "SECONDARY", 2, "self", date))
     entries.insert(generate_doc(
-        "status", "2", "ARBITER", 7, "self", datetime.now()))
+        "status", "2", "ARBITER", 7, "self", date))
 
     assert address_matchup(db, "hp") == 1
     assert servers.find_one({"server_num": "2"})["server_IP"] == "2.2.2.2"
