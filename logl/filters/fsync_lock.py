@@ -25,13 +25,12 @@ import string
 def criteria(msg):
     """Does the given log line fit the criteria for this filter?
     return an integer code if yes, -1 if not."""
-    if string.find(msg, 'conn') >= 0:
-        if (string.find(msg, 'db is now locked') >= 0):
-            return 0
-        elif (string.find(msg, 'command: unlock requested') >= 0):
-            return 1
-        elif (string.find(msg, 'CMD fsync: sync:1 lock:1') >= 0):
-            return 2
+    if (string.find(msg, 'db is now locked') >= 0):
+        return 0
+    elif (string.find(msg, 'command: unlock requested') >= 0):
+        return 1
+    elif (string.find(msg, 'CMD fsync: sync:1 lock:1') >= 0):
+        return 2
     return -1
 
 
