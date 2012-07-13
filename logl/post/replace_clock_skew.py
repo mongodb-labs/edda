@@ -50,7 +50,6 @@ def replace_clock_skew(db, collName):
     """"Using clock skew values that we have recieved from the
         clock skew method, fixes these values in the
         original DB, (.entries)."""""
-    #print 'I am here'
     entries = db[collName + ".entries"]
     clock_skew = db[collName + ".clock_skew"]
     servers = db[collName + ".servers"]
