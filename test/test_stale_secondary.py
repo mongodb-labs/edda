@@ -27,17 +27,16 @@ def test_criteria():
 def test_process():
     """Test the process() method of stale_secondary.py"""
     date = datetime.now()
-    check_state("Thu Sep 9 17:22:46 [rs_sync] replSet error RS102 too stale to catch up", 0, date, None)
-    check_state("Thu Sep 9 17:24:46 [rs_sync] replSet error RS102 too stale to catch up, at least from primary: 127.0.0.1:30000", 0, date, "127.0.0.1:30000")
-    check_state("Thu Sep 9 17:24:46 [rs_sync] replSet error RS102 too stale to catch up, at least from primary: sam@10gen.com:27017", 0, date, "sam@10gen.com:27017")
+    check_state("Thu Sep 9 17:22:46 [rs_sync] replSet error RS102 too stale to catch up", 0, date)
+    check_state("Thu Sep 9 17:24:46 [rs_sync] replSet error RS102 too stale to catch up, at least from primary: 127.0.0.1:30000", 0, date)
+    check_state("Thu Sep 9 17:24:46 [rs_sync] replSet error RS102 too stale to catch up, at least from primary: sam@10gen.com:27017", 0, date)
     assert process("This should fail", date) == None
 
 
-def check_state(message, code, date, server):
+def check_state(message, code, date):
     """Helper method for tests"""
     doc = process(message, date)
     assert doc
     assert doc["type"] == "stale"
     assert doc["original_message"] == message
-    if server != None:
-        assert doc["info"]["server"] == server
+    assert doc["info"]["server"] == "self"
