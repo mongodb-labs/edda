@@ -13,7 +13,7 @@
 # limitations under the License.
 
 
-# Example messages: 
+# Example messages:
 
 # Tue Jul  3 10:20:15 [rsMgr] replset msgReceivedNewConfig version: version: 4
 # Tue Jul  3 10:20:15 [rsMgr] replSet info saving a newer config version to local.system.replset
@@ -48,6 +48,6 @@ def check_state(message, code, date, server):
     print "Doc: {}".format(doc)
     assert doc
     assert doc["date"] == date
-    assert doc["type"] == "re_sync"
-    assert doc["original_message"] == message
+    assert doc["type"] == "reconfig"
+    assert doc["msg"] == message
     assert doc["info"]["server"] == "self"
