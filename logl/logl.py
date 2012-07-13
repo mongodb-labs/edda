@@ -199,7 +199,7 @@ def main():
     logger.info('-' * 64)
         # send to server
     logger.info("Sending frames to server...")
-    send_to_js(frames, get_server_names(db, collName))
+    send_to_js(frames, get_server_names(db, collName), "admin")
     logger.info('-' * 64)
     logger.info('=' * 64)
     logger.warning('Completed post processing.\nExiting.')
