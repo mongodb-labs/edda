@@ -97,17 +97,19 @@ draw_names = function() {
 	// figure out which side of the circle to
 	// write labels
 	var i = 0;
+	var n = 13;
 	var y = servers[s]["y"];
 	var x = servers[s]["x"];
 	if (x < w/2){
-	    x = servers[s]["x"] - (1.5*r) - 180;
+	    x = servers[s]["x"] - (2*r) - 170;
 	}
-	// draw name, but only 15 characters per line
+
+	// draw name, but only n characters per line
 	while (true) {
-	    sub_label = label.substring(15 * i, 15 * (i + 1));
+	    sub_label = label.substring(n * i, n * (i + 1));
 	    contexts["background"].fillText(sub_label, x + (1.5*r), y + (15 * i));
 	    i++;
-	    if ((15 * i) > label.length) {
+	    if ((n * i) > label.length) {
 		break;
 	    }
 	}
