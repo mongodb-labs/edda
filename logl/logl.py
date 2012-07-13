@@ -36,7 +36,6 @@ from supporting_methods import *
 from datetime import datetime
 from filters import *
 from post.server_matchup import address_matchup
-from post.server_matchup import is_IP
 from post.clock_skew import server_clock_skew
 from post.replace_clock_skew import replace_clock_skew
 from post.event_matchup import *
@@ -84,7 +83,7 @@ def main():
     else:
         collName = str(objectid.ObjectId())
     # for easier debugging:
-    print collName
+    print "Logl is storing data under collection name {0}".format(collName);
 
 
     # configure logger
@@ -121,29 +120,21 @@ def main():
     logger.info('Connection opened with logl mongod, using {0} on port {1}'.format(host, port))
     logger.debug('Writing to db logl, collection {0}\nPreparing to parse log files'.format(name))
 
-    reset = True
-    server_num = 0
-
     # read in from each log file
     for arg in namespace.filename:
         f = open(arg, 'r')
         counter = 0
         stored = 0
+        server_num = -1
 
-        server_num += 1
-
-        # a name for this server
-        origin_server = server_num
         logger.warning('Reading from logfile {0}...'.format(arg))
         previous = "none"
+
         for line in f:
-            add_doc = True
             counter += 1
-            logger.debug('Reading line {0} from {1}'.format(counter, arg))
             # handle restart lines
             if (string.find(line, '*****') >= 0):
-                reset = True
-                server_num += 1
+                logger.debug("Skipping restart message")
                 continue
             # skip blank lines
             if (len(line) > 1):
@@ -153,16 +144,25 @@ def main():
                     continue
                 doc = traffic_control(line, date)
                 if doc:
-                    if reset and doc["type"] == "init" and doc["info"]["subtype"] == "startup":
+                    # is there a server number for us yet?  If not, get one
+                    if server_num == -1:
+                        server_num = get_server_num("unknown", servers)
+                    # see if we have captured a new server address
+                    if doc["type"] == "init" and doc["info"]["subtype"] == "startup":
+                        logger.debug("Found addr {0} for server {1} from startup msg"
+                                     .format(doc["info"]["addr"], server_num))
+                        assign_address(server_num, str(doc["info"]["addr"]), servers)
+                    if doc["type"] == "status" and "addr" in doc["info"]:
+                        logger.debug("Found addr {0} for server {1} from rs_status msg"
+                                     .format(doc["info"]["addr"], server_num))
                         assign_address(server_num, str(doc["info"]["server"]), servers)
+                    # skip repetitive 'exit' messages
                     if doc["type"] == "exit" and previous == "exit":
-                        add_doc = False
-                    reset = False
-                    doc["origin_server"] = str(server_num)
-                    if add_doc:
-                        entries.insert(doc)
-                        logger.debug('Stored line {0} of {1} to db'.format(counter, arg))
-                        stored += 1
+                        continue
+                    doc["origin_server"] = server_num
+                    entries.insert(doc)
+                    logger.debug('Stored line {0} of {1} to db'.format(counter, arg))
+                    stored += 1
                     previous = doc["type"]
         logger.warning('-' * 64)
         logger.warning('Finished running on {0}'.format(arg))
@@ -170,14 +170,14 @@ def main():
         logger.warning('=' * 64)
     logger.info("Finished reading from log files, performing post processing")
     logger.info('-' * 64)
-#    if len(namespace.filename) > 1:
-    logger.info("Attempting to resolve server names")
-    result = address_matchup(db, collName)
-    if result == 1:
-        logger.info("Server addresses successfully resolved")
-    else:
-        logger.warning("Server addresses could not be resolved")
-    logger.info('-' * 64)
+    if len(namespace.filename) > 1:
+        logger.info("Attempting to resolve server names")
+        result = address_matchup(db, collName)
+        if result == 1:
+            logger.info("Server addresses successfully resolved")
+        else:
+            logger.warning("Server addresses could not be resolved")
+        logger.info('-' * 64)
     # clock skew
     #logger.info("Attempting to resolve clock skew across servers")
     #result = server_clock_skew(db, collName)
@@ -212,9 +212,7 @@ def traffic_control(msg, date):
     pattern = re.compile(".py$")
     dir_name = os.path.dirname(os.path.abspath(__file__)) + "/filters"
     dirList = os.listdir(dir_name)
-
     logger = logging.getLogger(__name__)
-
     for fname in dirList:
 
         # only deal with .py files
@@ -230,7 +228,7 @@ def traffic_control(msg, date):
                 if 'process' in dir(sys.modules[fname]):
                     doc = sys.modules[fname].process(msg, date)
                     if (doc != None):
-                        logger.info('Found {0} type message, storing to db'.format(fname))
+                        logger.debug("Filter {0} returned a valuable doc, storing to db".format(fname))
                         return doc
                     # for now, this will only return the first module hit...
                     # do we want to change this?
