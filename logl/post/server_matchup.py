@@ -18,6 +18,8 @@ import logging
 from copy import deepcopy
 from .clock_skew import server_clock_skew
 from supporting_methods import *
+# for nostests:
+#from logl.supporting_methods import *
 import operator
 import re
 
@@ -69,7 +71,8 @@ def address_matchup(db, collName):
         if servers.find_one({"$or": [{"server_name" : addr}, {"server_IP": addr}]}):
             # concerned that skipping these will make test fail
             continue
-        mentioned_names.append(addr)
+        if not addr in mentioned_names:
+            mentioned_names.append(addr)
 
     last_change = -1
     round = 0
