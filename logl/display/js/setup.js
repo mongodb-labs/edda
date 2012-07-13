@@ -29,8 +29,6 @@ function logl_setup() {
     canvases_and_contexts();
     mouse_over_setup();
     connect();  // see connection.js
-    console.log("Frames: ");
-    console.log(size(frames));
     time_setup(size(frames));
     visual_setup();
 }
@@ -97,14 +95,11 @@ function time_setup(max_time) {
 
     $("#slider").slider({ slide: function(event, ui) {
 		render(ui.value);
-        console.log(ui.value);
         document.getElementById("timestamp").innerHTML = frames[ui.value]["date"];
         document.getElementById("summary").innerHTML = ui.value + ": " + frames[ui.value]["summary"];
 	current_frame = ui.value;
         }});
     //$("#slider").slider( "option", "min", 0 );
-    console.log("Max time: ");
-    console.log(max_time);
     $("#slider").slider( "option", "max", max_time );
     //$("#slider").slider( "option", "step", 1 );
 }

@@ -57,7 +57,6 @@ render = function(time) {
     // to capture actual server state
     var n = state.split(".");
     state = n[0];
-    console.log(state);
         switch(state) {
 	case "STARTUP1":
 	    startup1(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);

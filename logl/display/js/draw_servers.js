@@ -84,7 +84,6 @@ draw_names = function() {
     // for each server:
     for (var s in servers) {
 	var r = servers[s]["r"];
-	console.log(s)
 	var label;
 	// use hostname, or IP if unknown
 	if (server_names["hostname"][s] == "unknown") {
