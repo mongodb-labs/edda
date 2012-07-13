@@ -73,10 +73,11 @@ def generate_frames(unsorted_events, db, collName):
         if last_frame:
             f["servers"] = deepcopy(last_frame["servers"])
             f["links"] = deepcopy(last_frame["links"])
+            f["broken_links"] = deepcopy(last_frame["broken_links"])
             f["users"] = deepcopy(last_frame["users"])
             f["syncs"] = deepcopy(last_frame["syncs"])
-        f = info_by_type(f, e)
         f = witnesses_dissenters(f, e)
+        f = info_by_type(f, e)
         last_frame = f
         frames[str(i)] = f
         i += 1
@@ -129,6 +130,7 @@ def witnesses_dissenters(f, e):
         if e["target"] in f["broken_links"][w]:
             f["broken_links"][w].remove(e["target"])
     # a dissenter means that link should be removed
+    # add broken link only if link existed
     for d in e["dissenters"]:
         if e["target"] in f["links"][d]:
             f["links"][d].remove(e["target"])
@@ -136,10 +138,6 @@ def witnesses_dissenters(f, e):
         if d in f["links"][e["target"]]:
             f["links"][e["target"]].remove(d)
             f["broken_links"][e["target"]].append(d)
-        # add broken link only if link existed
-#        if (not e["target"] in f["broken_links"][d] and
- #           not d in f["broken_links"][e["target"]]):
- #           f["broken_links"][e["target"]].append(d)
     return f
 
 
@@ -147,11 +145,14 @@ def break_links(me, f):
     # find my links and make them broken links
     for link in f["links"][me]:
         f["broken_links"][me].append(link)
-    f["links"][me] = []
-    f["syncs"][me] = []
+        f["links"][me].remove(link)
+    for sync in f["syncs"][me]:
+        if not sync in f["broken_links"][me]:
+            f["broken_links"][me].append(sync)
+        f["syncs"][me].remove(sync)
     # find links that reference me and make them broken links
     for s in f["servers"].keys():
-        if s != me:
+        if s == me:
             continue
         # remove links that reference me
         for link in f["links"][s]:
@@ -160,9 +161,10 @@ def break_links(me, f):
                 f["broken_links"][s].append(link)
         # remove syncs that reference me
         for sync in f["syncs"][s]:
-            if link == me:
-                f["syncs"][s].remove(link)
-                f["broken_links"][s].append(link)
+            if sync == me:
+                f["syncs"][s].remove(sync)
+                if not sync in f["broken_links"][s]:
+                    f["broken_links"][s].append(sync)
     # remove all of my user connections
     f["users"][me] = []
     return f
@@ -192,6 +194,7 @@ def info_by_type(f, e):
     elif e["type"] == "end_conn":
         if e["conn_addr"] in f["users"][s]:
             f["users"][s].remove(e["conn_addr"])
+
     # syncs
     elif e["type"] == "sync":
         s_to = e["sync_to"]
@@ -209,6 +212,7 @@ def info_by_type(f, e):
             f["broken_links"][s_from].remove(s_to)
         if s_from in f["broken_links"][s_to]:
             f["broken_links"][s_to].remove(s_from)
+
     # exits
     elif e["type"] == "exit":
         f["servers"][s] == "DOWN"
