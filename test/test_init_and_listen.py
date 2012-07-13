@@ -33,7 +33,6 @@ def test_criteria():
     assert criteria("Mon Jun 11 15:56:16 [initandlisten] MongoDB starting "
         ": pid=7029 port=27018 dbpath=/data/rs2 64-bit "
         "host=Kaushals-MacBook-Air.local") == 1
-    #assert criteria("Mon Jun 11 15:56:24 [initandlisten] connection accepted from 127.0.0.1:55227 #6 (4 connections now open)") == 2
     return
 
 
@@ -48,8 +47,10 @@ def test_process():
         ".local", date)
     assert doc
     assert doc["type"] == "init"
-    assert doc["info"]["server"] == "Kaushals-MacBook-Air.local:27018"
+    assert doc["info"]["server"] == "self"
     assert doc["info"]["subtype"] == "startup"
+    print doc["info"]["addr"]
+    assert doc["info"]["addr"] == "Kaushals-MacBook-Air.local:27018"
     return
 
 
@@ -59,9 +60,9 @@ def test_starting_up():
     doc["type"] = "init"
     doc["info"] = {}
     # non-valid message
-    assert starting_up("this is a nonvalid message", doc) == None
-    assert starting_up("Mon Jun 11 15:56:16 [initandlisten] MongoDB starting "
-        ": 64-bit host=Kaushals-MacBook-Air.local", doc) == None
+    assert not starting_up("this is a nonvalid message", doc)
+    assert not starting_up("Mon Jun 11 15:56:16 [initandlisten] MongoDB starting "
+        ": 64-bit host=Kaushals-MacBook-Air.local", doc)
     # valid messages
     doc = starting_up("Mon Jun 11 15:56:16 [initandlisten] MongoDB starting : "
         "pid=7029 port=27018 dbpath=/data/rs2 64-bit "
@@ -69,10 +70,6 @@ def test_starting_up():
     assert doc
     assert doc["type"] == "init"
     assert doc["info"]["subtype"] == "startup"
-    assert doc["info"]["server"] == "Kaushals-MacBook-Air.local:27018"
-    return
-
-
     assert doc["info"]["server"] == "self"
     print doc["info"]["addr"]
     assert doc["info"]["addr"] == "Kaushals-MacBook-Air.local:27018"
