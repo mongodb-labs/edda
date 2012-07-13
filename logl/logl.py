@@ -39,8 +39,8 @@ from post.server_matchup import address_matchup
 from post.clock_skew import server_clock_skew
 from post.replace_clock_skew import replace_clock_skew
 from post.event_matchup import *
-from post.frames import generate_frames
-from post.connection import send_to_js
+from ui.frames import generate_frames
+from ui.connection import send_to_js
 
 def main():
     """a main function, handles basic parsing and sends
