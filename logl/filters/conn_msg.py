@@ -17,6 +17,8 @@ import re
 import string
 import logging
 from supporting_methods import capture_address
+# for nosetests:
+#from logl.supporting_methods import capture_address
 
 def criteria(msg):
     """Determing if the given message is an instance
