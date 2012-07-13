@@ -23,6 +23,7 @@ var server_names;
 var frames;
 var slider = {};
 var current_frame = 0;
+var admin;
 
 // call various setup functions
 function logl_setup() {
@@ -97,7 +98,7 @@ function time_setup(max_time) {
 		document.getElementById("summary").innerHTML = "Summary:<br/>Event " + ui.value + ": " + frames[ui.value]["summary"];
 		current_frame = ui.value;
 	    }});
-    $("#slider").slider( "option", "max", max_time );
+    $("#slider").slider( "option", "max", max_time - 1);
 }
 
 
