@@ -48,6 +48,38 @@ def is_IP(s):
     return True
 
 
+def get_server_num(addr, servers):
+    """Gets and returns a server_num for an
+    existing .servers entry with 'addr', or creates a new .servers
+    entry and returns the new server_num, as a string.  If
+    'addr' is 'unknown', assume this is a new server and return
+    a new number"""
+    logger = logging.getLogger(__name__)
+    num = None
+    addr = addr.replace('\n', "")
+    addr = addr.replace(" ", "")
+
+    # if addr is 'self', ignore
+
+    if addr != "unknown":
+        if is_IP(addr):
+            num = servers.find_one({"server_IP": addr})
+        else:
+            num = servers.find_one({"server_name": addr})
+        if num:
+            logger.debug("Found server number {0} for address {1}".format(num["server_num"], addr))
+            return str(num["server_num"])
+    # no .servers entry found for this target, make a new one
+    # make sure that we do not overwrite an existing server's index
+    for i in range(1, 50):
+        if not servers.find_one({"server_num" : str(i)}):
+            logger.info("No server entry found for target server {0}".format(addr))
+            logger.info("Adding {0} to the .servers collection with server_num {1}".format(addr, i))
+            assign_address(str(i), addr, servers)
+            return str(i)
+    logger.critical("Ran out of server numbers!")
+
+
 def assign_address(num, addr, servers):
     """Given this num and addr, sees if there exists a document
     in the .servers collection for that server.  If so, adds addr, if
