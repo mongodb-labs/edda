@@ -39,7 +39,7 @@ def process(msg, date):
        "origin_server" : name,
        "info" structure below:
        "info" : {
-          "subtype" : "reSyncing",
+          "subtype" : "rsSync",
           "sync_server" : "host:port"
           "server" : "self
           }
@@ -62,7 +62,7 @@ def syncing_diff(msg, doc):
     """generates and returns a document for rs that are
     syncing to a new server"""
 
-    doc["info"]["subtype"] = "reSyncing"
+    doc["info"]["subtype"] = "rsSync"
 
     start = string.find(msg, "to: ")
     if (start < 0):
