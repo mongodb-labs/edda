@@ -23,9 +23,7 @@ import logging
 def criteria(msg):
     """does the given log line fit the criteria for this filter?
     return an integer code if yes, -1 if no."""
-    if (string.find(msg, '[initandlisten]') < 0):
-        return -1
-    if (string.find(msg, 'starting') >= 0):
+    if (string.find(msg, '[initandlisten] MongoDB starting') >= 0):
         return 1
     return -1
 
