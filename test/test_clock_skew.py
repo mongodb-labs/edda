@@ -85,7 +85,6 @@ def test_clock_skew_two():
     t1 = int(t1)
     assert abs(abs(t1) - 3) < .01
     assert t1 > 0
-    print wt1
     assert wt1 == 6
     # check second server entry
     doc2 = clock_skew.find_one({"server_num" : "2"})
@@ -99,8 +98,6 @@ def test_clock_skew_two():
     t2 = int(t2)
     assert abs(abs(t2) - 3) < .01
     assert t2 < 0
-    print wt1
-    print wt2
     assert wt2 == 6
     # compare entries against each other
     assert abs(t1) == abs(t2)
@@ -217,7 +214,6 @@ def test_detect_a_has_more():
     skews2 = detect("Erica", "Alison", db, "wildcats")
     assert skews2
     assert len(skews2) == 1
-    print skews2
     assert in_skews(3, skews2)
     assert skews2['3'] == 4
 
@@ -254,7 +250,6 @@ def test_two_different_skews():
     entries.insert(generate_doc(
         "status", "Mel", "SECONDARY", 2, "self", datetime.now()))
     skews = detect("Hannah", "Mel", db, "wildcats")
-    print skews
     assert skews
     assert len(skews) == 2
     assert in_skews(5, skews)
@@ -339,8 +334,6 @@ def test_detect_network_delay():
     # run detect()!
     skews1 = detect("Erica", "Alison", db, "wildcats")
     skews2 = detect("Alison", "Erica", db, "wildcats")
-    print skews1
-    print skews2
     assert not skews1
     assert not skews2
 

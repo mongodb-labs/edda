@@ -49,7 +49,6 @@ def test_process():
     assert doc["type"] == "init"
     assert doc["info"]["server"] == "self"
     assert doc["info"]["subtype"] == "startup"
-    print doc["info"]["addr"]
     assert doc["info"]["addr"] == "Kaushals-MacBook-Air.local:27018"
     return
 
@@ -71,6 +70,5 @@ def test_starting_up():
     assert doc["type"] == "init"
     assert doc["info"]["subtype"] == "startup"
     assert doc["info"]["server"] == "self"
-    print doc["info"]["addr"]
     assert doc["info"]["addr"] == "Kaushals-MacBook-Air.local:27018"
     return
