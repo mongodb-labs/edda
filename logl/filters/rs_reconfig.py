@@ -44,7 +44,7 @@ def process(msg, date):
        "info" : {
           "server" : self
        }
-       "oritinal_message" : msg
+       "msg" : msg
     }"""
     message_type = criteria(msg)
     if message_type < 0:
@@ -52,7 +52,8 @@ def process(msg, date):
 
     doc = {}
     doc["date"] = date
-    doc["type"] = "re_sync"
+    doc["type"] = "reconfig"
+    doc["msg"] = msg
     doc["info"] = {}
     doc["info"]["server"] = "self"
 
