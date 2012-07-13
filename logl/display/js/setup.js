@@ -29,7 +29,9 @@ function logl_setup() {
     canvases_and_contexts();
     mouse_over_setup();
     connect();  // see connection.js
-    time_setup(frames.size);
+    console.log("Frames: ");
+    console.log(size(frames));
+    time_setup(size(frames));
     visual_setup();
 }
 
@@ -101,22 +103,21 @@ function time_setup(max_time) {
 	current_frame = ui.value;
         }});
     //$("#slider").slider( "option", "min", 0 );
-    //$("#slider").slider( "option", "max", max_time );
-    $("#slider").slider( "option", "step", 1 );
+    console.log("Max time: ");
+    console.log(max_time);
+    $("#slider").slider( "option", "max", max_time );
+    //$("#slider").slider( "option", "step", 1 );
 }
 
 
 // define .size function for object
 // thanks http://stackoverflow.com/questions/5223/length-of-javascript-object-ie-associative-array
-Object.size = function(obj) {
-    var size = 0, key;
+function size(obj) {
+    var len = 0, key;
     for (key in obj) {
-    if (obj.hasOwnProperty(key)) size++;
+        if(obj.hasOwnProperty(key))
+            len++;
     }
-    return size;
-};
+    return len;
 
-
-
-
-
+}
