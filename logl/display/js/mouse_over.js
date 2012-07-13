@@ -50,8 +50,6 @@ on_canvas_mouseover = function(e) {
     else if (servers[server]["on"] === true){
         servers[server]["on"] = false;
         canvases["shadow"].width = canvases["shadow"].width;
-        canvases["message"].width = canvases["message"].width;
-        canvases["text"].width = canvases["text"].width;
     }
     }
 };

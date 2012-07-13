@@ -15,7 +15,7 @@
 // A centralized file for all the JS setup details
 
 // define program-wide global variables
-var layers = new Array("background", "shadow", "link", "arrow", "server", "text", "message");
+var layers = new Array("background", "shadow", "link", "arrow", "server");
 var canvases = {};
 var contexts = {};
 var servers = {};
@@ -44,8 +44,8 @@ function canvases_and_contexts() {
 
 // set up mouse-over functionality
 function mouse_over_setup() {
-    canvases["message"].addEventListener("mousemove", on_canvas_mouseover, false);
-    canvases["message"].addEventListener("click", new_click, false);
+    canvases["server"].addEventListener("mousemove", on_canvas_mouseover, false);
+    canvases["server"].addEventListener("click", new_click, false);
 }
 
 
@@ -71,9 +71,7 @@ function visual_setup() {
     grad.addColorStop(1, "#000000");
     b_ctx.rect(0, 0, w, h);
     b_ctx.fillStyle = grad;
-	//    b_ctx.fillStyle = "#4E3629";
     b_ctx.fill();
-
 
     if (frames) {
         if (frames["0"]) {
@@ -95,13 +93,11 @@ function time_setup(max_time) {
 
     $("#slider").slider({ slide: function(event, ui) {
 		render(ui.value);
-        document.getElementById("timestamp").innerHTML = frames[ui.value]["date"];
-        document.getElementById("summary").innerHTML = ui.value + ": " + frames[ui.value]["summary"];
-	current_frame = ui.value;
-        }});
-    //$("#slider").slider( "option", "min", 0 );
+		document.getElementById("timestamp").innerHTML = "Time: " + frames[ui.value]["date"].substring(5, 50);
+		document.getElementById("summary").innerHTML = "Summary:<br/>Event " + ui.value + ": " + frames[ui.value]["summary"];
+		current_frame = ui.value;
+	    }});
     $("#slider").slider( "option", "max", max_time );
-    //$("#slider").slider( "option", "step", 1 );
 }
 
 
@@ -114,5 +110,4 @@ function size(obj) {
             len++;
     }
     return len;
-
 }

@@ -6,8 +6,8 @@ body {
 
 #page {
      background-color: #9D7E51;
-/*      background-color: #e0e0e0; */
-      font-family: Georgia, Serif;
+     font-family: Monaco, Georgia, Serif;
+     font-size: 14;
 }
 
 /* div that holds all the canvases */
@@ -16,8 +16,7 @@ body {
 	width: 800px;
 	height: 600px;
 	background-color: #ffffff;
-	margin-left: auto;
-	margin-right: auto;
+	margin-left: 220px;
 	box-shadow: 0px 0px 40px #444444;
 }
 
@@ -47,38 +46,38 @@ body {
 	     z-index: 7;
 }
 
-#text_layer {
-	     z-index: 9;
-}
-
-#message_layer {
-	      z-index: 10;
-}
-
 /* slider element */
-
-/*.oSliderContainer { width: 100px; }*/
 
 .ui-slider-horizontal .ui-slider-handle {
 	      padding: 0px 0 0 0;
 }
 
 #slider_box {
-	margin-right: auto;
-	margin-left: auto;
+	margin-left: 220px;
 	width: 800px;
 }
 
+/* information divs */
+
+#timestamp, #summary {
+	    width: 150px;
+	    background-color:#DECBA2;
+	    position: absolute;
+	    left: 30px;
+	    padding: 10px;
+	    opacity:0.8;
+	    filter:alpha(opacity=80);
+	    -moz-border-radius: 5px;
+	    border-radius: 5px;
+}
+
 #timestamp {
-	   margin-left: auto;
-	   margin-right: auto;
-	   width: 200px;
+	   top: 27px;
 }
 
 #summary {
-	 margin-left: auto;
-	 margin-right: auto;
-	 width: 800px;
+	 top: 100px;
+	 width: 150px;
 }
 
 /* message box!! */
