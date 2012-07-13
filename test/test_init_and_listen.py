@@ -73,25 +73,7 @@ def test_starting_up():
     return
 
 
-def new_conn():
-    """test the new_conn() method of this module"""
-    doc = {}
-    doc["type"] = "init"
-    doc["info"] = {}
-    # non-valid messages
-    assert new_conn("this is an invalid message", doc) == None
-    assert new_conn("Mon Jun 11 15:56:16 [initandlisten] connection accepted "
-        "from 127.0.0.1:55224 (4 connections now open)", doc) == None
-    assert new_conn("Mon Jun 11 15:56:16 [initandlisten] connection #5 (4 "
-        "connections now open)", doc) == None
-    assert new_conn("Mon Jun 11 15:56:16 [initandlisten] connection accepted "
-        "from 127.0.0.1 #5 (4 connections now open)", doc) == None
-    # valid messages
-    doc = new_conn("Mon Jun 11 15:56:16 [initandlisten] connection accepted "
-        "from 127.0.0.1:55224 #5", doc)
-    assert doc
-    assert doc["type"] == "init"
-    assert doc["info"]["subtype"] == "new_conn"
-    assert doc["info"]["conn_number"] == "5"
-    assert doc["info"]["server"] == "127.0.0.1:55224"
+    assert doc["info"]["server"] == "self"
+    print doc["info"]["addr"]
+    assert doc["info"]["addr"] == "Kaushals-MacBook-Air.local:27018"
     return
