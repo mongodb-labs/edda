@@ -122,7 +122,10 @@ def main():
 
     # read in from each log file
     for arg in namespace.filename:
-        f = open(arg, 'r')
+        try:
+            f = open(arg, 'r')
+        except IOError:
+            print "Error: Unable to read file {0}\nExiting".format(arg)
         counter = 0
         stored = 0
         server_num = -1
