@@ -42,6 +42,7 @@ class ThreadClass(threading.Thread):
         except webbrowser.Error:
             print "Error: Unable to launch webpage"
             print "Please try again with a different default browser"
+    # end of ThreadClass
 
 
 def send_to_js(frames, servers):
