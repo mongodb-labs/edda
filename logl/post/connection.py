@@ -30,13 +30,14 @@ from time import sleep
 
 data = None
 server_list = None
+admin = None
 
 class ThreadClass(threading.Thread):
 
     def run(self):
         """Open page and send GET request to server"""
         # open the JS page
-        url = "http://localhost:28018"
+        url = "http://localhost:28000"
         try:
             webbrowser.open(url, 1, True)
         except webbrowser.Error:
@@ -45,12 +46,15 @@ class ThreadClass(threading.Thread):
     # end of ThreadClass
 
 
-def send_to_js(frames, servers):
+def send_to_js(frames, servers, info):
     """Sends information to the JavaScript
     client"""
 
     global data
     global server_list
+    global admin
+
+    admin = info
     data = frames
     server_list = servers
 
@@ -64,15 +68,13 @@ def send_to_js(frames, servers):
     print "Opening server, kill with Ctrl+C once logl.html has opened"
     print "==========================================================="
     try:
-        server = HTTPServer(('', 28018), LoglHTTPRequest)
+        server = HTTPServer(('', 28000), LoglHTTPRequest)
     except socket.error, (value, message):
         if value == 98:
             print "Error: could not bind to localhost:28018"
         else:
             print message
             return
-
-    print 'listening for connections on http://localhost:28018\n'
     try:
         server.serve_forever()
     except KeyboardInterrupt:
