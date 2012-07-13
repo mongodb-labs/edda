@@ -45,7 +45,6 @@ def test_process():
 
 def check_state(message, code, date, server):
     doc = process(message, date)
-    print "Doc: {}".format(doc)
     assert doc
     assert doc["date"] == date
     assert doc["type"] == "reconfig"

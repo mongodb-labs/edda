@@ -522,7 +522,6 @@ def test_incomplete_graph_one():
     # THIS TEST SENDS PROGRAM INTO INFINITE LOOP.
     # ******************************************
     return
-    print "\n\n\ntest one\n\n\n"
     servers, entries, clock_skew, db = db_setup()
     insert_unknown(3, servers)
     edge("A", "B", entries)
@@ -537,7 +536,6 @@ def test_incomplete_graph_two():
     """Test a network graph with four servers, A, B, C, D
     with the following edges:
     A - B, B - C, C - D, D - A"""
-    print "\n\n\ntest two\n\n\n"
     # this case contains a cycle, not possible for this algorithm to solve
     servers, entries, clock_skew, db = db_setup()
     insert_unknown(4, servers)
@@ -559,7 +557,6 @@ def test_incomplete_graph_three():
     # THIS TEST SENDS PROGRAM INTO INFINITE LOOP.
     # ******************************************
     return
-    print "\n\n\ntest three\n\n\n"
     servers, entries, clock_skew, db = db_setup()
     insert_unknown(4, servers)
     edge("A", "B", entries)
@@ -579,7 +576,6 @@ def test_incomplete_graph_four():
     """Test a network graph with four servers: A, B, C, D
     and the following edges:
     B - A, B - C, B - D"""
-    print "\n\n\ntest four\n\n\n"
     # this is a doable case, but only for B
     # to fix later:
     # ******************************************
@@ -600,7 +596,6 @@ def test_incomplete_graph_five():
     and the following edges:
     A - B, B - C, C - D, D - E"""
     # doable in a few rounds
-    print "\n\n\ntest five\n\n\n"
     servers, entries, clock_skew, db = db_setup()
     insert_unknown(5, servers)
     edge("A", "B", entries)
@@ -614,7 +609,6 @@ def test_incomplete_graph_six():
     """Test a graph with three servers: A, B, C
     and the following edges:
     A - B"""
-    print "\n\n\ntest six\n\n\n"
     # to fix later:
     # ******************************************
     # THIS TEST FAILS
@@ -633,7 +627,6 @@ def test_incomplete_graph_seven():
     """Test a graph with four servers: A, B, C, D
     and the following edges:
     A - B, C - D"""
-    print "\n\n\ntest seven\n\n\n"
     # to fix later:
     # ******************************************
     # THIS TEST FAILS
@@ -657,7 +650,6 @@ def insert_unknown(n, servers):
     and must be matched, while IPs are known"""
     for i in range(1,n):
         ip = str(i) + "." + str(i) + "." + str(i) + "." + str(i)
-        print ip
         assign_address(i, ip, servers)
 
 
