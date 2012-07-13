@@ -187,6 +187,10 @@ def info_by_type(f, e):
         # nothing to do for a reconfig?
         pass
 
+    # startups
+    elif e["type"] == "init":
+        f["servers"][s] = "STARTUP1"
+
     # connections
     elif e["type"] == "new_conn":
         if not e["conn_addr"] in f["users"][s]:
