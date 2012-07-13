@@ -25,10 +25,20 @@ function connect() {
 	    }
 	});
 
+    // poll for additional setup data
+    $.ajax({
+	    async: false,
+		url: "http://localhost:28000/data.admin",
+		dataType: "json",
+		success: function(data) {
+		admin = data;
+	    }
+	});
+
     // poll for the server names
     $.ajax({
 	    async: false,
-		url: "http://localhost:28018/data.servers",
+		url: "http://localhost:28000/data.servers",
 		dataType: "json",
 		success: function(data) {
 		server_names = data;
