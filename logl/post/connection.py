@@ -121,35 +121,37 @@ class LoglHTTPRequest(BaseHTTPRequestHandler):
         # return data
         (uri, args, type) = self.process_uri("GET")
 
-        if len(type) != 0:
+        if len(type) == 0:
+            return
 
         if type == "admin":
             self.wfile.write(json.dumps(admin))
-            if type == "please":
-                self.wfile.write(json.dumps(data))
 
-            elif type == "one_frame":
-                index = uri[:(len(uri) - 10)]
-                print "index is {0}".format(index)
-                # handle the case where we'd get a key error
-                if not index in data:
-                    # send nothing
-                    self.wfile.write(json.dumps("no frame"))
-                self.wfile.write(json.dumps(data[index]))
+        elif type == "all_frames":
+            self.wfile.write(json.dumps(data))
 
-            elif type == "servers":
-                self.wfile.write(json.dumps(server_list))
+        elif type == "one_frame":
+            index = uri[:(len(uri) - 10)]
+            print "index is {0}".format(index)
+            # handle the case where we'd get a key error
+            if not index in data:
+                # send nothing
+                self.wfile.write(json.dumps("no frame"))
+            self.wfile.write(json.dumps(data[index]))
 
-            elif type in self.mimetypes and os.path.exists(self.docroot + uri):
-                f = open(self.docroot + uri, 'r')
+        elif type == "servers":
+            self.wfile.write(json.dumps(server_list))
 
-                self.send_response(200, 'OK')
-                self.send_header('Content-type', self.mimetypes[type])
-                self.end_headers()
-                self.wfile.write(f.read())
-                f.close()
-                return
+        elif type in self.mimetypes and os.path.exists(self.docroot + uri):
+            f = open(self.docroot + uri, 'r')
 
-            else:
-                self.send_error(404, 'File Not Found: ' + uri)
-                return
+            self.send_response(200, 'OK')
+            self.send_header('Content-type', self.mimetypes[type])
+            self.end_headers()
+            self.wfile.write(f.read())
+            f.close()
+            return
+
+        else:
+            self.send_error(404, 'File Not Found: ' + uri)
+            return
