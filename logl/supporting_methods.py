@@ -37,11 +37,12 @@ def capture_address(msg):
 
 
 def is_IP(s):
-    """Returns true if s is an IP address, false otherwise"""
-    s = "(([0|1]?[0-9]{1,2})|(2[0-4][0-9])"
-    s += "|(25[0-5]))(\.([0|1]?[0-9]{1,2})"
-    s += "|(2[0-4][0-9])|(25[0-5])){3}"
-    pattern = re.compile(s)
+    """Returns true if s contains an IP address, false otherwise"""
+    # note: this message will return True for strings that
+    # have more than 4 dotted groups of numbers (like 1.2.3.4.5)
+    a = "(0|(1?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))"
+    a += "(\.(0|(1?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))){3}"
+    pattern = re.compile(a)
     m = pattern.search(s)
     if (m == None):
         return False
