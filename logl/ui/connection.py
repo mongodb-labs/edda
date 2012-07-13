@@ -97,7 +97,7 @@ class LoglHTTPRequest(BaseHTTPRequestHandler):
                   "ico": "image/vnd.microsoft.icon"}
 
     docroot = str(os.path.dirname(os.path.abspath(__file__)))
-    docroot += "/../display/"
+    docroot += "/display/"
 
     def process_uri(self, method):
         """Process the uri"""
