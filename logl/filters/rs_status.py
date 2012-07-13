@@ -87,7 +87,7 @@ def process(msg, date):
     doc["info"]["state_code"] = result
     doc["info"]["state"] = labels[result]
 
-    # if this is a startup message, and includes IP, do something special!!!
+    # if this is a startup message, and includes server address, do something special!!!
     # add an extra field to capture the IP
     pattern = re.compile("\S+:[0-9]{1,5}")
     n = pattern.search(msg[20:])

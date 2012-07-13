@@ -17,6 +17,8 @@ import re
 import string
 import logging
 from supporting_methods import capture_address
+# for nosetests:
+#from logl.supporting_methods import capture_address
 
 def criteria(msg):
     """Does the given log line fit the criteria for this filter?
@@ -48,13 +50,7 @@ def process(msg, date):
     doc["original_message"] = msg
 
     if message_type == 0:
-        doc["info"]["state"] = "STALE"
         logger = logging.getLogger(__name__)
-
-        addr = capture_address(msg[20:])
-        if not addr:
-            logger.debug("Unable to find target server going stale")
-            return None
-        doc["info"]["server"] = addr
+        doc["info"]["server"] = "self"
 
     return doc
