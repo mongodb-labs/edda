@@ -21,11 +21,11 @@ import string
 def criteria(msg):
     """Does the given log line fit the criteria for this filter?
     return an integer code if yes, -1 if not."""
-    if (string.find(msg, 'closing') >= 0):
+    if (string.find(msg, '[interruptThread] closing') >= 0):
         return 0
-    elif (string.find(msg, 'shutdown') >= 0):
+    elif (string.find(msg, '[interruptThread] shutdown') >= 0):
         return 1
-    elif (string.find(msg, 'dbexit') >= 0):
+    elif (string.find(msg, 'dbexit: really exiting now') >= 0):
         return 2
 
     return -1
