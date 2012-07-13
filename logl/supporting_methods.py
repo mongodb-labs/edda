@@ -91,7 +91,7 @@ def assign_address(num, addr, servers):
     # all but the first address found
     # store all fields as strings, including server_num
     # server doc = {
-    #    "server_num" : int
+    #    "server_num" : int, as string
     #    "server_name" : hostname
     #    "server_IP" : IP
     #    }
@@ -99,18 +99,13 @@ def assign_address(num, addr, servers):
     num = str(num)
     addr = str(addr)
     addr = addr.replace('\n', "")
-    print(addr)
     doc = servers.find_one({"server_num": num})
     if not doc:
         if addr != "unknown":
-            # couldn't find with server_num, try using addr as IP
             doc = servers.find_one({"server_IP": addr})
             if not doc:
-                # couldn't find with server_IP, try using addr as hostname
                 doc = servers.find_one({"server_name": addr})
             if doc:
-                # nothing to do, return
-                print 'entry already exists for server {}'.format(addr)
                 logger.debug("Entry already exists for server {0}".format(addr))
                 return
         logger.debug("No doc found for this server, making one")
@@ -119,23 +114,21 @@ def assign_address(num, addr, servers):
         doc["server_name"] = "unknown"
         doc["server_IP"] = "unknown"
     else:
-        print 'doc already exists for server {}'.format(addr)
-        logger.debug("Doc already exists for server {0}".format(num))
-    if addr == num:
-        pass
-    elif is_IP(addr):
+        logger.debug("Fetching existing doc for server {0}".format(num))
+    if is_IP(addr):
         if doc["server_IP"] != "unknown" and doc["server_IP"] != addr:
             logger.warning("conflicting IPs found for server {0}:".format(num))
-            logger.warning("\n{0}\n{1}".format(addr, doc["server_IP"]))
+            logger.warning("\n{0}\n{1}".format(repr(addr), repr(doc["server_IP"])))
         else:
             doc["server_IP"] = addr
     else:
-        if doc["server_name"] != "unknown" and doc["server_name"] != addr:
+        # NOTE: case insensitive!
+        if doc["server_name"] != "unknown" and doc["server_name"].lower() != addr.lower():
             logger.warning("conflicting hostnames found for server {0}:".format(num))
-            logger.warning("\n{0}\n{1}".format(addr, doc["server_name"]))
+            logger.warning("\n{0}\n{1}".format(repr(addr), repr(doc["server_name"])))
         else:
             doc["server_name"] = addr
-    print "I am saving, even thought i probably shouldn't, {0}".format(doc)
+    logger.debug("I am saving {0} to the .servers collection".format(doc))
     servers.save(doc)
 
 
