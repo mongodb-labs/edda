@@ -116,6 +116,8 @@ def next_event(servers, server_entries, db, collName):
     event["type"] = first["type"]
     event["date"] = first["date"]
 
+    logger.debug("Handling event of type {0} with target {1}".format(event["type"], event["target"]))
+
     # some messages need specific fields set:
     # status events
     if event["type"] == "status":
