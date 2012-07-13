@@ -123,6 +123,8 @@ class LoglHTTPRequest(BaseHTTPRequestHandler):
 
         if len(type) != 0:
 
+        if type == "admin":
+            self.wfile.write(json.dumps(admin))
             if type == "please":
                 self.wfile.write(json.dumps(data))
 
