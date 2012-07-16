@@ -122,6 +122,7 @@ def next_event(servers, server_entries, db, collName):
     # status events
     if event["type"] == "status":
         event["state"] = first["info"]["state"]
+        print "State is: {}".format(event["state"])
 
     # locking messages
     if event["type"] == "fsync":
@@ -306,6 +307,7 @@ def generate_summary(event):
     # for status messages
     if event["type"] == "status":
         summary += " is now " + event["state"]
+        #if event["state"] == "ARBITER":
 
     # for connection messages
     if (event["type"].find("conn") >= 0):
