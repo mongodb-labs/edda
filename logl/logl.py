@@ -243,8 +243,6 @@ def traffic_control(msg, date):
                         logger.debug("Filter {0} returned a valuable doc, storing to db".format(fname))
                         return doc
                     # for now, this will only return the first module hit...
-                    # do we want to change this?
-                    # probably...
 
 
 def get_server_names(db, collName):
