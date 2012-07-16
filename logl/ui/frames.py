@@ -65,6 +65,8 @@ def generate_frames(unsorted_events, db, collName):
     servers = list(db[collName + ".servers"].distinct("server_num"))
 
     for e in events:
+        logger.debug("Generating frame for a type {0} event with target {1}"
+                     .format(e["type"], e["target"]))
         f = new_frame(servers)
         # fill in various fields
         f["date"] = str(e["date"])
@@ -112,6 +114,8 @@ def witnesses_dissenters(f, e):
     """Using the witnesses and dissenters
     lists in event e, determine links that should
     exist in frame, and if this frame should be flagged"""
+    logger = logging.getLogger(__name__)
+    logger.debug("Resolving witnesses and dissenters into links")
     f["witnesses"] = e["witnesses"]
     f["dissenters"] = e["dissenters"]
     if e["witnesses"] <= e["dissenters"]:
@@ -143,6 +147,8 @@ def witnesses_dissenters(f, e):
 
 def break_links(me, f):
     # find my links and make them broken links
+    logger = logging.getLogger(__name__)
+    logger.debug("Breaking all links to server {0}".format(me))
     for link in f["links"][me]:
         f["broken_links"][me].append(link)
         f["links"][me].remove(link)
@@ -219,17 +225,20 @@ def info_by_type(f, e):
 
     # exits
     elif e["type"] == "exit":
-        f["servers"][s] == "DOWN"
+        f["servers"][s] = "DOWN"
         f = break_links(s, f)
 
     # fsync and locking
     elif e["type"] == "LOCKED":
-        f["servers"][s] += ".LOCKED"
+        # make sure .LOCKED is not already appended
+        if string.find(f["servers"][s], ".LOCKED") < 0:
+            f["servers"][s] += ".LOCKED"
     elif e["type"] == "UNLOCKED":
         n = string.find(f["servers"][s], ".LOCKED")
         f["servers"][s] = f["servers"][s[:n]]
     elif e["type"] == "FSYNC":
         # nothing to do for fsync?
-        # render a lock?
-        f["servers"][s] += ".LOCKED"
+        # render a lock, if not already locked
+        if string.find(f["servers"][s], ".LOCKED") < 0:
+            f["servers"][s] += ".LOCKED"
     return f
