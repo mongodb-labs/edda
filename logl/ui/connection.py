@@ -64,9 +64,9 @@ def send_to_js(frames, servers, info):
     # parent starts a server listening on localhost:27080
     # child opens page to send GET request to server
     # open socket, bind and listen
-    print "==========================================================="
-    print "Opening server, kill with Ctrl+C once logl.html has opened"
-    print "==========================================================="
+    print "================================================================="
+    print "Opening server, kill with Ctrl+C once you are finished with logl."
+    print "================================================================="
     try:
         server = HTTPServer(('', 28000), LoglHTTPRequest)
     except socket.error, (value, message):
@@ -128,7 +128,7 @@ class LoglHTTPRequest(BaseHTTPRequestHandler):
             return
 
         if type == "admin":
-            admin = {}
+            #admin = {}
             admin["total_frame_count"] = len(data)
             self.wfile.write(json.dumps(admin))
 
