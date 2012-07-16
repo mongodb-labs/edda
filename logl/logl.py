@@ -239,6 +239,10 @@ def traffic_control(msg, date):
             if fname != "__init__" and fname != "template":
                 fname = "filters." + fname
 
+                # for first release, ignore conn_msg.py, not supported
+                if fname == "filters.conn_msg":
+                    continue
+
                 # if module is valid and contains method, run!
                 if 'process' in dir(sys.modules[fname]):
                     doc = sys.modules[fname].process(msg, date)
