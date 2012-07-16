@@ -19,11 +19,22 @@ var layers = new Array("background", "shadow", "link", "arrow", "server");
 var canvases = {};
 var contexts = {};
 var servers = {};
+var slider = {};
+
+// batch information
+var current_frame = 0;
+var batch_size = 40;
+var half_batch = parseInt(batch_size/2);
+var trigger = parseInt(batch_size/4);
+var frame_top;
+var frame_bottom;
+
+// stored information
 var server_names;
 var frames;
-var slider = {};
-var current_frame = 0;
 var admin;
+var total_frame_count;
+
 
 // call various setup functions
 function logl_setup() {
@@ -85,7 +96,6 @@ function visual_setup() {
 
     // render first frame
     render("0");
-
 }
 
 
@@ -93,12 +103,67 @@ function visual_setup() {
 function time_setup(max_time) {
 
     $("#slider").slider({ slide: function(event, ui) {
-		render(ui.value);
+		// handle frame batches
+		if (ui.value >= current_frame) { direction = 1; }
+		else { direction = -1; }
+		current_frame = ui.value;
+		handle_batches();
 		document.getElementById("timestamp").innerHTML = "Time: " + frames[ui.value]["date"].substring(5, 50);
 		document.getElementById("summary").innerHTML = "Summary:<br/>Event " + ui.value + ": " + frames[ui.value]["summary"];
-		current_frame = ui.value;
 	    }});
-    $("#slider").slider( "option", "max", max_time - 1);
+    $("#slider").slider( "option", "max", total_frame_count - 2);
+}
+
+// handle frame batches
+function handle_batches() {
+
+    // do we even have to batch?
+    if (total_frame_count <= batch_size) {
+	render(current_frame);
+	return;
+    }
+
+    // handle case where user clicked entirely outside
+    // aka load frames and then render
+    if (current_frame > frame_top ||
+	current_frame < frame_bottom) {
+	// force some garbage collection?
+	slide_batch_window();
+	render(current_frame);
+    }
+
+    // handle case where use is still within frame buffer
+    // but close enough to edge to reload
+    else if ((frame_top - current_frame < trigger && frame_top != total_frame_count) ||
+	     (current_frame - frame_bottom < trigger && frame_bottom != 0)) {
+	render(current_frame);
+	// force some garbage collection?
+	slide_batch_window();
+    }
+
+    // otherwise, just render
+    else { render(current_frame); }
+}
+
+
+function slide_batch_window() {
+
+    // get new frames
+    frame_bottom = current_frame - half_batch;
+    frame_top = current_frame + half_batch;
+
+    // frame_bottom is less than 0
+    if (frame_bottom < 0) {
+	frame_bottom = 0;
+	frame_top = batch_size;
+    }
+
+    // frame_top is past the last frame
+    if (frame_top >= total_frame_count) {
+	frame_top = total_frame_count - 1;
+	frame_bottom = frame_top - batch_size;
+    }
+    get_batch(frame_bottom, frame_top);
 }
 
 

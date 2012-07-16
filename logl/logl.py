@@ -126,6 +126,7 @@ def main():
             f = open(arg, 'r')
         except IOError:
             print "Error: Unable to read file {0}\nExiting".format(arg)
+            return
         counter = 0
         stored = 0
         server_num = -1
@@ -171,6 +172,14 @@ def main():
         logger.warning('Finished running on {0}'.format(arg))
         logger.info('Stored {0} of {1} log lines to db'.format(stored, counter))
         logger.warning('=' * 64)
+
+    # if no servers or meaningful events were found, exit
+    if servers.find().count() == 0:
+        logger.critical("No servers were found, exiting.")
+        return
+    if entries.find().count() == 0:
+        logger.critical("No meaningful events were found, exiting.")
+        return
     logger.info("Finished reading from log files, performing post processing")
     logger.info('-' * 64)
     if len(namespace.filename) > 1:
