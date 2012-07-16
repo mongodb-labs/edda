@@ -45,7 +45,6 @@ def criteria(msg):
         return 6
     # state ARBITER
     if (string.find(msg, 'ARBITER') >= 0):
-        print "I found an arbiter. "
         return 7
     # state DOWN
     if (string.find(msg, 'DOWN') >= 0):
