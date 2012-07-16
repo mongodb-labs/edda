@@ -18,6 +18,7 @@
 import pymongo
 import logging
 import re
+from operator import itemgetter
 from datetime import timedelta
 from supporting_methods import *
 # for nosetests:
@@ -88,18 +89,22 @@ def next_event(servers, server_entries, db, collName):
 
     # these are messages that do not involve
     # corresponding messages across servers
-    loners = ["conn", "LOCKED", "UNLOCKED", "FSYNC", "sync"]
+    loners = ["conn", "fsync", "sync"]
     logger = logging.getLogger(__name__)
 
-    first = None
+    first_server = None
     for s in servers:
         if not server_entries[s]:
             continue
-        if first and server_entries[s][0]["date"] > first["date"]:
+        if (first_server and
+            server_entries[s][0]["date"] > server_entries[first_server][0]["date"]):
             continue
-        first = server_entries[s].pop(0)
-    if not first:
+        first_server = s
+    if not first_server:
+        logger.debug("No more entries in queue, returning")
         return None
+
+    first = server_entries[first_server].pop(0)
 
     servers_coll = db[collName + ".servers"]
     event = {}
@@ -122,7 +127,6 @@ def next_event(servers, server_entries, db, collName):
     # status events
     if event["type"] == "status":
         event["state"] = first["info"]["state"]
-        print "State is: {}".format(event["state"])
 
     # locking messages
     if event["type"] == "fsync":
@@ -140,12 +144,13 @@ def next_event(servers, server_entries, db, collName):
         event["conn_addr"] = first["info"]["conn_addr"]
         event["conn_number"] = first["info"]["conn_number"]
 
+    event["summary"] = generate_summary(event)
+
     # handle corresponding messages
     event["witnesses"].append(first["origin_server"])
     if not first["type"] in loners:
         event = get_corresponding_events(servers, server_entries,
                                          event, first, servers_coll)
-    event["summary"] = generate_summary(event)
     return event
 
 
@@ -156,24 +161,27 @@ def get_corresponding_events(servers, server_entries,
     this one and combine them"""
     logger = logging.getLogger(__name__)
     delay = timedelta(seconds=2)
+
     # find corresponding messages
     for s in servers:
+        add = False
+        add_entry = None
         if s == first["origin_server"]:
             continue
         for entry in server_entries[s]:
             if abs(entry["date"] - event["date"]) > delay:
-                #logger.debug("entry is outside range of network delay, breaking")
                 break
             if not target_server_match(entry, first, servers_coll):
                 continue
-            # here
-            # event["target"] = target
             if not type_check(first, entry):
                 continue
-            logger.debug("Found a match!  Adding to event's witnesses")
-            server_entries[s].remove(entry)
+            # match found!
+            add = True
+            add_entry = entry
+        if add:
+            server_entries[s].remove(add_entry)
             event["witnesses"].append(s)
-        if s not in event["witnesses"]:
+        if not add:
             logger.debug("No matches found for server {0}, adding to dissenters".format(s))
             event["dissenters"].append(s)
     return event
@@ -186,8 +194,10 @@ def type_check(entry_a, entry_b):
     if entry_a["type"] != entry_b["type"]:
         return False
     type = entry_a["type"]
+
+    # status messages
     if type == "status":
-        if entry_a["info"]["state_code"] != entry_b["info"]["state_code"]:
+        if entry_a["info"]["state"] != entry_b["info"]["state"]:
             return False
     elif type == "stale":
         pass
@@ -274,9 +284,6 @@ def resolve_dissenters(events):
                     for wit_a in a["witnesses"]:
                         if wit_a in b["witnesses"]:
                             break
-                    # concerned about this loop breaking thing
-                    # also, concerned about mutability of lists?
-                    # check that removing something from b also removes it from a!
                     else:
                         logger.debug("Corresponding, clock-skewed events found, merging events")
                         logger.debug("skew is {0}".format(a["date"] - b["date"]))
@@ -354,9 +361,6 @@ def organize_servers(db, collName):
 
     for server in servers.find():
         num = server["server_num"]
-        servers_list[num] = []
-        cursor = entries.find({"origin_server": num})
-        cursor.sort("date")
-        for doc in cursor:
-            servers_list[num].append(doc)
+        servers_list[num] = sorted(list(entries.find({"origin_server": num})), key=itemgetter("date"))
+
     return servers_list
