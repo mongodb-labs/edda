@@ -23,7 +23,7 @@ var slider = {};
 
 // batch information
 var current_frame = 0;
-var batch_size = 40;
+var batch_size = 100;
 var half_batch = parseInt(batch_size/2);
 var trigger = parseInt(batch_size/4);
 var frame_top;
