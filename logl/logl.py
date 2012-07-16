@@ -121,7 +121,9 @@ def main():
     logger.debug('Writing to db logl, collection {0}\nPreparing to parse log files'.format(name))
 
     # read in from each log file
+    fileNames = []
     for arg in namespace.filename:
+        fileNames.append(arg)
         try:
             f = open(arg, 'r')
         except IOError:
@@ -133,7 +135,7 @@ def main():
 
         logger.warning('Reading from logfile {0}...'.format(arg))
         previous = "none"
-
+        #f is the file names
         for line in f:
             counter += 1
             # handle restart lines
@@ -211,7 +213,8 @@ def main():
     logger.info('-' * 64)
         # send to server
     logger.info("Sending frames to server...")
-    send_to_js(frames, get_server_names(db, collName), "admin")
+    print fileNames
+    send_to_js(frames, get_server_names(db, collName), get_admin_info(fileNames))
     logger.info('-' * 64)
     logger.info('=' * 64)
     logger.warning('Completed post processing.\nExiting.')
@@ -256,6 +259,14 @@ def get_server_names(db, collName):
         server_names["hostname"][doc["server_num"]] = doc["server_name"]
         server_names["IP"][doc["server_num"]] = doc["server_IP"]
     return server_names
+
+
+def get_admin_info(fileNames):
+    admin_info = {}
+    admin_info["file_names"] = fileNames
+    admin_info["version"] = __version__
+
+    return admin_info
 
 
 if __name__ == "__main__":
