@@ -126,6 +126,7 @@ def main():
             f = open(arg, 'r')
         except IOError:
             print "Error: Unable to read file {0}\nExiting".format(arg)
+            return
         counter = 0
         stored = 0
         server_num = -1
