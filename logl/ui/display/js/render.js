@@ -45,7 +45,7 @@ render = function(time) {
     }
 
     for (origin_server in frames[time]["syncs"]) {
-    	list = frames[time]["syncs"][origin_server];
+        list = frames[time]["syncs"][origin_server];
         for (i = 0; i < list.length; i++) {
             one_arrow(servers[list[i]]["x"], servers[list[i]]["y"], servers[origin_server]["x"], servers[origin_server]["y"], contexts["arrow"]);
         }
@@ -55,54 +55,58 @@ render = function(time) {
         var state = frames[time]["servers"][name];
     // add logic to parse out ".LOCKED"
     // to capture actual server state
+    console.log(state);
     var n = state.split(".");
     state = n[0];
         switch(state) {
-	case "STARTUP1":
-	    startup1(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
-	    break;
-	case "STARTUP2":
-	    startup2(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
-	    break;
-	case "PRIMARY":
-	    primary(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
-	    break;
-        case "SECONDARY":
-	    secondary(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
-	    break;
-        case "ARBITER":
-	    arbiter(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
-	    break;
-        case "DOWN":
-	    down(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
-	    break;
-        case "RECOVERING":
-	    recovering(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
-	    break;
-        case "ROLLBACK":
-	    rollback(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
-	    break;
-        case "FATAL":
-	    fatal(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
-	    break;
-        case "UNKNOWN":
-	    unknown(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
-	    break;
-        case "UNDISCOVERED":
-	    undiscovered(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
-	    break;
-        case "REMOVED":
-	    removed(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
-	    break;
-	case "STALE":
-	    stale(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
-	    break;
-	}
+    case "STARTUP1":
+        startup1(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+        break;
+    case "STARTUP2":
+        startup2(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+        break;
+    case "PRIMARY":
+        primary(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+        break;
+    case "SECONDARY":
+        //console.log("I found a secondary.");
+        secondary(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+        break;
+    case "ARBITER":
+        console.log("I found an arbiter.");
+        arbiter(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+        break;
+    case "DOWN":
+        down(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+        break;
+    case "RECOVERING":
+        recovering(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+        break;
+    case "ROLLBACK":
+        rollback(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+        break;
+    case "FATAL":
+        fatal(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+        break;
+    case "UNKNOWN":
+        unknown(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+        break;
+    case "UNDISCOVERED":
+        undiscovered(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+        break;
+    case "REMOVED":
+        removed(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+        break;
+    case "STALE":
+        stale(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+        break;
+    }
 
     // add lock, if necessary
-	if (n.length == 2) {
-	    lock(servers[name]["x"], servers[name]["y"], servers[name]["r"]);
-	}
+    if (n.length > 1) {
+        console.log("Calling draw lock function.");
+        lock(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
+    }
     }
     }
 };
