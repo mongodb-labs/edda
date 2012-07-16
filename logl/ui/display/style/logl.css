@@ -71,6 +71,29 @@ body {
 	    border-radius: 5px;
 }
 
+#mask {
+  /* a brown mask to go under the pop-up key */
+	    opacity:0.8;
+	    filter:alpha(opacity=80);
+	    background-color: #1C0E0B;
+	    position: fixed;
+	    z-index: 14;
+	    margin: auto;
+	    left: 0;
+	    top: 0;
+	    width: 100%;
+	    height: 100%;
+}
+
+#icon_key {
+	  background-color: #e2e2e2;
+	  width: 600px;
+	  height: 600px;
+	  position: fixed;
+	  z-index: 15;
+	  margin: auto;
+}
+
 #timestamp {
 	   top: 27px;
 }
@@ -91,7 +114,7 @@ body {
 	     background-color: #1C0E0B;
 	     visibility: "hidden";
 	     color: #FFFFFF;
-	     z-index: 11;
+	     z-index: 9;
 	     padding: 10px;
 	     max-width: 150px;
 }
