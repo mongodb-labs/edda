@@ -15,15 +15,11 @@
 // without the async messing things up?
 function connect() {
 
-    // poll for the frames
-    $.ajax({
-	    async: false,
-		url: "http://localhost:28000/data.all_frames",
-		dataType: "json",
-		success: function(data) {
-		frames = data;
-	    }
-	});
+    // get first batch and first buffer
+    get_batch(0, batch_size);
+    frame_bottom = 0;
+    frame_top = batch_size;
+    if (frame_top > total_frame_count) { frame_top = total_frame_count; }
 
     // poll for additional setup data
     $.ajax({
@@ -32,6 +28,7 @@ function connect() {
 		dataType: "json",
 		success: function(data) {
 		admin = data;
+		total_frame_count = data["total_frame_count"];
 	    }
 	});
 
@@ -44,20 +41,19 @@ function connect() {
 		server_names = data;
 	    }
 	});
+
 };
 
 // this function is not finished
-function get_single_frame(index) {
-    // poll for a single frame
+function get_batch(a, b) {
+    // poll for a batch of frames
+    var s = "http://localhost:28000/" + a + "-" + b + ".batch";
     $.ajax({
 	    async: false,
-		url: "http://localhost:28018/" + index + ".one_frame",
+		url: s,
 		dataType: "json",
 		success: function(data) {
-		if (data != "no frame") {
-		    frames[index] = data;
-		    render(index);
-		}
+		frames = data;
 	    }
 	});
 };

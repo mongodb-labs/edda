@@ -128,19 +128,44 @@ class LoglHTTPRequest(BaseHTTPRequestHandler):
             return
 
         if type == "admin":
+            admin = {}
+            admin["total_frame_count"] = len(data)
             self.wfile.write(json.dumps(admin))
 
         elif type == "all_frames":
             self.wfile.write(json.dumps(data))
 
-        elif type == "one_frame":
-            index = uri[:(len(uri) - 10)]
-            print "index is {0}".format(index)
-            # handle the case where we'd get a key error
-            if not index in data:
-                # send nothing
-                self.wfile.write(json.dumps("no frame"))
-            self.wfile.write(json.dumps(data[index]))
+        # format of a batch request is
+        # 'start-end.batch'
+        elif type == "batch":
+            uri = uri[:len(uri) - 6]
+            parts = uri.partition("-")
+            try:
+                start = int(parts[0])
+            except ValueError:
+                start = 0
+            try:
+                end = int(parts[2])
+            except ValueError:
+                end = 0
+            batch = {}
+
+            # check for entries out of range
+            if end < 0:
+                return
+            if start < 0:
+                start = 0;
+            if start >= len(data):
+                return
+            if end >= len(data):
+                end = len(data) - 1
+
+            for i in range(start, end):
+                if not str(i) in data:
+                    break
+                batch[str(i)] = data[str(i)];
+            self.wfile.write(json.dumps(batch))
+
 
         elif type == "servers":
             self.wfile.write(json.dumps(server_list))
