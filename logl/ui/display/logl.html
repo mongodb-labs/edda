@@ -34,6 +34,7 @@ limitations under the License. /-->
   <script src="js/mouse_over.js"></script>
   <script src="js/arrows.js"></script>
   <script src="js/links.js"></script>
+  <script src="js/pop.js"></script>
 
 </head>
 
@@ -56,13 +57,18 @@ limitations under the License. /-->
       </div>
       <div id="timestamp">Time:</div>
       <div id="summary">Summary:</div>
+      <div id="pop_up_links">
+	<a href="javascript:void(0)" onmousedown="popUp('icon_key')">Icon Key</a><br/>
       <div id="log_files"></div>
       <div id="version"></div>
       <br/>
     </div>
-<!--
     <div id="mask"></div>
-    <div id="icon_key"><img src="server_icons.jpg" width="300px" height="300px"/></div> /-->
+    <div id="icon_key">
+      <a href="javascript:void(0)" onmousedown="popDown('icon_key')">
+	<img src="server_icons.jpg" width="600px" height="600px"/>
+      </a>
+    </div>
 </body>
 
 

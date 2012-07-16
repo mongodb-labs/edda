@@ -75,7 +75,7 @@ body {
   /* a brown mask to go under the pop-up key */
 	    opacity:0.8;
 	    filter:alpha(opacity=80);
-	    background-color: #1C0E0B;
+	    background-color: #1A0C09;
 	    position: fixed;
 	    z-index: 14;
 	    margin: auto;
@@ -83,6 +83,7 @@ body {
 	    top: 0;
 	    width: 100%;
 	    height: 100%;
+	    visibility: hidden;
 }
 
 #icon_key {
@@ -92,6 +93,9 @@ body {
 	  position: fixed;
 	  z-index: 15;
 	  margin: auto;
+	  left: 0; right: 0;
+	  top: 0; bottom: 0;
+	  visibility: hidden;
 }
 
 #timestamp {
@@ -100,8 +104,20 @@ body {
 
 #summary {
 	 top: 100px;
-	 width: 150px;
 }
+
+#pop_up_links {
+	      position: absolute;
+	      width: 150px;
+	      top: 600px;
+	      padding: 10px;
+	      left: 30px;
+}
+
+/* link formatting */
+a:link {color:#DECBA2; text-decoration: none;}
+a:hover {color: green; text-decoration: none;}
+a:active {color: #6a5178; text-decoration: none;}
 
 /* message box!! */
 
