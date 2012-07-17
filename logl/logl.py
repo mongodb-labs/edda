@@ -130,8 +130,9 @@ def main():
         fileNames.append(arg)
         try:
             f = open(arg, 'r')
-        except IOError:
-            print "Error: Unable to read file {0}\nExiting".format(arg)
+        except IOError as e:
+            print "Error: Unable to read file {0}".format(arg)
+            print e
             return
         counter = 0
         stored = 0
