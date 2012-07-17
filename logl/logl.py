@@ -221,10 +221,19 @@ def traffic_control(msg, date):
     it fits the criteria of a given filter, that filter returns
     a document, which this function will pass up to main()."""
     pattern = re.compile(".py$")
-    dir_name = os.path.dirname(os.path.abspath(__file__)) + "/filters"
-    dirList = os.listdir(dir_name)
     logger = logging.getLogger(__name__)
-    for fname in dirList:
+
+    module_list = [
+        "rs_status.py",
+        "stale_secondary.py",
+        "rs_sync.py",
+        "fsync_lock.py",
+        "init_and_listen.py",
+        "rs_exit.py",
+        "rs_reconfig.py",
+        ]
+
+    for fname in module_list:
 
         # only deal with .py files
         m = pattern.search(fname)
