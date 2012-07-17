@@ -12,9 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# one file for methods that are called on as helper methods
-# from many different modules within logl
-
 #!/usr/bin/env python
 
 
@@ -61,7 +58,6 @@ def get_server_num(addr, servers):
     addr = addr.replace(" ", "")
 
     # if addr is 'self', ignore
-
     if addr != "unknown":
         if is_IP(addr):
             num = servers.find_one({"server_IP": addr})
@@ -70,6 +66,7 @@ def get_server_num(addr, servers):
         if num:
             logger.debug("Found server number {0} for address {1}".format(num["server_num"], addr))
             return str(num["server_num"])
+
     # no .servers entry found for this target, make a new one
     # make sure that we do not overwrite an existing server's index
     for i in range(1, 50):
@@ -134,31 +131,11 @@ def assign_address(num, addr, servers):
 
 def date_parser(message):
     """extracts the date information from the given line.  If
-line contains incomplete or no date information, skip
-and return None."""
+    line contains incomplete or no date information, skip
+    and return None."""
     try:
         newMessage = str(parse_month(message[4:7])) + message[7:19]
         time = datetime.strptime(newMessage, "%m %d %H:%M:%S")
         return time
     except ValueError:
         return None
-
-
-def parse_month(month):
-    """tries to match the string to a month code, and returns
-that month's integer equivalent.  If no month is found,
-return 0."""
-    return{
-        'Jan': 1,
-        'Feb': 2,
-        'Mar': 3,
-        'Apr': 4,
-        'May': 5,
-        'Jun': 6,
-        'Jul': 7,
-        'Aug': 8,
-        'Sep': 9,
-        'Oct': 10,
-        'Nov': 11,
-        'Dec': 12,
-        }.get(month, 0)
