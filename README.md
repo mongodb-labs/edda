@@ -1,54 +1,61 @@
 Logl, a log visualizer for MongoDB
-==============
+==================================
 
-logl
-c 2012 10gen, the MongoDB Company
-info@10gen.com
+Logl c 2012 10gen, the MongoDB Company
 
-All of this product's content was created by 10gen.
 Authors: Samantha Ritter, Kaushal Parikh
 
-==============
 INSTALL
+-------
 
 You must have the following installed as prerequisites for running Logl.
 
-Pip:
-http://www.pip-installer.org/en/latest/installing.html#
++ Pip:
 
-MongoDB (which you should do anyway because it is awesome)
-see http://www.mongodb.org/downloads
+  http://www.pip-installer.org/en/latest/installing.html#
 
-PyMongo, MongoDB's language driver for Python:
-$ pip install pymongo
++ MongoDB (which you should do anyway because it is awesome)
 
-argparse:
-$ pip install argparse
+  see http://www.mongodb.org/downloads
 
-Install a non-text-based browser
-We recommend Google Chrome or Firefox.
++ PyMongo, MongoDB's language driver for Python:
 
-Install Logl
-$ pip install logl
+  $ pip install pymongo
 
-==============
++ argparse:
+
+  $ pip install argparse
+
++ Install a non-text-based browser
+
+  We recommend Google Chrome or Firefox.
+
++ Install Logl:
+
+  $ pip install logl
+
 RUN
+---
 
 Give the log files from your servers as command-line
 arguments to the visualizer:
 
-python logl.py --options filename1 filename2 ...
+	  python logl.py --options filename1 filename2 ...
 (see python logl.py --help for options)
 
 Logl can read in multiple log files at once.
+
 NOTE: please only give logl files from the same server cluster!
+
 
 There are some sample log files in logl/test you can run
 if you don't have any log files of your own yet.
 
-==============
 ADDITIONAL
+----------
 
 If you'd like to report a bug or request a new feature,
-please file an issue on our github repository:
-https://github.com/kchodorow/logl
+please file an issue on our github repository 
+(you must be logged into github to do this):
+
+https://github.com/kchodorow/logl/issues/new
