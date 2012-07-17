@@ -235,7 +235,7 @@ def info_by_type(f, e):
             f["servers"][s] += ".LOCKED"
     elif e["type"] == "UNLOCKED":
         n = string.find(f["servers"][s], ".LOCKED")
-        f["servers"][s] = f["servers"][s[:n]]
+        f["servers"][s] = f["servers"][s][:n]
     elif e["type"] == "FSYNC":
         # nothing to do for fsync?
         # render a lock, if not already locked
