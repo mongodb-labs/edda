@@ -38,13 +38,26 @@ __doc__ = ""
 doclines = __doc__.split("\n")
 
 setup(name="logl",
-      version=".1",
+      version=".1.1",
       maintainer="10Gen",
-      maintainer_email="zodb-dev@zope.org",
-      url = "https://github.com/kchodorow/logl",
+      maintainer_email="kaushal.parikh@10gen.com",
+      #url = "https://github.com/kchodorow/logl",
       license = "http://www.apache.org/licenses/LICENSE-2.0.html",
       platforms = ["any"],
-      description = doclines[0]
+      description = doclines[0],
       classifiers = filter(None, classifiers.split("\n")),
       long_description = "\n".join(doclines[2:]),
+      #include_package_data=True,
+      packages=['logl', 'logl.filters', 'logl.post', 'logl.ui', 'logl.ui.display.js', 'logl.ui.display.style', 'logl.ui.display', ''],
+      #packages = find_packages('src'),  # include all packages under src
+      #package_dir = {'':'src'},   # tell distutils packages are under src
+
+      package_data = {
+          # If any package contains *.txt files, include them:
+          'logl.ui.display.js': ['*.js'],
+          'logl.ui.display.style': ['*.css'],
+          'logl.ui.display': ['*.jpg', '*.html'],
+          # And include any *.dat files found in the 'data' subdirectory
+          # of the 'mypkg' package, also:
+      }
       )
