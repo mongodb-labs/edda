@@ -10,9 +10,11 @@ INSTALL
 You must have the following installed as prerequisites for running Logl.
 
 + Pip:
+
   http://www.pip-installer.org/en/latest/installing.html#
 
 + MongoDB (which you should do anyway because it is awesome)
+
   see http://www.mongodb.org/downloads
 
 + PyMongo, MongoDB's language driver for Python:
@@ -20,12 +22,15 @@ You must have the following installed as prerequisites for running Logl.
   $ pip install pymongo
 
 + argparse:
+
   $ pip install argparse
 
 + Install a non-text-based browser
+
   We recommend Google Chrome or Firefox.
 
 + Install Logl:
+
   $ pip install logl
 
 RUN
