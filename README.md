@@ -2,6 +2,7 @@ Logl, a log visualizer for MongoDB
 ==================================
 
 Logl c 2012 10gen, the MongoDB Company
+
 Authors: Samantha Ritter, Kaushal Parikh
 
 INSTALL
@@ -43,7 +44,9 @@ arguments to the visualizer:
 (see python logl.py --help for options)
 
 Logl can read in multiple log files at once.
+
 NOTE: please only give logl files from the same server cluster!
+
 
 There are some sample log files in logl/test you can run
 if you don't have any log files of your own yet.
@@ -53,4 +56,5 @@ ADDITIONAL
 
 If you'd like to report a bug or request a new feature,
 please file an issue on our github repository:
+
 https://github.com/kchodorow/logl
