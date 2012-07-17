@@ -87,7 +87,6 @@ def main():
     # for easier debugging:
     print "Logl is storing data under collection name {0}".format(collName);
 
-
     # configure logger
     # use to switch from console to file: logname = "logl_logs/" + name + ".log"
     if not namespace.verbose:
@@ -127,6 +126,7 @@ def main():
     # read in from each log file
     fileNames = []
     for arg in namespace.filename:
+
         fileNames.append(arg)
         try:
             f = open(arg, 'r')
@@ -190,6 +190,7 @@ def main():
         return
     logger.info("Finished reading from log files, performing post processing")
     logger.info('-' * 64)
+
     if len(namespace.filename) > 1:
         logger.info("Attempting to resolve server names")
         result = address_matchup(db, collName)
@@ -198,16 +199,19 @@ def main():
         else:
             logger.warning("Server addresses could not be resolved")
         logger.info('-' * 64)
+
     # event matchup
     logger.info("Matching events across documents and logs...")
     events = event_matchup(db, collName)
     logger.info("Completed event matchup")
     logger.info('-' * 64)
+
     # generate frames
     logger.info("Converting events into frames...")
     frames = generate_frames(events, db, collName)
     logger.info("Completed frame conversion")
     logger.info('-' * 64)
+
     # send to server
     logger.info("Sending frames to server...")
     send_to_js(frames, get_server_names(db, collName), get_admin_info(fileNames))

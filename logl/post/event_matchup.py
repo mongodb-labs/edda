@@ -317,7 +317,7 @@ def generate_summary(event):
         #if event["state"] == "ARBITER":
 
     # for connection messages
-    if (event["type"].find("conn") >= 0):
+    elif (event["type"].find("conn") >= 0):
         if event["type"] == "new_conn":
             summary += " opened connection #"
         elif event["type"] == "end_conn":
@@ -325,24 +325,28 @@ def generate_summary(event):
         summary += event["conn_number"] + " to user " + event["conn_addr"]
 
     # for exit messages
-    if event["type"] == "exit":
+    elif event["type"] == "exit":
         summary += " is now exiting"
 
     # for locking messages
-    if event["type"] == "UNLOCK":
+    elif event["type"] == "UNLOCKED":
         summary += " is unlocking itself"
-    if event["type"] == "LOCK":
+    elif event["type"] == "LOCKED":
         summary += " is locking itself"
-    if event["type"] == "FSYNC":
+    elif event["type"] == "FSYNC":
         summary += " is in FSYNC"
 
     # for stale messages
-    if event["type"] == "stale":
+    elif event["type"] == "stale":
         summary += " is going stale"
 
     # for syncing messages
-    if event["type"] == "sync":
+    elif event["type"] == "sync":
         summary += " is syncing to " + event["sync_to"]
+
+    # for any uncaught messages
+    else:
+        summary += " is reporting status " + event["type"]
 
     return summary
 
