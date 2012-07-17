@@ -13,16 +13,34 @@
 # limitations under the License.
 
 #!/usr/bin/env python
-"""This filter processes WHICH types of log lines."""
+"""This filter processes ______ types of log lines."""
 
 
 def criteria(msg):
     """does the given log line fit the criteria for this filter?
     return an integer code if yes, -1 if no"""
+    # perform a check or series of checks here on msg
     pass
 
 
 def process(msg, date):
     """if the given log line fits the critera for this filter,
-    processes the line and creates a document for it."""
+    processes the line and creates a document for it.
+    doc = {
+         "date" : date,
+         "msg"  : msg,
+         "type" : (name of filter),
+         "info" : {
+                "server" : "host:port" or "self",
+                (any additional fields)
+                }
+    }"""
+
+    # doc = {}
+    # doc["date"] = date
+    # doc["msg"] = msg
+    # doc["type"] = "your_filter_name"
+    # doc["info"] = {}
+    # etc.
+
     pass
