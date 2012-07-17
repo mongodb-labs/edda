@@ -57,4 +57,4 @@ ADDITIONAL
 If you'd like to report a bug or request a new feature,
 please file an issue on our github repository:
 
-https://github.com/kchodorow/logl
+https://github.com/kchodorow/logl/issues/new
