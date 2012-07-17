@@ -43,6 +43,8 @@ class ThreadClass(threading.Thread):
         except webbrowser.Error as e:
             print "Error: Unable to launch webpage:"
             print e
+            print "Enter the following url into your browser to bring up Logl:"
+            print "http://localhost:28000/"
     # end of ThreadClass
 
 
@@ -65,7 +67,7 @@ def send_to_js(frames, servers, info):
     # child opens page to send GET request to server
     # open socket, bind and listen
     print "================================================================="
-    print "Opening server, kill with Ctrl+C once you are finished with logl."
+    print "Opening server, kill with Ctrl+C once you are finished with Logl."
     print "================================================================="
     try:
         server = HTTPServer(('', 28000), LoglHTTPRequest)
