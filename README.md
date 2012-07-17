@@ -55,6 +55,7 @@ ADDITIONAL
 ----------
 
 If you'd like to report a bug or request a new feature,
-please file an issue on our github repository:
+please file an issue on our github repository 
+(you must be logged into github to do this):
 
 https://github.com/kchodorow/logl/issues/new
