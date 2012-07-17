@@ -40,9 +40,9 @@ class ThreadClass(threading.Thread):
         url = "http://localhost:28000"
         try:
             webbrowser.open(url, 1, True)
-        except webbrowser.Error:
-            print "Error: Unable to launch webpage"
-            print "Please try again with a different default browser"
+        except webbrowser.Error as e:
+            print "Error: Unable to launch webpage:"
+            print e
     # end of ThreadClass
 
 
