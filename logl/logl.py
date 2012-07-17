@@ -51,11 +51,13 @@ def main():
         return
 
     # argparse methods
-    parser = argparse.ArgumentParser(description='Process and visualize log files from mongo servers')
+    parser = argparse.ArgumentParser(
+        description = 'Process and visualize log files from mongo servers')
     parser.add_argument('--port', nargs=1)
     parser.add_argument('--host', nargs=1)
     parser.add_argument('--verbose', '-v', action='count')
-    parser.add_argument('--version', action='version', version="Running logl version {0}".format(__version__))
+    parser.add_argument('--version', action='version',
+                        version="Running logl version {0}".format(__version__))
     parser.add_argument('--db', '-d', nargs=1)
     parser.add_argument('--collection', '-c', nargs=1)
     parser.add_argument('filename', nargs='+')
@@ -117,8 +119,10 @@ def main():
     name = str(now.strftime("logl_%m_%d_%Y_at_%H_%M_%S"))
 
     # some verbose comments
-    logger.info('Connection opened with logl mongod, using {0} on port {1}'.format(host, port))
-    logger.debug('Writing to db logl, collection {0}\nPreparing to parse log files'.format(name))
+    logger.info('Connection opened with logl mongod, using {0} on port {1}'
+                .format(host, port))
+    logger.debug('Writing to db logl, collection {0}\nPreparing to parse log files'
+                 .format(name))
 
     # read in from each log file
     fileNames = []
@@ -146,7 +150,8 @@ def main():
             if (len(line) > 1):
                 date = date_parser(line)
                 if not date:
-                    logger.warning("Line {0} has a malformatted date, skipping".format(counter))
+                    logger.warning("Line {0} has a malformatted date, skipping"
+                                   .format(counter))
                     continue
                 doc = traffic_control(line, date)
                 if doc:
@@ -192,28 +197,18 @@ def main():
         else:
             logger.warning("Server addresses could not be resolved")
         logger.info('-' * 64)
-    # clock skew
-    #logger.info("Attempting to resolve clock skew across servers")
-    #result = server_clock_skew(db, collName)
-    #logger.info("Completed clock skew detection")
-    logger.info('-' * 64)
-    #logger.info("Attempting to Fix Clock_skews in original .entries documents")
-    #replace_clock_skew(db, collName)
-    #logger.info("Completed replacing skew values.")
-    logger.info('-' * 64)
-        # event matchup
+    # event matchup
     logger.info("Matching events across documents and logs...")
     events = event_matchup(db, collName)
     logger.info("Completed event matchup")
     logger.info('-' * 64)
-        # generate frames
+    # generate frames
     logger.info("Converting events into frames...")
     frames = generate_frames(events, db, collName)
     logger.info("Completed frame conversion")
     logger.info('-' * 64)
-        # send to server
+    # send to server
     logger.info("Sending frames to server...")
-    print fileNames
     send_to_js(frames, get_server_names(db, collName), get_admin_info(fileNames))
     logger.info('-' * 64)
     logger.info('=' * 64)
@@ -249,7 +244,6 @@ def traffic_control(msg, date):
                     if (doc != None):
                         logger.debug("Filter {0} returned a valuable doc, storing to db".format(fname))
                         return doc
-                    # for now, this will only return the first module hit...
 
 
 def get_server_names(db, collName):
@@ -266,10 +260,11 @@ def get_server_names(db, collName):
 
 
 def get_admin_info(fileNames):
+    """Format administrative information to send to the
+    JavaScript client"""
     admin_info = {}
     admin_info["file_names"] = fileNames
     admin_info["version"] = __version__
-
     return admin_info
 
 
