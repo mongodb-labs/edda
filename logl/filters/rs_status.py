@@ -66,7 +66,6 @@ def process(msg, date):
        "msg" : msg,
        "origin_server" : name,
        "info" : {
-          "subtype" : None,
           "state" : state,
           "state_code" : int,
           "server" : "host:port",
