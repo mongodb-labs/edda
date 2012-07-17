@@ -139,3 +139,23 @@ def date_parser(message):
         return time
     except ValueError:
         return None
+
+def parse_month(month):
+    """tries to match the string to a month code, and returns
+that month's integer equivalent.  If no month is found,
+return 0."""
+    return{
+        'Jan': 1,
+        'Feb': 2,
+        'Mar': 3,
+        'Apr': 4,
+        'May': 5,
+        'Jun': 6,
+        'Jul': 7,
+        'Aug': 8,
+        'Sep': 9,
+        'Oct': 10,
+        'Nov': 11,
+        'Dec': 12,
+        }.get(month, 0)
+
