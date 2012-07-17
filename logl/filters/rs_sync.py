@@ -36,10 +36,7 @@ def process(msg, date):
        "date" : date,
        "type" : "rsSync",
        "msg" : msg,
-       "origin_server" : name,
-       "info" structure below:
        "info" : {
-          "subtype" : "rsSync",
           "sync_server" : "host:port"
           "server" : "self
           }
