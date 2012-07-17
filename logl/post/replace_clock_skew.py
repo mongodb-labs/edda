@@ -12,28 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
-#Make sure you run this file after you run clock_skew.py
-
-#General plan of action for this method:
-    #Run a loop to make sure you haven't already gone through the server that you are on.
-    #It will run through the first time.
-    #Loop for each entry in the partners field of the specific server that you are on
-        #Isolate messages that have the origin server the same as the partners field
-        #Loop through each message and adjust clock skew for each server individually
-        #Along the way, add each server to a list that has already been checked. 
-            #From here on out, we will only be going through servers not on this list
-
-        #Move on  to the next server and continue
-    #Since the time deltas should be signed, we should be able to add the time skews of the different servers together. 
-    #This should work for the case of the line of servers where every server is connected to every other server
-
 # anatomy of a clock skew document:
 # document = {
 #    "type" = "clock_skew"
 #    "server_name" = "name"
 #    "partners" = {
-#          server_name : 
+#          server_name :
 #                [time_delay1 : weight1, time_delay2 : weight2, ...]
 #          }
 #     }
