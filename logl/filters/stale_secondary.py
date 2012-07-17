@@ -37,7 +37,7 @@ def process(msg, date):
        "info" : {
           "server" : host:port
        }
-       "oritinal_message" : msg
+       "msg" : msg
     }"""
     message_type = criteria(msg)
     if message_type < 0:
@@ -47,7 +47,7 @@ def process(msg, date):
     doc["date"] = date
     doc["type"] = "stale"
     doc["info"] = {}
-    doc["original_message"] = msg
+    doc["msg"] = msg
 
     if message_type == 0:
         logger = logging.getLogger(__name__)
