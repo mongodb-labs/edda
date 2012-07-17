@@ -16,6 +16,7 @@ You must have the following installed as prerequisites for running Logl.
   see http://www.mongodb.org/downloads
 
 + PyMongo, MongoDB's language driver for Python:
+
   $ pip install pymongo
 
 + argparse:
@@ -24,7 +25,7 @@ You must have the following installed as prerequisites for running Logl.
 + Install a non-text-based browser
   We recommend Google Chrome or Firefox.
 
-+ Install Logl
++ Install Logl:
   $ pip install logl
 
 RUN
