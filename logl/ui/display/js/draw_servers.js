@@ -241,6 +241,11 @@ startup2 = function(x, y, r, ctx) {
     circle(x, y, r, "#85807D", "#E1E2E5", 18, ctx);
 };
 
+stale = function(x, y, r, ctx) {
+    // draw a secondary going stale
+    circle(x, y, r, "#6E6134", "#4C4725", 18, ctx);
+};
+
 fatal = function(x, y, r, ctx) {
     // draw a red circle with radius r centered at (x, y)
     // this server is in a FATAL state

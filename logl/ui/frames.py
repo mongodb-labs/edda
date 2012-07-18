@@ -183,6 +183,8 @@ def info_by_type(f, e):
     # by type:
     # make sure it is a string!
     s = str(e["target"])
+
+    # status changes
     if e["type"] == "status":
         f["servers"][s] = e["state"]
         # if server went down, change links and syncs
@@ -191,6 +193,11 @@ def info_by_type(f, e):
             e["state"] == "FATAL"):
             f = break_links(s, f)
 
+    # stale secondaries
+    if e["type"] == "stale":
+        f["servers"][s] = "STALE"
+
+    # reconfigs
     elif e["type"] == "reconfig":
         # nothing to do for a reconfig?
         pass

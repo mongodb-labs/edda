@@ -89,7 +89,7 @@ def next_event(servers, server_entries, db, collName):
 
     # these are messages that do not involve
     # corresponding messages across servers
-    loners = ["conn", "fsync", "sync"]
+    loners = ["conn", "fsync", "sync", "stale"]
     logger = logging.getLogger(__name__)
 
     first_server = None
