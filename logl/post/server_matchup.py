@@ -182,29 +182,6 @@ def address_matchup(db, collName):
     return -1
 
 
-def name_me(s, servers):
-    """Given a string s (which can be a server_num,
-    server_name, or server_IP), method returns all info known
-    about the server in a tuple [server_num, server_name, server_IP]"""
-    name = None
-    IP = None
-    num = None
-    docs = []
-    docs.append(servers.find_one({"server_num": s}))
-    docs.append(servers.find_one({"server_name": s}))
-    docs.append(servers.find_one({"server_IP": s}))
-    for doc in docs:
-        if not doc:
-            continue
-        if doc["server_name"] != "unknown":
-            name = doc["server_name"]
-            name = name.replace('\n', "")
-        if doc["server_IP"] != "unknown":
-            IP = doc["server_IP"]
-        num = doc["server_num"]
-    return [num, name, IP]
-
-
 def eliminate(small, big):
     """See if, by process of elimination,
     there is exactly one entry in big that

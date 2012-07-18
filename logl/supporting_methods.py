@@ -64,7 +64,8 @@ def get_server_num(addr, servers):
         else:
             num = servers.find_one({"server_name": addr})
         if num:
-            logger.debug("Found server number {0} for address {1}".format(num["server_num"], addr))
+            logger.debug("Found server number {0} for address {1}"
+                         .format(num["server_num"], addr))
             return str(num["server_num"])
 
     # no .servers entry found for this target, make a new one
@@ -72,10 +73,34 @@ def get_server_num(addr, servers):
     for i in range(1, 50):
         if not servers.find_one({"server_num" : str(i)}):
             logger.info("No server entry found for target server {0}".format(addr))
-            logger.info("Adding {0} to the .servers collection with server_num {1}".format(addr, i))
+            logger.info("Adding {0} to the .servers collection with server_num {1}"
+                        .format(addr, i))
             assign_address(str(i), addr, servers)
             return str(i)
     logger.critical("Ran out of server numbers!")
+
+
+def name_me(s, servers):
+    """Given a string s (which can be a server_num,
+    server_name, or server_IP), method returns all info known
+    about the server in a tuple [server_num, server_name, server_IP]"""
+    name = None
+    IP = None
+    num = None
+    docs = []
+    docs.append(servers.find_one({"server_num": s}))
+    docs.append(servers.find_one({"server_name": s}))
+    docs.append(servers.find_one({"server_IP": s}))
+    for doc in docs:
+        if not doc:
+            continue
+        if doc["server_name"] != "unknown":
+            name = doc["server_name"]
+            name = name.replace('\n', "")
+        if doc["server_IP"] != "unknown":
+            IP = doc["server_IP"]
+        num = doc["server_num"]
+    return [num, name, IP]
 
 
 def assign_address(num, addr, servers):
