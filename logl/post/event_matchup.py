@@ -144,7 +144,17 @@ def next_event(servers, server_entries, db, collName):
         event["conn_addr"] = first["info"]["conn_addr"]
         event["conn_number"] = first["info"]["conn_number"]
 
-    event["summary"] = generate_summary(event)
+    # get a hostname
+    label = ""
+    num, name, IP = name_me(event["target"], servers_coll)
+    if name:
+        label = name
+    elif IP:
+        label = IP
+    else:
+        label = event["target"]
+
+    event["summary"] = generate_summary(event, label)
 
     # handle corresponding messages
     event["witnesses"].append(first["origin_server"])
@@ -300,16 +310,15 @@ def resolve_dissenters(events):
     return events
 
 
-def generate_summary(event):
+def generate_summary(event, hostname):
     """Given an event, generates and returns a one-line,
     mnemonic summary for that event"""
-    summary = ""
 
     # for reconfig messages
     if event["type"] == "reconfig":
         return "All servers received a reconfig message"
 
-    summary += "Server " + event["target"]
+    summary = hostname
 
     # for status messages
     if event["type"] == "status":
