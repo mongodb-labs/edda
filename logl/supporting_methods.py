@@ -118,6 +118,11 @@ def assign_address(num, addr, servers):
     #    "server_IP" : IP
     #    }
     logger = logging.getLogger(__name__)
+
+    # if "self" is the address, ignore
+    if addr == "self":
+        return
+
     num = str(num)
     addr = str(addr)
     addr = addr.replace('\n', "")
