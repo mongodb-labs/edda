@@ -115,6 +115,9 @@ function time_setup(max_time) {
 		document.getElementById("timestamp").innerHTML = "Time: " + frames[ui.value]["date"].substring(5, 50);
 		document.getElementById("summary").innerHTML = "Event " + ui.value + ": " + frames[ui.value]["summary"];
 
+		// erase pop-up box
+		document.getElementById("message_box").style.visibility = "hidden";
+
 		// print witnesses, as hostnames
 		var w = "";
 		for (var s in frames[ui.value]["witnesses"]) {
