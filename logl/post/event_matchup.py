@@ -128,6 +128,10 @@ def next_event(servers, server_entries, db, collName):
     if event["type"] == "status":
         event["state"] = first["info"]["state"]
 
+    # exit messages
+    if event["type"] == "exit":
+        event["state"] = "DOWN"
+
     # locking messages
     if event["type"] == "fsync":
         event["type"] = first["info"]["state"]
@@ -183,9 +187,11 @@ def get_corresponding_events(servers, server_entries,
                 break
             if not target_server_match(entry, first, servers_coll):
                 continue
-            if not type_check(first, entry):
+            type = type_check(first, entry)
+            if not type:
                 continue
             # match found!
+            event["type"] = type
             add = True
             add_entry = entry
         if add:
@@ -200,18 +206,19 @@ def get_corresponding_events(servers, server_entries,
 def type_check(entry_a, entry_b):
     """Given two .entries documents, perform checks specific to
     their type to see if they refer to corresponding events"""
-    # handle exit messages carefully
-    if entry_a["type"] != entry_b["type"]:
-        return False
-    type = entry_a["type"]
 
-    # status messages
-    if type == "status":
-        if entry_a["info"]["state"] != entry_b["info"]["state"]:
-            return False
-    elif type == "stale":
-        pass
-    return True
+    if entry_a["type"] == entry_b["type"]:
+        return entry_a["type"]
+
+    # handle exit messages carefully
+    # if exit and down messages, save as "exit" type
+    if entry_a["type"] == "exit" and entry_b["type"] == "status":
+        if entry_b["info"]["state"] == "DOWN":
+            return "exit"
+    elif entry_b["type"] == "exit" and entry_a["type"] == "status":
+        if entry_a["info"]["state"] == "DOWN":
+            return "exit"
+    return None
 
 
 def target_server_match(entry_a, entry_b, servers):
