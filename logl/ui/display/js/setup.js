@@ -31,6 +31,7 @@ var frame_bottom;
 
 // stored information
 var server_names;
+var labels;
 var frames;
 var admin;
 var total_frame_count;
@@ -113,8 +114,27 @@ function time_setup(max_time) {
 		handle_batches();
 		document.getElementById("timestamp").innerHTML = "Time: " + frames[ui.value]["date"].substring(5, 50);
 		document.getElementById("summary").innerHTML = "Event " + ui.value + ": " + frames[ui.value]["summary"];
-		document.getElementById("witnesses").innerHTML = "Witnessed event: " + frames[ui.value]["witnesses"];
-		document.getElementById("dissenters").innerHTML = "Blind to event: " + frames[ui.value]["dissenters"];
+
+		// print witnesses, as hostnames
+		var w = "";
+		for (var s in frames[ui.value]["witnesses"]) {
+		    if (w != "") {
+			w += "<br/>";
+		    }
+		    w += labels[frames[ui.value]["witnesses"][s]];
+		}
+		document.getElementById("witnesses").innerHTML = "Witnessed event:<br/>" + w;
+
+		// print dissenters, as hostnames
+		var d = "";
+		for (var s in frames[ui.value]["dissenters"]) {
+		    if (d != "") {
+			d += "<br/>";
+		    }
+		    d += labels[frames[ui.value]["dissenters"][s]];
+		}
+		document.getElementById("dissenters").innerHTML = "Blind to event:<br/>" + d;
+
 	    }});
     $("#slider").slider( "option", "max", total_frame_count - 2);
 }
