@@ -124,6 +124,13 @@ def witnesses_dissenters(f, e):
         f["flag"] = True
     # a witness means a new link
     # links are always added to the TARGET's queue.
+    # unless target server just went down
+    if e["type"] == "status":
+        if (e["state"] == "REMOVED" or
+            e["state"] == "DOWN" or
+            e["state"] == "FATAL"):
+            return f
+
     for w in e["witnesses"]:
         if w == e["target"]:
             continue
@@ -158,21 +165,21 @@ def break_links(me, f):
         if not sync in f["broken_links"][me]:
             f["broken_links"][me].append(sync)
         f["syncs"][me].remove(sync)
-    # find links that reference me and make them broken links
+
+    # find links and syncs that reference me
     for s in f["servers"].keys():
         if s == me:
             continue
-        # remove links that reference me
         for link in f["links"][s]:
             if link == me:
                 f["links"][s].remove(link)
                 f["broken_links"][s].append(link)
-        # remove syncs that reference me
         for sync in f["syncs"][s]:
             if sync == me:
                 f["syncs"][s].remove(sync)
                 if not sync in f["broken_links"][s]:
                     f["broken_links"][s].append(sync)
+
     # remove all of my user connections
     f["users"][me] = []
     return f
@@ -186,7 +193,11 @@ def info_by_type(f, e):
 
     # status changes
     if e["type"] == "status":
-        f["servers"][s] = e["state"]
+        # if server was previously stale,
+        # do not change icon if RECOVERING
+        if not (f["servers"][s] == "STALE" and
+            e["state"] == "RECOVERING"):
+            f["servers"][s] = e["state"]
         # if server went down, change links and syncs
         if (e["state"] == "DOWN" or
             e["state"] == "REMOVED" or
