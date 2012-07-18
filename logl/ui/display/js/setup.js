@@ -45,7 +45,7 @@ function logl_setup() {
     visual_setup();
     version_number();
     file_names();
-    
+
 }
 
 // set up canvases and associated contexts
@@ -112,7 +112,9 @@ function time_setup(max_time) {
 		current_frame = ui.value;
 		handle_batches();
 		document.getElementById("timestamp").innerHTML = "Time: " + frames[ui.value]["date"].substring(5, 50);
-		document.getElementById("summary").innerHTML = "Summary:<br/>Event " + ui.value + ": " + frames[ui.value]["summary"];
+		document.getElementById("summary").innerHTML = "Event " + ui.value + ": " + frames[ui.value]["summary"];
+		document.getElementById("witnesses").innerHTML = "Witnessed event: " + frames[ui.value]["witnesses"];
+		document.getElementById("dissenters").innerHTML = "Blind to event: " + frames[ui.value]["dissenters"];
 	    }});
     $("#slider").slider( "option", "max", total_frame_count - 2);
 }
