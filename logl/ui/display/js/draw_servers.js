@@ -81,6 +81,7 @@ draw_names = function() {
     contexts["background"].font = "11pt Courier New";
     contexts["background"].fillStyle = "white";
     w = canvases["background"].width;
+    labels = {};
     // for each server:
     for (var s in servers) {
 	var r = servers[s]["r"];
@@ -93,6 +94,9 @@ draw_names = function() {
 	    }
         }
         else {label = server_names["hostname"][s];}
+
+	// save this information
+	labels[s] = label;
 
 	// figure out which side of the circle to
 	// write labels

@@ -87,7 +87,7 @@ body {
 }
 
 #side_information {
-	   width: 150px;
+	   width: 160px;
 	   position: absolute;
 	    left: 30px;
 	    top: 30px;
@@ -95,22 +95,19 @@ body {
 
 
 #timestamp, #summary, #log_files, #witnesses, #dissenters {
-	    width: 150px;
+	    width: 160px;
 	    background-color:#DECBA2;
 	    padding: 10px;
 	    opacity:0.8;
 	    filter:alpha(opacity=80);
 	    -moz-border-radius: 5px;
 	    border-radius: 5px;
-}
-
-#log_files, #timestamp {
-	   font-size: 10pt;
+	    font-size: 10pt;
 }
 
 #pop_up_links {
 	      position: absolute;
-	      width: 150px;
+	      width: 160px;
 	      top: 580px;
 	      padding: 10px;
 	      left: 30px;
