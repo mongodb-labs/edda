@@ -71,6 +71,8 @@ def generate_frames(unsorted_events, db, collName):
         # fill in various fields
         f["date"] = str(e["date"])
         f["summary"] = e["summary"]
+        f["witnesses"] = e["witnesses"]
+        f["dissenters"] = e["dissenters"]
         # see what data we can glean from the last frame
         if last_frame:
             f["servers"] = deepcopy(last_frame["servers"])
