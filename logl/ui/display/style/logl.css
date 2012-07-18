@@ -86,11 +86,17 @@ body {
 	  visibility: hidden;
 }
 
-#timestamp, #summary, #log_files {
+#side_information {
+	   width: 150px;
+	   position: absolute;
+	    left: 30px;
+	    top: 30px;
+}
+
+
+#timestamp, #summary, #log_files, #witnesses, #dissenters {
 	    width: 150px;
 	    background-color:#DECBA2;
-	    position: absolute;
-	    left: 30px;
 	    padding: 10px;
 	    opacity:0.8;
 	    filter:alpha(opacity=80);
@@ -98,17 +104,8 @@ body {
 	    border-radius: 5px;
 }
 
-#timestamp {
-	   top: 27px;
-}
-
-#summary {
-	 top: 100px;
-}
-
-#log_files {
-	   top: 220px;
-	   font-size: 8pt;
+#log_files, #timestamp {
+	   font-size: 10pt;
 }
 
 #pop_up_links {
