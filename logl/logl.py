@@ -126,14 +126,16 @@ def main():
     # read in from each log file
     fileNames = []
     for arg in namespace.filename:
-
-        fileNames.append(arg)
+        if arg in fileNames:
+            logger.warning("Skipping duplicate file {0}".format(arg))
+            continue
         try:
             f = open(arg, 'r')
         except IOError as e:
             print "Error: Unable to read file {0}".format(arg)
             print e
             return
+        fileNames.append(arg)
         counter = 0
         stored = 0
         server_num = -1
