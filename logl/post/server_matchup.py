@@ -71,19 +71,25 @@ def address_matchup(db, coll_name):
     for addr in all_servers_cursor:
         if addr == "self":
             continue
-        if servers.find_one(
-            {"$or": [{"server_name" : addr}, {"server_IP": addr}]}):
+        if servers.find_one({"network_name": addr}):
+            continue
+        # check if there exists doc with this self_name
+        doc = servers.find_one({"self_name": addr})
+        if doc:
+            doc["network_name"] = addr
+            servers.save(doc)
             continue
         if not addr in mentioned_names:
             mentioned_names.append(addr)
+
+    LOGGER.debug("All mentioned network names:\n{0}".format(mentioned_names))
+
 
     last_change = -1
     round = 0
     while mentioned_names:
         round += 1
-        unknowns = list(servers.find(
-                {"$or": [{"server_name": "unknown"},
-                         {"server_IP": "unknown"}]}))
+        unknowns = list(servers.find({"network_name": "unknown"}))
 
         if len(unknowns) == 0:
             LOGGER.debug("No unknowns, breaking")
@@ -92,10 +98,8 @@ def address_matchup(db, coll_name):
 
             # extract server information
             num = s["server_num"]
-            if s["server_name"] != "unknown":
-                name = s["server_name"]
-            elif s["server_IP"] != "unknown":
-                name = s["server_IP"]
+            if s["network_name"] != "unknown":
+                name = s["network_name"]
             else:
                 name = None
 
@@ -124,17 +128,16 @@ def address_matchup(db, coll_name):
                 LOGGER.debug(
                     "finding neighbors of (S) referring to name {0}".format(name))
                 neighbors_neighbors = []
-                neighbors = entries.find(
-                    {"info.server": name}).distinct("origin_server")
+                neighbors = list(entries.find(
+                    {"info.server": name}).distinct("origin_server"))
                 # for each server that mentions s
                 for n_addr in neighbors:
-                    LOGGER.debug("Find neighbors of (S)'s neighbor, {0}".format(n_addr))
-                    n_num, n_name, n_IP = name_me(n_addr, servers)
+                    LOGGER.debug("Find neighbors of (S)'s neighbor, {0}"
+                                 .format(n_addr))
+                    n_num, n_self_name, n_net_name = name_me(n_addr, servers)
                     if n_num:
-                        LOGGER.debug("Succesfully found server number for server {0}"
-                                     .format(n_addr))
-                        n_addrs = entries.find(
-                            {"origin_server": n_num}).distinct("info.server")
+                        n_addrs = list(entries.find(
+                            {"origin_server": n_num}).distinct("info.server"))
                         if not neighbors_neighbors:
                             # n_addr: the server name
                             # n_addrs: the names that n_addr mentions
@@ -169,22 +172,17 @@ def address_matchup(db, coll_name):
                     "Examining for match:\n{0}\n{1}"
                     .format(neighbors_of_s, mentioned_names))
                 match = eliminate(neighbors_of_s, mentioned_names)
-
+            LOGGER.debug("match: {0}".format(match))
             if match:
-                if is_IP(match):
-                    # entries will ALWAYS be labeled with the server_num
-                    if s["server_IP"] == "unknown":
+                # we are only trying to match network names here
+                if s["network_name"] == "unknown":
                         last_change = num
                         mentioned_names.remove(match)
-                        LOGGER.debug("IP {0} matched to server {1}"
+                        LOGGER.debug("Network name {0} matched to server {1}"
                                      .format(match, num))
-                else:
-                    if s["server_name"] == "unknown":
-                        LOGGER.debug("hostname {0} matched to server {1}"
-                                     .format(match, num))
-                        last_change = num
-                        mentioned_names.remove(match)
-                assign_address(num, match, servers)
+                        assign_address(num, match, False, servers)
+                LOGGER.debug("Duplicate network names found for server {0}"
+                             .format(s["network_name"]))
             else:
                 LOGGER.debug("No match found for server {0} this round"
                              .format(num))
@@ -194,12 +192,8 @@ def address_matchup(db, coll_name):
 
     if not mentioned_names:
         # for logl to succeed, it needs to match logs to servers
-        # so, it would really just need mentioned_names to be empty,
-        # and for ever server to have either a hostname or IP
-        # (the idea being that any log lines could be matched to some server)
-        s = list(servers.find(
-                {"$and": [{"server_name": "unknown"},
-                          {"server_IP": "unknown"}]}))
+        # so, all servers must have a network name.
+        s = list(servers.find({"self_name": "unknown"}))
         if len(s) == 0:
             LOGGER.debug("Successfully named all unnamed servers!")
             return 1

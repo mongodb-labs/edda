@@ -87,13 +87,13 @@ draw_names = function() {
 	var r = servers[s]["r"];
 	var label;
 	// use hostname, or IP if unknown
-	if (server_names["hostname"][s] == "unknown") {
-	    label = server_names["IP"][s];
+	if (server_names["self_name"][s] == "unknown") {
+	    label = server_names["network_name"][s];
 	    if (label == "unknown") {
 		label += "#" + s;
 	    }
         }
-        else {label = server_names["hostname"][s];}
+        else {label = server_names["self_name"][s];}
 
 	// save this information
 	labels[s] = label;

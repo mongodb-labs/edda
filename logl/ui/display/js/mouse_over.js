@@ -70,8 +70,8 @@ new_click = function(e) {
     }
 
     var info = "Number: " + s;
-    info += "<br/>Hostname: " + server_names["hostname"][s];
-    info += "<br/>IP: " + server_names["IP"][s];
+    info += "<br/>Name: " + server_names["self_name"][s];
+    info += "<br/>Network Name: " + server_names["network_name"][s];
     info += "<br/>State: " + frames[current_frame]["servers"][s];
     box.innerHTML = info;
     box.style.left = x + "px";

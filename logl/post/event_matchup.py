@@ -97,7 +97,8 @@ def next_event(servers, server_entries, db, coll_name):
         if not server_entries[s]:
             continue
         if (first_server and
-            server_entries[s][0]["date"] > server_entries[first_server][0]["date"]):
+            server_entries[s][0]["date"] >
+            server_entries[first_server][0]["date"]):
             continue
         first_server = s
     if not first_server:
@@ -116,7 +117,7 @@ def next_event(servers, server_entries, db, coll_name):
         event["target"] = str(first["origin_server"])
     else:
         event["target"] = get_server_num(first["info"]["server"],
-                                         servers_coll)
+                                         False, servers_coll)
     # define other event fields
     event["type"] = first["type"]
     event["date"] = first["date"]
@@ -140,7 +141,7 @@ def next_event(servers, server_entries, db, coll_name):
     # sync events
     if event["type"] == "sync":
         # must have a server number for this server
-        num = get_server_num(first["info"]["sync_server"], servers_coll)
+        num = get_server_num(first["info"]["sync_server"], False, servers_coll)
         event["sync_to"] = num
 
     # conn messages
@@ -151,11 +152,11 @@ def next_event(servers, server_entries, db, coll_name):
 
     # get a hostname
     label = ""
-    num, name, IP = name_me(event["target"], servers_coll)
-    if name:
-        label = name
-    elif IP:
-        label = IP
+    num, self_name, network_name = name_me(event["target"], servers_coll)
+    if self_name:
+        label = self_name
+    elif network_name:
+        label = network_name
     else:
         label = event["target"]
 
@@ -237,51 +238,29 @@ def target_server_match(entry_a, entry_b, servers):
     b_doc = servers.find_one({"server_num": entry_b["origin_server"]})
 
     # address is known
-    if a == "self":
-        if (b == a_doc["server_name"] or
-            b == a_doc["server_IP"]):
+    if a == "self" and b == a_doc["network_name"]:
             return True
-    if b == "self":
-        if (a == b_doc["server_name"] or
-            a == b_doc["server_IP"]):
+    if b == "self" and a == b_doc["network_name"]:
             return True
 
     # address not known
     # in this case, we will assume that the address does belong
     # to the unnamed server and name it.
     if a == "self":
-        if is_IP(b):
-            if a_doc["server_IP"] == "unknown":
-                LOGGER.info("Assigning IP {0} to server {1}".format(b, a))
-                a_doc["server_IP"] == b
-                servers.save(a_doc)
-                return True
-            return False
-        else:
-            if a_doc["server_name"] == "unknown":
-                LOGGER.info("Assigning hostname {0} to server {1}".format(b, a))
-                a_doc["server_name"] == b
-                servers.save(a_doc)
-                return True
-            return False
+        if a_doc["network_name"] == "unknown":
+            LOGGER.info("Assigning network name {0} to server {1}".format(b, a))
+            a_doc["network_name"] == b
+            servers.save(a_doc)
+            return True
+        return False
 
-    # why, yes, it is rather silly to code this here twice.
-    # clean me up please!!
     if b == "self":
-        if is_IP(a):
-            if b_doc["server_IP"] == "unknown":
-                LOGGER.info("Assigning IP {0} to server {1}".format(a, b))
-                b_doc["server_IP"] == a
-                servers.save(b_doc)
-                return True
-            return False
-        else:
-            if b_doc["server_name"] == "unknown":
-                LOGGER.info("Assigning hostname {0} to server {1}".format(a, b))
-                b_doc["server_name"] == a
-                servers.save(b_doc)
-                return True
-            return False
+        if b_doc["network_name"] == "unknown":
+            LOGGER.info("Assigning network name {0} to server {1}".format(a, b))
+            b_doc["network_name"] == a
+            servers.save(b_doc)
+            return True
+        return False
 
 
 def resolve_dissenters(events):

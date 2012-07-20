@@ -53,6 +53,7 @@ def process(msg, date):
        }
     }
     """
+
     result = criteria(msg)
     if not result:
         return None
