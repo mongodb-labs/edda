@@ -30,6 +30,7 @@ import logging
 import os
 import re
 import sys
+import gzip
 
 from bson import objectid
 from datetime import datetime
