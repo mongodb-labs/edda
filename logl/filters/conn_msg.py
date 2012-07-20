@@ -12,20 +12,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
-import re
-import string
 import logging
+import re
 from supporting_methods import capture_address
+
+# module-level regex
+START_CONN_NUMBER = re.compile("#[0-9]+")
+END_CONN_NUMBER = re.compile("\[conn[0-9]+\]")
+ANY_NUMBER = re.compile("[0-9]+")
 
 def criteria(msg):
     """Determing if the given message is an instance
-    of a connection type message"""
-    if string.find(msg, 'connection accepted') >= 0:
+    of a connection type message
+    """
+    if 'connection accepted' in msg:
         return 1
-    if string.find(msg, 'end connection') >= 0:
+    if 'end connection' in msg:
         return 2
-    return -1
+    return 0
 
 
 def process(msg, date):
@@ -41,9 +45,12 @@ def process(msg, date):
               "conn_num"  : int
               "server"    : "self"
               }
-    }"""
+    }
+    """
+    logger = logging.getLogger(__name__)
+
     result = criteria(msg)
-    if result < 0:
+    if not result:
         return None
     doc = {}
     doc["date"] = date
@@ -59,9 +66,8 @@ def process(msg, date):
 
 
 def new_conn(msg, doc):
-    """this server has accepted a new connection."""
+    """Generate a document for a new connection event."""
     doc["info"]["subtype"] = "new_conn"
-    logger = logging.getLogger(__name__)
 
     addr = capture_address(msg)
     if not addr:
@@ -71,9 +77,8 @@ def new_conn(msg, doc):
     doc["info"]["conn_addr"] = addr
 
     # isolate connection number
-    pattern2 = re.compile("#[0-9]+")
-    m = pattern2.search(msg)
-    if m is None:
+    m = START_CONN_NUMBER.search(msg)
+    if not m:
         logger.debug("malformed new_conn message: no connection number found")
         return None
     doc["info"]["conn_number"] = m.group(0)[1:]
@@ -84,9 +89,8 @@ def new_conn(msg, doc):
 
 
 def ended(msg, doc):
-    """this server is ending a connections."""
+    """Generate a document for an end-of-connection event."""
     doc["info"]["subtype"] = "end_conn"
-    logger = logging.getLogger(__name__)
 
     addr = capture_address(msg)
     if not addr:
@@ -96,17 +100,15 @@ def ended(msg, doc):
     doc["info"]["conn_addr"] = addr
 
     # isolate connection number
-    pattern = re.compile("\[conn[0-9]+\]")
-    m = pattern.search(msg)
-    if m is None:
+    m = END_CONN_NUMBER.search(msg)
+    if not m:
         logger.warning("malformed new_conn message: no connection number found")
         return None
     # do a second search for the actual number
-    pattern = re.compile("[0-9]+")
-    n = pattern.search(m.group(0))
+    n = ANY_NUMBER.search(m.group(0))
     doc["info"]["conn_number"] = n.group(0)
 
-    debug = "Returning new doc for a message of type: initandlisten: new_conn"
+    debug = "Returning new doc for a message of type: initandlisten: end_conn"
     logger.debug(debug)
 
     return doc
