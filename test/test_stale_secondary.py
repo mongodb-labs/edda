@@ -12,31 +12,35 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
+import unittest
 from logl.filters.stale_secondary import *
 from datetime import datetime
 
 
-def test_criteria():
-    """Test the criteria() method of stale_secondary.py"""
-    assert criteria("this should not pass") == -1
-    assert criteria("Thu Sep 9 17:22:46 [rs_sync] replSet error RS102 too stale to catch up") == 0
-    assert criteria("Thu Sep 9 17:24:46 [rs_sync] replSet error RS102 too stale to catch up, at least from primary: 127.0.0.1:30000") == 0
+class test_stale_secondary(unittest.TetCase):
+    def test_criteria(self):
+        """Test the criteria() method of stale_secondary.py"""
+        assert criteria("this should not pass") == -1
+        assert criteria("Thu Sep 9 17:22:46 [rs_sync] replSet error RS102 too stale to catch up") == 0
+        assert criteria("Thu Sep 9 17:24:46 [rs_sync] replSet error RS102 too stale to catch up, at least from primary: 127.0.0.1:30000") == 0
 
 
-def test_process():
-    """Test the process() method of stale_secondary.py"""
-    date = datetime.now()
-    check_state("Thu Sep 9 17:22:46 [rs_sync] replSet error RS102 too stale to catch up", 0, date)
-    check_state("Thu Sep 9 17:24:46 [rs_sync] replSet error RS102 too stale to catch up, at least from primary: 127.0.0.1:30000", 0, date)
-    check_state("Thu Sep 9 17:24:46 [rs_sync] replSet error RS102 too stale to catch up, at least from primary: sam@10gen.com:27017", 0, date)
-    assert process("This should fail", date) == None
+    def test_process():
+        """Test the process() method of stale_secondary.py"""
+        date = datetime.now()
+        self.check_state("Thu Sep 9 17:22:46 [rs_sync] replSet error RS102 too stale to catch up", 0, date)
+        self.check_state("Thu Sep 9 17:24:46 [rs_sync] replSet error RS102 too stale to catch up, at least from primary: 127.0.0.1:30000", 0, date)
+        self.check_state("Thu Sep 9 17:24:46 [rs_sync] replSet error RS102 too stale to catch up, at least from primary: sam@10gen.com:27017", 0, date)
+        assert process("This should fail", date) == None
 
 
-def check_state(message, code, date):
-    """Helper method for tests"""
-    doc = process(message, date)
-    assert doc
-    assert doc["type"] == "stale"
-    assert doc["original_message"] == message
-    assert doc["info"]["server"] == "self"
+    def check_state(self, message, code, date):
+        """Helper method for tests"""
+        doc = process(message, date)
+        assert doc
+        assert doc["type"] == "stale"
+        assert doc["original_message"] == message
+        assert doc["info"]["server"] == "self"
+
+if __name__ == '__main__':
+    unittest.main()

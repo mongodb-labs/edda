@@ -23,30 +23,33 @@
 
 
 import string
+import unittest
 from logl.filters.rs_reconfig import *
 from datetime import datetime
 
 
-def test_criteria():
-    assert criteria("this should not pass") == -1
-    assert criteria("Tue Jul  3 10:20:15 [rsMgr]"
-        " replSet replSetReconfig new config saved locally") == 0
-    assert criteria("Tue Jul  3 10:20:15 [rsMgr]"
-        " replSet new config saved locally") == -1
-    assert criteria("Tue Jul  3 10:20:15 [rsMgr] replSet info : additive change to configuration") == -1
+class test_rs_reconfig(unittest.TestCase):
+    def test_criteria(self):
+        assert criteria("this should not pass") == -1
+        assert criteria("Tue Jul  3 10:20:15 [rsMgr]"
+            " replSet replSetReconfig new config saved locally") == 0
+        assert criteria("Tue Jul  3 10:20:15 [rsMgr]"
+            " replSet new config saved locally") == -1
+        assert criteria("Tue Jul  3 10:20:15 [rsMgr] replSet info : additive change to configuration") == -1
 
+    def test_process(self):
+        date = datetime.now()
+        self.check_state("Tue Jul  3 10:20:15 [rsMgr] replSet"
+            " replSetReconfig new config saved locally", 0, date, None)
+        assert process("This should fail", date) == None
 
-def test_process():
-    date = datetime.now()
-    check_state("Tue Jul  3 10:20:15 [rsMgr] replSet"
-        " replSetReconfig new config saved locally", 0, date, None)
-    assert process("This should fail", date) == None
+    def check_state(self, message, code, date, server):
+        doc = process(message, date)
+        assert doc
+        assert doc["date"] == date
+        assert doc["type"] == "reconfig"
+        assert doc["msg"] == message
+        assert doc["info"]["server"] == "self"
 
-
-def check_state(message, code, date, server):
-    doc = process(message, date)
-    assert doc
-    assert doc["date"] == date
-    assert doc["type"] == "reconfig"
-    assert doc["msg"] == message
-    assert doc["info"]["server"] == "self"
+if __name__ == '__main__':
+    unittest.main()

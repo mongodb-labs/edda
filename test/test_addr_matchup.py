@@ -18,6 +18,17 @@ from logl.logl import assign_address
 from pymongo import Connection
 from datetime import datetime, timedelta
 import logging
+import unittest
+
+
+class testAddrMatchup(unittest.TestCase):
+    def setup(self):
+        self.seq = range(10)
+
+    def testTrue(self):
+        self.assertTrue()
+suite = unittest.TestLoader().loadTestsFromTestCase(TestSequenceFunctions)
+unittest.TextTestRunner(verbosity=2).run(suite)
 
 
 def db_setup():
