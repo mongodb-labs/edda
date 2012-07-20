@@ -1,0 +1,883 @@
+Wed Jul 18 11:01:17 [initandlisten] MongoDB starting : pid=499 port=37017 dbpath=power_rangers/1 64-bit host=Jason
+Wed Jul 18 11:01:17 [initandlisten] db version v2.0.5, pdfile version 4.5
+Wed Jul 18 11:01:17 [initandlisten] git version: 1bb4de4630302fad8af53824ca4f627db490b753
+Wed Jul 18 11:01:17 [initandlisten] build info: Darwin erh2.10gen.cc 9.8.0 Darwin Kernel Version 9.8.0: Wed Jul 15 16:55:01 PDT 2009; root:xnu-1228.15.4~1/RELEASE_I386 i386 BOOST_LIB_VERSION=1_40
+Wed Jul 18 11:01:17 [initandlisten] options: { dbpath: "power_rangers/1", logpath: "Jason.log", port: 37017, replSet: "pr" }
+Wed Jul 18 11:01:17 [initandlisten] journal dir=power_rangers/1/journal
+Wed Jul 18 11:01:17 [initandlisten] recover : no journal files present, no recovery needed
+Wed Jul 18 11:01:17 [websvr] admin web console waiting for connections on port 38017
+Wed Jul 18 11:01:17 [initandlisten] waiting for connections on port 37017
+Wed Jul 18 11:01:17 [initandlisten] connection accepted from 127.0.0.1:50367 #1
+Wed Jul 18 11:01:17 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:01:17 [rsStart] replSet info you may need to run replSetInitiate -- rs.initiate() in the shell -- if that is not already done
+Wed Jul 18 11:01:27 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:01:37 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:01:47 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:01:57 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:02:07 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:02:17 [clientcursormon] mem (MB) res:14 virt:2435 mapped:0
+Wed Jul 18 11:02:17 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:02:27 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:02:37 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:02:47 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:02:57 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:03:07 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:03:17 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:03:20 [initandlisten] connection accepted from 127.0.0.1:50375 #2
+Wed Jul 18 11:03:27 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:03:37 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:03:47 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:03:57 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:04:07 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:04:17 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:04:27 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:04:37 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:04:47 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:04:57 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:05:07 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:05:17 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:05:27 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:05:37 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:05:47 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:05:57 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:06:07 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:06:17 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:06:27 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:06:37 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:06:47 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:06:57 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:07:07 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:07:17 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:07:17 [clientcursormon] mem (MB) res:15 virt:2435 mapped:0
+Wed Jul 18 11:07:27 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:07:37 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:07:47 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:07:57 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:08:07 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:08:17 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:08:27 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:08:37 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:08:47 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:08:57 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:09:07 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:09:17 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:09:27 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:09:37 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:09:47 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:09:57 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:10:07 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:10:17 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:10:27 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:10:37 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:10:47 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:10:57 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:11:07 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:11:17 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:11:27 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:11:37 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:11:47 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:11:57 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:12:07 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:12:17 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:12:17 [clientcursormon] mem (MB) res:15 virt:2435 mapped:0
+Wed Jul 18 11:12:27 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:12:37 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:12:47 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:12:57 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:13:07 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:13:17 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:13:27 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:13:37 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:13:47 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:13:57 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:14:07 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:14:17 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:14:27 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:14:37 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:14:47 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:14:57 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:15:07 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:15:17 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:15:27 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:15:37 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:15:47 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:15:57 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:16:07 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:16:17 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:16:27 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:16:37 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:16:47 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:16:57 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:17:07 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:17:17 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:17:17 [clientcursormon] mem (MB) res:15 virt:2435 mapped:0
+Wed Jul 18 11:17:27 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:17:37 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:17:47 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:17:57 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:18:07 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:18:17 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:18:27 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:18:37 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:18:47 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:18:57 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:19:07 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:19:17 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:19:27 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:19:37 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:19:47 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:19:57 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:20:07 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:20:17 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:20:27 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:20:37 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:20:47 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:20:57 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:21:07 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:21:17 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:21:27 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:21:37 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:21:47 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:21:57 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:22:07 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:22:17 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:22:17 [clientcursormon] mem (MB) res:15 virt:2435 mapped:0
+Wed Jul 18 11:22:27 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:22:37 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:22:47 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:22:57 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:23:07 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:23:17 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:23:27 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:23:37 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:23:47 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:23:57 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:24:07 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:24:17 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:24:27 [conn2] end connection 127.0.0.1:50375
+Wed Jul 18 11:24:27 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:24:37 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:24:38 got kill or ctrl c or hup signal 2 (Interrupt: 2), will terminate after current cmd ends
+Wed Jul 18 11:24:38 [interruptThread] now exiting
+Wed Jul 18 11:24:38 dbexit: 
+Wed Jul 18 11:24:38 [interruptThread] shutdown: going to close listening sockets...
+Wed Jul 18 11:24:38 [interruptThread] closing listening socket: 6
+Wed Jul 18 11:24:38 [interruptThread] closing listening socket: 7
+Wed Jul 18 11:24:38 [interruptThread] closing listening socket: 8
+Wed Jul 18 11:24:38 [interruptThread] removing socket file: /tmp/mongodb-37017.sock
+Wed Jul 18 11:24:38 [interruptThread] shutdown: going to flush diaglog...
+Wed Jul 18 11:24:38 [interruptThread] shutdown: going to close sockets...
+Wed Jul 18 11:24:38 [interruptThread] shutdown: waiting for fs preallocator...
+Wed Jul 18 11:24:38 [interruptThread] shutdown: lock for final commit...
+Wed Jul 18 11:24:38 [interruptThread] shutdown: final commit...
+Wed Jul 18 11:24:38 [interruptThread] shutdown: closing all files...
+Wed Jul 18 11:24:38 [conn1] end connection 127.0.0.1:50367
+Wed Jul 18 11:24:38 [interruptThread] closeAllFiles() finished
+Wed Jul 18 11:24:38 [interruptThread] journalCleanup...
+Wed Jul 18 11:24:38 [interruptThread] removeJournalFiles
+Wed Jul 18 11:24:38 [interruptThread] shutdown: removing fs lock...
+Wed Jul 18 11:24:38 dbexit: really exiting now
+
+
+***** SERVER RESTARTED *****
+
+
+Wed Jul 18 14:43:02 [initandlisten] MongoDB starting : pid=1340 port=17017 dbpath=power_rangers/1 64-bit host=SamanthaRitter.local
+Wed Jul 18 14:43:02 [initandlisten] db version v2.0.5, pdfile version 4.5
+Wed Jul 18 14:43:02 [initandlisten] git version: 1bb4de4630302fad8af53824ca4f627db490b753
+Wed Jul 18 14:43:02 [initandlisten] build info: Darwin erh2.10gen.cc 9.8.0 Darwin Kernel Version 9.8.0: Wed Jul 15 16:55:01 PDT 2009; root:xnu-1228.15.4~1/RELEASE_I386 i386 BOOST_LIB_VERSION=1_40
+Wed Jul 18 14:43:02 [initandlisten] options: { dbpath: "power_rangers/1", logappend: true, logpath: "Jason.log", port: 17017, replSet: "pr" }
+Wed Jul 18 14:43:02 [initandlisten] journal dir=power_rangers/1/journal
+Wed Jul 18 14:43:02 [initandlisten] recover : no journal files present, no recovery needed
+Wed Jul 18 14:43:02 [websvr] admin web console waiting for connections on port 18017
+Wed Jul 18 14:43:02 [initandlisten] waiting for connections on port 17017
+Wed Jul 18 14:43:02 [initandlisten] connection accepted from 127.0.0.1:51861 #1
+Wed Jul 18 14:43:02 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:43:02 [rsStart] replSet info you may need to run replSetInitiate -- rs.initiate() in the shell -- if that is not already done
+Wed Jul 18 14:43:12 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:43:22 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:43:32 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:43:37 [initandlisten] connection accepted from 127.0.0.1:51876 #2
+Wed Jul 18 14:43:42 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:43:52 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:44:02 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:44:02 [clientcursormon] mem (MB) res:15 virt:2435 mapped:0
+Wed Jul 18 14:44:12 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:44:22 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:44:32 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:44:42 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:44:52 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:45:02 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:45:12 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:45:22 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:45:32 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:45:42 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:45:52 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:46:02 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:46:12 [conn2] replSet replSetInitiate admin command received from client
+Wed Jul 18 14:46:12 [conn2] replSet replSetInitiate config object parses ok, 6 members specified
+Wed Jul 18 14:46:12 [conn2] replSet replSetInitiate all members seem up
+Wed Jul 18 14:46:12 [conn2] ******
+Wed Jul 18 14:46:12 [conn2] creating replication oplog of size: 183MB...
+Wed Jul 18 14:46:12 [FileAllocator] allocating new datafile power_rangers/1/local.ns, filling with zeroes...
+Wed Jul 18 14:46:12 [FileAllocator] creating directory power_rangers/1/_tmp
+Wed Jul 18 14:46:12 [FileAllocator] done allocating datafile power_rangers/1/local.ns, size: 16MB,  took 0.034 secs
+Wed Jul 18 14:46:12 [FileAllocator] allocating new datafile power_rangers/1/local.0, filling with zeroes...
+Wed Jul 18 14:46:12 [FileAllocator] done allocating datafile power_rangers/1/local.0, size: 64MB,  took 0.258 secs
+Wed Jul 18 14:46:12 [FileAllocator] allocating new datafile power_rangers/1/local.1, filling with zeroes...
+Wed Jul 18 14:46:12 [FileAllocator] done allocating datafile power_rangers/1/local.1, size: 128MB,  took 0.533 secs
+Wed Jul 18 14:46:13 [FileAllocator] allocating new datafile power_rangers/1/local.2, filling with zeroes...
+Wed Jul 18 14:46:14 [FileAllocator] done allocating datafile power_rangers/1/local.2, size: 256MB,  took 1.073 secs
+Wed Jul 18 14:46:14 [conn2] ******
+Wed Jul 18 14:46:14 [conn2] replSet info saving a newer config version to local.system.replset
+Wed Jul 18 14:46:14 [conn2] replSet saveConfigLocally done
+Wed Jul 18 14:46:14 [conn2] replSet replSetInitiate config now saved locally.  Should come online in about a minute.
+Wed Jul 18 14:46:14 [conn2] command admin.$cmd command: { replSetInitiate: { _id: "pr", members: [ { _id: 0.0, host: "Jason:17017" }, { _id: 1.0, host: "Zach:17018" }, { _id: 2.0, host: "Trini:17019" }, { _id: 3.0, host: "Kimberly:17020" }, { _id: 4.0, host: "Tommy:17021" }, { _id: 5.0, host: "Billy:17022", arbiterOnly: true } ] } } ntoreturn:1 reslen:112 2193ms
+Wed Jul 18 14:46:14 [rsStart] replSet STARTUP2
+Wed Jul 18 14:46:14 [rsMgr] replSet total number of votes is even - add arbiter or give one member an extra vote
+Wed Jul 18 14:46:14 [rsSync] replSet SECONDARY
+Wed Jul 18 14:46:16 [rsHealthPoll] replSet member Trini:17019 is up
+Wed Jul 18 14:46:16 [rsHealthPoll] replSet member Zach:17018 is up
+Wed Jul 18 14:46:16 [rsHealthPoll] replSet member Billy:17022 is up
+Wed Jul 18 14:46:16 [rsHealthPoll] replSet member Tommy:17021 is up
+Wed Jul 18 14:46:16 [rsHealthPoll] replSet member Kimberly:17020 is up
+Wed Jul 18 14:46:16 [rsMgr] replSet can't see a majority, will not try to elect self
+Wed Jul 18 14:46:16 [rsMgr] replSet not electing self, not all members up and we have been up less than 5 minutes
+Wed Jul 18 14:46:16 [rsMgr] replSet not electing self, not all members up and we have been up less than 5 minutes
+Wed Jul 18 14:46:16 [rsMgr] replSet not electing self, not all members up and we have been up less than 5 minutes
+Wed Jul 18 14:46:16 [initandlisten] connection accepted from 127.0.0.1:51883 #3
+Wed Jul 18 14:46:18 [rsHealthPoll] replSet member Zach:17018 is now in state STARTUP2
+Wed Jul 18 14:46:18 [rsMgr] not electing self, Zach:17018 would veto
+Wed Jul 18 14:46:20 [initandlisten] connection accepted from 127.0.0.1:51888 #4
+Wed Jul 18 14:46:21 [initandlisten] connection accepted from 127.0.0.1:51890 #5
+Wed Jul 18 14:46:22 [rsHealthPoll] replSet member Trini:17019 is now in state STARTUP2
+Wed Jul 18 14:46:22 [rsHealthPoll] replSet member Tommy:17021 is now in state STARTUP2
+Wed Jul 18 14:46:22 [rsMgr] not electing self, Tommy:17021 would veto
+Wed Jul 18 14:46:22 [rsMgr] not electing self, Tommy:17021 would veto
+Wed Jul 18 14:46:23 [initandlisten] connection accepted from 127.0.0.1:51898 #6
+Wed Jul 18 14:46:25 [initandlisten] connection accepted from 127.0.0.1:51902 #7
+Wed Jul 18 14:46:26 [rsHealthPoll] replSet member Kimberly:17020 is now in state STARTUP2
+Wed Jul 18 14:46:26 [rsHealthPoll] replSet member Billy:17022 is now in state STARTUP2
+Wed Jul 18 14:46:26 [rsMgr] not electing self, Billy:17022 would veto
+Wed Jul 18 14:46:26 [rsMgr] not electing self, Billy:17022 would veto
+Wed Jul 18 14:46:30 [rsMgr] replSet info electSelf 0
+Wed Jul 18 14:46:30 [rsMgr] replSet PRIMARY
+Wed Jul 18 14:46:32 [rsHealthPoll] replSet member Tommy:17021 is now in state RECOVERING
+Wed Jul 18 14:46:32 [rsHealthPoll] replSet member Billy:17022 is now in state ARBITER
+Wed Jul 18 14:46:32 [rsHealthPoll] replSet member Trini:17019 is now in state RECOVERING
+Wed Jul 18 14:46:32 [rsHealthPoll] replSet member Kimberly:17020 is now in state RECOVERING
+Wed Jul 18 14:46:32 [rsHealthPoll] replSet member Zach:17018 is now in state RECOVERING
+Wed Jul 18 14:46:35 [initandlisten] connection accepted from 127.0.0.1:51908 #8
+Wed Jul 18 14:46:35 [initandlisten] connection accepted from 127.0.0.1:51909 #9
+Wed Jul 18 14:46:36 [slaveTracking] build index local.slaves { _id: 1 }
+Wed Jul 18 14:46:36 [slaveTracking] build index done 0 records 0.001 secs
+Wed Jul 18 14:46:37 [conn9] end connection 127.0.0.1:51909
+Wed Jul 18 14:46:37 [conn8] end connection 127.0.0.1:51908
+Wed Jul 18 14:46:38 [initandlisten] connection accepted from 127.0.0.1:51910 #10
+Wed Jul 18 14:46:38 [initandlisten] connection accepted from 127.0.0.1:51911 #11
+Wed Jul 18 14:46:38 [initandlisten] connection accepted from 127.0.0.1:51912 #12
+Wed Jul 18 14:46:40 [initandlisten] connection accepted from 127.0.0.1:51915 #13
+Wed Jul 18 14:46:40 [rsHealthPoll] replSet member Zach:17018 is now in state SECONDARY
+Wed Jul 18 14:46:41 [conn12] end connection 127.0.0.1:51912
+Wed Jul 18 14:46:41 [conn11] end connection 127.0.0.1:51911
+Wed Jul 18 14:46:42 [initandlisten] connection accepted from 127.0.0.1:51916 #14
+Wed Jul 18 14:46:43 [initandlisten] connection accepted from 127.0.0.1:51917 #15
+Wed Jul 18 14:46:43 [initandlisten] connection accepted from 127.0.0.1:51920 #16
+Wed Jul 18 14:46:44 [rsHealthPoll] replSet member Trini:17019 is now in state SECONDARY
+Wed Jul 18 14:46:44 [rsHealthPoll] replSet member Tommy:17021 is now in state SECONDARY
+Wed Jul 18 14:46:47 [conn3] end connection 127.0.0.1:51883
+Wed Jul 18 14:46:47 [initandlisten] connection accepted from 127.0.0.1:51927 #17
+Wed Jul 18 14:46:47 [initandlisten] connection accepted from 127.0.0.1:51931 #18
+Wed Jul 18 14:46:48 [rsHealthPoll] replSet member Kimberly:17020 is now in state SECONDARY
+Wed Jul 18 14:46:50 [conn4] end connection 127.0.0.1:51888
+Wed Jul 18 14:46:50 [initandlisten] connection accepted from 127.0.0.1:51934 #19
+Wed Jul 18 14:46:51 [conn5] end connection 127.0.0.1:51890
+Wed Jul 18 14:46:51 [initandlisten] connection accepted from 127.0.0.1:51937 #20
+Wed Jul 18 14:46:53 got kill or ctrl c or hup signal 2 (Interrupt: 2), will terminate after current cmd ends
+Wed Jul 18 14:46:53 [interruptThread] now exiting
+Wed Jul 18 14:46:53 dbexit: 
+Wed Jul 18 14:46:53 [interruptThread] shutdown: going to close listening sockets...
+Wed Jul 18 14:46:53 [interruptThread] closing listening socket: 6
+Wed Jul 18 14:46:53 [interruptThread] closing listening socket: 7
+Wed Jul 18 14:46:53 [interruptThread] closing listening socket: 8
+Wed Jul 18 14:46:53 [interruptThread] removing socket file: /tmp/mongodb-17017.sock
+Wed Jul 18 14:46:53 [interruptThread] shutdown: going to flush diaglog...
+Wed Jul 18 14:46:53 [interruptThread] shutdown: going to close sockets...
+Wed Jul 18 14:46:53 [interruptThread] shutdown: waiting for fs preallocator...
+Wed Jul 18 14:46:53 [interruptThread] shutdown: lock for final commit...
+Wed Jul 18 14:46:53 [interruptThread] shutdown: final commit...
+Wed Jul 18 14:46:53 [conn17] end connection 127.0.0.1:51927
+Wed Jul 18 14:46:53 [conn6] end connection 127.0.0.1:51898
+Wed Jul 18 14:46:53 [conn1] end connection 127.0.0.1:51861
+Wed Jul 18 14:46:53 [conn19] end connection 127.0.0.1:51934
+Wed Jul 18 14:46:53 [conn20] end connection 127.0.0.1:51937
+Wed Jul 18 14:46:53 [conn7] end connection 127.0.0.1:51902
+Wed Jul 18 14:46:53 [conn16] end connection 127.0.0.1:51920
+Wed Jul 18 14:46:53 [conn2] end connection 127.0.0.1:51876
+Wed Jul 18 14:46:53 [conn13] end connection 127.0.0.1:51915
+Wed Jul 18 14:46:53 [interruptThread] shutdown: closing all files...
+Wed Jul 18 14:46:53 [interruptThread] closeAllFiles() finished
+Wed Jul 18 14:46:53 [interruptThread] journalCleanup...
+Wed Jul 18 14:46:53 [interruptThread] removeJournalFiles
+Wed Jul 18 14:46:53 [interruptThread] shutdown: removing fs lock...
+Wed Jul 18 14:46:53 dbexit: really exiting now
+
+
+***** SERVER RESTARTED *****
+
+
+Wed Jul 18 14:48:19 [initandlisten] MongoDB starting : pid=1364 port=17017 dbpath=power_rangers/1 64-bit host=SamanthaRitter.local
+Wed Jul 18 14:48:19 [initandlisten] db version v2.0.5, pdfile version 4.5
+Wed Jul 18 14:48:19 [initandlisten] git version: 1bb4de4630302fad8af53824ca4f627db490b753
+Wed Jul 18 14:48:19 [initandlisten] build info: Darwin erh2.10gen.cc 9.8.0 Darwin Kernel Version 9.8.0: Wed Jul 15 16:55:01 PDT 2009; root:xnu-1228.15.4~1/RELEASE_I386 i386 BOOST_LIB_VERSION=1_40
+Wed Jul 18 14:48:19 [initandlisten] options: { dbpath: "power_rangers/1", logappend: true, logpath: "Jason.log", port: 17017, replSet: "pr" }
+Wed Jul 18 14:48:19 [initandlisten] journal dir=power_rangers/1/journal
+Wed Jul 18 14:48:19 [initandlisten] recover : no journal files present, no recovery needed
+Wed Jul 18 14:48:19 [websvr] admin web console waiting for connections on port 18017
+Wed Jul 18 14:48:19 [initandlisten] waiting for connections on port 17017
+Wed Jul 18 14:48:19 [initandlisten] connection accepted from 127.0.0.1:52336 #1
+Wed Jul 18 14:48:19 [rsStart] replSet STARTUP2
+Wed Jul 18 14:48:19 [rsMgr] replSet total number of votes is even - add arbiter or give one member an extra vote
+Wed Jul 18 14:48:19 [rsSync] replSet SECONDARY
+Wed Jul 18 14:48:20 [initandlisten] connection accepted from 127.0.0.1:52340 #2
+Wed Jul 18 14:48:20 [initandlisten] connection accepted from 127.0.0.1:52341 #3
+Wed Jul 18 14:48:20 [conn2] end connection 127.0.0.1:52340
+Wed Jul 18 14:48:20 [initandlisten] connection accepted from 127.0.0.1:52347 #4
+Wed Jul 18 14:48:21 [initandlisten] connection accepted from 127.0.0.1:52350 #5
+Wed Jul 18 14:48:21 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:48:21 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:48:21 [rsHealthPoll] replSet member Zach:17018 is up
+Wed Jul 18 14:48:21 [rsHealthPoll] replSet member Billy:17022 is up
+Wed Jul 18 14:48:21 [rsHealthPoll] replSet member Zach:17018 is now in state SECONDARY
+Wed Jul 18 14:48:21 [rsHealthPoll] replSet member Tommy:17021 is up
+Wed Jul 18 14:48:21 [rsMgr] replSet can't see a majority, will not try to elect self
+Wed Jul 18 14:48:21 [rsHealthPoll] replSet member Billy:17022 is now in state ARBITER
+Wed Jul 18 14:48:21 [rsHealthPoll] replSet member Tommy:17021 is now in state SECONDARY
+Wed Jul 18 14:48:21 [rsHealthPoll] replSet info Kimberly:17020 is down (or slow to respond): socket exception
+Wed Jul 18 14:48:21 [rsHealthPoll] replSet member Kimberly:17020 is now in state DOWN
+Wed Jul 18 14:48:21 [rsHealthPoll] replSet info Trini:17019 is down (or slow to respond): socket exception
+Wed Jul 18 14:48:21 [MultiCommandJob] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:48:21 [rsHealthPoll] replSet member Trini:17019 is now in state DOWN
+Wed Jul 18 14:48:21 [MultiCommandJob] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:48:21 [rsMgr] not electing self, Billy:17022 would veto
+Wed Jul 18 14:48:21 [MultiCommandJob] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:48:21 [rsMgr] not electing self, Billy:17022 would veto
+Wed Jul 18 14:48:21 [rsMgr] not electing self, Billy:17022 would veto
+Wed Jul 18 14:48:23 [conn3] replSet info voting yea for Tommy:17021 (4)
+Wed Jul 18 14:48:23 [rsHealthPoll] replSet member Tommy:17021 is now in state PRIMARY
+Wed Jul 18 14:48:23 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:48:23 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:48:24 [conn4] end connection 127.0.0.1:52347
+Wed Jul 18 14:48:24 [initandlisten] connection accepted from 127.0.0.1:52376 #6
+Wed Jul 18 14:48:25 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:48:25 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:48:27 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:48:27 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:48:28 [rsSync] replSet syncing to: Tommy:17021
+Wed Jul 18 14:48:28 [rsSync] build index local.me { _id: 1 }
+Wed Jul 18 14:48:28 [rsSync] build index done 0 records 0.001 secs
+Wed Jul 18 14:48:29 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:48:29 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:48:31 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:48:31 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:48:33 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:48:33 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:48:35 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:48:35 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:48:35 [FileAllocator] allocating new datafile power_rangers/1/test.ns, filling with zeroes...
+Wed Jul 18 14:48:35 [FileAllocator] done allocating datafile power_rangers/1/test.ns, size: 16MB,  took 0.084 secs
+Wed Jul 18 14:48:35 [FileAllocator] allocating new datafile power_rangers/1/test.0, filling with zeroes...
+Wed Jul 18 14:48:36 [FileAllocator] done allocating datafile power_rangers/1/test.0, size: 64MB,  took 0.771 secs
+Wed Jul 18 14:48:36 [FileAllocator] allocating new datafile power_rangers/1/test.1, filling with zeroes...
+Wed Jul 18 14:48:36 [rsSync] build index test.pr { _id: 1 }
+Wed Jul 18 14:48:36 [rsSync] build index done 0 records 0.004 secs
+Wed Jul 18 14:48:37 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:48:37 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:48:37 [FileAllocator] done allocating datafile power_rangers/1/test.1, size: 128MB,  took 1.126 secs
+Wed Jul 18 14:48:39 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:48:39 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:48:41 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:48:41 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:48:43 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:48:43 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:48:45 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:48:45 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:48:47 [conn5] end connection 127.0.0.1:52350
+Wed Jul 18 14:48:47 [initandlisten] connection accepted from 127.0.0.1:52496 #7
+Wed Jul 18 14:48:47 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:48:47 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:48:49 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:48:49 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:48:49 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:48:49 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:48:49 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:48:49 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:48:50 [conn3] end connection 127.0.0.1:52341
+Wed Jul 18 14:48:50 [initandlisten] connection accepted from 127.0.0.1:52524 #8
+Wed Jul 18 14:48:51 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:48:51 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:48:53 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:48:53 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:48:54 [conn6] end connection 127.0.0.1:52376
+Wed Jul 18 14:48:54 [initandlisten] connection accepted from 127.0.0.1:52551 #9
+Wed Jul 18 14:48:55 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:48:55 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:48:57 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:48:57 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:48:59 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:48:59 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:01 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:01 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:03 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:03 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:05 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:05 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:07 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:07 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:09 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:09 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:11 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:11 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:13 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:13 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:15 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:15 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:17 [conn7] end connection 127.0.0.1:52496
+Wed Jul 18 14:49:17 [initandlisten] connection accepted from 127.0.0.1:52702 #10
+Wed Jul 18 14:49:17 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:17 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:19 [clientcursormon] mem (MB) res:16 virt:3560 mapped:544
+Wed Jul 18 14:49:19 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:19 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:19 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:19 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:19 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:19 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:20 [conn8] end connection 127.0.0.1:52524
+Wed Jul 18 14:49:20 [initandlisten] connection accepted from 127.0.0.1:52730 #11
+Wed Jul 18 14:49:21 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:21 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:23 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:23 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:24 [conn9] end connection 127.0.0.1:52551
+Wed Jul 18 14:49:24 [initandlisten] connection accepted from 127.0.0.1:52757 #12
+Wed Jul 18 14:49:26 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:26 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:28 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:28 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:30 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:30 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:32 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:32 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:34 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:34 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:36 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:36 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:38 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:38 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:40 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:40 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:42 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:42 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:44 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:44 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:46 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:46 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:47 [conn10] end connection 127.0.0.1:52702
+Wed Jul 18 14:49:47 [initandlisten] connection accepted from 127.0.0.1:52874 #13
+Wed Jul 18 14:49:48 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:48 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:50 [conn11] end connection 127.0.0.1:52730
+Wed Jul 18 14:49:50 [initandlisten] connection accepted from 127.0.0.1:52893 #14
+Wed Jul 18 14:49:50 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:50 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:50 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:50 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:50 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:50 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:52 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:52 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:54 [conn12] end connection 127.0.0.1:52757
+Wed Jul 18 14:49:54 [initandlisten] connection accepted from 127.0.0.1:52925 #15
+Wed Jul 18 14:49:54 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:54 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:56 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:56 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:58 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:58 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:00 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:00 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:50:02 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:50:02 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:04 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:50:04 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:06 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:06 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:50:08 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:08 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:50:10 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:10 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:50:12 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:50:12 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:14 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:14 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:50:16 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:16 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:50:17 [conn13] end connection 127.0.0.1:52874
+Wed Jul 18 14:50:17 [initandlisten] connection accepted from 127.0.0.1:53046 #16
+Wed Jul 18 14:50:18 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:18 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:50:20 [conn14] end connection 127.0.0.1:52893
+Wed Jul 18 14:50:20 [initandlisten] connection accepted from 127.0.0.1:53066 #17
+Wed Jul 18 14:50:20 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:20 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:50:20 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:20 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:50:20 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:20 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:50:22 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:22 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:50:24 [conn15] end connection 127.0.0.1:52925
+Wed Jul 18 14:50:24 [initandlisten] connection accepted from 127.0.0.1:53097 #18
+Wed Jul 18 14:50:24 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:24 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:50:26 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:50:26 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:28 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:50:28 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:30 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:30 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:50:32 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:50:32 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:34 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:50:34 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:36 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:36 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:50:38 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:38 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:50:40 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:40 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:50:42 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:42 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:50:44 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:44 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:50:46 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:50:46 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:47 [conn16] end connection 127.0.0.1:53046
+Wed Jul 18 14:50:47 [initandlisten] connection accepted from 127.0.0.1:53222 #19
+Wed Jul 18 14:50:48 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:50:48 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:50 [conn17] end connection 127.0.0.1:53066
+Wed Jul 18 14:50:50 [initandlisten] connection accepted from 127.0.0.1:53241 #20
+Wed Jul 18 14:50:50 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:50 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:50:50 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:50 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:50:50 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:50 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:50:52 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:52 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:50:54 [conn18] end connection 127.0.0.1:53097
+Wed Jul 18 14:50:54 [initandlisten] connection accepted from 127.0.0.1:53271 #21
+Wed Jul 18 14:50:54 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:54 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:50:56 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:56 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:50:58 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:58 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:00 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:00 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:02 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:02 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:04 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:04 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:06 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:06 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:08 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:08 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:10 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:10 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:12 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:12 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:14 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:14 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:16 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:16 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:17 [conn19] end connection 127.0.0.1:53222
+Wed Jul 18 14:51:17 [initandlisten] connection accepted from 127.0.0.1:53396 #22
+Wed Jul 18 14:51:18 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:18 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:20 [conn20] end connection 127.0.0.1:53241
+Wed Jul 18 14:51:20 [initandlisten] connection accepted from 127.0.0.1:53416 #23
+Wed Jul 18 14:51:20 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:20 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:20 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:20 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:20 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:20 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:22 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:22 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:24 [conn21] end connection 127.0.0.1:53271
+Wed Jul 18 14:51:24 [initandlisten] connection accepted from 127.0.0.1:53445 #24
+Wed Jul 18 14:51:24 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:24 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:26 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:26 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:28 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:28 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:30 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:30 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:32 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:32 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:34 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:34 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:36 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:36 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:38 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:38 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:40 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:40 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:42 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:42 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:44 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:44 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:46 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:46 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:47 [conn22] end connection 127.0.0.1:53396
+Wed Jul 18 14:51:47 [initandlisten] connection accepted from 127.0.0.1:53569 #25
+Wed Jul 18 14:51:48 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:48 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:50 [conn23] end connection 127.0.0.1:53416
+Wed Jul 18 14:51:50 [initandlisten] connection accepted from 127.0.0.1:53588 #26
+Wed Jul 18 14:51:50 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:50 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:50 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:50 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:50 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:50 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:52 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:52 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:54 [conn24] end connection 127.0.0.1:53445
+Wed Jul 18 14:51:54 [initandlisten] connection accepted from 127.0.0.1:53618 #27
+Wed Jul 18 14:51:54 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:54 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:56 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:56 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:58 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:58 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:00 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:00 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:02 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:02 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:04 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:04 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:06 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:06 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:08 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:08 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:10 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:10 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:12 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:12 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:14 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:14 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:15 [initandlisten] connection accepted from 127.0.0.1:53730 #28
+Wed Jul 18 14:52:16 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:16 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:17 [conn25] end connection 127.0.0.1:53569
+Wed Jul 18 14:52:17 [initandlisten] connection accepted from 127.0.0.1:53743 #29
+Wed Jul 18 14:52:18 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:18 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:20 [conn26] end connection 127.0.0.1:53588
+Wed Jul 18 14:52:20 [initandlisten] connection accepted from 127.0.0.1:53763 #30
+Wed Jul 18 14:52:20 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:20 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:20 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:20 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:20 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:20 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:22 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:22 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:24 [conn27] end connection 127.0.0.1:53618
+Wed Jul 18 14:52:24 [initandlisten] connection accepted from 127.0.0.1:53792 #31
+Wed Jul 18 14:52:24 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:24 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:26 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:26 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:27 [conn28] CMD fsync:  sync:1 lock:1
+Wed Jul 18 14:52:27 [conn28] removeJournalFiles
+Wed Jul 18 14:52:27 [fsyncjob] db is now locked for snapshotting, no writes allowed. db.fsyncUnlock() to unlock
+Wed Jul 18 14:52:27 [fsyncjob]     For more info see http://www.mongodb.org/display/DOCS/fsync+Command
+Wed Jul 18 14:52:28 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:28 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:30 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:30 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:32 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:32 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:32 [conn28] end connection 127.0.0.1:53730
+Wed Jul 18 14:52:34 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:34 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:36 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:36 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:38 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:38 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:40 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:40 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:42 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:42 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:44 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:44 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:46 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:46 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:47 [conn29] end connection 127.0.0.1:53743
+Wed Jul 18 14:52:47 [initandlisten] connection accepted from 127.0.0.1:53916 #32
+Wed Jul 18 14:52:48 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:48 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:50 [conn30] end connection 127.0.0.1:53763
+Wed Jul 18 14:52:50 [initandlisten] connection accepted from 127.0.0.1:53936 #33
+Wed Jul 18 14:52:50 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:50 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:50 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:50 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:50 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:50 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:52 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:52 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:54 [conn31] end connection 127.0.0.1:53792
+Wed Jul 18 14:52:54 [initandlisten] connection accepted from 127.0.0.1:53965 #34
+Wed Jul 18 14:52:54 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:54 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:56 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:56 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:58 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:58 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:53:00 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:53:00 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:53:02 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:53:02 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:53:04 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:53:04 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:53:06 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:53:06 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:53:08 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:53:08 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:53:10 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:53:10 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:53:12 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:53:12 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:53:14 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:53:14 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:53:16 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:53:16 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:53:17 [conn32] end connection 127.0.0.1:53916
+Wed Jul 18 14:53:17 [initandlisten] connection accepted from 127.0.0.1:54088 #35
+Wed Jul 18 14:53:18 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:53:18 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:53:20 [conn33] end connection 127.0.0.1:53936
+Wed Jul 18 14:53:20 [initandlisten] connection accepted from 127.0.0.1:54107 #36
+Wed Jul 18 14:53:20 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:53:20 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:53:20 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:53:20 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:53:20 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:53:20 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:53:22 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:53:22 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:53:24 [conn34] end connection 127.0.0.1:53965
+Wed Jul 18 14:53:24 [initandlisten] connection accepted from 127.0.0.1:54137 #37
+Wed Jul 18 14:53:24 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:53:24 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:53:26 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:53:26 [rsHealthPoll] replSet member Trini:17019 is up
+Wed Jul 18 14:53:26 [rsHealthPoll] replSet member Trini:17019 is now in state SECONDARY
+Wed Jul 18 14:53:28 [initandlisten] connection accepted from 127.0.0.1:54163 #38
+Wed Jul 18 14:53:28 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:53:30 [rsHealthPoll] replSet member Kimberly:17020 is up
+Wed Jul 18 14:53:30 [rsHealthPoll] replSet member Kimberly:17020 is now in state SECONDARY
+Wed Jul 18 14:53:31 [initandlisten] connection accepted from 127.0.0.1:54180 #39
+Wed Jul 18 14:53:37 [initandlisten] connection accepted from 127.0.0.1:54187 #40
+Wed Jul 18 14:53:43 [conn40] command: unlock requested
+Wed Jul 18 14:53:47 [conn35] end connection 127.0.0.1:54088
+Wed Jul 18 14:53:47 [initandlisten] connection accepted from 127.0.0.1:54190 #41
+Wed Jul 18 14:53:50 [conn36] end connection 127.0.0.1:54107
+Wed Jul 18 14:53:50 [initandlisten] connection accepted from 127.0.0.1:54197 #42
+Wed Jul 18 14:53:51 [conn42] end connection 127.0.0.1:54197
+Wed Jul 18 14:53:51 [rsSync] replSet syncThread: 10278 dbclient error communicating with server: Tommy:17021
+Wed Jul 18 14:53:51 [rsHealthPoll] DBClientCursor::init call() failed
+Wed Jul 18 14:53:51 [rsHealthPoll] replSet info Tommy:17021 is down (or slow to respond): DBClientBase::findN: transport error: Tommy:17021 query: { replSetHeartbeat: "pr", v: 1, pv: 1, checkEmpty: false, from: "Jason:17017" }
+Wed Jul 18 14:53:51 [rsHealthPoll] replSet member Tommy:17021 is now in state DOWN
+Wed Jul 18 14:53:51 [rsMgr] not electing self, Billy:17022 would veto
+Wed Jul 18 14:53:54 [conn37] end connection 127.0.0.1:54137
+Wed Jul 18 14:53:54 [initandlisten] connection accepted from 127.0.0.1:54208 #43
+Wed Jul 18 14:53:54 [conn39] replSet info voting yea for Kimberly:17020 (3)
+Wed Jul 18 14:53:56 [conn38] end connection 127.0.0.1:54163
+Wed Jul 18 14:53:56 [initandlisten] connection accepted from 127.0.0.1:54215 #44
+Wed Jul 18 14:53:56 [rsHealthPoll] replSet member Kimberly:17020 is now in state PRIMARY
+Wed Jul 18 14:53:56 [rsMgr] not electing self, Billy:17022 would veto
+Wed Jul 18 14:53:59 [conn39] end connection 127.0.0.1:54180
+Wed Jul 18 14:53:59 [initandlisten] connection accepted from 127.0.0.1:54227 #45
+Wed Jul 18 14:54:02 [rsSync] replSet syncing to: Kimberly:17020
+Wed Jul 18 14:54:06 [conn40] end connection 127.0.0.1:54187
+Wed Jul 18 14:54:17 [conn41] end connection 127.0.0.1:54190
+Wed Jul 18 14:54:17 [initandlisten] connection accepted from 127.0.0.1:54286 #46
+Wed Jul 18 14:54:19 [rsHealthPoll] couldn't connect to Tommy:17021: couldn't connect to server Tommy:17021
+Wed Jul 18 14:54:24 [conn43] end connection 127.0.0.1:54208
+Wed Jul 18 14:54:24 [initandlisten] connection accepted from 127.0.0.1:54317 #47
+Wed Jul 18 14:54:26 [conn44] end connection 127.0.0.1:54215
+Wed Jul 18 14:54:26 [initandlisten] connection accepted from 127.0.0.1:54326 #48
+Wed Jul 18 14:54:29 [conn45] end connection 127.0.0.1:54227
+Wed Jul 18 14:54:29 [initandlisten] connection accepted from 127.0.0.1:54336 #49
+Wed Jul 18 14:54:45 [rsHealthPoll] replSet member Tommy:17021 is up
+Wed Jul 18 14:54:45 [rsHealthPoll] replSet member Tommy:17021 is now in state SECONDARY
+Wed Jul 18 14:54:47 [conn46] end connection 127.0.0.1:54286
+Wed Jul 18 14:54:47 [initandlisten] connection accepted from 127.0.0.1:54389 #50
+Wed Jul 18 14:54:47 [initandlisten] connection accepted from 127.0.0.1:54392 #51
+Wed Jul 18 14:54:54 [conn47] end connection 127.0.0.1:54317
+Wed Jul 18 14:54:54 [initandlisten] connection accepted from 127.0.0.1:54404 #52
+Wed Jul 18 14:54:56 [conn48] end connection 127.0.0.1:54326
+Wed Jul 18 14:54:56 [initandlisten] connection accepted from 127.0.0.1:54412 #53
+Wed Jul 18 14:54:57 [conn52] end connection 127.0.0.1:54404
+Wed Jul 18 14:54:57 [rsHealthPoll] DBClientCursor::init call() failed
+Wed Jul 18 14:54:57 [rsHealthPoll] replSet info Billy:17022 is down (or slow to respond): DBClientBase::findN: transport error: Billy:17022 query: { replSetHeartbeat: "pr", v: 1, pv: 1, checkEmpty: false, from: "Jason:17017" }
+Wed Jul 18 14:54:57 [rsHealthPoll] replSet member Billy:17022 is now in state DOWN
+Wed Jul 18 14:54:59 [conn51] end connection 127.0.0.1:54392
+Wed Jul 18 14:54:59 [clientcursormon] mem (MB) res:17 virt:3560 mapped:544
+Wed Jul 18 14:54:59 [conn49] end connection 127.0.0.1:54336
+Wed Jul 18 14:54:59 [initandlisten] connection accepted from 127.0.0.1:54415 #54
+Wed Jul 18 14:54:59 [rsHealthPoll] DBClientCursor::init call() failed
+Wed Jul 18 14:54:59 [rsHealthPoll] replSet info Tommy:17021 is down (or slow to respond): DBClientBase::findN: transport error: Tommy:17021 query: { replSetHeartbeat: "pr", v: 1, pv: 1, checkEmpty: false, from: "Jason:17017" }
+Wed Jul 18 14:54:59 [rsHealthPoll] replSet member Tommy:17021 is now in state DOWN
+Wed Jul 18 14:55:01 [rsSync] replSet syncThread: 10278 dbclient error communicating with server: Kimberly:17020
+Wed Jul 18 14:55:01 [conn54] end connection 127.0.0.1:54415
+Wed Jul 18 14:55:02 [rsHealthPoll] DBClientCursor::init call() failed
+Wed Jul 18 14:55:02 [rsHealthPoll] replSet info Kimberly:17020 is down (or slow to respond): DBClientBase::findN: transport error: Kimberly:17020 query: { replSetHeartbeat: "pr", v: 1, pv: 1, checkEmpty: false, from: "Jason:17017" }
+Wed Jul 18 14:55:02 [rsHealthPoll] replSet member Kimberly:17020 is now in state DOWN
+Wed Jul 18 14:55:02 [rsMgr] replSet can't see a majority, will not try to elect self
+Wed Jul 18 14:55:04 [conn53] end connection 127.0.0.1:54412
+Wed Jul 18 14:55:06 [rsHealthPoll] DBClientCursor::init call() failed
+Wed Jul 18 14:55:06 [rsHealthPoll] replSet info Trini:17019 is down (or slow to respond): DBClientBase::findN: transport error: Trini:17019 query: { replSetHeartbeat: "pr", v: 1, pv: 1, checkEmpty: false, from: "Jason:17017" }
+Wed Jul 18 14:55:06 [rsHealthPoll] replSet member Trini:17019 is now in state DOWN
+Wed Jul 18 14:55:07 [conn50] end connection 127.0.0.1:54389
+Wed Jul 18 14:55:07 [rsHealthPoll] DBClientCursor::init call() failed
+Wed Jul 18 14:55:07 [rsHealthPoll] replSet info Zach:17018 is down (or slow to respond): DBClientBase::findN: transport error: Zach:17018 query: { replSetHeartbeat: "pr", v: 1, pv: 1, checkEmpty: false, from: "Jason:17017" }
+Wed Jul 18 14:55:07 [rsHealthPoll] replSet member Zach:17018 is now in state DOWN
+Wed Jul 18 14:55:10 got kill or ctrl c or hup signal 2 (Interrupt: 2), will terminate after current cmd ends
+Wed Jul 18 14:55:10 [interruptThread] now exiting
+Wed Jul 18 14:55:10 dbexit: 
+Wed Jul 18 14:55:10 [interruptThread] shutdown: going to close listening sockets...
+Wed Jul 18 14:55:10 [interruptThread] closing listening socket: 6
+Wed Jul 18 14:55:10 [interruptThread] closing listening socket: 7
+Wed Jul 18 14:55:10 [interruptThread] closing listening socket: 8
+Wed Jul 18 14:55:10 [interruptThread] removing socket file: /tmp/mongodb-17017.sock
+Wed Jul 18 14:55:10 [interruptThread] shutdown: going to flush diaglog...
+Wed Jul 18 14:55:10 [interruptThread] shutdown: going to close sockets...
+Wed Jul 18 14:55:10 [interruptThread] shutdown: waiting for fs preallocator...
+Wed Jul 18 14:55:10 [interruptThread] shutdown: lock for final commit...
+Wed Jul 18 14:55:10 [interruptThread] shutdown: final commit...
+Wed Jul 18 14:55:10 [conn1] end connection 127.0.0.1:52336
+Wed Jul 18 14:55:10 [interruptThread] shutdown: closing all files...
+Wed Jul 18 14:55:10 [interruptThread] closeAllFiles() finished
+Wed Jul 18 14:55:10 [interruptThread] journalCleanup...
+Wed Jul 18 14:55:10 [interruptThread] removeJournalFiles
+Wed Jul 18 14:55:10 [interruptThread] shutdown: removing fs lock...
+Wed Jul 18 14:55:10 dbexit: really exiting now

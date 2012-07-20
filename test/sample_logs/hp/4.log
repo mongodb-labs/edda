@@ -1,0 +1,1027 @@
+Mon Jul 16 10:11:26 [initandlisten] MongoDB starting : pid=2531 port=37020 dbpath=/data/rs4 64-bit host=snape
+Mon Jul 16 10:11:26 [initandlisten] 
+Mon Jul 16 10:11:26 [initandlisten] ** NOTE: This is a development version (2.1.2) of MongoDB.
+Mon Jul 16 10:11:26 [initandlisten] **       Not recommended for production.
+Mon Jul 16 10:11:26 [initandlisten] 
+Mon Jul 16 10:11:26 [initandlisten] ** WARNING: soft rlimits too low. Number of files is 256, should be at least 1000
+Mon Jul 16 10:11:26 [initandlisten] 
+Mon Jul 16 10:11:26 [initandlisten] db version v2.1.2, pdfile version 4.5
+Mon Jul 16 10:11:26 [initandlisten] git version: 927beb54fb5ec38ccd0ca5fa712564a0696c9003
+Mon Jul 16 10:11:26 [initandlisten] build info: Darwin bs-osx-106-x86-64-1.local 10.8.0 Darwin Kernel Version 10.8.0: Tue Jun  7 16:33:36 PDT 2011; root:xnu-1504.15.3~1/RELEASE_I386 i386 BOOST_LIB_VERSION=1_49
+Mon Jul 16 10:11:26 [initandlisten] options: { dbpath: "/data/rs4", fork: true, logappend: true, logpath: "4.log", port: 37020, replSet: "foo" }
+Mon Jul 16 10:11:26 [initandlisten] journal dir=/data/rs4/journal
+Mon Jul 16 10:11:26 [initandlisten] recover : no journal files present, no recovery needed
+Mon Jul 16 10:11:26 [websvr] admin web console waiting for connections on port 38020
+Mon Jul 16 10:11:26 [initandlisten] waiting for connections on port 37020
+Mon Jul 16 10:11:26 [initandlisten] connection accepted from 10.4.100.30:50986 #1 (1 connection now open)
+Mon Jul 16 10:11:26 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:11:26 [rsStart] replSet info you may need to run replSetInitiate -- rs.initiate() in the shell -- if that is not already done
+Mon Jul 16 10:11:36 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:11:46 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:11:56 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:12:06 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:12:16 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:12:26 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:12:36 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:12:46 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:12:56 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:13:06 [initandlisten] connection accepted from 127.0.0.1:50996 #2 (2 connections now open)
+Mon Jul 16 10:13:06 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:13:16 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:13:26 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:13:36 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:13:46 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:13:56 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:14:06 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:14:16 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:14:26 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:14:36 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:14:46 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:14:56 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:15:06 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:15:16 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:15:26 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:15:36 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:15:46 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:15:56 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:16:06 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:16:16 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:16:26 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:16:36 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:16:46 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:16:56 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:17:06 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:17:16 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:17:26 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:17:28 [initandlisten] connection accepted from 127.0.0.1:51034 #3 (3 connections now open)
+Mon Jul 16 10:17:36 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Mon Jul 16 10:17:38 [initandlisten] connection accepted from 127.0.0.1:51044 #4 (4 connections now open)
+Mon Jul 16 10:17:40 [initandlisten] connection accepted from 127.0.0.1:51048 #5 (5 connections now open)
+Mon Jul 16 10:17:40 [conn5] end connection 127.0.0.1:51048 (4 connections now open)
+Mon Jul 16 10:17:40 [initandlisten] connection accepted from 127.0.0.1:51052 #6 (5 connections now open)
+Mon Jul 16 10:17:46 [rsStart] trying to contact dumbledore:37023
+Mon Jul 16 10:17:46 [rsStart] trying to contact harry:37018
+Mon Jul 16 10:17:46 [rsStart] trying to contact ron:37017
+Mon Jul 16 10:17:46 [rsStart] replSet I am snape:37020
+Mon Jul 16 10:17:46 [rsStart] replSet got config version 1 from a remote, saving locally
+Mon Jul 16 10:17:46 [rsStart] replSet info saving a newer config version to local.system.replset
+Mon Jul 16 10:17:46 [FileAllocator] allocating new datafile /data/rs4/local.ns, filling with zeroes...
+Mon Jul 16 10:17:46 [FileAllocator] creating directory /data/rs4/_tmp
+Mon Jul 16 10:17:46 [FileAllocator] done allocating datafile /data/rs4/local.ns, size: 16MB,  took 0.032 secs
+Mon Jul 16 10:17:46 [FileAllocator] allocating new datafile /data/rs4/local.0, filling with zeroes...
+Mon Jul 16 10:17:48 [FileAllocator] done allocating datafile /data/rs4/local.0, size: 64MB,  took 1.27 secs
+Mon Jul 16 10:17:48 [FileAllocator] allocating new datafile /data/rs4/local.1, filling with zeroes...
+Mon Jul 16 10:17:48 [rsStart] replSet saveConfigLocally done
+Mon Jul 16 10:17:48 [rsStart] replSet STARTUP2
+Mon Jul 16 10:17:48 [rsSync] ******
+Mon Jul 16 10:17:48 [rsSync] creating replication oplog of size: 183MB...
+Mon Jul 16 10:17:48 [initandlisten] connection accepted from 127.0.0.1:51068 #7 (6 connections now open)
+Mon Jul 16 10:17:48 [rsHealthPoll] replSet member dumbledore:37023 is up
+Mon Jul 16 10:17:48 [rsHealthPoll] replSet member ron:37017 is up
+Mon Jul 16 10:17:48 [rsHealthPoll] replSet member harry:37018 is up
+Mon Jul 16 10:17:48 [rsHealthPoll] replSet member dumbledore:37023 is now in state RECOVERING
+Mon Jul 16 10:17:48 [rsHealthPoll] replSet member ron:37017 is now in state SECONDARY
+Mon Jul 16 10:17:48 [rsHealthPoll] replSet member harry:37018 is now in state RECOVERING
+Mon Jul 16 10:17:48 [rsHealthPoll] replSet member neville:37022 is up
+Mon Jul 16 10:17:48 [rsHealthPoll] replSet member hermione:37019 is up
+Mon Jul 16 10:17:48 [rsHealthPoll] replSet member ginny:37021 is up
+Mon Jul 16 10:17:48 [rsHealthPoll] replSet member neville:37022 is now in state STARTUP2
+Mon Jul 16 10:17:48 [rsHealthPoll] replSet member ginny:37021 is now in state STARTUP2
+Mon Jul 16 10:17:48 [rsHealthPoll] replSet member hermione:37019 is now in state STARTUP2
+Mon Jul 16 10:17:48 [initandlisten] connection accepted from 127.0.0.1:51076 #8 (7 connections now open)
+Mon Jul 16 10:17:48 [conn8] end connection 127.0.0.1:51076 (6 connections now open)
+Mon Jul 16 10:17:48 [initandlisten] connection accepted from 127.0.0.1:51079 #9 (7 connections now open)
+Mon Jul 16 10:17:48 [initandlisten] connection accepted from 127.0.0.1:51081 #10 (8 connections now open)
+Mon Jul 16 10:17:48 [conn10] end connection 127.0.0.1:51081 (7 connections now open)
+Mon Jul 16 10:17:48 [initandlisten] connection accepted from 127.0.0.1:51083 #11 (8 connections now open)
+Mon Jul 16 10:17:49 [FileAllocator] done allocating datafile /data/rs4/local.1, size: 128MB,  took 1.744 secs
+Mon Jul 16 10:17:49 [FileAllocator] allocating new datafile /data/rs4/local.2, filling with zeroes...
+Mon Jul 16 10:17:54 [FileAllocator] done allocating datafile /data/rs4/local.2, size: 256MB,  took 4.215 secs
+Mon Jul 16 10:17:54 [rsSync] ******
+Mon Jul 16 10:17:54 [rsSync] replSet initial sync pending
+Mon Jul 16 10:17:54 [rsSync] replSet syncing to: ron:37017
+Mon Jul 16 10:17:54 [rsSync] build index local.me { _id: 1 }
+Mon Jul 16 10:17:54 [rsSync] build index done.  scanned 0 total records. 0 secs
+Mon Jul 16 10:17:54 [rsSync] replSet initial sync drop all databases
+Mon Jul 16 10:17:54 [rsSync] dropAllDatabasesExceptLocal 1
+Mon Jul 16 10:17:54 [rsSync] replSet initial sync clone all databases
+Mon Jul 16 10:17:54 [rsSync] replSet initial sync data copy, starting syncup
+Mon Jul 16 10:17:54 [rsSync] replSet initial sync building indexes
+Mon Jul 16 10:17:54 [rsSync] replSet initial sync query minValid
+Mon Jul 16 10:17:54 [rsSync] replSet initial sync finishing up
+Mon Jul 16 10:17:54 [rsSync] replSet set minValid=50042279:1
+Mon Jul 16 10:17:54 [rsSync] build index local.replset.minvalid { _id: 1 }
+Mon Jul 16 10:17:54 [rsSync] build index done.  scanned 0 total records. 0 secs
+Mon Jul 16 10:17:54 [rsSync] replSet initial sync done
+Mon Jul 16 10:17:54 [conn3] end connection 127.0.0.1:51034 (7 connections now open)
+Mon Jul 16 10:17:54 [initandlisten] connection accepted from 127.0.0.1:51094 #12 (8 connections now open)
+Mon Jul 16 10:17:54 [conn4] end connection 127.0.0.1:51044 (7 connections now open)
+Mon Jul 16 10:17:54 [initandlisten] connection accepted from 127.0.0.1:51096 #13 (8 connections now open)
+Mon Jul 16 10:17:56 [rsSync] replSet SECONDARY
+Mon Jul 16 10:17:56 [conn12] replSet info voting yea for ron:37017 (0)
+Mon Jul 16 10:17:56 [rsHealthPoll] replSet member ron:37017 is now in state PRIMARY
+Mon Jul 16 10:17:56 [rsHealthPoll] replSet member dumbledore:37023 is now in state ARBITER
+Mon Jul 16 10:17:56 [rsHealthPoll] replSet member neville:37022 is now in state RECOVERING
+Mon Jul 16 10:17:56 [rsHealthPoll] replSet member ginny:37021 is now in state SECONDARY
+Mon Jul 16 10:17:56 [rsHealthPoll] replSet member hermione:37019 is now in state SECONDARY
+Mon Jul 16 10:17:57 [rsBackgroundSync] replSet syncing to: ron:37017
+Mon Jul 16 10:17:57 [rsSyncNotifier] replset setting oplog notifier to ron:37017
+Mon Jul 16 10:17:58 [rsHealthPoll] replSet member harry:37018 is now in state SECONDARY
+Mon Jul 16 10:17:58 [rsHealthPoll] replSet member neville:37022 is now in state SECONDARY
+Mon Jul 16 10:18:04 [conn7] end connection 127.0.0.1:51068 (7 connections now open)
+Mon Jul 16 10:18:04 [initandlisten] connection accepted from 127.0.0.1:51116 #14 (8 connections now open)
+Mon Jul 16 10:18:10 [conn6] end connection 127.0.0.1:51052 (7 connections now open)
+Mon Jul 16 10:18:10 [initandlisten] connection accepted from 127.0.0.1:51130 #15 (8 connections now open)
+Mon Jul 16 10:18:18 [conn9] end connection 127.0.0.1:51079 (7 connections now open)
+Mon Jul 16 10:18:18 [initandlisten] connection accepted from 127.0.0.1:51139 #16 (8 connections now open)
+Mon Jul 16 10:18:18 [conn11] end connection 127.0.0.1:51083 (7 connections now open)
+Mon Jul 16 10:18:18 [initandlisten] connection accepted from 127.0.0.1:51140 #17 (8 connections now open)
+Mon Jul 16 10:18:24 [conn12] end connection 127.0.0.1:51094 (7 connections now open)
+Mon Jul 16 10:18:24 [initandlisten] connection accepted from 127.0.0.1:51147 #18 (8 connections now open)
+Mon Jul 16 10:18:24 [conn13] end connection 127.0.0.1:51096 (7 connections now open)
+Mon Jul 16 10:18:24 [initandlisten] connection accepted from 127.0.0.1:51150 #19 (8 connections now open)
+Mon Jul 16 10:18:34 [conn14] end connection 127.0.0.1:51116 (7 connections now open)
+Mon Jul 16 10:18:34 [initandlisten] connection accepted from 127.0.0.1:51158 #20 (8 connections now open)
+Mon Jul 16 10:18:40 [conn15] end connection 127.0.0.1:51130 (7 connections now open)
+Mon Jul 16 10:18:40 [initandlisten] connection accepted from 127.0.0.1:51172 #21 (8 connections now open)
+Mon Jul 16 10:18:48 [conn16] end connection 127.0.0.1:51139 (7 connections now open)
+Mon Jul 16 10:18:48 [initandlisten] connection accepted from 127.0.0.1:51181 #22 (8 connections now open)
+Mon Jul 16 10:18:48 [conn17] end connection 127.0.0.1:51140 (7 connections now open)
+Mon Jul 16 10:18:48 [initandlisten] connection accepted from 127.0.0.1:51182 #23 (8 connections now open)
+Mon Jul 16 10:18:54 [conn18] end connection 127.0.0.1:51147 (7 connections now open)
+Mon Jul 16 10:18:54 [initandlisten] connection accepted from 127.0.0.1:51190 #24 (8 connections now open)
+Mon Jul 16 10:18:54 [conn19] end connection 127.0.0.1:51150 (7 connections now open)
+Mon Jul 16 10:18:54 [initandlisten] connection accepted from 127.0.0.1:51192 #25 (8 connections now open)
+Mon Jul 16 10:19:04 [conn20] end connection 127.0.0.1:51158 (7 connections now open)
+Mon Jul 16 10:19:04 [initandlisten] connection accepted from 127.0.0.1:51200 #26 (8 connections now open)
+Mon Jul 16 10:19:10 [conn21] end connection 127.0.0.1:51172 (7 connections now open)
+Mon Jul 16 10:19:10 [initandlisten] connection accepted from 127.0.0.1:51214 #27 (8 connections now open)
+Mon Jul 16 10:19:13 [FileAllocator] allocating new datafile /data/rs4/foo.ns, filling with zeroes...
+Mon Jul 16 10:19:14 [FileAllocator] done allocating datafile /data/rs4/foo.ns, size: 16MB,  took 0.426 secs
+Mon Jul 16 10:19:14 [FileAllocator] allocating new datafile /data/rs4/foo.0, filling with zeroes...
+Mon Jul 16 10:19:15 [FileAllocator] done allocating datafile /data/rs4/foo.0, size: 64MB,  took 1.731 secs
+Mon Jul 16 10:19:15 [FileAllocator] allocating new datafile /data/rs4/foo.1, filling with zeroes...
+Mon Jul 16 10:19:15 [repl writer worker] build index foo.foo { _id: 1 }
+Mon Jul 16 10:19:15 [repl writer worker] build index done.  scanned 0 total records. 0.009 secs
+Mon Jul 16 10:19:16 [journal] info journal _rotate called inside dbMutex - ok but should be somewhat rare
+Mon Jul 16 10:19:18 [conn22] end connection 127.0.0.1:51181 (7 connections now open)
+Mon Jul 16 10:19:18 [initandlisten] connection accepted from 127.0.0.1:51223 #28 (8 connections now open)
+Mon Jul 16 10:19:18 [conn23] end connection 127.0.0.1:51182 (7 connections now open)
+Mon Jul 16 10:19:18 [initandlisten] connection accepted from 127.0.0.1:51224 #29 (8 connections now open)
+Mon Jul 16 10:19:19 [FileAllocator] done allocating datafile /data/rs4/foo.1, size: 128MB,  took 3.486 secs
+Mon Jul 16 10:19:24 [conn24] end connection 127.0.0.1:51190 (7 connections now open)
+Mon Jul 16 10:19:24 [initandlisten] connection accepted from 127.0.0.1:51232 #30 (8 connections now open)
+Mon Jul 16 10:19:24 [conn25] end connection 127.0.0.1:51192 (7 connections now open)
+Mon Jul 16 10:19:24 [initandlisten] connection accepted from 127.0.0.1:51234 #31 (8 connections now open)
+Mon Jul 16 10:19:34 [conn26] end connection 127.0.0.1:51200 (7 connections now open)
+Mon Jul 16 10:19:34 [initandlisten] connection accepted from 127.0.0.1:51243 #32 (8 connections now open)
+Mon Jul 16 10:19:40 [conn27] end connection 127.0.0.1:51214 (7 connections now open)
+Mon Jul 16 10:19:40 [initandlisten] connection accepted from 127.0.0.1:51257 #33 (8 connections now open)
+Mon Jul 16 10:19:48 [conn28] end connection 127.0.0.1:51223 (7 connections now open)
+Mon Jul 16 10:19:48 [initandlisten] connection accepted from 127.0.0.1:51266 #34 (8 connections now open)
+Mon Jul 16 10:19:48 [conn29] end connection 127.0.0.1:51224 (7 connections now open)
+Mon Jul 16 10:19:48 [initandlisten] connection accepted from 127.0.0.1:51267 #35 (8 connections now open)
+Mon Jul 16 10:19:54 [conn30] end connection 127.0.0.1:51232 (7 connections now open)
+Mon Jul 16 10:19:54 [initandlisten] connection accepted from 127.0.0.1:51275 #36 (8 connections now open)
+Mon Jul 16 10:19:54 [conn31] end connection 127.0.0.1:51234 (7 connections now open)
+Mon Jul 16 10:19:54 [initandlisten] connection accepted from 127.0.0.1:51277 #37 (8 connections now open)
+Mon Jul 16 10:20:04 [conn32] end connection 127.0.0.1:51243 (7 connections now open)
+Mon Jul 16 10:20:04 [initandlisten] connection accepted from 127.0.0.1:51285 #38 (8 connections now open)
+Mon Jul 16 10:20:10 [conn33] end connection 127.0.0.1:51257 (7 connections now open)
+Mon Jul 16 10:20:10 [initandlisten] connection accepted from 127.0.0.1:51299 #39 (8 connections now open)
+Mon Jul 16 10:20:18 [conn34] end connection 127.0.0.1:51266 (7 connections now open)
+Mon Jul 16 10:20:18 [initandlisten] connection accepted from 127.0.0.1:51308 #40 (8 connections now open)
+Mon Jul 16 10:20:18 [conn35] end connection 127.0.0.1:51267 (7 connections now open)
+Mon Jul 16 10:20:18 [initandlisten] connection accepted from 127.0.0.1:51309 #41 (8 connections now open)
+Mon Jul 16 10:20:24 [conn36] end connection 127.0.0.1:51275 (7 connections now open)
+Mon Jul 16 10:20:24 [initandlisten] connection accepted from 127.0.0.1:51317 #42 (8 connections now open)
+Mon Jul 16 10:20:24 [conn37] end connection 127.0.0.1:51277 (7 connections now open)
+Mon Jul 16 10:20:24 [initandlisten] connection accepted from 127.0.0.1:51319 #43 (8 connections now open)
+Mon Jul 16 10:20:34 [conn38] end connection 127.0.0.1:51285 (7 connections now open)
+Mon Jul 16 10:20:34 [initandlisten] connection accepted from 127.0.0.1:51327 #44 (8 connections now open)
+Mon Jul 16 10:20:40 [conn39] end connection 127.0.0.1:51299 (7 connections now open)
+Mon Jul 16 10:20:40 [initandlisten] connection accepted from 127.0.0.1:51341 #45 (8 connections now open)
+Mon Jul 16 10:20:48 [conn40] end connection 127.0.0.1:51308 (7 connections now open)
+Mon Jul 16 10:20:48 [initandlisten] connection accepted from 127.0.0.1:51350 #46 (8 connections now open)
+Mon Jul 16 10:20:48 [conn41] end connection 127.0.0.1:51309 (7 connections now open)
+Mon Jul 16 10:20:48 [initandlisten] connection accepted from 127.0.0.1:51351 #47 (8 connections now open)
+Mon Jul 16 10:20:54 [conn42] end connection 127.0.0.1:51317 (7 connections now open)
+Mon Jul 16 10:20:54 [initandlisten] connection accepted from 127.0.0.1:51359 #48 (8 connections now open)
+Mon Jul 16 10:20:54 [conn43] end connection 127.0.0.1:51319 (7 connections now open)
+Mon Jul 16 10:20:54 [initandlisten] connection accepted from 127.0.0.1:51362 #49 (8 connections now open)
+Mon Jul 16 10:21:04 [conn44] end connection 127.0.0.1:51327 (7 connections now open)
+Mon Jul 16 10:21:04 [initandlisten] connection accepted from 127.0.0.1:51370 #50 (8 connections now open)
+Mon Jul 16 10:21:05 [journal] info journal _rotate called inside dbMutex - ok but should be somewhat rare
+Mon Jul 16 10:21:10 [conn45] end connection 127.0.0.1:51341 (7 connections now open)
+Mon Jul 16 10:21:10 [initandlisten] connection accepted from 127.0.0.1:51384 #51 (8 connections now open)
+Mon Jul 16 10:21:18 [conn46] end connection 127.0.0.1:51350 (7 connections now open)
+Mon Jul 16 10:21:18 [initandlisten] connection accepted from 127.0.0.1:51393 #52 (8 connections now open)
+Mon Jul 16 10:21:19 [conn47] end connection 127.0.0.1:51351 (7 connections now open)
+Mon Jul 16 10:21:19 [initandlisten] connection accepted from 127.0.0.1:51394 #53 (8 connections now open)
+Mon Jul 16 10:21:24 [conn48] end connection 127.0.0.1:51359 (7 connections now open)
+Mon Jul 16 10:21:24 [initandlisten] connection accepted from 127.0.0.1:51401 #54 (8 connections now open)
+Mon Jul 16 10:21:24 [conn49] end connection 127.0.0.1:51362 (7 connections now open)
+Mon Jul 16 10:21:24 [initandlisten] connection accepted from 127.0.0.1:51404 #55 (8 connections now open)
+Mon Jul 16 10:21:25 [journal] info journal _rotate called inside dbMutex - ok but should be somewhat rare
+Mon Jul 16 10:21:34 [conn50] end connection 127.0.0.1:51370 (7 connections now open)
+Mon Jul 16 10:21:34 [initandlisten] connection accepted from 127.0.0.1:51412 #56 (8 connections now open)
+Mon Jul 16 10:21:40 [conn51] end connection 127.0.0.1:51384 (7 connections now open)
+Mon Jul 16 10:21:40 [initandlisten] connection accepted from 127.0.0.1:51426 #57 (8 connections now open)
+Mon Jul 16 10:21:45 [journal] info journal _rotate called inside dbMutex - ok but should be somewhat rare
+Mon Jul 16 10:21:48 [conn52] end connection 127.0.0.1:51393 (7 connections now open)
+Mon Jul 16 10:21:48 [initandlisten] connection accepted from 127.0.0.1:51435 #58 (8 connections now open)
+Mon Jul 16 10:21:49 [conn53] end connection 127.0.0.1:51394 (7 connections now open)
+Mon Jul 16 10:21:49 [initandlisten] connection accepted from 127.0.0.1:51436 #59 (8 connections now open)
+Mon Jul 16 10:21:54 [conn54] end connection 127.0.0.1:51401 (7 connections now open)
+Mon Jul 16 10:21:54 [initandlisten] connection accepted from 127.0.0.1:51443 #60 (8 connections now open)
+Mon Jul 16 10:21:54 [conn55] end connection 127.0.0.1:51404 (7 connections now open)
+Mon Jul 16 10:21:54 [initandlisten] connection accepted from 127.0.0.1:51446 #61 (8 connections now open)
+Mon Jul 16 10:22:04 [conn56] end connection 127.0.0.1:51412 (7 connections now open)
+Mon Jul 16 10:22:04 [initandlisten] connection accepted from 127.0.0.1:51454 #62 (8 connections now open)
+Mon Jul 16 10:22:05 [journal] info journal _rotate called inside dbMutex - ok but should be somewhat rare
+Mon Jul 16 10:22:10 [conn57] end connection 127.0.0.1:51426 (7 connections now open)
+Mon Jul 16 10:22:10 [initandlisten] connection accepted from 127.0.0.1:51468 #63 (8 connections now open)
+Mon Jul 16 10:22:19 [conn58] end connection 127.0.0.1:51435 (7 connections now open)
+Mon Jul 16 10:22:19 [initandlisten] connection accepted from 127.0.0.1:51477 #64 (8 connections now open)
+Mon Jul 16 10:22:19 [conn59] end connection 127.0.0.1:51436 (7 connections now open)
+Mon Jul 16 10:22:19 [initandlisten] connection accepted from 127.0.0.1:51478 #65 (8 connections now open)
+Mon Jul 16 10:22:24 [conn60] end connection 127.0.0.1:51443 (7 connections now open)
+Mon Jul 16 10:22:24 [initandlisten] connection accepted from 127.0.0.1:51486 #66 (8 connections now open)
+Mon Jul 16 10:22:24 [conn61] end connection 127.0.0.1:51446 (7 connections now open)
+Mon Jul 16 10:22:24 [initandlisten] connection accepted from 127.0.0.1:51489 #67 (8 connections now open)
+Mon Jul 16 10:22:25 [journal] info journal _rotate called inside dbMutex - ok but should be somewhat rare
+Mon Jul 16 10:22:26 [conn67] end connection 127.0.0.1:51489 (7 connections now open)
+Mon Jul 16 10:22:26 [rsHealthPoll] DBClientCursor::init call() failed
+Mon Jul 16 10:22:26 [rsHealthPoll] replSet info harry:37018 is down (or slow to respond): DBClientBase::findN: transport error: harry:37018 ns: admin.$cmd query: { replSetHeartbeat: "foo", v: 1, pv: 1, checkEmpty: false, from: "snape:37020", $auth: {} }
+Mon Jul 16 10:22:26 [rsHealthPoll] replSet member harry:37018 is now in state DOWN
+Mon Jul 16 10:22:34 [conn62] end connection 127.0.0.1:51454 (6 connections now open)
+Mon Jul 16 10:22:34 [initandlisten] connection accepted from 127.0.0.1:51516 #68 (7 connections now open)
+Mon Jul 16 10:22:40 [conn63] end connection 127.0.0.1:51468 (6 connections now open)
+Mon Jul 16 10:22:40 [initandlisten] connection accepted from 127.0.0.1:51544 #69 (7 connections now open)
+Mon Jul 16 10:22:45 [journal] info journal _rotate called inside dbMutex - ok but should be somewhat rare
+Mon Jul 16 10:22:49 [conn64] end connection 127.0.0.1:51477 (6 connections now open)
+Mon Jul 16 10:22:49 [initandlisten] connection accepted from 127.0.0.1:51584 #70 (7 connections now open)
+Mon Jul 16 10:22:49 [conn65] end connection 127.0.0.1:51478 (6 connections now open)
+Mon Jul 16 10:22:49 [initandlisten] connection accepted from 127.0.0.1:51586 #71 (7 connections now open)
+Mon Jul 16 10:22:50 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:22:50 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:22:52 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:22:54 [conn66] end connection 127.0.0.1:51486 (6 connections now open)
+Mon Jul 16 10:22:54 [initandlisten] connection accepted from 127.0.0.1:51616 #72 (7 connections now open)
+Mon Jul 16 10:22:54 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:22:56 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:22:58 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:00 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:02 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:04 [conn68] end connection 127.0.0.1:51516 (6 connections now open)
+Mon Jul 16 10:23:04 [initandlisten] connection accepted from 127.0.0.1:51691 #73 (7 connections now open)
+Mon Jul 16 10:23:04 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:06 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:08 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:10 [conn69] end connection 127.0.0.1:51544 (6 connections now open)
+Mon Jul 16 10:23:10 [initandlisten] connection accepted from 127.0.0.1:51735 #74 (7 connections now open)
+Mon Jul 16 10:23:10 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:12 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:14 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:16 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:18 [journal] info journal _rotate called inside dbMutex - ok but should be somewhat rare
+Mon Jul 16 10:23:18 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:19 [conn70] end connection 127.0.0.1:51584 (6 connections now open)
+Mon Jul 16 10:23:19 [initandlisten] connection accepted from 127.0.0.1:51801 #75 (7 connections now open)
+Mon Jul 16 10:23:19 [conn71] end connection 127.0.0.1:51586 (6 connections now open)
+Mon Jul 16 10:23:19 [initandlisten] connection accepted from 127.0.0.1:51802 #76 (7 connections now open)
+Mon Jul 16 10:23:20 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:20 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:20 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:22 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:24 [conn72] end connection 127.0.0.1:51616 (6 connections now open)
+Mon Jul 16 10:23:24 [initandlisten] connection accepted from 127.0.0.1:51840 #77 (7 connections now open)
+Mon Jul 16 10:23:24 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:26 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:28 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:30 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:32 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:34 [conn73] end connection 127.0.0.1:51691 (6 connections now open)
+Mon Jul 16 10:23:34 [initandlisten] connection accepted from 127.0.0.1:51914 #78 (7 connections now open)
+Mon Jul 16 10:23:34 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:36 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:38 [journal] info journal _rotate called inside dbMutex - ok but should be somewhat rare
+Mon Jul 16 10:23:38 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:40 [conn74] end connection 127.0.0.1:51735 (6 connections now open)
+Mon Jul 16 10:23:40 [initandlisten] connection accepted from 127.0.0.1:51958 #79 (7 connections now open)
+Mon Jul 16 10:23:40 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:42 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:44 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:46 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:48 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:49 [conn75] end connection 127.0.0.1:51801 (6 connections now open)
+Mon Jul 16 10:23:49 [initandlisten] connection accepted from 127.0.0.1:52023 #80 (7 connections now open)
+Mon Jul 16 10:23:49 [conn76] end connection 127.0.0.1:51802 (6 connections now open)
+Mon Jul 16 10:23:49 [initandlisten] connection accepted from 127.0.0.1:52024 #81 (7 connections now open)
+Mon Jul 16 10:23:50 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:50 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:50 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:53 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:54 [conn77] end connection 127.0.0.1:51840 (6 connections now open)
+Mon Jul 16 10:23:54 [initandlisten] connection accepted from 127.0.0.1:52062 #82 (7 connections now open)
+Mon Jul 16 10:23:55 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:57 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:59 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:23:59 [journal] info journal _rotate called inside dbMutex - ok but should be somewhat rare
+Mon Jul 16 10:24:01 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:24:03 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:24:04 [conn78] end connection 127.0.0.1:51914 (6 connections now open)
+Mon Jul 16 10:24:04 [initandlisten] connection accepted from 127.0.0.1:52136 #83 (7 connections now open)
+Mon Jul 16 10:24:05 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+Mon Jul 16 10:24:07 [rsHealthPoll] couldn't connect to harry:37018: couldn't connect to server harry:37018
+
+
+***** SERVER RESTARTED *****
+
+
+Mon Jul 16 13:08:42 [initandlisten] MongoDB starting : pid=3307 port=37020 dbpath=/data/rs4 64-bit host=snape
+Mon Jul 16 13:08:42 [initandlisten] 
+Mon Jul 16 13:08:42 [initandlisten] ** NOTE: This is a development version (2.1.2) of MongoDB.
+Mon Jul 16 13:08:42 [initandlisten] **       Not recommended for production.
+Mon Jul 16 13:08:42 [initandlisten] 
+Mon Jul 16 13:08:42 [initandlisten] ** WARNING: soft rlimits too low. Number of files is 256, should be at least 1000
+Mon Jul 16 13:08:42 [initandlisten] 
+Mon Jul 16 13:08:42 [initandlisten] db version v2.1.2, pdfile version 4.5
+Mon Jul 16 13:08:42 [initandlisten] git version: 927beb54fb5ec38ccd0ca5fa712564a0696c9003
+Mon Jul 16 13:08:42 [initandlisten] build info: Darwin bs-osx-106-x86-64-1.local 10.8.0 Darwin Kernel Version 10.8.0: Tue Jun  7 16:33:36 PDT 2011; root:xnu-1504.15.3~1/RELEASE_I386 i386 BOOST_LIB_VERSION=1_49
+Mon Jul 16 13:08:42 [initandlisten] options: { dbpath: "/data/rs4", fork: true, logappend: true, logpath: "4.log", port: 37020, replSet: "foo" }
+Mon Jul 16 13:08:42 [initandlisten] journal dir=/data/rs4/journal
+Mon Jul 16 13:08:42 [initandlisten] recover begin
+Mon Jul 16 13:08:42 [initandlisten] recover lsn: 658427
+Mon Jul 16 13:08:42 [initandlisten] recover /data/rs4/journal/j._0
+Mon Jul 16 13:08:42 [initandlisten] recover skipping application of section seq:328672 < lsn:658427
+Mon Jul 16 13:08:42 [initandlisten] recover skipping application of section seq:353691 < lsn:658427
+Mon Jul 16 13:08:42 [initandlisten] recover skipping application of section seq:383369 < lsn:658427
+Mon Jul 16 13:08:42 [initandlisten] recover skipping application of section seq:438271 < lsn:658427
+Mon Jul 16 13:08:42 [initandlisten] recover skipping application of section seq:493103 < lsn:658427
+Mon Jul 16 13:08:42 [initandlisten] recover skipping application of section seq:548035 < lsn:658427
+Mon Jul 16 13:08:42 [initandlisten] recover skipping application of section seq:603367 < lsn:658427
+Mon Jul 16 13:08:47 [initandlisten] recover cleaning up
+Mon Jul 16 13:08:47 [initandlisten] removeJournalFiles
+Mon Jul 16 13:08:47 [initandlisten] recover done
+Mon Jul 16 13:08:47 [initandlisten] preallocateIsFaster=true 3.94
+Mon Jul 16 13:08:48 [websvr] admin web console waiting for connections on port 38020
+Mon Jul 16 13:08:48 [initandlisten] waiting for connections on port 37020
+Mon Jul 16 13:08:48 [initandlisten] connection accepted from 10.4.100.30:50575 #1 (1 connection now open)
+Mon Jul 16 13:08:48 [rsStart] replSet I am snape:37020
+Mon Jul 16 13:08:48 [rsStart] replSet STARTUP2
+Mon Jul 16 13:08:48 [rsHealthPoll] replSet member ron:37017 is up
+Mon Jul 16 13:08:48 [rsHealthPoll] replSet member ron:37017 is now in state PRIMARY
+Mon Jul 16 13:08:49 [initandlisten] connection accepted from 127.0.0.1:50578 #2 (2 connections now open)
+Mon Jul 16 13:08:49 [conn2] end connection 127.0.0.1:50578 (1 connection now open)
+Mon Jul 16 13:08:49 [initandlisten] connection accepted from 127.0.0.1:50579 #3 (2 connections now open)
+Mon Jul 16 13:08:49 [initandlisten] connection accepted from 127.0.0.1:50580 #4 (3 connections now open)
+Mon Jul 16 13:08:49 [initandlisten] connection accepted from 127.0.0.1:50581 #5 (4 connections now open)
+Mon Jul 16 13:08:49 [conn4] end connection 127.0.0.1:50580 (2 connections now open)
+Mon Jul 16 13:08:49 [initandlisten] connection accepted from 127.0.0.1:50582 #6 (4 connections now open)
+Mon Jul 16 13:08:49 [conn6] end connection 127.0.0.1:50582 (3 connections now open)
+Mon Jul 16 13:08:49 [initandlisten] connection accepted from 127.0.0.1:50583 #7 (4 connections now open)
+Mon Jul 16 13:08:49 [initandlisten] connection accepted from 127.0.0.1:50584 #8 (5 connections now open)
+Mon Jul 16 13:08:49 [conn8] end connection 127.0.0.1:50584 (4 connections now open)
+Mon Jul 16 13:08:49 [initandlisten] connection accepted from 127.0.0.1:50585 #9 (5 connections now open)
+Mon Jul 16 13:08:49 [rsSync] replSet SECONDARY
+Mon Jul 16 13:08:49 [initandlisten] connection accepted from 127.0.0.1:50587 #10 (6 connections now open)
+Mon Jul 16 13:08:49 [conn10] end connection 127.0.0.1:50587 (5 connections now open)
+Mon Jul 16 13:08:49 [initandlisten] connection accepted from 127.0.0.1:50588 #11 (6 connections now open)
+Mon Jul 16 13:08:49 [initandlisten] connection accepted from 127.0.0.1:50589 #12 (7 connections now open)
+Mon Jul 16 13:08:49 [conn12] end connection 127.0.0.1:50589 (6 connections now open)
+Mon Jul 16 13:08:49 [initandlisten] connection accepted from 127.0.0.1:50590 #13 (7 connections now open)
+Mon Jul 16 13:08:50 [rsHealthPoll] replSet member dumbledore:37023 is up
+Mon Jul 16 13:08:50 [rsHealthPoll] replSet member dumbledore:37023 is now in state ARBITER
+Mon Jul 16 13:08:50 [rsHealthPoll] replSet member hermione:37019 is up
+Mon Jul 16 13:08:50 [rsHealthPoll] replSet member harry:37018 is up
+Mon Jul 16 13:08:50 [rsHealthPoll] replSet member hermione:37019 is now in state SECONDARY
+Mon Jul 16 13:08:50 [rsHealthPoll] replSet member harry:37018 is now in state RECOVERING
+Mon Jul 16 13:08:50 [rsHealthPoll] replSet member neville:37022 is up
+Mon Jul 16 13:08:50 [rsHealthPoll] replSet member neville:37022 is now in state SECONDARY
+Mon Jul 16 13:08:50 [rsHealthPoll] replSet member ginny:37021 is up
+Mon Jul 16 13:08:50 [rsHealthPoll] replSet member ginny:37021 is now in state SECONDARY
+Mon Jul 16 13:08:54 [rsBackgroundSync] replSet syncing to: ron:37017
+Mon Jul 16 13:08:54 [rsBackgroundSync] replSet syncing to: hermione:37019
+Mon Jul 16 13:08:54 [rsBackgroundSync] replSet syncing to: neville:37022
+Mon Jul 16 13:08:54 [rsBackgroundSync] replSet syncing to: ginny:37021
+Mon Jul 16 13:08:54 [rsBackgroundSync] replSet error RS102 too stale to catch up, at least from ginny:37021
+Mon Jul 16 13:08:54 [rsBackgroundSync] replSet our last optime : Jul 16 10:24:07 50042407:2a4
+Mon Jul 16 13:08:54 [rsBackgroundSync] replSet oldest at ginny:37021 : Jul 16 11:46:00 50043738:5d5
+Mon Jul 16 13:08:54 [rsBackgroundSync] replSet See http://www.mongodb.org/display/DOCS/Resyncing+a+Very+Stale+Replica+Set+Member
+Mon Jul 16 13:08:54 [rsBackgroundSync] replSet error RS102 too stale to catch up
+Mon Jul 16 13:08:54 [rsBackgroundSync] replSet RECOVERING
+Mon Jul 16 13:08:54 [journal] info journal _rotate called inside dbMutex - ok but should be somewhat rare
+Mon Jul 16 13:08:55 [conn7] end connection 127.0.0.1:50583 (6 connections now open)
+Mon Jul 16 13:08:55 [initandlisten] connection accepted from 127.0.0.1:50611 #14 (7 connections now open)
+Mon Jul 16 13:08:55 [rsSync] replSet still syncing, not yet to minValid optime 50043738:5d5
+Mon Jul 16 13:08:55 [conn11] end connection 127.0.0.1:50588 (6 connections now open)
+Mon Jul 16 13:08:55 [initandlisten] connection accepted from 127.0.0.1:50612 #15 (7 connections now open)
+Mon Jul 16 13:09:01 [conn13] end connection 127.0.0.1:50590 (6 connections now open)
+Mon Jul 16 13:09:01 [initandlisten] connection accepted from 127.0.0.1:50629 #16 (7 connections now open)
+Mon Jul 16 13:09:11 [conn5] end connection 127.0.0.1:50581 (6 connections now open)
+Mon Jul 16 13:09:11 [initandlisten] connection accepted from 127.0.0.1:50640 #17 (8 connections now open)
+Mon Jul 16 13:09:11 [conn9] end connection 127.0.0.1:50585 (6 connections now open)
+Mon Jul 16 13:09:11 [initandlisten] connection accepted from 127.0.0.1:50641 #18 (7 connections now open)
+Mon Jul 16 13:09:17 [conn3] end connection 127.0.0.1:50579 (6 connections now open)
+Mon Jul 16 13:09:17 [initandlisten] connection accepted from 127.0.0.1:50648 #19 (7 connections now open)
+Mon Jul 16 13:09:20 [initandlisten] connection accepted from 127.0.0.1:50654 #20 (8 connections now open)
+Mon Jul 16 13:09:25 [conn14] end connection 127.0.0.1:50611 (7 connections now open)
+Mon Jul 16 13:09:25 [initandlisten] connection accepted from 127.0.0.1:50661 #21 (8 connections now open)
+Mon Jul 16 13:09:25 [conn15] end connection 127.0.0.1:50612 (7 connections now open)
+Mon Jul 16 13:09:25 [initandlisten] connection accepted from 127.0.0.1:50662 #22 (8 connections now open)
+Mon Jul 16 13:09:31 [conn16] end connection 127.0.0.1:50629 (7 connections now open)
+Mon Jul 16 13:09:31 [initandlisten] connection accepted from 127.0.0.1:50676 #23 (8 connections now open)
+Mon Jul 16 13:09:41 [conn17] end connection 127.0.0.1:50640 (7 connections now open)
+Mon Jul 16 13:09:41 [initandlisten] connection accepted from 127.0.0.1:50690 #24 (8 connections now open)
+Mon Jul 16 13:09:41 [conn18] end connection 127.0.0.1:50641 (7 connections now open)
+Mon Jul 16 13:09:41 [initandlisten] connection accepted from 127.0.0.1:50691 #25 (8 connections now open)
+Mon Jul 16 13:09:47 [conn19] end connection 127.0.0.1:50648 (7 connections now open)
+Mon Jul 16 13:09:47 [initandlisten] connection accepted from 127.0.0.1:50695 #26 (8 connections now open)
+Mon Jul 16 13:09:55 [conn21] end connection 127.0.0.1:50661 (7 connections now open)
+Mon Jul 16 13:09:55 [initandlisten] connection accepted from 127.0.0.1:50726 #27 (9 connections now open)
+Mon Jul 16 13:09:55 [rsSync] replSet still syncing, not yet to minValid optime 50043738:5d5
+Mon Jul 16 13:09:55 [conn22] end connection 127.0.0.1:50662 (7 connections now open)
+Mon Jul 16 13:09:55 [initandlisten] connection accepted from 127.0.0.1:50727 #28 (8 connections now open)
+Mon Jul 16 13:10:01 [conn23] end connection 127.0.0.1:50676 (7 connections now open)
+Mon Jul 16 13:10:01 [initandlisten] connection accepted from 127.0.0.1:50749 #29 (8 connections now open)
+Mon Jul 16 13:10:11 [conn24] end connection 127.0.0.1:50690 (7 connections now open)
+Mon Jul 16 13:10:11 [initandlisten] connection accepted from 127.0.0.1:50761 #30 (8 connections now open)
+Mon Jul 16 13:10:11 [conn25] end connection 127.0.0.1:50691 (7 connections now open)
+Mon Jul 16 13:10:11 [initandlisten] connection accepted from 127.0.0.1:50762 #31 (8 connections now open)
+Mon Jul 16 13:10:17 [conn26] end connection 127.0.0.1:50695 (7 connections now open)
+Mon Jul 16 13:10:17 [initandlisten] connection accepted from 127.0.0.1:50769 #32 (8 connections now open)
+Mon Jul 16 13:10:25 [conn27] end connection 127.0.0.1:50726 (7 connections now open)
+Mon Jul 16 13:10:25 [initandlisten] connection accepted from 127.0.0.1:50781 #33 (8 connections now open)
+Mon Jul 16 13:10:25 [conn28] end connection 127.0.0.1:50727 (7 connections now open)
+Mon Jul 16 13:10:25 [initandlisten] connection accepted from 127.0.0.1:50782 #34 (8 connections now open)
+Mon Jul 16 13:10:31 [conn29] end connection 127.0.0.1:50749 (7 connections now open)
+Mon Jul 16 13:10:31 [initandlisten] connection accepted from 127.0.0.1:50795 #35 (8 connections now open)
+Mon Jul 16 13:10:41 [conn30] end connection 127.0.0.1:50761 (7 connections now open)
+Mon Jul 16 13:10:41 [initandlisten] connection accepted from 127.0.0.1:50806 #36 (8 connections now open)
+Mon Jul 16 13:10:41 [conn31] end connection 127.0.0.1:50762 (7 connections now open)
+Mon Jul 16 13:10:41 [initandlisten] connection accepted from 127.0.0.1:50807 #37 (8 connections now open)
+Mon Jul 16 13:10:45 [conn20] CMD fsync: sync:1 lock:1
+Mon Jul 16 13:10:45 [fsyncLockWorker] removeJournalFiles
+Mon Jul 16 13:10:45 [conn20] db is now locked for snapshotting, no writes allowed. db.fsyncUnlock() to unlock
+Mon Jul 16 13:10:45 [conn20]     For more info see http://www.mongodb.org/display/DOCS/fsync+Command
+Mon Jul 16 13:10:47 [conn32] end connection 127.0.0.1:50769 (7 connections now open)
+Mon Jul 16 13:10:47 [initandlisten] connection accepted from 127.0.0.1:50811 #38 (8 connections now open)
+Mon Jul 16 13:10:55 [conn33] end connection 127.0.0.1:50781 (7 connections now open)
+Mon Jul 16 13:10:55 [initandlisten] connection accepted from 127.0.0.1:50826 #39 (8 connections now open)
+Mon Jul 16 13:10:55 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 479 more seconds
+Mon Jul 16 13:10:55 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 479 more seconds
+Mon Jul 16 13:10:55 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 479 more seconds
+Mon Jul 16 13:10:55 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 479 more seconds
+Mon Jul 16 13:10:55 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 479 more seconds
+Mon Jul 16 13:10:55 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 479 more seconds
+Mon Jul 16 13:10:55 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 479 more seconds
+Mon Jul 16 13:10:55 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 479 more seconds
+Mon Jul 16 13:10:55 [conn34] end connection 127.0.0.1:50782 (7 connections now open)
+Mon Jul 16 13:10:55 [initandlisten] connection accepted from 127.0.0.1:50827 #40 (8 connections now open)
+Mon Jul 16 13:10:55 [rsSync] replSet still syncing, not yet to minValid optime 50043738:5d5
+Mon Jul 16 13:11:00 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 474 more seconds
+Mon Jul 16 13:11:00 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 474 more seconds
+Mon Jul 16 13:11:00 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 474 more seconds
+Mon Jul 16 13:11:00 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 474 more seconds
+Mon Jul 16 13:11:00 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 474 more seconds
+Mon Jul 16 13:11:00 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 474 more seconds
+Mon Jul 16 13:11:00 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 474 more seconds
+Mon Jul 16 13:11:00 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 474 more seconds
+Mon Jul 16 13:11:01 [conn35] end connection 127.0.0.1:50795 (7 connections now open)
+Mon Jul 16 13:11:01 [initandlisten] connection accepted from 127.0.0.1:50840 #41 (8 connections now open)
+Mon Jul 16 13:11:05 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 469 more seconds
+Mon Jul 16 13:11:05 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 469 more seconds
+Mon Jul 16 13:11:05 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 469 more seconds
+Mon Jul 16 13:11:05 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 469 more seconds
+Mon Jul 16 13:11:05 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 469 more seconds
+Mon Jul 16 13:11:05 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 469 more seconds
+Mon Jul 16 13:11:05 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 469 more seconds
+Mon Jul 16 13:11:05 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 469 more seconds
+Mon Jul 16 13:11:10 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 464 more seconds
+Mon Jul 16 13:11:10 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 464 more seconds
+Mon Jul 16 13:11:10 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 464 more seconds
+Mon Jul 16 13:11:10 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 464 more seconds
+Mon Jul 16 13:11:10 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 464 more seconds
+Mon Jul 16 13:11:10 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 464 more seconds
+Mon Jul 16 13:11:10 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 464 more seconds
+Mon Jul 16 13:11:10 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 464 more seconds
+Mon Jul 16 13:11:11 [conn36] end connection 127.0.0.1:50806 (7 connections now open)
+Mon Jul 16 13:11:11 [initandlisten] connection accepted from 127.0.0.1:50851 #42 (8 connections now open)
+Mon Jul 16 13:11:11 [conn37] end connection 127.0.0.1:50807 (7 connections now open)
+Mon Jul 16 13:11:11 [initandlisten] connection accepted from 127.0.0.1:50852 #43 (8 connections now open)
+Mon Jul 16 13:11:15 [conn20] command: unlock requested
+Mon Jul 16 13:11:15 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 459 more seconds
+Mon Jul 16 13:11:15 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 459 more seconds
+Mon Jul 16 13:11:15 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 459 more seconds
+Mon Jul 16 13:11:15 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 459 more seconds
+Mon Jul 16 13:11:15 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 459 more seconds
+Mon Jul 16 13:11:15 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 459 more seconds
+Mon Jul 16 13:11:15 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 459 more seconds
+Mon Jul 16 13:11:15 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 459 more seconds
+Mon Jul 16 13:11:17 [conn38] end connection 127.0.0.1:50811 (7 connections now open)
+Mon Jul 16 13:11:17 [initandlisten] connection accepted from 127.0.0.1:50856 #44 (8 connections now open)
+Mon Jul 16 13:11:20 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 454 more seconds
+Mon Jul 16 13:11:20 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 454 more seconds
+Mon Jul 16 13:11:20 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 454 more seconds
+Mon Jul 16 13:11:20 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 454 more seconds
+Mon Jul 16 13:11:20 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 454 more seconds
+Mon Jul 16 13:11:20 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 454 more seconds
+Mon Jul 16 13:11:20 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 454 more seconds
+Mon Jul 16 13:11:20 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 454 more seconds
+Mon Jul 16 13:11:25 [conn39] end connection 127.0.0.1:50826 (7 connections now open)
+Mon Jul 16 13:11:25 [initandlisten] connection accepted from 127.0.0.1:50868 #45 (8 connections now open)
+Mon Jul 16 13:11:25 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 449 more seconds
+Mon Jul 16 13:11:25 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 449 more seconds
+Mon Jul 16 13:11:25 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 449 more seconds
+Mon Jul 16 13:11:25 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 449 more seconds
+Mon Jul 16 13:11:25 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 449 more seconds
+Mon Jul 16 13:11:25 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 449 more seconds
+Mon Jul 16 13:11:25 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 449 more seconds
+Mon Jul 16 13:11:25 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 449 more seconds
+Mon Jul 16 13:11:25 [conn40] end connection 127.0.0.1:50827 (7 connections now open)
+Mon Jul 16 13:11:25 [initandlisten] connection accepted from 127.0.0.1:50869 #46 (8 connections now open)
+Mon Jul 16 13:11:30 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 444 more seconds
+Mon Jul 16 13:11:30 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 444 more seconds
+Mon Jul 16 13:11:30 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 444 more seconds
+Mon Jul 16 13:11:30 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 444 more seconds
+Mon Jul 16 13:11:30 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 444 more seconds
+Mon Jul 16 13:11:30 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 444 more seconds
+Mon Jul 16 13:11:30 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 444 more seconds
+Mon Jul 16 13:11:30 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 444 more seconds
+Mon Jul 16 13:11:31 [conn41] end connection 127.0.0.1:50840 (7 connections now open)
+Mon Jul 16 13:11:31 [initandlisten] connection accepted from 127.0.0.1:50882 #47 (8 connections now open)
+Mon Jul 16 13:11:35 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 439 more seconds
+Mon Jul 16 13:11:35 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 439 more seconds
+Mon Jul 16 13:11:35 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 439 more seconds
+Mon Jul 16 13:11:35 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 439 more seconds
+Mon Jul 16 13:11:35 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 439 more seconds
+Mon Jul 16 13:11:35 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 439 more seconds
+Mon Jul 16 13:11:35 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 439 more seconds
+Mon Jul 16 13:11:35 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 439 more seconds
+Mon Jul 16 13:11:40 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 434 more seconds
+Mon Jul 16 13:11:40 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 434 more seconds
+Mon Jul 16 13:11:40 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 434 more seconds
+Mon Jul 16 13:11:40 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 434 more seconds
+Mon Jul 16 13:11:40 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 434 more seconds
+Mon Jul 16 13:11:40 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 434 more seconds
+Mon Jul 16 13:11:40 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 434 more seconds
+Mon Jul 16 13:11:40 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 434 more seconds
+Mon Jul 16 13:11:41 [conn42] end connection 127.0.0.1:50851 (7 connections now open)
+Mon Jul 16 13:11:41 [initandlisten] connection accepted from 127.0.0.1:50896 #48 (8 connections now open)
+Mon Jul 16 13:11:41 [conn43] end connection 127.0.0.1:50852 (7 connections now open)
+Mon Jul 16 13:11:41 [initandlisten] connection accepted from 127.0.0.1:50897 #49 (8 connections now open)
+Mon Jul 16 13:11:45 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 429 more seconds
+Mon Jul 16 13:11:45 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 429 more seconds
+Mon Jul 16 13:11:45 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 429 more seconds
+Mon Jul 16 13:11:45 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 429 more seconds
+Mon Jul 16 13:11:45 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 429 more seconds
+Mon Jul 16 13:11:45 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 429 more seconds
+Mon Jul 16 13:11:45 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 429 more seconds
+Mon Jul 16 13:11:45 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 429 more seconds
+Mon Jul 16 13:11:47 [conn44] end connection 127.0.0.1:50856 (7 connections now open)
+Mon Jul 16 13:11:47 [initandlisten] connection accepted from 127.0.0.1:50901 #50 (8 connections now open)
+Mon Jul 16 13:11:50 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 424 more seconds
+Mon Jul 16 13:11:50 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 424 more seconds
+Mon Jul 16 13:11:50 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 424 more seconds
+Mon Jul 16 13:11:50 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 424 more seconds
+Mon Jul 16 13:11:50 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 424 more seconds
+Mon Jul 16 13:11:50 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 424 more seconds
+Mon Jul 16 13:11:50 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 424 more seconds
+Mon Jul 16 13:11:50 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 424 more seconds
+Mon Jul 16 13:11:55 [conn45] end connection 127.0.0.1:50868 (7 connections now open)
+Mon Jul 16 13:11:55 [initandlisten] connection accepted from 127.0.0.1:50913 #51 (8 connections now open)
+Mon Jul 16 13:11:55 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 419 more seconds
+Mon Jul 16 13:11:55 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 419 more seconds
+Mon Jul 16 13:11:55 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 419 more seconds
+Mon Jul 16 13:11:55 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 419 more seconds
+Mon Jul 16 13:11:55 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 419 more seconds
+Mon Jul 16 13:11:55 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 419 more seconds
+Mon Jul 16 13:11:55 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 419 more seconds
+Mon Jul 16 13:11:55 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 419 more seconds
+Mon Jul 16 13:11:55 [conn46] end connection 127.0.0.1:50869 (7 connections now open)
+Mon Jul 16 13:11:55 [initandlisten] connection accepted from 127.0.0.1:50914 #52 (8 connections now open)
+Mon Jul 16 13:11:55 [rsSync] replSet still syncing, not yet to minValid optime 50043738:5d5
+Mon Jul 16 13:12:00 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 414 more seconds
+Mon Jul 16 13:12:00 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 414 more seconds
+Mon Jul 16 13:12:00 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 414 more seconds
+Mon Jul 16 13:12:00 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 414 more seconds
+Mon Jul 16 13:12:00 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 414 more seconds
+Mon Jul 16 13:12:00 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 414 more seconds
+Mon Jul 16 13:12:00 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 414 more seconds
+Mon Jul 16 13:12:00 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 414 more seconds
+Mon Jul 16 13:12:01 [conn47] end connection 127.0.0.1:50882 (7 connections now open)
+Mon Jul 16 13:12:01 [initandlisten] connection accepted from 127.0.0.1:50927 #53 (8 connections now open)
+Mon Jul 16 13:12:05 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 409 more seconds
+Mon Jul 16 13:12:05 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 409 more seconds
+Mon Jul 16 13:12:05 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 409 more seconds
+Mon Jul 16 13:12:05 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 409 more seconds
+Mon Jul 16 13:12:05 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 409 more seconds
+Mon Jul 16 13:12:05 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 409 more seconds
+Mon Jul 16 13:12:05 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 409 more seconds
+Mon Jul 16 13:12:05 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 409 more seconds
+Mon Jul 16 13:12:10 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 404 more seconds
+Mon Jul 16 13:12:10 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 404 more seconds
+Mon Jul 16 13:12:10 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 404 more seconds
+Mon Jul 16 13:12:10 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 404 more seconds
+Mon Jul 16 13:12:10 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 404 more seconds
+Mon Jul 16 13:12:10 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 404 more seconds
+Mon Jul 16 13:12:10 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 404 more seconds
+Mon Jul 16 13:12:10 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 404 more seconds
+Mon Jul 16 13:12:11 [conn48] end connection 127.0.0.1:50896 (7 connections now open)
+Mon Jul 16 13:12:11 [initandlisten] connection accepted from 127.0.0.1:50938 #54 (8 connections now open)
+Mon Jul 16 13:12:11 [conn49] end connection 127.0.0.1:50897 (7 connections now open)
+Mon Jul 16 13:12:11 [initandlisten] connection accepted from 127.0.0.1:50939 #55 (8 connections now open)
+Mon Jul 16 13:12:15 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 399 more seconds
+Mon Jul 16 13:12:15 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 399 more seconds
+Mon Jul 16 13:12:15 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 399 more seconds
+Mon Jul 16 13:12:15 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 399 more seconds
+Mon Jul 16 13:12:15 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 399 more seconds
+Mon Jul 16 13:12:15 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 399 more seconds
+Mon Jul 16 13:12:15 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 399 more seconds
+Mon Jul 16 13:12:15 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 399 more seconds
+Mon Jul 16 13:12:17 [conn50] end connection 127.0.0.1:50901 (7 connections now open)
+Mon Jul 16 13:12:17 [initandlisten] connection accepted from 127.0.0.1:50946 #56 (8 connections now open)
+Mon Jul 16 13:12:20 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 394 more seconds
+Mon Jul 16 13:12:20 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 394 more seconds
+Mon Jul 16 13:12:20 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 394 more seconds
+Mon Jul 16 13:12:20 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 394 more seconds
+Mon Jul 16 13:12:20 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 394 more seconds
+Mon Jul 16 13:12:20 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 394 more seconds
+Mon Jul 16 13:12:20 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 394 more seconds
+Mon Jul 16 13:12:20 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 394 more seconds
+Mon Jul 16 13:12:25 [conn51] end connection 127.0.0.1:50913 (7 connections now open)
+Mon Jul 16 13:12:25 [initandlisten] connection accepted from 127.0.0.1:50958 #57 (8 connections now open)
+Mon Jul 16 13:12:25 [conn52] end connection 127.0.0.1:50914 (7 connections now open)
+Mon Jul 16 13:12:25 [initandlisten] connection accepted from 127.0.0.1:50959 #58 (8 connections now open)
+Mon Jul 16 13:12:25 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 389 more seconds
+Mon Jul 16 13:12:25 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 389 more seconds
+Mon Jul 16 13:12:25 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 389 more seconds
+Mon Jul 16 13:12:25 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 389 more seconds
+Mon Jul 16 13:12:25 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 389 more seconds
+Mon Jul 16 13:12:25 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 389 more seconds
+Mon Jul 16 13:12:25 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 389 more seconds
+Mon Jul 16 13:12:25 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 389 more seconds
+Mon Jul 16 13:12:30 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 384 more seconds
+Mon Jul 16 13:12:30 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 384 more seconds
+Mon Jul 16 13:12:30 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 384 more seconds
+Mon Jul 16 13:12:30 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 384 more seconds
+Mon Jul 16 13:12:30 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 384 more seconds
+Mon Jul 16 13:12:30 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 384 more seconds
+Mon Jul 16 13:12:30 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 384 more seconds
+Mon Jul 16 13:12:30 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 384 more seconds
+Mon Jul 16 13:12:31 [conn53] end connection 127.0.0.1:50927 (7 connections now open)
+Mon Jul 16 13:12:31 [initandlisten] connection accepted from 127.0.0.1:50972 #59 (8 connections now open)
+Mon Jul 16 13:12:35 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 379 more seconds
+Mon Jul 16 13:12:35 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 379 more seconds
+Mon Jul 16 13:12:35 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 379 more seconds
+Mon Jul 16 13:12:35 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 379 more seconds
+Mon Jul 16 13:12:35 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 379 more seconds
+Mon Jul 16 13:12:35 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 379 more seconds
+Mon Jul 16 13:12:35 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 379 more seconds
+Mon Jul 16 13:12:35 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 379 more seconds
+Mon Jul 16 13:12:40 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 374 more seconds
+Mon Jul 16 13:12:40 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 374 more seconds
+Mon Jul 16 13:12:40 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 374 more seconds
+Mon Jul 16 13:12:40 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 374 more seconds
+Mon Jul 16 13:12:40 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 374 more seconds
+Mon Jul 16 13:12:40 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 374 more seconds
+Mon Jul 16 13:12:40 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 374 more seconds
+Mon Jul 16 13:12:40 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 374 more seconds
+Mon Jul 16 13:12:41 [conn54] end connection 127.0.0.1:50938 (7 connections now open)
+Mon Jul 16 13:12:41 [initandlisten] connection accepted from 127.0.0.1:50984 #60 (8 connections now open)
+Mon Jul 16 13:12:41 [conn55] end connection 127.0.0.1:50939 (7 connections now open)
+Mon Jul 16 13:12:41 [initandlisten] connection accepted from 127.0.0.1:50986 #61 (8 connections now open)
+Mon Jul 16 13:12:45 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 369 more seconds
+Mon Jul 16 13:12:45 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 369 more seconds
+Mon Jul 16 13:12:45 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 369 more seconds
+Mon Jul 16 13:12:45 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 369 more seconds
+Mon Jul 16 13:12:45 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 369 more seconds
+Mon Jul 16 13:12:45 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 369 more seconds
+Mon Jul 16 13:12:45 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 369 more seconds
+Mon Jul 16 13:12:45 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 369 more seconds
+Mon Jul 16 13:12:47 [conn56] end connection 127.0.0.1:50946 (7 connections now open)
+Mon Jul 16 13:12:47 [initandlisten] connection accepted from 127.0.0.1:50993 #62 (8 connections now open)
+Mon Jul 16 13:12:50 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 364 more seconds
+Mon Jul 16 13:12:50 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 364 more seconds
+Mon Jul 16 13:12:50 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 364 more seconds
+Mon Jul 16 13:12:50 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 364 more seconds
+Mon Jul 16 13:12:50 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 364 more seconds
+Mon Jul 16 13:12:50 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 364 more seconds
+Mon Jul 16 13:12:50 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 364 more seconds
+Mon Jul 16 13:12:50 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 364 more seconds
+Mon Jul 16 13:12:55 [conn57] end connection 127.0.0.1:50958 (7 connections now open)
+Mon Jul 16 13:12:55 [initandlisten] connection accepted from 127.0.0.1:51011 #63 (8 connections now open)
+Mon Jul 16 13:12:55 [conn58] end connection 127.0.0.1:50959 (7 connections now open)
+Mon Jul 16 13:12:55 [initandlisten] connection accepted from 127.0.0.1:51012 #64 (8 connections now open)
+Mon Jul 16 13:12:55 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 359 more seconds
+Mon Jul 16 13:12:55 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 359 more seconds
+Mon Jul 16 13:12:55 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 359 more seconds
+Mon Jul 16 13:12:55 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 359 more seconds
+Mon Jul 16 13:12:55 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 359 more seconds
+Mon Jul 16 13:12:55 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 359 more seconds
+Mon Jul 16 13:12:55 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 359 more seconds
+Mon Jul 16 13:12:55 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 359 more seconds
+Mon Jul 16 13:12:55 [rsSync] replSet still syncing, not yet to minValid optime 50043738:5d5
+Mon Jul 16 13:13:00 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 354 more seconds
+Mon Jul 16 13:13:00 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 354 more seconds
+Mon Jul 16 13:13:00 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 354 more seconds
+Mon Jul 16 13:13:00 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 354 more seconds
+Mon Jul 16 13:13:00 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 354 more seconds
+Mon Jul 16 13:13:00 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 354 more seconds
+Mon Jul 16 13:13:00 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 354 more seconds
+Mon Jul 16 13:13:00 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 354 more seconds
+Mon Jul 16 13:13:01 [conn59] end connection 127.0.0.1:50972 (7 connections now open)
+Mon Jul 16 13:13:01 [initandlisten] connection accepted from 127.0.0.1:51025 #65 (8 connections now open)
+Mon Jul 16 13:13:05 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 349 more seconds
+Mon Jul 16 13:13:05 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 349 more seconds
+Mon Jul 16 13:13:05 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 349 more seconds
+Mon Jul 16 13:13:05 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 349 more seconds
+Mon Jul 16 13:13:05 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 349 more seconds
+Mon Jul 16 13:13:05 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 349 more seconds
+Mon Jul 16 13:13:05 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 349 more seconds
+Mon Jul 16 13:13:05 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 349 more seconds
+Mon Jul 16 13:13:10 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 344 more seconds
+Mon Jul 16 13:13:10 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 344 more seconds
+Mon Jul 16 13:13:10 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 344 more seconds
+Mon Jul 16 13:13:10 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 344 more seconds
+Mon Jul 16 13:13:10 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 344 more seconds
+Mon Jul 16 13:13:10 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 344 more seconds
+Mon Jul 16 13:13:10 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 344 more seconds
+Mon Jul 16 13:13:10 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 344 more seconds
+Mon Jul 16 13:13:11 [conn60] end connection 127.0.0.1:50984 (7 connections now open)
+Mon Jul 16 13:13:11 [initandlisten] connection accepted from 127.0.0.1:51036 #66 (8 connections now open)
+Mon Jul 16 13:13:11 [conn61] end connection 127.0.0.1:50986 (7 connections now open)
+Mon Jul 16 13:13:11 [initandlisten] connection accepted from 127.0.0.1:51037 #67 (8 connections now open)
+Mon Jul 16 13:13:15 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 339 more seconds
+Mon Jul 16 13:13:15 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 339 more seconds
+Mon Jul 16 13:13:15 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 339 more seconds
+Mon Jul 16 13:13:15 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 339 more seconds
+Mon Jul 16 13:13:15 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 339 more seconds
+Mon Jul 16 13:13:15 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 339 more seconds
+Mon Jul 16 13:13:15 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 339 more seconds
+Mon Jul 16 13:13:15 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 339 more seconds
+Mon Jul 16 13:13:17 [conn62] end connection 127.0.0.1:50993 (7 connections now open)
+Mon Jul 16 13:13:17 [initandlisten] connection accepted from 127.0.0.1:51041 #68 (8 connections now open)
+Mon Jul 16 13:13:20 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 334 more seconds
+Mon Jul 16 13:13:20 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 334 more seconds
+Mon Jul 16 13:13:20 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 334 more seconds
+Mon Jul 16 13:13:20 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 334 more seconds
+Mon Jul 16 13:13:20 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 334 more seconds
+Mon Jul 16 13:13:20 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 334 more seconds
+Mon Jul 16 13:13:20 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 334 more seconds
+Mon Jul 16 13:13:20 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 334 more seconds
+Mon Jul 16 13:13:25 [conn63] end connection 127.0.0.1:51011 (7 connections now open)
+Mon Jul 16 13:13:25 [initandlisten] connection accepted from 127.0.0.1:51053 #69 (8 connections now open)
+Mon Jul 16 13:13:25 [conn64] end connection 127.0.0.1:51012 (7 connections now open)
+Mon Jul 16 13:13:25 [initandlisten] connection accepted from 127.0.0.1:51054 #70 (8 connections now open)
+Mon Jul 16 13:13:25 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 329 more seconds
+Mon Jul 16 13:13:25 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 329 more seconds
+Mon Jul 16 13:13:25 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 329 more seconds
+Mon Jul 16 13:13:25 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 329 more seconds
+Mon Jul 16 13:13:25 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 329 more seconds
+Mon Jul 16 13:13:25 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 329 more seconds
+Mon Jul 16 13:13:25 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 329 more seconds
+Mon Jul 16 13:13:25 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 329 more seconds
+Mon Jul 16 13:13:30 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 324 more seconds
+Mon Jul 16 13:13:30 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 324 more seconds
+Mon Jul 16 13:13:30 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 324 more seconds
+Mon Jul 16 13:13:30 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 324 more seconds
+Mon Jul 16 13:13:30 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 324 more seconds
+Mon Jul 16 13:13:30 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 324 more seconds
+Mon Jul 16 13:13:30 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 324 more seconds
+Mon Jul 16 13:13:30 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 324 more seconds
+Mon Jul 16 13:13:31 [conn65] end connection 127.0.0.1:51025 (7 connections now open)
+Mon Jul 16 13:13:31 [initandlisten] connection accepted from 127.0.0.1:51067 #71 (8 connections now open)
+Mon Jul 16 13:13:35 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 319 more seconds
+Mon Jul 16 13:13:35 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 319 more seconds
+Mon Jul 16 13:13:35 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 319 more seconds
+Mon Jul 16 13:13:35 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 319 more seconds
+Mon Jul 16 13:13:35 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 319 more seconds
+Mon Jul 16 13:13:35 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 319 more seconds
+Mon Jul 16 13:13:35 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 319 more seconds
+Mon Jul 16 13:13:35 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 319 more seconds
+Mon Jul 16 13:13:40 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 314 more seconds
+Mon Jul 16 13:13:40 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 314 more seconds
+Mon Jul 16 13:13:40 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 314 more seconds
+Mon Jul 16 13:13:40 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 314 more seconds
+Mon Jul 16 13:13:40 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 314 more seconds
+Mon Jul 16 13:13:40 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 314 more seconds
+Mon Jul 16 13:13:40 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 314 more seconds
+Mon Jul 16 13:13:40 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 314 more seconds
+Mon Jul 16 13:13:41 [conn66] end connection 127.0.0.1:51036 (7 connections now open)
+Mon Jul 16 13:13:41 [initandlisten] connection accepted from 127.0.0.1:51079 #72 (8 connections now open)
+Mon Jul 16 13:13:41 [conn67] end connection 127.0.0.1:51037 (7 connections now open)
+Mon Jul 16 13:13:41 [initandlisten] connection accepted from 127.0.0.1:51080 #73 (8 connections now open)
+Mon Jul 16 13:13:45 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 309 more seconds
+Mon Jul 16 13:13:45 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 309 more seconds
+Mon Jul 16 13:13:45 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 309 more seconds
+Mon Jul 16 13:13:45 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 309 more seconds
+Mon Jul 16 13:13:45 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 309 more seconds
+Mon Jul 16 13:13:45 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 309 more seconds
+Mon Jul 16 13:13:45 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 309 more seconds
+Mon Jul 16 13:13:45 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 309 more seconds
+Mon Jul 16 13:13:47 [conn68] end connection 127.0.0.1:51041 (7 connections now open)
+Mon Jul 16 13:13:47 [initandlisten] connection accepted from 127.0.0.1:51084 #74 (8 connections now open)
+Mon Jul 16 13:13:50 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 304 more seconds
+Mon Jul 16 13:13:50 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 304 more seconds
+Mon Jul 16 13:13:50 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 304 more seconds
+Mon Jul 16 13:13:50 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 304 more seconds
+Mon Jul 16 13:13:50 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 304 more seconds
+Mon Jul 16 13:13:50 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 304 more seconds
+Mon Jul 16 13:13:50 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 304 more seconds
+Mon Jul 16 13:13:50 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 304 more seconds
+Mon Jul 16 13:13:55 [conn69] end connection 127.0.0.1:51053 (7 connections now open)
+Mon Jul 16 13:13:55 [initandlisten] connection accepted from 127.0.0.1:51096 #75 (8 connections now open)
+Mon Jul 16 13:13:55 [conn70] end connection 127.0.0.1:51054 (7 connections now open)
+Mon Jul 16 13:13:55 [initandlisten] connection accepted from 127.0.0.1:51097 #76 (8 connections now open)
+Mon Jul 16 13:13:55 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 299 more seconds
+Mon Jul 16 13:13:55 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 299 more seconds
+Mon Jul 16 13:13:55 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 299 more seconds
+Mon Jul 16 13:13:55 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 299 more seconds
+Mon Jul 16 13:13:55 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 299 more seconds
+Mon Jul 16 13:13:55 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 299 more seconds
+Mon Jul 16 13:13:55 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 299 more seconds
+Mon Jul 16 13:13:55 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 299 more seconds
+Mon Jul 16 13:13:55 [rsSync] replSet still syncing, not yet to minValid optime 50043738:5d5
+Mon Jul 16 13:14:00 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 294 more seconds
+Mon Jul 16 13:14:00 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 294 more seconds
+Mon Jul 16 13:14:00 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 294 more seconds
+Mon Jul 16 13:14:00 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 294 more seconds
+Mon Jul 16 13:14:00 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 294 more seconds
+Mon Jul 16 13:14:00 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 294 more seconds
+Mon Jul 16 13:14:00 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 294 more seconds
+Mon Jul 16 13:14:00 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 294 more seconds
+Mon Jul 16 13:14:01 [conn71] end connection 127.0.0.1:51067 (7 connections now open)
+Mon Jul 16 13:14:01 [initandlisten] connection accepted from 127.0.0.1:51132 #77 (8 connections now open)
+Mon Jul 16 13:14:05 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 289 more seconds
+Mon Jul 16 13:14:05 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 289 more seconds
+Mon Jul 16 13:14:05 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 289 more seconds
+Mon Jul 16 13:14:05 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 289 more seconds
+Mon Jul 16 13:14:05 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 289 more seconds
+Mon Jul 16 13:14:05 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 289 more seconds
+Mon Jul 16 13:14:05 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 289 more seconds
+Mon Jul 16 13:14:05 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 289 more seconds
+Mon Jul 16 13:14:10 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 284 more seconds
+Mon Jul 16 13:14:10 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 284 more seconds
+Mon Jul 16 13:14:10 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 284 more seconds
+Mon Jul 16 13:14:10 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 284 more seconds
+Mon Jul 16 13:14:10 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 284 more seconds
+Mon Jul 16 13:14:10 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 284 more seconds
+Mon Jul 16 13:14:10 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 284 more seconds
+Mon Jul 16 13:14:10 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 284 more seconds
+Mon Jul 16 13:14:11 [conn72] end connection 127.0.0.1:51079 (7 connections now open)
+Mon Jul 16 13:14:11 [initandlisten] connection accepted from 127.0.0.1:51143 #78 (8 connections now open)
+Mon Jul 16 13:14:11 [conn73] end connection 127.0.0.1:51080 (7 connections now open)
+Mon Jul 16 13:14:11 [initandlisten] connection accepted from 127.0.0.1:51144 #79 (8 connections now open)
+Mon Jul 16 13:14:15 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 279 more seconds
+Mon Jul 16 13:14:15 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 279 more seconds
+Mon Jul 16 13:14:15 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 279 more seconds
+Mon Jul 16 13:14:15 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 279 more seconds
+Mon Jul 16 13:14:15 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 279 more seconds
+Mon Jul 16 13:14:15 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 279 more seconds
+Mon Jul 16 13:14:15 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 279 more seconds
+Mon Jul 16 13:14:15 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 279 more seconds
+Mon Jul 16 13:14:17 [conn74] end connection 127.0.0.1:51084 (7 connections now open)
+Mon Jul 16 13:14:17 [initandlisten] connection accepted from 127.0.0.1:51151 #80 (8 connections now open)
+Mon Jul 16 13:14:20 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 274 more seconds
+Mon Jul 16 13:14:20 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 274 more seconds
+Mon Jul 16 13:14:20 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 274 more seconds
+Mon Jul 16 13:14:20 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 274 more seconds
+Mon Jul 16 13:14:20 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 274 more seconds
+Mon Jul 16 13:14:20 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 274 more seconds
+Mon Jul 16 13:14:20 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 274 more seconds
+Mon Jul 16 13:14:20 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 274 more seconds
+Mon Jul 16 13:14:25 [conn75] end connection 127.0.0.1:51096 (7 connections now open)
+Mon Jul 16 13:14:25 [initandlisten] connection accepted from 127.0.0.1:51163 #81 (8 connections now open)
+Mon Jul 16 13:14:25 [conn76] end connection 127.0.0.1:51097 (7 connections now open)
+Mon Jul 16 13:14:25 [initandlisten] connection accepted from 127.0.0.1:51164 #82 (8 connections now open)
+Mon Jul 16 13:14:25 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 269 more seconds
+Mon Jul 16 13:14:25 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 269 more seconds
+Mon Jul 16 13:14:25 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 269 more seconds
+Mon Jul 16 13:14:25 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 269 more seconds
+Mon Jul 16 13:14:25 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 269 more seconds
+Mon Jul 16 13:14:25 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 269 more seconds
+Mon Jul 16 13:14:25 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 269 more seconds
+Mon Jul 16 13:14:25 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 269 more seconds
+Mon Jul 16 13:14:30 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 264 more seconds
+Mon Jul 16 13:14:30 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 264 more seconds
+Mon Jul 16 13:14:30 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 264 more seconds
+Mon Jul 16 13:14:30 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 264 more seconds
+Mon Jul 16 13:14:30 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 264 more seconds
+Mon Jul 16 13:14:30 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 264 more seconds
+Mon Jul 16 13:14:30 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 264 more seconds
+Mon Jul 16 13:14:30 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 264 more seconds
+Mon Jul 16 13:14:31 [conn77] end connection 127.0.0.1:51132 (7 connections now open)
+Mon Jul 16 13:14:31 [initandlisten] connection accepted from 127.0.0.1:51177 #83 (8 connections now open)
+Mon Jul 16 13:14:35 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 259 more seconds
+Mon Jul 16 13:14:35 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 259 more seconds
+Mon Jul 16 13:14:35 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 259 more seconds
+Mon Jul 16 13:14:35 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 259 more seconds
+Mon Jul 16 13:14:35 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 259 more seconds
+Mon Jul 16 13:14:35 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 259 more seconds
+Mon Jul 16 13:14:35 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 259 more seconds
+Mon Jul 16 13:14:35 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 259 more seconds
+Mon Jul 16 13:14:40 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 254 more seconds
+Mon Jul 16 13:14:40 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 254 more seconds
+Mon Jul 16 13:14:40 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 254 more seconds
+Mon Jul 16 13:14:40 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 254 more seconds
+Mon Jul 16 13:14:40 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 254 more seconds
+Mon Jul 16 13:14:40 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 254 more seconds
+Mon Jul 16 13:14:40 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 254 more seconds
+Mon Jul 16 13:14:40 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 254 more seconds
+Mon Jul 16 13:14:41 [conn78] end connection 127.0.0.1:51143 (7 connections now open)
+Mon Jul 16 13:14:41 [initandlisten] connection accepted from 127.0.0.1:51188 #84 (8 connections now open)
+Mon Jul 16 13:14:41 [conn79] end connection 127.0.0.1:51144 (7 connections now open)
+Mon Jul 16 13:14:41 [initandlisten] connection accepted from 127.0.0.1:51189 #85 (8 connections now open)
+Mon Jul 16 13:14:45 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 249 more seconds
+Mon Jul 16 13:14:45 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 249 more seconds
+Mon Jul 16 13:14:45 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 249 more seconds
+Mon Jul 16 13:14:45 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 249 more seconds
+Mon Jul 16 13:14:45 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 249 more seconds
+Mon Jul 16 13:14:45 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 249 more seconds
+Mon Jul 16 13:14:45 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 249 more seconds
+Mon Jul 16 13:14:45 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 249 more seconds
+Mon Jul 16 13:14:47 [conn80] end connection 127.0.0.1:51151 (7 connections now open)
+Mon Jul 16 13:14:47 [initandlisten] connection accepted from 127.0.0.1:51193 #86 (8 connections now open)
+Mon Jul 16 13:14:50 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 244 more seconds
+Mon Jul 16 13:14:50 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 244 more seconds
+Mon Jul 16 13:14:50 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 244 more seconds
+Mon Jul 16 13:14:50 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 244 more seconds
+Mon Jul 16 13:14:50 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 244 more seconds
+Mon Jul 16 13:14:50 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 244 more seconds
+Mon Jul 16 13:14:50 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 244 more seconds
+Mon Jul 16 13:14:50 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 244 more seconds
+Mon Jul 16 13:14:55 [conn81] end connection 127.0.0.1:51163 (7 connections now open)
+Mon Jul 16 13:14:55 [initandlisten] connection accepted from 127.0.0.1:51205 #87 (8 connections now open)
+Mon Jul 16 13:14:55 [conn82] end connection 127.0.0.1:51164 (7 connections now open)
+Mon Jul 16 13:14:55 [initandlisten] connection accepted from 127.0.0.1:51206 #88 (8 connections now open)
+Mon Jul 16 13:14:55 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 239 more seconds
+Mon Jul 16 13:14:55 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 239 more seconds
+Mon Jul 16 13:14:55 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 239 more seconds
+Mon Jul 16 13:14:55 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 239 more seconds
+Mon Jul 16 13:14:55 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 239 more seconds
+Mon Jul 16 13:14:55 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 239 more seconds
+Mon Jul 16 13:14:55 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 239 more seconds
+Mon Jul 16 13:14:55 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 239 more seconds
+Mon Jul 16 13:14:55 [rsSync] replSet still syncing, not yet to minValid optime 50043738:5d5
+Mon Jul 16 13:15:00 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 234 more seconds
+Mon Jul 16 13:15:00 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 234 more seconds
+Mon Jul 16 13:15:00 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 234 more seconds
+Mon Jul 16 13:15:00 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 234 more seconds
+Mon Jul 16 13:15:00 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 234 more seconds
+Mon Jul 16 13:15:00 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 234 more seconds
+Mon Jul 16 13:15:00 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 234 more seconds
+Mon Jul 16 13:15:00 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 234 more seconds
+Mon Jul 16 13:15:01 [conn83] end connection 127.0.0.1:51177 (7 connections now open)
+Mon Jul 16 13:15:01 [initandlisten] connection accepted from 127.0.0.1:51219 #89 (8 connections now open)
+Mon Jul 16 13:15:05 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 229 more seconds
+Mon Jul 16 13:15:05 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 229 more seconds
+Mon Jul 16 13:15:05 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 229 more seconds
+Mon Jul 16 13:15:05 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 229 more seconds
+Mon Jul 16 13:15:05 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 229 more seconds
+Mon Jul 16 13:15:05 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 229 more seconds
+Mon Jul 16 13:15:05 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 229 more seconds
+Mon Jul 16 13:15:05 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 229 more seconds
+Mon Jul 16 13:15:10 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 224 more seconds
+Mon Jul 16 13:15:10 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 224 more seconds
+Mon Jul 16 13:15:10 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 224 more seconds
+Mon Jul 16 13:15:10 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 224 more seconds
+Mon Jul 16 13:15:10 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 224 more seconds
+Mon Jul 16 13:15:10 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 224 more seconds
+Mon Jul 16 13:15:10 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 224 more seconds
+Mon Jul 16 13:15:10 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 224 more seconds
+Mon Jul 16 13:15:11 [conn84] end connection 127.0.0.1:51188 (7 connections now open)
+Mon Jul 16 13:15:11 [initandlisten] connection accepted from 127.0.0.1:51230 #90 (8 connections now open)
+Mon Jul 16 13:15:11 [conn85] end connection 127.0.0.1:51189 (7 connections now open)
+Mon Jul 16 13:15:11 [initandlisten] connection accepted from 127.0.0.1:51231 #91 (8 connections now open)
+Mon Jul 16 13:15:15 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 219 more seconds
+Mon Jul 16 13:15:15 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 219 more seconds
+Mon Jul 16 13:15:15 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 219 more seconds
+Mon Jul 16 13:15:15 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 219 more seconds
+Mon Jul 16 13:15:15 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 219 more seconds
+Mon Jul 16 13:15:15 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 219 more seconds
+Mon Jul 16 13:15:15 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 219 more seconds
+Mon Jul 16 13:15:15 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 219 more seconds
+Mon Jul 16 13:15:17 [conn86] end connection 127.0.0.1:51193 (7 connections now open)
+Mon Jul 16 13:15:17 [initandlisten] connection accepted from 127.0.0.1:51235 #92 (8 connections now open)
+Mon Jul 16 13:15:20 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 214 more seconds
+Mon Jul 16 13:15:20 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 214 more seconds
+Mon Jul 16 13:15:20 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 214 more seconds
+Mon Jul 16 13:15:20 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 214 more seconds
+Mon Jul 16 13:15:20 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 214 more seconds
+Mon Jul 16 13:15:20 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 214 more seconds
+Mon Jul 16 13:15:20 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 214 more seconds
+Mon Jul 16 13:15:20 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 214 more seconds
+Mon Jul 16 13:15:25 [conn87] end connection 127.0.0.1:51205 (7 connections now open)
+Mon Jul 16 13:15:25 [initandlisten] connection accepted from 127.0.0.1:51249 #93 (8 connections now open)
+Mon Jul 16 13:15:25 [conn88] end connection 127.0.0.1:51206 (7 connections now open)
+Mon Jul 16 13:15:25 [initandlisten] connection accepted from 127.0.0.1:51250 #94 (8 connections now open)
+Mon Jul 16 13:15:25 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 209 more seconds
+Mon Jul 16 13:15:25 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 209 more seconds
+Mon Jul 16 13:15:25 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 209 more seconds
+Mon Jul 16 13:15:25 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 209 more seconds
+Mon Jul 16 13:15:25 [rsBackgroundSync] replSet not trying to sync from neville:37022, it is vetoed for 209 more seconds
+Mon Jul 16 13:15:25 [rsBackgroundSync] replSet not trying to sync from ginny:37021, it is vetoed for 209 more seconds
+Mon Jul 16 13:15:25 [rsBackgroundSync] replSet not trying to sync from hermione:37019, it is vetoed for 209 more seconds
+Mon Jul 16 13:15:25 [rsBackgroundSync] replSet not trying to sync from ron:37017, it is vetoed for 209 more seconds
