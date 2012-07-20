@@ -32,20 +32,18 @@ data = None
 server_list = None
 admin = None
 
-class ThreadClass(threading.Thread):
-
-    def run(self):
-        """Open page and send GET request to server"""
-        # open the JS page
-        url = "http://localhost:28000"
-        try:
-            webbrowser.open(url, 1, True)
-        except webbrowser.Error as e:
-            print "Webbrowser failure: Unable to launch webpage:"
-            print e
-            print "Enter the following url into a browser to bring up Logl:"
-            print "http://localhost:28000/"
-    # end of ThreadClass
+def run():
+    """Open page and send GET request to server"""
+    # open the JS page
+    url = "http://localhost:28000"
+    try:
+        webbrowser.open(url, 1, True)
+    except webbrowser.Error as e:
+        print "Webbrowser failure: Unable to launch webpage:"
+        print e
+        print "Enter the following url into a browser to bring up Logl:"
+        print "http://localhost:28000/"
+    # end of thread
 
 
 def send_to_js(frames, servers, info):
@@ -61,7 +59,7 @@ def send_to_js(frames, servers, info):
     server_list = servers
 
     # fork here!
-    t = ThreadClass()
+    t = threading.Thread(target=run())
     t.start()
     # parent starts a server listening on localhost:27080
     # child opens page to send GET request to server

@@ -22,6 +22,7 @@ from copy import deepcopy
 from .clock_skew import server_clock_skew
 from supporting_methods import *
 
+LOGGER = logging.getLogger(__name__)
 
 def address_matchup(db, coll_name):
     """Runs an algorithm to match servers with their
@@ -60,8 +61,6 @@ def address_matchup(db, coll_name):
     the network graph was complete, or was a tree (connected and acyclic)
     """
 
-    logger = logging.getLogger(__name__)
-
     # find a list of all unnamed servers being talked about
     mentioned_names = []
 
@@ -87,7 +86,7 @@ def address_matchup(db, coll_name):
                          {"server_IP": "unknown"}]}))
 
         if len(unknowns) == 0:
-            logger.debug("No unknowns, breaking")
+            LOGGER.debug("No unknowns, breaking")
             break
         for s in unknowns:
 
@@ -102,7 +101,7 @@ def address_matchup(db, coll_name):
 
             # break if we've exhausted algorithm
             if last_change == num:
-                logger.debug("Algorithm exhausted, breaking")
+                LOGGER.debug("Algorithm exhausted, breaking")
                 break
             if last_change == -1:
                 last_change = num
@@ -111,7 +110,7 @@ def address_matchup(db, coll_name):
             # (these are servers s mentions)
             c = list(entries.find({"origin_server": num})
                      .distinct("info.server"))
-            logger.debug("Found {0} neighbors of (S)".format(len(c)))
+            LOGGER.debug("Found {0} neighbors of (S)".format(len(c)))
             neighbors_of_s = []
             for entry in c:
                 if entry != "self":
@@ -121,18 +120,18 @@ def address_matchup(db, coll_name):
             # and then, the servers they in turn mention
             # (stronger algorithm)
             if name:
-                logger.debug("Server (S) is named! Running stronger algorithm")
-                logger.debug(
+                LOGGER.debug("Server (S) is named! Running stronger algorithm")
+                LOGGER.debug(
                     "finding neighbors of (S) referring to name {0}".format(name))
                 neighbors_neighbors = []
                 neighbors = entries.find(
                     {"info.server": name}).distinct("origin_server")
                 # for each server that mentions s
                 for n_addr in neighbors:
-                    logger.debug("Find neighbors of (S)'s neighbor, {0}".format(n_addr))
+                    LOGGER.debug("Find neighbors of (S)'s neighbor, {0}".format(n_addr))
                     n_num, n_name, n_IP = name_me(n_addr, servers)
                     if n_num:
-                        logger.debug("Succesfully found server number for server {0}"
+                        LOGGER.debug("Succesfully found server number for server {0}"
                                      .format(n_addr))
                         n_addrs = entries.find(
                             {"origin_server": n_num}).distinct("info.server")
@@ -149,24 +148,24 @@ def address_matchup(db, coll_name):
                                 if addr in n_n_copy:
                                     neighbors_neighbors.append(addr)
                     else:
-                        logger.debug(
+                        LOGGER.debug(
                             "Unable to find server number for server {0}, skipping"
                             .format(n_addr))
-                logger.debug(
+                LOGGER.debug(
                     "Examining for match:\n{0}\n{1}"
                     .format(neighbors_of_s, neighbors_neighbors))
                 match = eliminate(neighbors_of_s, neighbors_neighbors)
                 if not match:
                     # (try weaker algorithm anyway, it catches some cases)
-                    logger.debug(
+                    LOGGER.debug(
                         "No match found using strong algorith, running weak algorithm")
                     match = eliminate(neighbors_of_s, mentioned_names)
             else:
                 # (weaker algorithm)
-                logger.debug(
+                LOGGER.debug(
                     "Server {0} is unnamed.  Running weaker algorithm"
                     .format(num))
-                logger.debug(
+                LOGGER.debug(
                     "Examining for match:\n{0}\n{1}"
                     .format(neighbors_of_s, mentioned_names))
                 match = eliminate(neighbors_of_s, mentioned_names)
@@ -177,17 +176,17 @@ def address_matchup(db, coll_name):
                     if s["server_IP"] == "unknown":
                         last_change = num
                         mentioned_names.remove(match)
-                        logger.debug("IP {0} matched to server {1}"
+                        LOGGER.debug("IP {0} matched to server {1}"
                                      .format(match, num))
                 else:
                     if s["server_name"] == "unknown":
-                        logger.debug("hostname {0} matched to server {1}"
+                        LOGGER.debug("hostname {0} matched to server {1}"
                                      .format(match, num))
                         last_change = num
                         mentioned_names.remove(match)
                 assign_address(num, match, servers)
             else:
-                logger.debug("No match found for server {0} this round"
+                LOGGER.debug("No match found for server {0} this round"
                              .format(num))
         else:
             continue
@@ -202,13 +201,13 @@ def address_matchup(db, coll_name):
                 {"$and": [{"server_name": "unknown"},
                           {"server_IP": "unknown"}]}))
         if len(s) == 0:
-            logger.debug("Successfully named all unnamed servers!")
+            LOGGER.debug("Successfully named all unnamed servers!")
             return 1
-        logger.debug(
+        LOGGER.debug(
             "Exhausted mentioned_names, but {0} servers remain unnamed"
             .format(len(s)))
         return -1
-    logger.debug(
+    LOGGER.debug(
         "Could not match {0} addresses: {1}"
         .format(len(mentioned_names), mentioned_names))
     return -1

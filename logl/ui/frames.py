@@ -13,12 +13,15 @@
 # limitations under the License.
 
 #!/usr/bin/env python
-from operator import itemgetter
-from datetime import datetime
-from copy import deepcopy
-import pymongo
 import logging
+import pymongo
 import string
+
+from copy import deepcopy
+from datetime import datetime
+from operator import itemgetter
+
+LOGGER = logging.getLogger(__name__)
 
 # The documents this module
 # generates will include the following information:
@@ -52,7 +55,6 @@ def generate_frames(unsorted_events, db, collName):
     # view the world in the same way.  If it detects something
     # amiss between two or more servers, it will set the 'flag'
     # to true, but will do nothing further.
-    logger = logging.getLogger(__name__)
 
     frames = {}
     last_frame = None
@@ -65,7 +67,7 @@ def generate_frames(unsorted_events, db, collName):
     servers = list(db[collName + ".servers"].distinct("server_num"))
 
     for e in events:
-        logger.debug("Generating frame for a type {0} event with target {1}"
+        LOGGER.debug("Generating frame for a type {0} event with target {1}"
                      .format(e["type"], e["target"]))
         f = new_frame(servers)
         # fill in various fields
@@ -116,8 +118,7 @@ def witnesses_dissenters(f, e):
     """Using the witnesses and dissenters
     lists in event e, determine links that should
     exist in frame, and if this frame should be flagged"""
-    logger = logging.getLogger(__name__)
-    logger.debug("Resolving witnesses and dissenters into links")
+    LOGGER.debug("Resolving witnesses and dissenters into links")
     f["witnesses"] = e["witnesses"]
     f["dissenters"] = e["dissenters"]
     if e["witnesses"] <= e["dissenters"]:
@@ -156,8 +157,7 @@ def witnesses_dissenters(f, e):
 
 def break_links(me, f):
     # find my links and make them broken links
-    logger = logging.getLogger(__name__)
-    logger.debug("Breaking all links to server {0}".format(me))
+    LOGGER.debug("Breaking all links to server {0}".format(me))
     for link in f["links"][me]:
         f["broken_links"][me].append(link)
         f["links"][me].remove(link)

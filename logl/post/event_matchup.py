@@ -23,6 +23,7 @@ from datetime import timedelta
 from operator import itemgetter
 from supporting_methods import *
 
+LOGGER = logging.getLogger(__name__)
 
 def event_matchup(db, coll_name):
     """This method sorts through the db's entries to
@@ -90,7 +91,6 @@ def next_event(servers, server_entries, db, coll_name):
     # these are messages that do not involve
     # corresponding messages across servers
     loners = ["conn", "fsync", "sync", "stale"]
-    logger = logging.getLogger(__name__)
 
     first_server = None
     for s in servers:
@@ -101,7 +101,7 @@ def next_event(servers, server_entries, db, coll_name):
             continue
         first_server = s
     if not first_server:
-        logger.debug("No more entries in queue, returning")
+        LOGGER.debug("No more entries in queue, returning")
         return None
 
     first = server_entries[first_server].pop(0)
@@ -121,7 +121,7 @@ def next_event(servers, server_entries, db, coll_name):
     event["type"] = first["type"]
     event["date"] = first["date"]
 
-    logger.debug("Handling event of type {0} with"
+    LOGGER.debug("Handling event of type {0} with"
                  "target {1}".format(event["type"], event["target"]))
 
     # some messages need specific fields set:
@@ -174,7 +174,6 @@ def get_corresponding_events(servers, server_entries,
     """Given a list of server names and entries
     organized by server, find all events that correspond to
     this one and combine them"""
-    logger = logging.getLogger(__name__)
     delay = timedelta(seconds=2)
 
     # find corresponding messages
@@ -199,7 +198,7 @@ def get_corresponding_events(servers, server_entries,
             server_entries[s].remove(add_entry)
             event["witnesses"].append(s)
         if not add:
-            logger.debug("No matches found for server {0}, adding to dissenters".format(s))
+            LOGGER.debug("No matches found for server {0}, adding to dissenters".format(s))
             event["dissenters"].append(s)
     return event
 
@@ -226,7 +225,6 @@ def target_server_match(entry_a, entry_b, servers):
     """Given two .entries documents, are they talking about the
     same sever?  (these should never be from the same
     origin_server) Return True or False"""
-    logger = logging.getLogger(__name__)
 
     a = entry_a["info"]["server"]
     b = entry_b["info"]["server"]
@@ -254,14 +252,14 @@ def target_server_match(entry_a, entry_b, servers):
     if a == "self":
         if is_IP(b):
             if a_doc["server_IP"] == "unknown":
-                logger.info("Assigning IP {0} to server {1}".format(b, a))
+                LOGGER.info("Assigning IP {0} to server {1}".format(b, a))
                 a_doc["server_IP"] == b
                 servers.save(a_doc)
                 return True
             return False
         else:
             if a_doc["server_name"] == "unknown":
-                logger.info("Assigning hostname {0} to server {1}".format(b, a))
+                LOGGER.info("Assigning hostname {0} to server {1}".format(b, a))
                 a_doc["server_name"] == b
                 servers.save(a_doc)
                 return True
@@ -272,14 +270,14 @@ def target_server_match(entry_a, entry_b, servers):
     if b == "self":
         if is_IP(a):
             if b_doc["server_IP"] == "unknown":
-                logger.info("Assigning IP {0} to server {1}".format(a, b))
+                LOGGER.info("Assigning IP {0} to server {1}".format(a, b))
                 b_doc["server_IP"] == a
                 servers.save(b_doc)
                 return True
             return False
         else:
             if b_doc["server_name"] == "unknown":
-                logger.info("Assigning hostname {0} to server {1}".format(a, b))
+                LOGGER.info("Assigning hostname {0} to server {1}".format(a, b))
                 b_doc["server_name"] == a
                 servers.save(b_doc)
                 return True
@@ -292,8 +290,7 @@ def resolve_dissenters(events):
     attempts to match that event to another corresponding
     event outside the margin of allowable network delay"""
     # useful for cases with undetected clock skew
-    logger = logging.getLogger(__name__)
-    logger.info("------------------"
+    LOGGER.info("------------------"
                 "Attempting to resolve dissenters"
                 "--------------------")
     for a in events[:]:
@@ -305,9 +302,9 @@ def resolve_dissenters(events):
                         if wit_a in b["witnesses"]:
                             break
                     else:
-                        logger.debug("Corresponding, "
+                        LOGGER.debug("Corresponding, "
                                      "clock-skewed events found, merging events")
-                        logger.debug("skew is {0}".format(a["date"] - b["date"]))
+                        LOGGER.debug("skew is {0}".format(a["date"] - b["date"]))
                         events.remove(a)
                         # resolve witnesses and dissenters lists
                         for wit_a in a["witnesses"]:
@@ -316,7 +313,7 @@ def resolve_dissenters(events):
                                 b["dissenters"].remove(wit_a)
                         # we've already found a match, stop looking
                         break
-                    logger.debug("Match not found for this event")
+                    LOGGER.debug("Match not found for this event")
                     continue
     return events
 
