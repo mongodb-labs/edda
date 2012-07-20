@@ -15,13 +15,10 @@
 import os
 import re
 
-__all__ = []
-dirList = os.listdir(os.path.dirname(os.path.abspath(__file__)))
-pattern = re.compile(".py$")
-
-for d in dirList:
-    # ignore anything that isn't strictly .py
-    m = pattern.search(d)
-    if (m != None):
-        d = d[0:len(d) - 3]
-        __all__.append(d)
+from rs_status import process
+from rs_exit import process
+from rs_sync import process
+from rs_reconfig import process
+from fsync_lock import process
+from init_and_listen import process
+from stale_secondary import process
