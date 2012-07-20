@@ -13,41 +13,30 @@
 # limitations under the License.
 
 
-# Example messages:
-
-# Tue Jul  3 10:20:15 [rsMgr] replset msgReceivedNewConfig version: version: 4
-# Tue Jul  3 10:20:15 [rsMgr] replSet info saving a newer config version to loc
-    # al.system.replset
-# Tue Jul  3 10:20:15 [rsMgr] replSet saveConfigLocally done
-# Tue Jul  3 10:20:15 [rsMgr] replSet info : additive change to configuration
-# Tue Jul  3 10:20:15 [rsMgr] replSet replSetReconfig new config saved locally
-
-
-import string
-
-
 def criteria(msg):
-
     """Does the given log line fit the criteria for this filter?
-    return an integer code if yes, -1 if not."""
-    if string.find(msg, 'replSetReconfig') >= 0:
-        return 0
-    return -1
+    If yes, return an integer code.  If not, return -1.
+    """
+    if 'replSetReconfig' in msg:
+        return 1
+    return 0
 
 
 def process(msg, date):
-    """if the given log line fits the criteria for this filter,
-    processes the line and creates a document for it.
-    document = {
+    """If the given log line fits the criteria for
+    this filter, processes the line and creates
+    a document of the following format:
+    doc = {
        "date" : date,
        "type" : "reconfig",
        "info" : {
           "server" : self
        }
        "msg" : msg
-    }"""
+    }
+    """
     message_type = criteria(msg)
-    if message_type < 0:
+    if not message_type:
         return None
 
     doc = {}

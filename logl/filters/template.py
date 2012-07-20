@@ -13,19 +13,20 @@
 # limitations under the License.
 
 #!/usr/bin/env python
-"""This filter processes ______ types of log lines."""
 
 
 def criteria(msg):
-    """does the given log line fit the criteria for this filter?
-    return an integer code if yes, -1 if no"""
+    """Does the given log line fit the criteria for this filter?
+    If yes, return an integer code.  Otherwise return 0.
+    """
     # perform a check or series of checks here on msg
-    pass
+    raise NotImplementedError
 
 
 def process(msg, date):
-    """if the given log line fits the critera for this filter,
-    processes the line and creates a document for it.
+    """If the given log line fits the critera for this filter,
+    processes the line and creates a document for it of the
+    following format:
     doc = {
          "date" : date,
          "msg"  : msg,
@@ -34,7 +35,8 @@ def process(msg, date):
                 "server" : "host:port" or "self",
                 (any additional fields)
                 }
-    }"""
+    }
+    """
 
     # doc = {}
     # doc["date"] = date
@@ -42,5 +44,4 @@ def process(msg, date):
     # doc["type"] = "your_filter_name"
     # doc["info"] = {}
     # etc.
-
-    pass
+    raise NotImplementedError

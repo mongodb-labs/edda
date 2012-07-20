@@ -13,34 +13,34 @@
 # limitations under the License.
 
 #!/usr/bin/env python
-"""This filter processes RSSYNC types of log lines"""
 
 
-import string
 import logging
 
 
 def criteria(msg):
     """Does the given log line fit the criteria for this filter?
-    return an integer code if yes, -1 if not."""
-    if (string.find(msg, '[rsSync]') >= 0):
-        if(string.find(msg, 'syncing') >= 0):
-            return 1
-    return -1
+    If so, return an integer code.  Otherwise, return 0.
+    """
+    if ('[rsSync]' in msg and
+        'syncing' in msg):
+        return 1
+    return 0
 
 
 def process(msg, date):
-    """if the given log line fits the criteria for this filter,
-    processes the line and creates a document for it.
+    """If the given log line fits the criteria for this filter,
+    process the line and create a document of the following format:
     document = {
        "date" : date,
-       "type" : "rsSync",
+       "type" : "sync",
        "msg" : msg,
        "info" : {
           "sync_server" : "host:port"
           "server" : "self
           }
-    }"""
+    }
+    """
     messageType = criteria(msg)
     if(messageType == -1):
         return None
@@ -56,12 +56,10 @@ def process(msg, date):
 
 
 def syncing_diff(msg, doc):
-    """generates and returns a document for rs that are
-    syncing to a new server"""
-
-    doc["info"]["subtype"] = "rsSync"
-
-    start = string.find(msg, "to: ")
+    """Generate and return a document for replica sets
+    that are syncing to a new server.
+    """
+    start = msg.find("to: ")
     if (start < 0):
         return None
     doc["info"]["sync_server"] = msg[start + 4: len(msg)]

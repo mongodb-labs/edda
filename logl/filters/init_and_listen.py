@@ -13,25 +13,30 @@
 # limitations under the License.
 
 #!/usr/bin/env python
-"""This filter processes INITANDLISTEN log lines."""
 
-import re
-import string
 import logging
+import re
+
+# global regex
+PORT_NUMBER = re.compile("port=[0-9]{1,5}")
+# global logger
+LOGGER = logging.getLogger(__name__)
 
 
 def criteria(msg):
-    """does the given log line fit the criteria for this filter?
-    return an integer code if yes, -1 if no."""
-    if (string.find(msg, '[initandlisten] MongoDB starting') >= 0):
+    """Does the given log line fit the criteria for this filter?
+    If yes, return an integer code.  If not, return 0.
+    """
+    if '[initandlisten] MongoDB starting' in msg:
         return 1
-    return -1
+    return 0
 
 
 def process(msg, date):
-    """If the given log line fits the criteria for this filter,
-    processes the line and creates a document for it.
-    document = {
+    """If the given log line fits the criteria for
+    this filter, processes the line and creates
+    a document of the following format:
+    doc = {
        "date" : date,
        "type" : "init",
        "msg" : msg,
@@ -46,9 +51,10 @@ def process(msg, date):
           "server" : "hostaddr:port",
           "conn_number" : int,
        }
-    }"""
+    }
+    """
     result = criteria(msg)
-    if result < 0:
+    if not result:
         return None
     doc = {}
     doc["date"] = date
@@ -62,20 +68,18 @@ def process(msg, date):
 
 
 def starting_up(msg, doc):
-    """this server is starting up.  Capture host information."""
-    logger = logging.getLogger(__name__)
+    """Generate a document for a server startup event."""
     doc["info"]["subtype"] = "startup"
 
     # isolate port number
-    pattern = re.compile("port=[0-9]{1,5}")
-    m = pattern.search(msg)
+    m = PORT_NUMBER.search(msg)
     if m is None:
-        logger.debug("malformed starting_up message: no port number found")
+        LOGGER.debug("malformed starting_up message: no port number found")
         return None
     port = m.group(0)[5:]
 
     # isolate host address
-    start = string.find(msg, 'host=')
+    start = msg.find('host=')
     host = msg[start + 5:len(msg)]
 
     doc["info"]["server"] = "self"
@@ -84,5 +88,5 @@ def starting_up(msg, doc):
     addr = addr.replace(" ", "")
     doc["info"]["addr"] = addr
     deb = "Returning new doc for a message of type: initandlisten: starting_up"
-    logger.debug(deb)
+    LOGGER.debug(deb)
     return doc

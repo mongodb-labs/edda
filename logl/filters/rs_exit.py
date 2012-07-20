@@ -13,18 +13,15 @@
 # limitations under the License.
 
 #!/usr/bin/env python
-"""This filter processes RSSYNC types of log lines"""
-
-import string
 
 
 def criteria(msg):
     """Does the given log line fit the criteria for this filter?
-    return an integer code if yes, -1 if not."""
-    if (string.find(msg, 'dbexit: really exiting now') >= 0):
-        return 2
-
-    return -1
+    If yes, return an integer code.  If not, return 0.
+    """
+    if 'dbexit: really exiting now' in msg:
+        return 1
+    return 0
 
 
 def process(msg, date):
@@ -34,24 +31,20 @@ def process(msg, date):
        "date" : date,
        "type" : "exit",
        "info" : {
-          "state" : state
           "server": "self"
        }
-       "oritinal_message" : msg
-    }"""
+       "msg" : msg
+    }
+    """
 
     messagetype = criteria(msg)
-    if(messagetype == -1):
+    if not messagetype:
         return None
-    labels = ["CLOSING", "SHUTDOWN", "DBEXIT"]
 
     doc = {}
     doc["date"] = date
     doc["type"] = "exit"
     doc["info"] = {}
-    doc["info"]["state"] = labels[messagetype]
-    doc["original_message"] = msg
-    #print doc["exit_message"]
+    doc["msg"] = msg
     doc["info"]["server"] = "self"
-    #Has the member begun syncing to a different place
     return doc

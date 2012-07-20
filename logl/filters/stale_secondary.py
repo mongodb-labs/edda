@@ -12,24 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
-import re
-import string
 import logging
+import re
 from supporting_methods import capture_address
-# for nosetests:
-#from logl.supporting_methods import capture_address
 
 def criteria(msg):
     """Does the given log line fit the criteria for this filter?
-    return an integer code if yes, -1 if not."""
-    if string.find(msg, 'too stale to catch up') >= 0:
-        return 0
-    return -1
+    Return an integer code if yes.  Otherwise return 0.
+    """
+    if 'too stale to catch up' in msg:
+        return 1
+    return 0
 
 
 def process(msg, date):
-    """if the given log line fits the criteria for this filter,
+    """If the given log line fits the criteria for this filter,
     processes the line and creates a document for it.
     document = {
        "date" : date,
@@ -38,9 +35,10 @@ def process(msg, date):
           "server" : host:port
        }
        "msg" : msg
-    }"""
+    }
+    """
     message_type = criteria(msg)
-    if message_type < 0:
+    if not message_type:
         return None
 
     doc = {}
@@ -49,8 +47,6 @@ def process(msg, date):
     doc["info"] = {}
     doc["msg"] = msg
 
-    if message_type == 0:
-        logger = logging.getLogger(__name__)
-        doc["info"]["server"] = "self"
+    doc["info"]["server"] = "self"
 
     return doc

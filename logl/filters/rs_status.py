@@ -13,54 +13,56 @@
 # limitations under the License.
 
 #!/usr/bin/env python
-"""This filter processes RS STATUS CHANGE types of log lines."""
 
-import string
+
 import re
+
+from supporting_methods import capture_address
 
 
 def criteria(msg):
-    """does the given log line fit the criteria for this filter?
-    return an integer code if yes, -1 if no"""
+    """Does the given log line fit the criteria for this filter?
+    If yes, return an integer code.  Otherwise, return -1.
+    """
     # state STARTUP1
-    if (string.find(msg, '[rsStart] replSet I am') >= 0):
+    if '[rsStart] replSet I am' in msg:
         return 0
     # state PRIMARY
-    if (string.find(msg, 'PRIMARY') >= 0):
+    if 'PRIMARY' in msg:
         return 1
     # state SECONDARY
-    if (string.find(msg, 'SECONDARY') >= 0):
+    if 'SECONDARY' in msg:
         return 2
     # state RECOVERING
-    if (string.find(msg, 'RECOVERING') >= 0):
+    if 'RECOVERING' in msg:
         return 3
     # state FATAL ERROR
-    if (string.find(msg, 'FATAL') >= 0):
+    if 'FATAL' in msg:
         return 4
     # state STARTUP2
-    if (string.find(msg, 'STARTUP2') >= 0):
+    if 'STARTUP2' in msg:
         return 5
     # state UNKNOWN
-    if (string.find(msg, 'UNKNOWN') >= 0):
+    if 'UNKNOWN' in msg:
         return 6
     # state ARBITER
-    if (string.find(msg, 'ARBITER') >= 0):
+    if 'ARBITER' in msg:
         return 7
     # state DOWN
-    if (string.find(msg, 'DOWN') >= 0):
+    if 'DOWN' in msg:
         return 8
     # state ROLLBACK
-    if (string.find(msg, 'ROLLBACK') >= 0):
+    if 'ROLLBACK' in msg:
         return 9
     # state REMOVED
-    if (string.find(msg, 'REMOVED') >= 0):
+    if 'REMOVED' in msg:
         return 10
 
 
 def process(msg, date):
-    """if the given log line fits the critera for this filter,
-    processes the line and creates a document for it.
-    document = {
+    """If the given log line fits the critera for this filter,
+    process it and create a document of the following format:
+    doc = {
        "date" : date,
        "type" : "status",
        "msg" : msg,
@@ -70,7 +72,8 @@ def process(msg, date):
           "state_code" : int,
           "server" : "host:port",
           }
-    }"""
+    }
+    """
     result = criteria(msg)
     if result < 0:
         return None
@@ -88,14 +91,13 @@ def process(msg, date):
 
     # if this is a startup message, and includes server address, do something special!!!
     # add an extra field to capture the IP
-    pattern = re.compile("\S+:[0-9]{1,5}")
-    n = pattern.search(msg[20:])
+    n = capture_address(msg[20:])
     if n:
         if result == 0:
             doc["info"]["server"] = "self"
-            doc["info"]["addr"] = n.group(0)
+            doc["info"]["addr"] = n
         else:
-            doc["info"]["server"] = n.group(0)
+            doc["info"]["server"] = n
     else:
         # if no server found, assume self is target
         doc["info"]["server"] = "self"
