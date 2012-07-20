@@ -53,7 +53,7 @@ def is_IP(s):
     return not (IP_PATTERN.search(s) == None)
 
 
-def get_server_num(addr, servers):
+def get_server_num(addr, self_name, servers):
     """Gets and returns a server_num for an
     existing .servers entry with 'addr', or creates a new .servers
     entry and returns the new server_num, as a string.  If
@@ -65,12 +65,11 @@ def get_server_num(addr, servers):
     addr = addr.replace('\n', "")
     addr = addr.replace(" ", "")
 
-    # if addr is 'self', ignore
     if addr != "unknown":
-        if is_IP(addr):
-            num = servers.find_one({"server_IP": addr})
-        else:
-            num = servers.find_one({"server_name": addr})
+        if self_name:
+            num = servers.find_one({"self_name": addr})
+        if not num:
+            num = servers.find_one({"network_name": addr})
         if num:
             logger.debug("Found server number {0} for address {1}"
                          .format(num["server_num"], addr))
@@ -83,7 +82,7 @@ def get_server_num(addr, servers):
             logger.info("No server entry found for target server {0}".format(addr))
             logger.info("Adding {0} to the .servers collection with server_num {1}"
                         .format(addr, i))
-            assign_address(str(i), addr, servers)
+            assign_address(str(i), addr, self_name, servers)
             return str(i)
     logger.critical("Ran out of server numbers!")
 
@@ -91,39 +90,45 @@ def get_server_num(addr, servers):
 def name_me(s, servers):
     """Given a string s (which can be a server_num,
     server_name, or server_IP), method returns all info known
-    about the server in a tuple [server_num, server_name, server_IP]"""
-    name = None
-    IP = None
+    about the server in a tuple [server_num, self_name, network_name]
+    """
+    s = str(s)
+    s = s.replace('\n', "")
+    s = s.replace(" ", "")
+    self_name = None
+    network_name = None
     num = None
     docs = []
     docs.append(servers.find_one({"server_num": s}))
-    docs.append(servers.find_one({"server_name": s}))
-    docs.append(servers.find_one({"server_IP": s}))
+    docs.append(servers.find_one({"self_name": s}))
+    docs.append(servers.find_one({"network_name": s}))
     for doc in docs:
         if not doc:
             continue
-        if doc["server_name"] != "unknown":
-            name = doc["server_name"]
-            name = name.replace('\n', "")
-        if doc["server_IP"] != "unknown":
-            IP = doc["server_IP"]
+        if doc["self_name"] != "unknown":
+            self_name = doc["self_name"]
+        if doc["network_name"] != "unknown":
+            network_name = doc["network_name"]
         num = doc["server_num"]
-    return [num, name, IP]
+    return [num, self_name, network_name]
 
 
-def assign_address(num, addr, servers):
+def assign_address(num, addr, self_name, servers):
     """Given this num and addr, sees if there exists a document
     in the .servers collection for that server.  If so, adds addr, if
     not already present, to the document.  If not, creates a new doc
-    for this server and saves to the db."""
+    for this server and saves to the db.  'self_name' is either True
+    or False, and indicates whether addr is a self_name or a
+    network_name.
+    """
     # in the case that two different addresses are found for the
     # same server, this chooses to log a warning and ignore
     # all but the first address found
     # store all fields as strings, including server_num
     # server doc = {
     #    "server_num" : int, as string
-    #    "server_name" : hostname
-    #    "server_IP" : IP
+    #    "self_name" : what I call myself
+    #    "network_name" : the name other servers use for me
     #    }
     logger = logging.getLogger(__name__)
 
@@ -137,32 +142,35 @@ def assign_address(num, addr, servers):
     doc = servers.find_one({"server_num": num})
     if not doc:
         if addr != "unknown":
-            doc = servers.find_one({"server_IP": addr})
+            if self_name:
+                doc = servers.find_one({"self_name" : addr})
             if not doc:
-                doc = servers.find_one({"server_name": addr})
+                doc = servers.find_one({"network_name": addr})
             if doc:
                 logger.debug("Entry already exists for server {0}".format(addr))
                 return
         logger.debug("No doc found for this server, making one")
         doc = {}
         doc["server_num"] = num
-        doc["server_name"] = "unknown"
-        doc["server_IP"] = "unknown"
+        doc["self_name"] = "unknown"
+        doc["network_name"] = "unknown"
     else:
         logger.debug("Fetching existing doc for server {0}".format(num))
-    if is_IP(addr):
-        if doc["server_IP"] != "unknown" and doc["server_IP"] != addr:
-            logger.warning("conflicting IPs found for server {0}:".format(num))
-            logger.warning("\n{0}\n{1}".format(repr(addr), repr(doc["server_IP"])))
+    # NOTE: case insensitive!
+    if self_name:
+        if (doc["self_name"] != "unknown" and
+            doc["self_name"].lower() != addr.lower()):
+            logger.warning("conflicting self_names found for server {0}:".format(num))
+            logger.warning("\n{0}\n{1}".format(repr(addr), repr(doc["self_name"])))
         else:
-            doc["server_IP"] = addr
+            doc["self_name"] = addr
     else:
-        # NOTE: case insensitive!
-        if doc["server_name"] != "unknown" and doc["server_name"].lower() != addr.lower():
-            logger.warning("conflicting hostnames found for server {0}:".format(num))
-            logger.warning("\n{0}\n{1}".format(repr(addr), repr(doc["server_name"])))
+        if (doc["network_name"] != "unknown" and
+            doc["network_name"].lower() != addr.lower()):
+            logger.warning("conflicting network names found for server {0}:".format(num))
+            logger.warning("\n{0}\n{1}".format(repr(addr), repr(doc["network_name"])))
         else:
-            doc["server_name"] = addr
+            doc["network_name"] = addr
     logger.debug("I am saving {0} to the .servers collection".format(doc))
     servers.save(doc)
 

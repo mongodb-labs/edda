@@ -44,8 +44,8 @@ from ui.frames import generate_frames
 from ui.connection import send_to_js
 
 PARSERS = [
-    rs_status.process,
     stale_secondary.process,
+    rs_status.process,
     rs_exit.process,
     rs_sync.process,
     init_and_listen.process,
@@ -144,6 +144,7 @@ def main():
 
     # read in from each log file
     file_names = []
+    f = None
     for arg in namespace.filename:
         if arg in file_names:
             LOGGER.warning("Skipping duplicate file {0}".format(arg))
@@ -153,7 +154,8 @@ def main():
         except IOError as e:
             print "Error: Unable to read file {0}".format(arg)
             print e
-            f.close()
+            if f:
+                f.close()
             return
         file_names.append(arg)
         counter = 0
@@ -179,19 +181,31 @@ def main():
                 doc = traffic_control(line, date)
                 if doc:
                     # see if we have captured a new server address
+                    # if server_num is at -1, this is a new server
                     if (doc["type"] == "init" and
                         doc["info"]["subtype"] == "startup"):
                         LOGGER.debug("Found addr {0} for server {1} from startup msg"
                                      .format(doc["info"]["addr"], server_num))
-                        assign_address(server_num, str(doc["info"]["addr"]), servers)
+                        # if we have don't yet have a server number:
+                        if server_num == -1:
+                            server_num = get_server_num(
+                                str(doc["info"]["addr"]), True, servers)
+                        else:
+                            assign_address(server_num,
+                                           str(doc["info"]["addr"]), True, servers)
                     if (doc["type"] == "status" and
                         "addr" in doc["info"]):
                         LOGGER.debug("Found addr {0} for server {1} from rs_status msg"
                                      .format(doc["info"]["addr"], server_num))
-                        assign_address(server_num, str(doc["info"]["server"]), servers)
+                        if server_num == -1:
+                            server_num = get_server_num(
+                                str(doc["info"]["server"]), False, servers)
+                        else:
+                            assign_address(server_num,
+                                           str(doc["info"]["server"]), False, servers)
                     # is there a server number for us yet?  If not, get one
                     if server_num == -1:
-                        server_num = get_server_num("unknown", servers)
+                        server_num = get_server_num("unknown", False, servers)
                     # skip repetitive 'exit' messages
                     if doc["type"] == "exit" and previous == "exit":
                         continue
@@ -253,7 +267,8 @@ def traffic_control(msg, date):
 
     for process in PARSERS:
         doc = process(msg, date)
-        return doc
+        if doc:
+            return doc
 
 
 def get_server_names(db, coll_name):
@@ -261,11 +276,11 @@ def get_server_names(db, coll_name):
     into a data structure to be sent to the JavaScript client.
     """
     server_names = {}
-    server_names["hostname"] = {}
-    server_names["IP"] = {}
+    server_names["self_name"] = {}
+    server_names["network_name"] = {}
     for doc in db[coll_name].servers.find():
-        server_names["hostname"][doc["server_num"]] = doc["server_name"]
-        server_names["IP"][doc["server_num"]] = doc["server_IP"]
+        server_names["self_name"][doc["server_num"]] = doc["self_name"]
+        server_names["network_name"][doc["server_num"]] = doc["network_name"]
     return server_names
 
 
