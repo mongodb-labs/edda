@@ -15,16 +15,16 @@
 #!/usr/bin/env python
 
 
-import pymongo
 import logging
+import pymongo
 import re
-from operator import itemgetter
-from datetime import timedelta
-from supporting_methods import *
-# for nosetests:
-#from logl.supporting_methods import *
 
-def event_matchup(db, collName):
+from datetime import timedelta
+from operator import itemgetter
+from supporting_methods import *
+
+
+def event_matchup(db, coll_name):
     """This method sorts through the db's entries to
     find discrete events that happen across servers.  It will
     organize these entries into a list of "events", which are
@@ -61,15 +61,15 @@ def event_matchup(db, collName):
     """
     # put events in ordered lists by date, one per origin_server
     # last communication with the db!
-    entries = organize_servers(db, collName)
+    entries = organize_servers(db, coll_name)
     events = []
 
-    server_coll = db[collName + ".servers"]
+    server_coll = db[coll_name + ".servers"]
     server_nums = server_coll.distinct("server_num")
 
     # make events
     while(True):
-        event = next_event(server_nums, entries, db, collName)
+        event = next_event(server_nums, entries, db, coll_name)
         if not event:
             break
         events.append(event)
@@ -79,7 +79,7 @@ def event_matchup(db, collName):
     return events
 
 
-def next_event(servers, server_entries, db, collName):
+def next_event(servers, server_entries, db, coll_name):
     """Given lists of entries from servers ordered by date,
     and a list of server numbers, finds a new event
     and returns it.  Returns None if out of entries"""
@@ -106,7 +106,7 @@ def next_event(servers, server_entries, db, collName):
 
     first = server_entries[first_server].pop(0)
 
-    servers_coll = db[collName + ".servers"]
+    servers_coll = db[coll_name + ".servers"]
     event = {}
     event["witnesses"] = []
     event["dissenters"] = []
@@ -121,7 +121,8 @@ def next_event(servers, server_entries, db, collName):
     event["type"] = first["type"]
     event["date"] = first["date"]
 
-    logger.debug("Handling event of type {0} with target {1}".format(event["type"], event["target"]))
+    logger.debug("Handling event of type {0} with"
+                 "target {1}".format(event["type"], event["target"]))
 
     # some messages need specific fields set:
     # status events
@@ -292,7 +293,9 @@ def resolve_dissenters(events):
     event outside the margin of allowable network delay"""
     # useful for cases with undetected clock skew
     logger = logging.getLogger(__name__)
-    logger.info("------------------Attempting to resolve dissenters--------------------")
+    logger.info("------------------"
+                "Attempting to resolve dissenters"
+                "--------------------")
     for a in events[:]:
         if len(a["dissenters"]) >= len(a["witnesses"]):
             events_b = events[:]
@@ -302,7 +305,8 @@ def resolve_dissenters(events):
                         if wit_a in b["witnesses"]:
                             break
                     else:
-                        logger.debug("Corresponding, clock-skewed events found, merging events")
+                        logger.debug("Corresponding, "
+                                     "clock-skewed events found, merging events")
                         logger.debug("skew is {0}".format(a["date"] - b["date"]))
                         events.remove(a)
                         # resolve witnesses and dissenters lists
@@ -319,8 +323,8 @@ def resolve_dissenters(events):
 
 def generate_summary(event, hostname):
     """Given an event, generates and returns a one-line,
-    mnemonic summary for that event"""
-
+    mnemonic summary for that event
+    """
     # for reconfig messages
     if event["type"] == "reconfig":
         return "All servers received a reconfig message"

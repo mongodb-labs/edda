@@ -15,35 +15,42 @@
 #!/usr/bin/env python
 
 
-import pymongo
 import logging
-from datetime import datetime
+import pymongo
 import re
+
+from datetime import datetime
+
+# global variables
+ADDRESS = re.compile("\S+:[0-9]{1,5}")
+IP_PATTERN = re.compile("(0|(1?[0-9]{1,2})|(2[0-4][0-9])"
+                        "|(25[0-5]))(\.(0|(1?[0-9]{1,2})"
+                        "|(2[0-4][0-9])|(25[0-5]))){3}")
+MONTH_DICT = {
+    'Jan': 1, 'Feb': 2, 'Mar': 3, 'Apr': 4,
+    'May': 5, 'Jun': 6, 'Jul': 7, 'Aug': 8,
+    'Sep': 9, 'Oct': 10, 'Nov': 11, 'Dec': 12
+    }
 
 
 def capture_address(msg):
     """Given a message, extracts and returns the address,
     be it a hostname or an IP address, in the form
-    'address:port#'"""
+    'address:port#'
+    """
     # capture the address, be it hostname or IP
-    pattern = re.compile("\S+:[0-9]{1,5}")
-    m = pattern.search(msg[20:]) # skip date field
+    m = ADDRESS.search(msg[20:]) # skip date field
     if not m:
         return None
     return m.group(0)
 
 
 def is_IP(s):
-    """Returns true if s contains an IP address, false otherwise"""
+    """Returns true if s contains an IP address, false otherwise.
+    """
     # note: this message will return True for strings that
     # have more than 4 dotted groups of numbers (like 1.2.3.4.5)
-    a = "(0|(1?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))"
-    a += "(\.(0|(1?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))){3}"
-    pattern = re.compile(a)
-    m = pattern.search(s)
-    if (m == None):
-        return False
-    return True
+    return not (IP_PATTERN.search(s) == None)
 
 
 def get_server_num(addr, servers):
@@ -51,7 +58,8 @@ def get_server_num(addr, servers):
     existing .servers entry with 'addr', or creates a new .servers
     entry and returns the new server_num, as a string.  If
     'addr' is 'unknown', assume this is a new server and return
-    a new number"""
+    a new number.
+    """
     logger = logging.getLogger(__name__)
     num = None
     addr = addr.replace('\n', "")
@@ -164,28 +172,9 @@ def date_parser(message):
     line contains incomplete or no date information, skip
     and return None."""
     try:
-        newMessage = str(parse_month(message[4:7])) + message[7:19]
-        time = datetime.strptime(newMessage, "%m %d %H:%M:%S")
-        return time
-    except ValueError:
+        newMessage = str(MONTH_DICT[message[4:7]]) + message[7:19]
+        return datetime.strptime(newMessage, "%m %d %H:%M:%S")
+    except (KeyError, ValueError):
         return None
 
-def parse_month(month):
-    """tries to match the string to a month code, and returns
-that month's integer equivalent.  If no month is found,
-return 0."""
-    return{
-        'Jan': 1,
-        'Feb': 2,
-        'Mar': 3,
-        'Apr': 4,
-        'May': 5,
-        'Jun': 6,
-        'Jul': 7,
-        'Aug': 8,
-        'Sep': 9,
-        'Oct': 10,
-        'Nov': 11,
-        'Dec': 12,
-        }.get(month, 0)
 
