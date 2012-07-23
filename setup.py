@@ -38,7 +38,7 @@ __doc__ = ""
 doclines = __doc__.split("\n")
 
 setup(name="logl",
-      version=".1.9",
+      version="0.3.9",
       maintainer="10Gen",
       maintainer_email="kaushal.parikh@10gen.com",
       #url = "https://github.com/kchodorow/logl",
@@ -48,16 +48,19 @@ setup(name="logl",
       classifiers = filter(None, classifiers.split("\n")),
       long_description = "\n".join(doclines[2:]),
       #include_package_data=True,
-      packages=['logl', 'logl.filters', 'logl.post', 'logl.ui', 'logl.ui.display.js', 'logl.ui.display.style', 'logl.ui.display', ''],
+      packages=['logl', 'logl.filters', 'logl.post', 'logl.ui', 'logl.sample_logs', 'logl.ui.display.js', 'logl.ui.display.style', 'logl.ui.display', 'logl.sample_logs.hp', 'logl.sample_logs.pr'],
       #packages = find_packages('src'),  # include all packages under src
       #package_dir = {'':'src'},   # tell distutils packages are under src
       scripts = ['scripts/logl'],
+      install_requires = ['pymongo'],
 
       package_data = {
           # If any package contains *.txt files, include them:
           'logl.ui.display.js': ['*.js'],
           'logl.ui.display.style': ['*.css'],
           'logl.ui.display': ['*.jpg', '*.html'],
+          'logl.sample_logs.hp': ['*.log'],
+          'logl.sample_logs.pr': ['*.log'],
           # And include any *.dat files found in the 'data' subdirectory
           # of the 'mypkg' package, also:
       }
