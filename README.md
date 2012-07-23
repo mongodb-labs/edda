@@ -41,7 +41,7 @@ Give the log files from your servers as command-line
 arguments to the visualizer:
 
 	  $ python edda/run_edda.py --options filename1 filename2 ...
-(see python edda.py --help for options)
+(see python run_edda.py --help for options)
 
 Edda can read in multiple log files at once.
 
