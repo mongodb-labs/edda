@@ -12,13 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
-import re
-
-from rs_status import process
-from rs_exit import process
-from rs_sync import process
-from rs_reconfig import process
-from fsync_lock import process
-from init_and_listen import process
-from stale_secondary import process
+import rs_status
+import rs_exit
+import rs_sync
+import rs_reconfig
+import fsync_lock
+import init_and_listen
+import stale_secondary
