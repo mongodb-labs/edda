@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import unittest
-from logl.filters.stale_secondary import *
+from edda.filters.stale_secondary import *
 from datetime import datetime
 
 

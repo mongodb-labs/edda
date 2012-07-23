@@ -14,7 +14,7 @@
 
 import logging
 import re
-from logl.supporting_methods import capture_address
+from edda.supporting_methods import capture_address
 
 def criteria(msg):
     """Does the given log line fit the criteria for this filter?

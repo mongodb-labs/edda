@@ -13,8 +13,8 @@
 # limitations under the License.
 
 import unittest #organizing servers uses the supporting methods module and is going to have the same import problem that replacing clock skew has. TO BE FIXED.
-from logl.post.event_matchup import organize_servers
-from logl.logl import assign_address
+from edda.post.event_matchup import organize_servers
+from edda.edda import assign_address
 import pymongo
 import logging
 from datetime import *

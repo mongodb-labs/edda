@@ -13,8 +13,8 @@
 # limitations under the License.
 
 import unittest #replacing clock skew uses supporting methods, so there is the problem with the import statement
-from logl.post.replace_clock_skew import replace_clock_skew
-from logl.logl import assign_address
+from edda.post.replace_clock_skew import replace_clock_skew
+from edda.edda import assign_address
 import logging
 from datetime import *
 from pymongo import Connection

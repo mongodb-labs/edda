@@ -41,7 +41,7 @@ def run():
     except webbrowser.Error as e:
         print "Webbrowser failure: Unable to launch webpage:"
         print e
-        print "Enter the following url into a browser to bring up Logl:"
+        print "Enter the following url into a browser to bring up edda:"
         print "http://localhost:28000/"
     # end of thread
 
@@ -65,10 +65,10 @@ def send_to_js(frames, servers, info):
     # child opens page to send GET request to server
     # open socket, bind and listen
     print "================================================================="
-    print "Opening server, kill with Ctrl+C once you are finished with Logl."
+    print "Opening server, kill with Ctrl+C once you are finished with edda."
     print "================================================================="
     try:
-        server = HTTPServer(('', 28000), LoglHTTPRequest)
+        server = HTTPServer(('', 28000), eddaHTTPRequest)
     except socket.error, (value, message):
         if value == 98:
             print "Error: could not bind to localhost:28018"
@@ -84,7 +84,7 @@ def send_to_js(frames, servers, info):
         return
 
 
-class LoglHTTPRequest(BaseHTTPRequestHandler):
+class eddaHTTPRequest(BaseHTTPRequestHandler):
 
     mimetypes = mimetypes = {"html": "text/html",
                   "htm": "text/html",
@@ -108,9 +108,9 @@ class LoglHTTPRequest(BaseHTTPRequestHandler):
 
         uri = uri.strip('/')
 
-        # default "/" to "logl.html"
+        # default "/" to "edda.html"
         if len(uri) == 0:
-            uri = "logl.html"
+            uri = "edda.html"
 
         # find type of file
         (temp, dot, type) = uri.rpartition('.')

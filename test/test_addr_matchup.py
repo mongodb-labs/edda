@@ -12,9 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from logl.post.server_matchup import *
+from edda.post.server_matchup import *
 from test_clock_skew import generate_doc
-from logl.logl import assign_address
+from edda.edda import assign_address
 from pymongo import Connection
 from datetime import datetime, timedelta
 import logging

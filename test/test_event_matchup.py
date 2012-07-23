@@ -12,13 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# testing file for logl/post/event_matchup.py
+# testing file for edda/post/event_matchup.py
 
 import unittest #there is a relative input problem with this file as well. MARKED TO FIX. 
 import logging
 from pymongo import Connection
-from logl.logl import assign_address
-from logl.post.event_matchup import *
+from edda.edda import assign_address
+from edda.post.event_matchup import *
 import pymongo
 from datetime import datetime
 from datetime import timedelta

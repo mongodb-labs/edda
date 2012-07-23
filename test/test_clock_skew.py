@@ -13,8 +13,8 @@
 # limitations under the License.
 
 import unittest
-from logl.post.clock_skew import *
-from logl.logl import assign_address
+from edda.post.clock_skew import *
+from edda.edda import assign_address
 import pymongo
 from datetime import datetime
 from pymongo import Connection

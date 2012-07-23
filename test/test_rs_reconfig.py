@@ -24,7 +24,7 @@
 
 import string
 import unittest
-from logl.filters.rs_reconfig import *
+from edda.filters.rs_reconfig import *
 from datetime import datetime
 
 

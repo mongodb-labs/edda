@@ -13,14 +13,14 @@
 # limitations under the License.
 
 #!/usr/bin/env
-"""Logl reads in from MongoDB log files and parses them.
+"""edda reads in from MongoDB log files and parses them.
 After storing the parsed data in a separate collection,
 the program then uses this data to provide users with a
 visual tool to help them analyze their servers.
 
 Users can customize this tool by adding their own parsers
-to the logl/filters/ subdirectory, following the layout specified
-in logl/filters/template.py.
+to the edda/filters/ subdirectory, following the layout specified
+in edda/filters/template.py.
 """
 __version__ = "0.1"
 
@@ -57,7 +57,7 @@ PARSERS = [
 LOGGER = None
 
 def main():
-    """This is the main function of Logl.  It takes log
+    """This is the main function of edda.  It takes log
     files as command line arguments and sends each
     line of each log through a series of parses.  Then, this
     function sends the parsed-out information through several
@@ -76,7 +76,7 @@ def main():
     parser.add_argument('--host')
     parser.add_argument('--verbose', '-v', action='count')
     parser.add_argument('--version', action='version',
-                        version="Running logl version {0}".format(__version__))
+                        version="Running edda version {0}".format(__version__))
     parser.add_argument('--db', '-d')
     parser.add_argument('--collection', '-c')
     parser.add_argument('filename', nargs='+')
@@ -104,10 +104,10 @@ def main():
     else:
         coll_name = str(objectid.ObjectId())
     # for easier debugging:
-    print "Logl is storing data under collection name {0}".format(coll_name);
+    print "edda is storing data under collection name {0}".format(coll_name);
 
     # configure logger
-    # use to switch from console to file: logname = "logl_logs/" + name + ".log"
+    # use to switch from console to file: logname = "edda_logs/" + name + ".log"
     if not namespace.verbose:
         logging.basicConfig(level=logging.ERROR)
     elif namespace.verbose == 1:
@@ -130,17 +130,17 @@ def main():
     if namespace.db:
         db = connection[namespace.db[0]]
     else:
-        db = connection.logl
+        db = connection.edda
     entries = db[coll_name].entries
     servers = db[coll_name].servers
 
     now = datetime.now()
-    name = now.strftime("logl_%m_%d_%Y_at_%H_%M_%S")
+    name = now.strftime("edda_%m_%d_%Y_at_%H_%M_%S")
 
     # some verbose comments
-    LOGGER.info('Connection opened with logl mongod, using {0} on port {1}'
+    LOGGER.info('Connection opened with edda mongod, using {0} on port {1}'
                 .format(host, port))
-    LOGGER.debug('Writing to db logl, collection {0}\nPreparing to parse log files'
+    LOGGER.debug('Writing to db edda, collection {0}\nPreparing to parse log files'
                  .format(name))
 
     # read in from each log file

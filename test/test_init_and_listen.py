@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import unittest
-from logl.filters.init_and_listen import *
+from edda.filters.init_and_listen import *
 from datetime import datetime
 
 class test_init_and_listen(unittest.TestCase):

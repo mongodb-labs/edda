@@ -14,7 +14,7 @@
 
 import logging
 import re
-from logl.supporting_methods import capture_address
+from edda.supporting_methods import capture_address
 
 # module-level regex
 START_CONN_NUMBER = re.compile("#[0-9]+")

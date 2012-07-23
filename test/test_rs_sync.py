@@ -14,7 +14,7 @@
 
 import unittest
 from datetime import datetime
-from logl.filters.rs_sync import *
+from edda.filters.rs_sync import *
 
 
 class test_rs_sync(unittest.TestCase):

@@ -38,7 +38,7 @@ var total_frame_count;
 
 
 // call various setup functions
-function logl_setup() {
+function edda_setup() {
     canvases_and_contexts();
     mouse_over_setup();
     connect();  // see connection.js

@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import unittest
-from logl.filters.fsync_lock import *
+from edda.filters.fsync_lock import *
 from datetime import datetime
 
 

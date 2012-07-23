@@ -20,7 +20,7 @@ import re
 
 from copy import deepcopy
 from .clock_skew import server_clock_skew
-from logl.supporting_methods import *
+from edda.supporting_methods import *
 
 LOGGER = logging.getLogger(__name__)
 
@@ -191,7 +191,7 @@ def address_matchup(db, coll_name):
         break
 
     if not mentioned_names:
-        # for logl to succeed, it needs to match logs to servers
+        # for edda to succeed, it needs to match logs to servers
         # so, all servers must have a network name.
         s = list(servers.find({"self_name": "unknown"}))
         if len(s) == 0:

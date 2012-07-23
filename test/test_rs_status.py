@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import unittest
-from logl.filters.rs_status import *
+from edda.filters.rs_status import *
 from datetime import datetime
 
 

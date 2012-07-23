@@ -37,30 +37,30 @@ if sys.version_info < (2, 3):
 __doc__ = ""
 doclines = __doc__.split("\n")
 
-setup(name="logl",
+setup(name="edda",
       version="0.3.9",
       maintainer="10Gen",
       maintainer_email="kaushal.parikh@10gen.com",
-      #url = "https://github.com/kchodorow/logl",
+      #url = "https://github.com/kchodorow/edda",
       license = "http://www.apache.org/licenses/LICENSE-2.0.html",
       platforms = ["any"],
       description = doclines[0],
       classifiers = filter(None, classifiers.split("\n")),
       long_description = "\n".join(doclines[2:]),
       #include_package_data=True,
-      packages=['logl', 'logl.filters', 'logl.post', 'logl.ui', 'logl.sample_logs', 'logl.ui.display.js', 'logl.ui.display.style', 'logl.ui.display', 'logl.sample_logs.hp', 'logl.sample_logs.pr'],
+      packages=['edda', 'edda.filters', 'edda.post', 'edda.ui', 'edda.sample_logs', 'edda.ui.display.js', 'edda.ui.display.style', 'edda.ui.display', 'edda.sample_logs.hp', 'edda.sample_logs.pr'],
       #packages = find_packages('src'),  # include all packages under src
       #package_dir = {'':'src'},   # tell distutils packages are under src
-      scripts = ['scripts/logl'],
+      scripts = ['scripts/edda'],
       install_requires = ['pymongo'],
 
       package_data = {
           # If any package contains *.txt files, include them:
-          'logl.ui.display.js': ['*.js'],
-          'logl.ui.display.style': ['*.css'],
-          'logl.ui.display': ['*.jpg', '*.html'],
-          'logl.sample_logs.hp': ['*.log'],
-          'logl.sample_logs.pr': ['*.log'],
+          'edda.ui.display.js': ['*.js'],
+          'edda.ui.display.style': ['*.css'],
+          'edda.ui.display': ['*.jpg', '*.html'],
+          'edda.sample_logs.hp': ['*.log'],
+          'edda.sample_logs.pr': ['*.log'],
           # And include any *.dat files found in the 'data' subdirectory
           # of the 'mypkg' package, also:
       }

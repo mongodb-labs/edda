@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import unittest
-from logl.post.connection import * #Relative import error.
+from edda.post.connection import * #Relative import error.
 from time import sleep
 from datetime import datetime
 from copy import deepcopy
