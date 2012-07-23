@@ -287,8 +287,6 @@ lock = function(x, y, r, ctx) {
     var radius = h/4;
     var theta = Math.PI/8; // radians
 
-    console.log("I am attempting to draw a lock. ");
-
     // draw the top circle
     ctx.beginPath();
     ctx.lineWidth = 10;

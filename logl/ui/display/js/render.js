@@ -30,6 +30,7 @@ render = function(time) {
 
     clear_layers();
 
+    // draw links
     for (var origin_server in frames[time]["links"]) {
         list = frames[time]["links"][origin_server];
         for (i = 0; i < list.length; i++) {
@@ -37,6 +38,7 @@ render = function(time) {
         }
     }
 
+    // draw broken links
     for (origin_server in frames[time]["broken_links"]) {
         var list2 = frames[time]["broken_links"][origin_server];
         for (i = 0; i < list2.length; i++) {
@@ -44,6 +46,7 @@ render = function(time) {
         }
     }
 
+    // draw syncs
     for (origin_server in frames[time]["syncs"]) {
         list = frames[time]["syncs"][origin_server];
         for (i = 0; i < list.length; i++) {
@@ -55,11 +58,8 @@ render = function(time) {
         var state = frames[time]["servers"][name];
     // add logic to parse out ".LOCKED"
     // to capture actual server state
-    console.log(state);
     var n = state.split(".");
     state = n[0];
-    console.log(n.length);
-    console.log(state);
         switch(state) {
     case "STARTUP1":
         startup1(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
@@ -75,7 +75,6 @@ render = function(time) {
         secondary(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
         break;
     case "ARBITER":
-        console.log("I found an arbiter.");
         arbiter(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
         break;
     case "DOWN":
@@ -106,7 +105,6 @@ render = function(time) {
 
     // add lock, if necessary
     if (n.length > 1) {
-        console.log("Calling draw lock function.");
         lock(servers[name]["x"], servers[name]["y"], servers[name]["r"], contexts["server"]);
     }
     }

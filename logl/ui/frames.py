@@ -1,6 +1,5 @@
 # Copyright 2009-2012 10gen, Inc.
 #
-# Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
@@ -135,6 +134,10 @@ def witnesses_dissenters(f, e):
     for w in e["witnesses"]:
         if w == e["target"]:
             continue
+        # if w is DOWN, do not add link
+        if f["servers"][w] == "DOWN":
+            continue
+        # do not add duplicate links
         if (not e["target"] in f["links"][w] and
             not w in f["links"][e["target"]]):
             f["links"][e["target"]].append(w)
@@ -148,10 +151,16 @@ def witnesses_dissenters(f, e):
     for d in e["dissenters"]:
         if e["target"] in f["links"][d]:
             f["links"][d].remove(e["target"])
-            f["broken_links"][e["target"]].append(d)
+            # do not duplicate broken links
+            if (not d in f["broken_links"][e["target"]] and
+                not e["target"] in f["broken_links"][d]):
+                f["broken_links"][d].append(e["target"])
         if d in f["links"][e["target"]]:
             f["links"][e["target"]].remove(d)
-            f["broken_links"][e["target"]].append(d)
+            # do not duplicate broken links
+            if (not e["target"] in f["broken_links"][d] and
+                not d in f["broken_links"][e["target"]]):
+                f["broken_links"][e["target"]].append(d)
     return f
 
 
@@ -159,10 +168,15 @@ def break_links(me, f):
     # find my links and make them broken links
     LOGGER.debug("Breaking all links to server {0}".format(me))
     for link in f["links"][me]:
-        f["broken_links"][me].append(link)
-        f["links"][me].remove(link)
+        # do not duplicate broken links
+        if (not link in f["broken_links"][me] and
+            not me in f["broken_links"][link]):
+            f["broken_links"][me].append(link)
+    f["links"][me] = []
     for sync in f["syncs"][me]:
-        if not sync in f["broken_links"][me]:
+        # do not duplicate broken links
+        if (not sync in f["broken_links"][me] and
+            not me in f["broken_links"][sync]):
             f["broken_links"][me].append(sync)
         f["syncs"][me].remove(sync)
 
@@ -173,11 +187,16 @@ def break_links(me, f):
         for link in f["links"][s]:
             if link == me:
                 f["links"][s].remove(link)
-                f["broken_links"][s].append(link)
+                # do not duplicate broken links
+                if (not link in f["broken_links"][s] and
+                    not s in f["broken_links"][link]):
+                    f["broken_links"][s].append(link)
         for sync in f["syncs"][s]:
             if sync == me:
                 f["syncs"][s].remove(sync)
-                if not sync in f["broken_links"][s]:
+                # do not duplicate broken links!
+                if (not sync in f["broken_links"][s] and
+                    not s in f["broken_links"][sync]):
                     f["broken_links"][s].append(sync)
 
     # remove all of my user connections
@@ -234,7 +253,7 @@ def info_by_type(f, e):
             f["syncs"][s_from] = []
             f["syncs"][s_from].append(s_to)
         # if links do not exist, add
-        if (not s_to in f["links"][s_from] or
+        if (not s_to in f["links"][s_from] and
             not s_from in f["links"][s_to]):
             f["links"][s_from].append(s_to)
         # remove broken links
