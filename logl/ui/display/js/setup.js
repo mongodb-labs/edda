@@ -214,10 +214,8 @@ function version_number() {
 function file_names() {
     var final_string = "";
     for (var i = 0; i < admin["file_names"].length; i++) {
-        console.log(admin["file_names"][i]);
         final_string += admin["file_names"][i];
         final_string += "<br/>";
     }
-    console.log(final_string);
     document.getElementById("log_files").innerHTML = final_string;
 }
