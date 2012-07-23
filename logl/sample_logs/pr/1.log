@@ -1,0 +1,446 @@
+Wed Jul 18 11:02:49 [initandlisten] MongoDB starting : pid=507 port=17022 dbpath=power_rangers/6 64-bit host=Billy
+Wed Jul 18 11:02:49 [initandlisten] db version v2.0.5, pdfile version 4.5
+Wed Jul 18 11:02:49 [initandlisten] git version: 1bb4de4630302fad8af53824ca4f627db490b753
+Wed Jul 18 11:02:49 [initandlisten] build info: Darwin erh2.10gen.cc 9.8.0 Darwin Kernel Version 9.8.0: Wed Jul 15 16:55:01 PDT 2009; root:xnu-1228.15.4~1/RELEASE_I386 i386 BOOST_LIB_VERSION=1_40
+Wed Jul 18 11:02:49 [initandlisten] options: { dbpath: "power_rangers/6", logpath: "Billy.log", port: 17022, replSet: "pr" }
+Wed Jul 18 11:02:49 [initandlisten] journal dir=power_rangers/6/journal
+Wed Jul 18 11:02:49 [initandlisten] recover : no journal files present, no recovery needed
+Wed Jul 18 11:02:49 [websvr] admin web console waiting for connections on port 18022
+Wed Jul 18 11:02:49 [initandlisten] waiting for connections on port 17022
+Wed Jul 18 11:02:49 [initandlisten] connection accepted from 127.0.0.1:50374 #1
+Wed Jul 18 11:02:49 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:02:49 [rsStart] replSet info you may need to run replSetInitiate -- rs.initiate() in the shell -- if that is not already done
+Wed Jul 18 11:02:59 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:03:09 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:03:19 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:03:29 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:03:39 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:03:49 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:03:49 [clientcursormon] mem (MB) res:14 virt:2435 mapped:0
+Wed Jul 18 11:03:59 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:04:09 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:04:19 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:04:29 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:04:39 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:04:49 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:04:59 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:05:09 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:05:19 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:05:29 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:05:39 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:05:49 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:05:59 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:06:09 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:06:19 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:06:29 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:06:39 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:06:49 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:06:59 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:07:09 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:07:19 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:07:29 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:07:39 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:07:49 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:07:59 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:08:09 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:08:19 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:08:29 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:08:39 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:08:49 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:08:49 [clientcursormon] mem (MB) res:15 virt:2435 mapped:0
+Wed Jul 18 11:08:59 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:09:09 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:09:19 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:09:29 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:09:39 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:09:49 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:09:59 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:10:09 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:10:19 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:10:29 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:10:39 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:10:49 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:10:59 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:11:09 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:11:19 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:11:29 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:11:39 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:11:49 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:11:59 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:12:09 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:12:19 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:12:29 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:12:39 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:12:49 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:12:59 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:13:09 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:13:19 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:13:29 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:13:39 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:13:49 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:13:49 [clientcursormon] mem (MB) res:15 virt:2435 mapped:0
+Wed Jul 18 11:13:59 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:14:09 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:14:19 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:14:29 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:14:39 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:14:49 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:14:59 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:15:09 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:15:19 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:15:29 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:15:39 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:15:49 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:15:59 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:16:09 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:16:19 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:16:29 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:16:39 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:16:49 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:16:59 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:17:09 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:17:19 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:17:29 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:17:39 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:17:49 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:17:59 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:18:09 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:18:19 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:18:29 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:18:39 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:18:49 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:18:49 [clientcursormon] mem (MB) res:15 virt:2435 mapped:0
+Wed Jul 18 11:18:59 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:19:09 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:19:19 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:19:29 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:19:39 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:19:49 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:19:59 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:20:09 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:20:19 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:20:29 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:20:39 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:20:49 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:20:59 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:21:09 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:21:19 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:21:29 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:21:39 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:21:49 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:21:59 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:22:09 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:22:19 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:22:29 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:22:39 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:22:49 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:22:59 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:23:09 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:23:19 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:23:29 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:23:39 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:23:49 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:23:49 [clientcursormon] mem (MB) res:15 virt:2435 mapped:0
+Wed Jul 18 11:23:59 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:24:09 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:24:19 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:24:29 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 11:24:34 got kill or ctrl c or hup signal 2 (Interrupt: 2), will terminate after current cmd ends
+Wed Jul 18 11:24:34 [interruptThread] now exiting
+Wed Jul 18 11:24:34 dbexit: 
+Wed Jul 18 11:24:34 [interruptThread] shutdown: going to close listening sockets...
+Wed Jul 18 11:24:34 [interruptThread] closing listening socket: 6
+Wed Jul 18 11:24:34 [interruptThread] closing listening socket: 7
+Wed Jul 18 11:24:34 [interruptThread] closing listening socket: 8
+Wed Jul 18 11:24:34 [interruptThread] removing socket file: /tmp/mongodb-17022.sock
+Wed Jul 18 11:24:34 [interruptThread] shutdown: going to flush diaglog...
+Wed Jul 18 11:24:34 [interruptThread] shutdown: going to close sockets...
+Wed Jul 18 11:24:34 [interruptThread] shutdown: waiting for fs preallocator...
+Wed Jul 18 11:24:34 [interruptThread] shutdown: lock for final commit...
+Wed Jul 18 11:24:34 [interruptThread] shutdown: final commit...
+Wed Jul 18 11:24:34 [interruptThread] shutdown: closing all files...
+Wed Jul 18 11:24:34 [interruptThread] closeAllFiles() finished
+Wed Jul 18 11:24:34 [interruptThread] journalCleanup...
+Wed Jul 18 11:24:34 [interruptThread] removeJournalFiles
+Wed Jul 18 11:24:34 [conn1] end connection 127.0.0.1:50374
+Wed Jul 18 11:24:34 [interruptThread] shutdown: removing fs lock...
+Wed Jul 18 11:24:34 dbexit: really exiting now
+
+
+***** SERVER RESTARTED *****
+
+
+Wed Jul 18 14:43:23 [initandlisten] MongoDB starting : pid=1346 port=17022 dbpath=power_rangers/6 64-bit host=SamanthaRitter.local
+Wed Jul 18 14:43:23 [initandlisten] db version v2.0.5, pdfile version 4.5
+Wed Jul 18 14:43:23 [initandlisten] git version: 1bb4de4630302fad8af53824ca4f627db490b753
+Wed Jul 18 14:43:23 [initandlisten] build info: Darwin erh2.10gen.cc 9.8.0 Darwin Kernel Version 9.8.0: Wed Jul 15 16:55:01 PDT 2009; root:xnu-1228.15.4~1/RELEASE_I386 i386 BOOST_LIB_VERSION=1_40
+Wed Jul 18 14:43:23 [initandlisten] options: { dbpath: "power_rangers/6", logappend: true, logpath: "Billy.log", port: 17022, replSet: "pr" }
+Wed Jul 18 14:43:23 [initandlisten] journal dir=power_rangers/6/journal
+Wed Jul 18 14:43:23 [initandlisten] recover : no journal files present, no recovery needed
+Wed Jul 18 14:43:23 [websvr] admin web console waiting for connections on port 18022
+Wed Jul 18 14:43:23 [initandlisten] waiting for connections on port 17022
+Wed Jul 18 14:43:23 [initandlisten] connection accepted from 127.0.0.1:51870 #1
+Wed Jul 18 14:43:23 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:43:23 [rsStart] replSet info you may need to run replSetInitiate -- rs.initiate() in the shell -- if that is not already done
+Wed Jul 18 14:43:33 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:43:43 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:43:53 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:44:03 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:44:13 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:44:23 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:44:23 [clientcursormon] mem (MB) res:14 virt:2435 mapped:0
+Wed Jul 18 14:44:33 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:44:43 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:44:53 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:45:03 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:45:13 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:45:23 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:45:33 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:45:43 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:45:53 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:46:03 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:46:12 [initandlisten] connection accepted from 127.0.0.1:51882 #2
+Wed Jul 18 14:46:13 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:46:18 [initandlisten] connection accepted from 127.0.0.1:51885 #3
+Wed Jul 18 14:46:22 [initandlisten] connection accepted from 127.0.0.1:51894 #4
+Wed Jul 18 14:46:23 [initandlisten] connection accepted from 127.0.0.1:51897 #5
+Wed Jul 18 14:46:23 [rsStart] trying to contact Jason:17017
+Wed Jul 18 14:46:23 [rsStart] trying to contact Tommy:17021
+Wed Jul 18 14:46:23 [rsStart] trying to contact Trini:17019
+Wed Jul 18 14:46:24 [rsStart] trying to contact Zach:17018
+Wed Jul 18 14:46:24 [rsStart] replSet got config version 1 from a remote, saving locally
+Wed Jul 18 14:46:24 [rsStart] replSet info saving a newer config version to local.system.replset
+Wed Jul 18 14:46:24 [FileAllocator] allocating new datafile power_rangers/6/local.ns, filling with zeroes...
+Wed Jul 18 14:46:24 [FileAllocator] creating directory power_rangers/6/_tmp
+Wed Jul 18 14:46:24 [FileAllocator] done allocating datafile power_rangers/6/local.ns, size: 16MB,  took 0.031 secs
+Wed Jul 18 14:46:24 [FileAllocator] allocating new datafile power_rangers/6/local.0, filling with zeroes...
+Wed Jul 18 14:46:24 [FileAllocator] done allocating datafile power_rangers/6/local.0, size: 64MB,  took 0.239 secs
+Wed Jul 18 14:46:24 [FileAllocator] allocating new datafile power_rangers/6/local.1, filling with zeroes...
+Wed Jul 18 14:46:24 [rsStart] replSet saveConfigLocally done
+Wed Jul 18 14:46:24 [rsStart] replSet STARTUP2
+Wed Jul 18 14:46:24 [rsMgr] replSet total number of votes is even - add arbiter or give one member an extra vote
+Wed Jul 18 14:46:24 [FileAllocator] done allocating datafile power_rangers/6/local.1, size: 128MB,  took 0.507 secs
+Wed Jul 18 14:46:26 [rsHealthPoll] replSet member Zach:17018 is up
+Wed Jul 18 14:46:26 [rsHealthPoll] replSet member Tommy:17021 is up
+Wed Jul 18 14:46:26 [rsHealthPoll] replSet member Jason:17017 is up
+Wed Jul 18 14:46:26 [rsHealthPoll] replSet member Zach:17018 is now in state STARTUP2
+Wed Jul 18 14:46:26 [rsHealthPoll] replSet member Tommy:17021 is now in state STARTUP2
+Wed Jul 18 14:46:26 [rsHealthPoll] replSet member Jason:17017 is now in state SECONDARY
+Wed Jul 18 14:46:26 [rsHealthPoll] replSet member Trini:17019 is up
+Wed Jul 18 14:46:26 [rsHealthPoll] replSet member Trini:17019 is now in state STARTUP2
+Wed Jul 18 14:46:26 [rsHealthPoll] replSet member Kimberly:17020 is up
+Wed Jul 18 14:46:26 [rsHealthPoll] replSet member Kimberly:17020 is now in state STARTUP2
+Wed Jul 18 14:46:27 [initandlisten] connection accepted from 127.0.0.1:51907 #6
+Wed Jul 18 14:46:30 [conn2] replSet RECOVERING
+Wed Jul 18 14:46:30 [conn2] replSet info voting yea for Jason:17017 (0)
+Wed Jul 18 14:46:32 [rsHealthPoll] replSet member Zach:17018 is now in state RECOVERING
+Wed Jul 18 14:46:32 [rsHealthPoll] replSet member Jason:17017 is now in state PRIMARY
+Wed Jul 18 14:46:32 [rsHealthPoll] replSet member Kimberly:17020 is now in state RECOVERING
+Wed Jul 18 14:46:32 [rsHealthPoll] replSet member Tommy:17021 is now in state RECOVERING
+Wed Jul 18 14:46:32 [rsHealthPoll] replSet member Trini:17019 is now in state RECOVERING
+Wed Jul 18 14:46:40 [rsHealthPoll] replSet member Zach:17018 is now in state SECONDARY
+Wed Jul 18 14:46:44 [rsHealthPoll] replSet member Trini:17019 is now in state SECONDARY
+Wed Jul 18 14:46:44 [rsHealthPoll] replSet member Tommy:17021 is now in state SECONDARY
+Wed Jul 18 14:46:44 [conn2] end connection 127.0.0.1:51882
+Wed Jul 18 14:46:44 [initandlisten] connection accepted from 127.0.0.1:51921 #7
+Wed Jul 18 14:46:47 [conn3] end connection 127.0.0.1:51885
+Wed Jul 18 14:46:47 [initandlisten] connection accepted from 127.0.0.1:51930 #8
+Wed Jul 18 14:46:48 [rsHealthPoll] replSet member Kimberly:17020 is now in state SECONDARY
+Wed Jul 18 14:46:50 [conn4] end connection 127.0.0.1:51894
+Wed Jul 18 14:46:50 [initandlisten] connection accepted from 127.0.0.1:51936 #9
+Wed Jul 18 14:46:51 [conn5] end connection 127.0.0.1:51897
+Wed Jul 18 14:46:51 [initandlisten] connection accepted from 127.0.0.1:51938 #10
+Wed Jul 18 14:46:53 [conn7] end connection 127.0.0.1:51921
+Wed Jul 18 14:46:54 [rsHealthPoll] couldn't connect to Jason:17017: couldn't connect to server Jason:17017
+Wed Jul 18 14:46:54 [rsHealthPoll] replSet info Jason:17017 is down (or slow to respond): socket exception
+Wed Jul 18 14:46:54 [rsHealthPoll] replSet member Jason:17017 is now in state DOWN
+Wed Jul 18 14:46:55 [conn6] end connection 127.0.0.1:51907
+Wed Jul 18 14:46:55 [initandlisten] connection accepted from 127.0.0.1:51951 #11
+Wed Jul 18 14:47:01 [conn9] replSet info voting yea for Tommy:17021 (4)
+Wed Jul 18 14:47:02 [rsHealthPoll] replSet member Tommy:17021 is now in state PRIMARY
+Wed Jul 18 14:47:14 [conn10] end connection 127.0.0.1:51938
+Wed Jul 18 14:47:16 [rsHealthPoll] DBClientCursor::init call() failed
+Wed Jul 18 14:47:16 [rsHealthPoll] replSet info Trini:17019 is down (or slow to respond): DBClientBase::findN: transport error: Trini:17019 query: { replSetHeartbeat: "pr", v: 1, pv: 1, checkEmpty: false, from: "Billy:17022" }
+Wed Jul 18 14:47:16 [rsHealthPoll] replSet member Trini:17019 is now in state DOWN
+Wed Jul 18 14:47:17 [conn8] end connection 127.0.0.1:51930
+Wed Jul 18 14:47:17 [initandlisten] connection accepted from 127.0.0.1:52013 #12
+Wed Jul 18 14:47:18 [conn11] end connection 127.0.0.1:51951
+Wed Jul 18 14:47:20 [conn9] end connection 127.0.0.1:51936
+Wed Jul 18 14:47:20 [initandlisten] connection accepted from 127.0.0.1:52029 #13
+Wed Jul 18 14:47:20 [rsHealthPoll] DBClientCursor::init call() failed
+Wed Jul 18 14:47:20 [rsHealthPoll] replSet info Kimberly:17020 is down (or slow to respond): DBClientBase::findN: transport error: Kimberly:17020 query: { replSetHeartbeat: "pr", v: 1, pv: 1, checkEmpty: false, from: "Billy:17022" }
+Wed Jul 18 14:47:20 [rsHealthPoll] replSet member Kimberly:17020 is now in state DOWN
+Wed Jul 18 14:47:23 [clientcursormon] mem (MB) res:32 virt:2631 mapped:80
+Wed Jul 18 14:47:24 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:47:24 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:47:24 [rsHealthPoll] couldn't connect to Jason:17017: couldn't connect to server Jason:17017
+Wed Jul 18 14:47:44 [conn13] end connection 127.0.0.1:52029
+Wed Jul 18 14:47:44 [rsHealthPoll] replSet member Tommy:17021 is now in state SECONDARY
+Wed Jul 18 14:47:46 [initandlisten] connection accepted from 127.0.0.1:52155 #14
+Wed Jul 18 14:47:47 [conn12] end connection 127.0.0.1:52013
+Wed Jul 18 14:47:47 [initandlisten] connection accepted from 127.0.0.1:52161 #15
+Wed Jul 18 14:47:50 [conn14] end connection 127.0.0.1:52155
+Wed Jul 18 14:47:50 [initandlisten] connection accepted from 127.0.0.1:52183 #16
+Wed Jul 18 14:47:54 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:47:54 [rsHealthPoll] couldn't connect to Jason:17017: couldn't connect to server Jason:17017
+Wed Jul 18 14:47:54 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:48:17 [conn15] end connection 127.0.0.1:52161
+Wed Jul 18 14:48:17 [initandlisten] connection accepted from 127.0.0.1:52319 #17
+Wed Jul 18 14:48:20 [conn16] end connection 127.0.0.1:52183
+Wed Jul 18 14:48:20 [initandlisten] connection accepted from 127.0.0.1:52338 #18
+Wed Jul 18 14:48:20 [rsHealthPoll] replSet member Jason:17017 is up
+Wed Jul 18 14:48:20 [rsHealthPoll] replSet member Jason:17017 is now in state SECONDARY
+Wed Jul 18 14:48:21 [initandlisten] connection accepted from 127.0.0.1:52354 #19
+Wed Jul 18 14:48:23 [conn18] replSet info voting yea for Tommy:17021 (4)
+Wed Jul 18 14:48:24 [rsHealthPoll] replSet member Tommy:17021 is now in state PRIMARY
+Wed Jul 18 14:48:24 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:48:24 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:48:47 [conn17] end connection 127.0.0.1:52319
+Wed Jul 18 14:48:47 [initandlisten] connection accepted from 127.0.0.1:52495 #20
+Wed Jul 18 14:48:49 [conn19] end connection 127.0.0.1:52354
+Wed Jul 18 14:48:49 [initandlisten] connection accepted from 127.0.0.1:52512 #21
+Wed Jul 18 14:48:50 [conn18] end connection 127.0.0.1:52338
+Wed Jul 18 14:48:50 [initandlisten] connection accepted from 127.0.0.1:52523 #22
+Wed Jul 18 14:48:54 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:48:54 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:17 [conn20] end connection 127.0.0.1:52495
+Wed Jul 18 14:49:17 [initandlisten] connection accepted from 127.0.0.1:52700 #23
+Wed Jul 18 14:49:19 [conn21] end connection 127.0.0.1:52512
+Wed Jul 18 14:49:19 [initandlisten] connection accepted from 127.0.0.1:52719 #24
+Wed Jul 18 14:49:20 [conn22] end connection 127.0.0.1:52523
+Wed Jul 18 14:49:20 [initandlisten] connection accepted from 127.0.0.1:52729 #25
+Wed Jul 18 14:49:24 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:24 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:49:47 [conn23] end connection 127.0.0.1:52700
+Wed Jul 18 14:49:47 [initandlisten] connection accepted from 127.0.0.1:52873 #26
+Wed Jul 18 14:49:49 [conn24] end connection 127.0.0.1:52719
+Wed Jul 18 14:49:49 [initandlisten] connection accepted from 127.0.0.1:52891 #27
+Wed Jul 18 14:49:50 [conn25] end connection 127.0.0.1:52729
+Wed Jul 18 14:49:50 [initandlisten] connection accepted from 127.0.0.1:52894 #28
+Wed Jul 18 14:49:54 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:49:54 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:17 [conn26] end connection 127.0.0.1:52873
+Wed Jul 18 14:50:17 [initandlisten] connection accepted from 127.0.0.1:53045 #29
+Wed Jul 18 14:50:19 [conn27] end connection 127.0.0.1:52891
+Wed Jul 18 14:50:19 [initandlisten] connection accepted from 127.0.0.1:53061 #30
+Wed Jul 18 14:50:20 [conn28] end connection 127.0.0.1:52894
+Wed Jul 18 14:50:20 [initandlisten] connection accepted from 127.0.0.1:53065 #31
+Wed Jul 18 14:50:24 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:50:24 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:33 [initandlisten] connection accepted from 127.0.0.1:53148 #32
+Wed Jul 18 14:50:37 [conn32] end connection 127.0.0.1:53148
+Wed Jul 18 14:50:47 [conn29] end connection 127.0.0.1:53045
+Wed Jul 18 14:50:47 [initandlisten] connection accepted from 127.0.0.1:53220 #33
+Wed Jul 18 14:50:49 [conn30] end connection 127.0.0.1:53061
+Wed Jul 18 14:50:49 [initandlisten] connection accepted from 127.0.0.1:53239 #34
+Wed Jul 18 14:50:50 [conn31] end connection 127.0.0.1:53065
+Wed Jul 18 14:50:50 [initandlisten] connection accepted from 127.0.0.1:53242 #35
+Wed Jul 18 14:50:54 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:50:54 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:17 [conn33] end connection 127.0.0.1:53220
+Wed Jul 18 14:51:17 [initandlisten] connection accepted from 127.0.0.1:53395 #36
+Wed Jul 18 14:51:19 [conn34] end connection 127.0.0.1:53239
+Wed Jul 18 14:51:19 [initandlisten] connection accepted from 127.0.0.1:53413 #37
+Wed Jul 18 14:51:20 [conn35] end connection 127.0.0.1:53242
+Wed Jul 18 14:51:20 [initandlisten] connection accepted from 127.0.0.1:53415 #38
+Wed Jul 18 14:51:24 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:51:24 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:47 [conn36] end connection 127.0.0.1:53395
+Wed Jul 18 14:51:47 [initandlisten] connection accepted from 127.0.0.1:53568 #39
+Wed Jul 18 14:51:49 [conn37] end connection 127.0.0.1:53413
+Wed Jul 18 14:51:49 [initandlisten] connection accepted from 127.0.0.1:53584 #40
+Wed Jul 18 14:51:50 [conn38] end connection 127.0.0.1:53415
+Wed Jul 18 14:51:50 [initandlisten] connection accepted from 127.0.0.1:53589 #41
+Wed Jul 18 14:51:54 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:51:54 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:17 [conn39] end connection 127.0.0.1:53568
+Wed Jul 18 14:52:17 [initandlisten] connection accepted from 127.0.0.1:53742 #42
+Wed Jul 18 14:52:19 [conn40] end connection 127.0.0.1:53584
+Wed Jul 18 14:52:19 [initandlisten] connection accepted from 127.0.0.1:53759 #43
+Wed Jul 18 14:52:20 [conn41] end connection 127.0.0.1:53589
+Wed Jul 18 14:52:20 [initandlisten] connection accepted from 127.0.0.1:53762 #44
+Wed Jul 18 14:52:23 [clientcursormon] mem (MB) res:32 virt:2632 mapped:80
+Wed Jul 18 14:52:24 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:24 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:52:47 [conn42] end connection 127.0.0.1:53742
+Wed Jul 18 14:52:47 [initandlisten] connection accepted from 127.0.0.1:53915 #45
+Wed Jul 18 14:52:49 [conn43] end connection 127.0.0.1:53759
+Wed Jul 18 14:52:49 [initandlisten] connection accepted from 127.0.0.1:53931 #46
+Wed Jul 18 14:52:50 [conn44] end connection 127.0.0.1:53762
+Wed Jul 18 14:52:50 [initandlisten] connection accepted from 127.0.0.1:53935 #47
+Wed Jul 18 14:52:54 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:52:54 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:53:17 [conn45] end connection 127.0.0.1:53915
+Wed Jul 18 14:53:17 [initandlisten] connection accepted from 127.0.0.1:54087 #48
+Wed Jul 18 14:53:19 [conn46] end connection 127.0.0.1:53931
+Wed Jul 18 14:53:19 [initandlisten] connection accepted from 127.0.0.1:54104 #49
+Wed Jul 18 14:53:20 [conn47] end connection 127.0.0.1:53935
+Wed Jul 18 14:53:20 [initandlisten] connection accepted from 127.0.0.1:54108 #50
+Wed Jul 18 14:53:24 [rsHealthPoll] couldn't connect to Kimberly:17020: couldn't connect to server Kimberly:17020
+Wed Jul 18 14:53:24 [rsHealthPoll] couldn't connect to Trini:17019: couldn't connect to server Trini:17019
+Wed Jul 18 14:53:26 [rsHealthPoll] replSet member Trini:17019 is up
+Wed Jul 18 14:53:26 [rsHealthPoll] replSet member Trini:17019 is now in state SECONDARY
+Wed Jul 18 14:53:28 [initandlisten] connection accepted from 127.0.0.1:54161 #51
+Wed Jul 18 14:53:30 [rsHealthPoll] replSet member Kimberly:17020 is up
+Wed Jul 18 14:53:30 [rsHealthPoll] replSet member Kimberly:17020 is now in state SECONDARY
+Wed Jul 18 14:53:31 [initandlisten] connection accepted from 127.0.0.1:54183 #52
+Wed Jul 18 14:53:47 [conn48] end connection 127.0.0.1:54087
+Wed Jul 18 14:53:47 [initandlisten] connection accepted from 127.0.0.1:54188 #53
+Wed Jul 18 14:53:49 [conn49] end connection 127.0.0.1:54104
+Wed Jul 18 14:53:49 [initandlisten] connection accepted from 127.0.0.1:54194 #54
+Wed Jul 18 14:53:50 [conn50] end connection 127.0.0.1:54108
+Wed Jul 18 14:53:50 [initandlisten] connection accepted from 127.0.0.1:54198 #55
+Wed Jul 18 14:53:51 [conn55] end connection 127.0.0.1:54198
+Wed Jul 18 14:53:52 [rsHealthPoll] DBClientCursor::init call() failed
+Wed Jul 18 14:53:52 [rsHealthPoll] replSet info Tommy:17021 is down (or slow to respond): DBClientBase::findN: transport error: Tommy:17021 query: { replSetHeartbeat: "pr", v: 1, pv: 1, checkEmpty: false, from: "Billy:17022" }
+Wed Jul 18 14:53:52 [rsHealthPoll] replSet member Tommy:17021 is now in state DOWN
+Wed Jul 18 14:53:54 [rsHealthPoll] couldn't connect to Tommy:17021: couldn't connect to server Tommy:17021
+Wed Jul 18 14:53:54 [conn52] replSet info voting yea for Kimberly:17020 (3)
+Wed Jul 18 14:53:56 [conn51] end connection 127.0.0.1:54161
+Wed Jul 18 14:53:56 [initandlisten] connection accepted from 127.0.0.1:54216 #56
+Wed Jul 18 14:53:56 [rsHealthPoll] replSet member Kimberly:17020 is now in state PRIMARY
+Wed Jul 18 14:53:59 [conn52] end connection 127.0.0.1:54183
+Wed Jul 18 14:53:59 [initandlisten] connection accepted from 127.0.0.1:54230 #57
+Wed Jul 18 14:54:17 [conn53] end connection 127.0.0.1:54188
+Wed Jul 18 14:54:17 [initandlisten] connection accepted from 127.0.0.1:54283 #58
+Wed Jul 18 14:54:19 [conn54] end connection 127.0.0.1:54194
+Wed Jul 18 14:54:19 [initandlisten] connection accepted from 127.0.0.1:54296 #59
+Wed Jul 18 14:54:24 [rsHealthPoll] couldn't connect to Tommy:17021: couldn't connect to server Tommy:17021
+Wed Jul 18 14:54:26 [conn56] end connection 127.0.0.1:54216
+Wed Jul 18 14:54:26 [initandlisten] connection accepted from 127.0.0.1:54327 #60
+Wed Jul 18 14:54:29 [conn57] end connection 127.0.0.1:54230
+Wed Jul 18 14:54:29 [initandlisten] connection accepted from 127.0.0.1:54337 #61
+Wed Jul 18 14:54:46 [rsHealthPoll] replSet member Tommy:17021 is up
+Wed Jul 18 14:54:46 [rsHealthPoll] replSet member Tommy:17021 is now in state SECONDARY
+Wed Jul 18 14:54:47 [conn58] end connection 127.0.0.1:54283
+Wed Jul 18 14:54:47 [initandlisten] connection accepted from 127.0.0.1:54386 #62
+Wed Jul 18 14:54:47 [initandlisten] connection accepted from 127.0.0.1:54393 #63
+Wed Jul 18 14:54:49 [conn59] end connection 127.0.0.1:54296
+Wed Jul 18 14:54:49 [initandlisten] connection accepted from 127.0.0.1:54398 #64
+Wed Jul 18 14:54:56 [conn60] end connection 127.0.0.1:54327
+Wed Jul 18 14:54:56 [initandlisten] connection accepted from 127.0.0.1:54411 #65
+Wed Jul 18 14:54:57 got kill or ctrl c or hup signal 2 (Interrupt: 2), will terminate after current cmd ends
+Wed Jul 18 14:54:57 [interruptThread] now exiting
+Wed Jul 18 14:54:57 dbexit: 
+Wed Jul 18 14:54:57 [interruptThread] shutdown: going to close listening sockets...
+Wed Jul 18 14:54:57 [interruptThread] closing listening socket: 6
+Wed Jul 18 14:54:57 [interruptThread] closing listening socket: 7
+Wed Jul 18 14:54:57 [interruptThread] closing listening socket: 8
+Wed Jul 18 14:54:57 [interruptThread] removing socket file: /tmp/mongodb-17022.sock
+Wed Jul 18 14:54:57 [interruptThread] shutdown: going to flush diaglog...
+Wed Jul 18 14:54:57 [interruptThread] shutdown: going to close sockets...
+Wed Jul 18 14:54:57 [interruptThread] shutdown: waiting for fs preallocator...
+Wed Jul 18 14:54:57 [interruptThread] shutdown: lock for final commit...
+Wed Jul 18 14:54:57 [interruptThread] shutdown: final commit...
+Wed Jul 18 14:54:57 [conn64] end connection 127.0.0.1:54398
+Wed Jul 18 14:54:57 [conn62] end connection 127.0.0.1:54386
+Wed Jul 18 14:54:57 [conn63] end connection 127.0.0.1:54393
+Wed Jul 18 14:54:57 [conn1] end connection 127.0.0.1:51870
+Wed Jul 18 14:54:57 [conn65] end connection 127.0.0.1:54411
+Wed Jul 18 14:54:57 [conn61] end connection 127.0.0.1:54337
+Wed Jul 18 14:54:57 [interruptThread] shutdown: closing all files...
+Wed Jul 18 14:54:57 [interruptThread] closeAllFiles() finished
+Wed Jul 18 14:54:57 [interruptThread] journalCleanup...
+Wed Jul 18 14:54:57 [interruptThread] removeJournalFiles
+Wed Jul 18 14:54:57 [interruptThread] shutdown: removing fs lock...
+Wed Jul 18 14:54:57 dbexit: really exiting now

@@ -1,0 +1,279 @@
+
+Wed Jul 18 14:43:15 [initandlisten] MongoDB starting : pid=1343 port=17020 dbpath=power_rangers/4 64-bit host=Kimberly
+Wed Jul 18 14:43:15 [initandlisten] db version v2.0.5, pdfile version 4.5
+Wed Jul 18 14:43:15 [initandlisten] git version: 1bb4de4630302fad8af53824ca4f627db490b753
+Wed Jul 18 14:43:15 [initandlisten] build info: Darwin erh2.10gen.cc 9.8.0 Darwin Kernel Version 9.8.0: Wed Jul 15 16:55:01 PDT 2009; root:xnu-1228.15.4~1/RELEASE_I386 i386 BOOST_LIB_VERSION=1_40
+Wed Jul 18 14:43:15 [initandlisten] options: { dbpath: "power_rangers/4", logappend: true, logpath: "Kimberly.log", port: 17020, replSet: "pr" }
+Wed Jul 18 14:43:15 [initandlisten] journal dir=power_rangers/4/journal
+Wed Jul 18 14:43:15 [initandlisten] recover : no journal files present, no recovery needed
+Wed Jul 18 14:43:15 [websvr] admin web console waiting for connections on port 18020
+Wed Jul 18 14:43:15 [initandlisten] waiting for connections on port 17020
+Wed Jul 18 14:43:15 [initandlisten] connection accepted from 127.0.0.1:51868 #1
+Wed Jul 18 14:43:15 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:43:15 [rsStart] replSet info you may need to run replSetInitiate -- rs.initiate() in the shell -- if that is not already done
+Wed Jul 18 14:43:25 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:43:35 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:43:45 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:43:55 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:44:05 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:44:15 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:44:15 [clientcursormon] mem (MB) res:14 virt:2435 mapped:0
+Wed Jul 18 14:44:25 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:44:35 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:44:45 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:44:55 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:45:05 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:45:15 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:45:25 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:45:35 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:45:45 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:45:55 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:46:05 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:46:12 [initandlisten] connection accepted from 127.0.0.1:51880 #2
+Wed Jul 18 14:46:15 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+Wed Jul 18 14:46:18 [initandlisten] connection accepted from 127.0.0.1:51884 #3
+Wed Jul 18 14:46:22 [initandlisten] connection accepted from 127.0.0.1:51892 #4
+Wed Jul 18 14:46:23 [initandlisten] connection accepted from 127.0.0.1:51895 #5
+Wed Jul 18 14:46:25 [rsStart] trying to contact Jason:17017
+Wed Jul 18 14:46:25 [rsStart] trying to contact Tommy:17021
+Wed Jul 18 14:46:25 [rsStart] trying to contact Trini:17019
+Wed Jul 18 14:46:25 [rsStart] trying to contact Zach:17018
+Wed Jul 18 14:46:25 [rsStart] replSet got config version 1 from a remote, saving locally
+Wed Jul 18 14:46:25 [rsStart] replSet info saving a newer config version to local.system.replset
+Wed Jul 18 14:46:25 [FileAllocator] allocating new datafile power_rangers/4/local.ns, filling with zeroes...
+Wed Jul 18 14:46:25 [FileAllocator] creating directory power_rangers/4/_tmp
+Wed Jul 18 14:46:25 [FileAllocator] done allocating datafile power_rangers/4/local.ns, size: 16MB,  took 0.032 secs
+Wed Jul 18 14:46:25 [FileAllocator] allocating new datafile power_rangers/4/local.0, filling with zeroes...
+Wed Jul 18 14:46:25 [FileAllocator] done allocating datafile power_rangers/4/local.0, size: 64MB,  took 0.232 secs
+Wed Jul 18 14:46:25 [FileAllocator] allocating new datafile power_rangers/4/local.1, filling with zeroes...
+Wed Jul 18 14:46:25 [rsStart] replSet saveConfigLocally done
+Wed Jul 18 14:46:25 [rsStart] replSet STARTUP2
+Wed Jul 18 14:46:25 [rsMgr] replSet total number of votes is even - add arbiter or give one member an extra vote
+Wed Jul 18 14:46:25 [rsSync] ******
+Wed Jul 18 14:46:25 [rsSync] creating replication oplog of size: 183MB...
+Wed Jul 18 14:46:26 [initandlisten] connection accepted from 127.0.0.1:51906 #6
+Wed Jul 18 14:46:26 [FileAllocator] done allocating datafile power_rangers/4/local.1, size: 128MB,  took 0.511 secs
+Wed Jul 18 14:46:26 [FileAllocator] allocating new datafile power_rangers/4/local.2, filling with zeroes...
+Wed Jul 18 14:46:27 [FileAllocator] done allocating datafile power_rangers/4/local.2, size: 256MB,  took 1.059 secs
+Wed Jul 18 14:46:27 [rsHealthPoll] replSet member Jason:17017 is up
+Wed Jul 18 14:46:27 [rsHealthPoll] replSet member Zach:17018 is up
+Wed Jul 18 14:46:27 [rsHealthPoll] replSet member Jason:17017 is now in state SECONDARY
+Wed Jul 18 14:46:27 [rsHealthPoll] replSet member Tommy:17021 is up
+Wed Jul 18 14:46:27 [rsHealthPoll] replSet member Zach:17018 is now in state STARTUP2
+Wed Jul 18 14:46:27 [rsHealthPoll] replSet member Trini:17019 is up
+Wed Jul 18 14:46:27 [rsHealthPoll] replSet member Tommy:17021 is now in state STARTUP2
+Wed Jul 18 14:46:27 [rsHealthPoll] replSet member Trini:17019 is now in state STARTUP2
+Wed Jul 18 14:46:27 [rsHealthPoll] replSet member Billy:17022 is up
+Wed Jul 18 14:46:27 [rsHealthPoll] replSet member Billy:17022 is now in state STARTUP2
+Wed Jul 18 14:46:27 [rsSync] ******
+Wed Jul 18 14:46:27 [rsSync] replSet initial sync pending
+Wed Jul 18 14:46:27 [rsSync] replSet initial sync need a member to be primary or secondary to do our initial sync
+Wed Jul 18 14:46:30 [conn2] replSet RECOVERING
+Wed Jul 18 14:46:30 [conn2] replSet info voting yea for Jason:17017 (0)
+Wed Jul 18 14:46:31 [rsHealthPoll] replSet member Jason:17017 is now in state PRIMARY
+Wed Jul 18 14:46:31 [rsHealthPoll] replSet member Tommy:17021 is now in state RECOVERING
+Wed Jul 18 14:46:31 [rsHealthPoll] replSet member Zach:17018 is now in state RECOVERING
+Wed Jul 18 14:46:31 [rsHealthPoll] replSet member Trini:17019 is now in state RECOVERING
+Wed Jul 18 14:46:31 [rsHealthPoll] replSet member Billy:17022 is now in state RECOVERING
+Wed Jul 18 14:46:33 [rsHealthPoll] replSet member Billy:17022 is now in state ARBITER
+Wed Jul 18 14:46:39 [rsHealthPoll] replSet member Zach:17018 is now in state SECONDARY
+Wed Jul 18 14:46:43 [rsHealthPoll] replSet member Trini:17019 is now in state SECONDARY
+Wed Jul 18 14:46:43 [rsHealthPoll] replSet member Tommy:17021 is now in state SECONDARY
+Wed Jul 18 14:46:43 [rsSync] replSet initial sync pending
+Wed Jul 18 14:46:43 [rsSync] replSet syncing to: Tommy:17021
+Wed Jul 18 14:46:43 [rsSync] build index local.me { _id: 1 }
+Wed Jul 18 14:46:43 [rsSync] build index done 0 records 0 secs
+Wed Jul 18 14:46:43 [rsSync] replSet initial sync drop all databases
+Wed Jul 18 14:46:43 [rsSync] dropAllDatabasesExceptLocal 1
+Wed Jul 18 14:46:43 [rsSync] replSet initial sync clone all databases
+Wed Jul 18 14:46:43 [rsSync] replSet initial sync query minValid
+Wed Jul 18 14:46:43 [rsSync] replSet initial oplog application from Tommy:17021 starting at Jul 18 14:46:14:1 to Jul 18 14:46:14:1
+Wed Jul 18 14:46:44 [conn2] end connection 127.0.0.1:51880
+Wed Jul 18 14:46:44 [initandlisten] connection accepted from 127.0.0.1:51924 #7
+Wed Jul 18 14:46:46 [rsSync] replSet initial sync finishing up
+Wed Jul 18 14:46:46 [rsSync] replSet set minValid=50070476:1
+Wed Jul 18 14:46:46 [rsSync] build index local.replset.minvalid { _id: 1 }
+Wed Jul 18 14:46:46 [rsSync] build index done 0 records 0 secs
+Wed Jul 18 14:46:46 [rsSync] replSet initial sync done
+Wed Jul 18 14:46:47 [conn3] end connection 127.0.0.1:51884
+Wed Jul 18 14:46:47 [initandlisten] connection accepted from 127.0.0.1:51929 #8
+Wed Jul 18 14:46:47 [rsSync] replSet syncing to: Jason:17017
+Wed Jul 18 14:46:47 [rsSync] replSet SECONDARY
+Wed Jul 18 14:46:50 [conn4] end connection 127.0.0.1:51892
+Wed Jul 18 14:46:50 [initandlisten] connection accepted from 127.0.0.1:51935 #9
+Wed Jul 18 14:46:51 [conn5] end connection 127.0.0.1:51895
+Wed Jul 18 14:46:51 [initandlisten] connection accepted from 127.0.0.1:51939 #10
+Wed Jul 18 14:46:53 [conn7] end connection 127.0.0.1:51924
+Wed Jul 18 14:46:53 [rsSync] replSet syncThread: 10278 dbclient error communicating with server: Jason:17017
+Wed Jul 18 14:46:53 [rsHealthPoll] DBClientCursor::init call() failed
+Wed Jul 18 14:46:53 [rsHealthPoll] replSet info Jason:17017 is down (or slow to respond): DBClientBase::findN: transport error: Jason:17017 query: { replSetHeartbeat: "pr", v: 1, pv: 1, checkEmpty: false, from: "Kimberly:17020" }
+Wed Jul 18 14:46:53 [rsHealthPoll] replSet member Jason:17017 is now in state DOWN
+Wed Jul 18 14:46:53 [rsMgr] not electing self, Billy:17022 would veto
+Wed Jul 18 14:46:54 [conn6] end connection 127.0.0.1:51906
+Wed Jul 18 14:46:54 [initandlisten] connection accepted from 127.0.0.1:51946 #11
+Wed Jul 18 14:46:55 [rsHealthPoll] couldn't connect to Jason:17017: couldn't connect to server Jason:17017
+Wed Jul 18 14:46:59 [rsMgr] replSet not trying to elect self as responded yea to someone else recently
+Wed Jul 18 14:47:01 [conn9] replSet info voting yea for Tommy:17021 (4)
+Wed Jul 18 14:47:01 [rsHealthPoll] replSet member Tommy:17021 is now in state PRIMARY
+Wed Jul 18 14:47:04 [rsSync] replSet syncing to: Tommy:17021
+Wed Jul 18 14:47:14 [conn10] end connection 127.0.0.1:51939
+Wed Jul 18 14:47:15 [rsHealthPoll] DBClientCursor::init call() failed
+Wed Jul 18 14:47:15 [rsHealthPoll] replSet info Trini:17019 is down (or slow to respond): DBClientBase::findN: transport error: Trini:17019 query: { replSetHeartbeat: "pr", v: 1, pv: 1, checkEmpty: false, from: "Kimberly:17020" }
+Wed Jul 18 14:47:15 [rsHealthPoll] replSet member Trini:17019 is now in state DOWN
+Wed Jul 18 14:47:17 [conn8] end connection 127.0.0.1:51929
+Wed Jul 18 14:47:17 [initandlisten] connection accepted from 127.0.0.1:52011 #12
+Wed Jul 18 14:47:18 [clientcursormon] mem (MB) res:18 virt:3400 mapped:464
+Wed Jul 18 14:47:18 got kill or ctrl c or hup signal 2 (Interrupt: 2), will terminate after current cmd ends
+Wed Jul 18 14:47:18 [interruptThread] now exiting
+Wed Jul 18 14:47:18 dbexit: 
+Wed Jul 18 14:47:18 [interruptThread] shutdown: going to close listening sockets...
+Wed Jul 18 14:47:18 [interruptThread] closing listening socket: 6
+Wed Jul 18 14:47:18 [interruptThread] closing listening socket: 7
+Wed Jul 18 14:47:18 [interruptThread] closing listening socket: 8
+Wed Jul 18 14:47:18 [interruptThread] removing socket file: /tmp/mongodb-17020.sock
+Wed Jul 18 14:47:18 [interruptThread] shutdown: going to flush diaglog...
+Wed Jul 18 14:47:18 [interruptThread] shutdown: going to close sockets...
+Wed Jul 18 14:47:18 [interruptThread] shutdown: waiting for fs preallocator...
+Wed Jul 18 14:47:18 [interruptThread] shutdown: lock for final commit...
+Wed Jul 18 14:47:18 [interruptThread] shutdown: final commit...
+Wed Jul 18 14:47:18 [conn11] end connection 127.0.0.1:51946
+Wed Jul 18 14:47:18 [conn9] end connection 127.0.0.1:51935
+Wed Jul 18 14:47:18 [rsSync] Socket recv() errno:9 Bad file descriptor 127.0.0.1:17021
+Wed Jul 18 14:47:18 [rsSync] SocketException: remote: 127.0.0.1:17021 error: 9001 socket exception [1] server [127.0.0.1:17021] 
+Wed Jul 18 14:47:18 [conn1] end connection 127.0.0.1:51868
+Wed Jul 18 14:47:18 [conn12] end connection 127.0.0.1:52011
+Wed Jul 18 14:47:18 [rsSync] replSet syncThread: 10278 dbclient error communicating with server: Tommy:17021
+Wed Jul 18 14:47:18 [interruptThread] shutdown: closing all files...
+Wed Jul 18 14:47:18 [interruptThread] closeAllFiles() finished
+Wed Jul 18 14:47:18 [interruptThread] journalCleanup...
+Wed Jul 18 14:47:18 [interruptThread] removeJournalFiles
+Wed Jul 18 14:47:18 [interruptThread] shutdown: removing fs lock...
+Wed Jul 18 14:47:18 dbexit: really exiting now
+
+
+***** SERVER RESTARTED *****
+
+
+Wed Jul 18 14:53:29 [initandlisten] MongoDB starting : pid=1377 port=17020 dbpath=power_rangers/4 64-bit host=SamanthaRitter.local
+Wed Jul 18 14:53:29 [initandlisten] db version v2.0.5, pdfile version 4.5
+Wed Jul 18 14:53:29 [initandlisten] git version: 1bb4de4630302fad8af53824ca4f627db490b753
+Wed Jul 18 14:53:29 [initandlisten] build info: Darwin erh2.10gen.cc 9.8.0 Darwin Kernel Version 9.8.0: Wed Jul 15 16:55:01 PDT 2009; root:xnu-1228.15.4~1/RELEASE_I386 i386 BOOST_LIB_VERSION=1_40
+Wed Jul 18 14:53:29 [initandlisten] options: { dbpath: "power_rangers/4", logappend: true, logpath: "Kimberly.log", port: 17020, replSet: "pr" }
+Wed Jul 18 14:53:29 [initandlisten] journal dir=power_rangers/4/journal
+Wed Jul 18 14:53:29 [initandlisten] recover : no journal files present, no recovery needed
+Wed Jul 18 14:53:29 [websvr] admin web console waiting for connections on port 18020
+Wed Jul 18 14:53:29 [initandlisten] waiting for connections on port 17020
+Wed Jul 18 14:53:29 [initandlisten] connection accepted from 127.0.0.1:54172 #1
+Wed Jul 18 14:53:29 [rsStart] replSet STARTUP2
+Wed Jul 18 14:53:29 [rsMgr] replSet total number of votes is even - add arbiter or give one member an extra vote
+Wed Jul 18 14:53:29 [rsSync] replSet SECONDARY
+Wed Jul 18 14:53:30 [initandlisten] connection accepted from 127.0.0.1:54173 #2
+Wed Jul 18 14:53:30 [initandlisten] connection accepted from 127.0.0.1:54174 #3
+Wed Jul 18 14:53:30 [conn2] end connection 127.0.0.1:54173
+Wed Jul 18 14:53:30 [initandlisten] connection accepted from 127.0.0.1:54175 #4
+Wed Jul 18 14:53:30 [initandlisten] connection accepted from 127.0.0.1:54176 #5
+Wed Jul 18 14:53:30 [initandlisten] connection accepted from 127.0.0.1:54177 #6
+Wed Jul 18 14:53:30 [conn6] end connection 127.0.0.1:54177
+Wed Jul 18 14:53:30 [initandlisten] connection accepted from 127.0.0.1:54178 #7
+Wed Jul 18 14:53:31 [initandlisten] connection accepted from 127.0.0.1:54179 #8
+Wed Jul 18 14:53:31 [rsHealthPoll] replSet member Zach:17018 is up
+Wed Jul 18 14:53:31 [rsHealthPoll] replSet member Jason:17017 is up
+Wed Jul 18 14:53:31 [rsHealthPoll] replSet member Zach:17018 is now in state SECONDARY
+Wed Jul 18 14:53:31 [rsHealthPoll] replSet member Jason:17017 is now in state SECONDARY
+Wed Jul 18 14:53:31 [rsHealthPoll] replSet member Tommy:17021 is up
+Wed Jul 18 14:53:31 [rsHealthPoll] replSet member Trini:17019 is up
+Wed Jul 18 14:53:31 [rsHealthPoll] replSet member Billy:17022 is up
+Wed Jul 18 14:53:31 [rsMgr] replSet can't see a majority, will not try to elect self
+Wed Jul 18 14:53:31 [rsHealthPoll] replSet member Trini:17019 is now in state SECONDARY
+Wed Jul 18 14:53:31 [rsHealthPoll] replSet member Billy:17022 is now in state ARBITER
+Wed Jul 18 14:53:31 [rsHealthPoll] replSet member Tommy:17021 is now in state PRIMARY
+Wed Jul 18 14:53:36 [rsSync] replSet syncing to: Tommy:17021
+Wed Jul 18 14:53:36 [FileAllocator] allocating new datafile power_rangers/4/test.ns, filling with zeroes...
+Wed Jul 18 14:53:36 [FileAllocator] creating directory power_rangers/4/_tmp
+Wed Jul 18 14:53:36 [FileAllocator] done allocating datafile power_rangers/4/test.ns, size: 16MB,  took 0.032 secs
+Wed Jul 18 14:53:36 [FileAllocator] allocating new datafile power_rangers/4/test.0, filling with zeroes...
+Wed Jul 18 14:53:36 [FileAllocator] done allocating datafile power_rangers/4/test.0, size: 64MB,  took 0.247 secs
+Wed Jul 18 14:53:36 [FileAllocator] allocating new datafile power_rangers/4/test.1, filling with zeroes...
+Wed Jul 18 14:53:36 [rsSync] build index test.pr { _id: 1 }
+Wed Jul 18 14:53:36 [rsSync] build index done 0 records 0.005 secs
+Wed Jul 18 14:53:37 [FileAllocator] done allocating datafile power_rangers/4/test.1, size: 128MB,  took 0.517 secs
+Wed Jul 18 14:53:47 [conn8] end connection 127.0.0.1:54179
+Wed Jul 18 14:53:47 [initandlisten] connection accepted from 127.0.0.1:54191 #9
+Wed Jul 18 14:53:50 [conn4] end connection 127.0.0.1:54175
+Wed Jul 18 14:53:50 [initandlisten] connection accepted from 127.0.0.1:54199 #10
+Wed Jul 18 14:53:50 [conn7] end connection 127.0.0.1:54178
+Wed Jul 18 14:53:50 [initandlisten] connection accepted from 127.0.0.1:54201 #11
+Wed Jul 18 14:53:51 [conn10] end connection 127.0.0.1:54199
+Wed Jul 18 14:53:51 [rsSync] replSet syncThread: 10278 dbclient error communicating with server: Tommy:17021
+Wed Jul 18 14:53:53 [rsHealthPoll] DBClientCursor::init call() failed
+Wed Jul 18 14:53:53 [rsHealthPoll] replSet info Tommy:17021 is down (or slow to respond): DBClientBase::findN: transport error: Tommy:17021 query: { replSetHeartbeat: "pr", v: 1, pv: 1, checkEmpty: false, from: "Kimberly:17020" }
+Wed Jul 18 14:53:53 [rsHealthPoll] replSet member Tommy:17021 is now in state DOWN
+Wed Jul 18 14:53:54 [conn5] end connection 127.0.0.1:54176
+Wed Jul 18 14:53:54 [initandlisten] connection accepted from 127.0.0.1:54210 #12
+Wed Jul 18 14:53:54 [rsMgr] replSet info electSelf 3
+Wed Jul 18 14:53:54 [rsMgr] replSet PRIMARY
+Wed Jul 18 14:53:56 [conn3] end connection 127.0.0.1:54174
+Wed Jul 18 14:53:56 [initandlisten] connection accepted from 127.0.0.1:54219 #13
+Wed Jul 18 14:53:59 [rsHealthPoll] couldn't connect to Tommy:17021: couldn't connect to server Tommy:17021
+Wed Jul 18 14:54:02 [initandlisten] connection accepted from 127.0.0.1:54241 #14
+Wed Jul 18 14:54:02 [initandlisten] connection accepted from 127.0.0.1:54242 #15
+Wed Jul 18 14:54:02 [initandlisten] connection accepted from 127.0.0.1:54243 #16
+Wed Jul 18 14:54:03 [slaveTracking] build index local.slaves { _id: 1 }
+Wed Jul 18 14:54:03 [slaveTracking] build index done 0 records 0.001 secs
+Wed Jul 18 14:54:12 [initandlisten] connection accepted from 127.0.0.1:54272 #17
+Wed Jul 18 14:54:17 [conn9] end connection 127.0.0.1:54191
+Wed Jul 18 14:54:17 [initandlisten] connection accepted from 127.0.0.1:54287 #18
+Wed Jul 18 14:54:20 [conn11] end connection 127.0.0.1:54201
+Wed Jul 18 14:54:20 [initandlisten] connection accepted from 127.0.0.1:54302 #19
+Wed Jul 18 14:54:24 [conn12] end connection 127.0.0.1:54210
+Wed Jul 18 14:54:24 [initandlisten] connection accepted from 127.0.0.1:54319 #20
+Wed Jul 18 14:54:26 [conn13] end connection 127.0.0.1:54219
+Wed Jul 18 14:54:26 [initandlisten] connection accepted from 127.0.0.1:54323 #21
+Wed Jul 18 14:54:29 [clientcursormon] mem (MB) res:49 virt:3575 mapped:544
+Wed Jul 18 14:54:29 [rsHealthPoll] couldn't connect to Tommy:17021: couldn't connect to server Tommy:17021
+Wed Jul 18 14:54:45 [rsHealthPoll] replSet member Tommy:17021 is up
+Wed Jul 18 14:54:45 [rsHealthPoll] replSet member Tommy:17021 is now in state SECONDARY
+Wed Jul 18 14:54:47 [initandlisten] connection accepted from 127.0.0.1:54394 #22
+Wed Jul 18 14:54:47 [conn18] end connection 127.0.0.1:54287
+Wed Jul 18 14:54:47 [initandlisten] connection accepted from 127.0.0.1:54395 #23
+Wed Jul 18 14:54:50 [conn19] end connection 127.0.0.1:54302
+Wed Jul 18 14:54:50 [initandlisten] connection accepted from 127.0.0.1:54400 #24
+Wed Jul 18 14:54:51 [initandlisten] connection accepted from 127.0.0.1:54402 #25
+Wed Jul 18 14:54:54 [conn20] end connection 127.0.0.1:54319
+Wed Jul 18 14:54:54 [initandlisten] connection accepted from 127.0.0.1:54406 #26
+Wed Jul 18 14:54:56 [conn21] end connection 127.0.0.1:54323
+Wed Jul 18 14:54:56 [initandlisten] connection accepted from 127.0.0.1:54409 #27
+Wed Jul 18 14:54:57 [conn26] end connection 127.0.0.1:54406
+Wed Jul 18 14:54:57 [rsHealthPoll] DBClientCursor::init call() failed
+Wed Jul 18 14:54:57 [rsHealthPoll] replSet info Billy:17022 is down (or slow to respond): DBClientBase::findN: transport error: Billy:17022 query: { replSetHeartbeat: "pr", v: 1, pv: 1, checkEmpty: false, from: "Kimberly:17020" }
+Wed Jul 18 14:54:57 [rsHealthPoll] replSet member Billy:17022 is now in state DOWN
+Wed Jul 18 14:54:59 [conn22] end connection 127.0.0.1:54394
+Wed Jul 18 14:54:59 [rsHealthPoll] couldn't connect to Billy:17022: couldn't connect to server Billy:17022
+Wed Jul 18 14:54:59 [rsHealthPoll] couldn't connect to Tommy:17021: couldn't connect to server Tommy:17021
+Wed Jul 18 14:54:59 [rsHealthPoll] replSet info Tommy:17021 is down (or slow to respond): socket exception
+Wed Jul 18 14:54:59 [rsHealthPoll] replSet member Tommy:17021 is now in state DOWN
+Wed Jul 18 14:55:01 [conn25] end connection 127.0.0.1:54402
+Wed Jul 18 14:55:01 got kill or ctrl c or hup signal 2 (Interrupt: 2), will terminate after current cmd ends
+Wed Jul 18 14:55:01 [interruptThread] now exiting
+Wed Jul 18 14:55:01 dbexit: 
+Wed Jul 18 14:55:01 [interruptThread] shutdown: going to close listening sockets...
+Wed Jul 18 14:55:01 [interruptThread] closing listening socket: 6
+Wed Jul 18 14:55:01 [interruptThread] closing listening socket: 7
+Wed Jul 18 14:55:01 [interruptThread] closing listening socket: 8
+Wed Jul 18 14:55:01 [interruptThread] removing socket file: /tmp/mongodb-17020.sock
+Wed Jul 18 14:55:01 [interruptThread] shutdown: going to flush diaglog...
+Wed Jul 18 14:55:01 [interruptThread] shutdown: going to close sockets...
+Wed Jul 18 14:55:01 [interruptThread] shutdown: waiting for fs preallocator...
+Wed Jul 18 14:55:01 [interruptThread] shutdown: lock for final commit...
+Wed Jul 18 14:55:01 [interruptThread] shutdown: final commit...
+Wed Jul 18 14:55:01 [conn1] end connection 127.0.0.1:54172
+Wed Jul 18 14:55:01 [conn27] end connection 127.0.0.1:54409
+Wed Jul 18 14:55:01 [conn23] end connection 127.0.0.1:54395
+Wed Jul 18 14:55:01 [conn24] end connection 127.0.0.1:54400
+Wed Jul 18 14:55:01 [conn17] end connection 127.0.0.1:54272
+Wed Jul 18 14:55:01 [interruptThread] shutdown: closing all files...
+Wed Jul 18 14:55:01 [interruptThread] closeAllFiles() finished
+Wed Jul 18 14:55:01 [interruptThread] journalCleanup...
+Wed Jul 18 14:55:01 [interruptThread] removeJournalFiles
+Wed Jul 18 14:55:01 [interruptThread] shutdown: removing fs lock...
+Wed Jul 18 14:55:01 dbexit: really exiting now
