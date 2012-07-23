@@ -95,6 +95,7 @@ body {
 
 
 #timestamp, #summary, #log_files, #witnesses, #dissenters {
+		overflow-x: scroll;
 	    width: 160px;
 	    background-color:#DECBA2;
 	    padding: 10px;
@@ -106,11 +107,12 @@ body {
 }
 
 #pop_up_links {
-	      position: absolute;
+	      /*position: absolute;*/
+
 	      width: 160px;
-	      top: 580px;
+	      top: 100%;
 	      padding: 10px;
-	      left: 30px;
+	      left: 100%;
 }
 
 /* link formatting */
