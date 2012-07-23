@@ -17,7 +17,7 @@
 
 import re
 
-from supporting_methods import capture_address
+from logl.supporting_methods import capture_address
 
 
 def criteria(msg):

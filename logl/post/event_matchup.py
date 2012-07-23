@@ -21,7 +21,7 @@ import re
 
 from datetime import timedelta
 from operator import itemgetter
-from supporting_methods import *
+from logl.supporting_methods import *
 
 LOGGER = logging.getLogger(__name__)
 

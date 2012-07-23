@@ -20,7 +20,7 @@ import re
 
 from copy import deepcopy
 from .clock_skew import server_clock_skew
-from supporting_methods import *
+from logl.supporting_methods import *
 
 LOGGER = logging.getLogger(__name__)
 
