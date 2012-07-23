@@ -1,14 +1,14 @@
-Logl, a log visualizer for MongoDB
+Edda, a log visualizer for MongoDB
 ==================================
 
-Logl c 2012 10gen, the MongoDB Company
+Edda c 2012 10gen, the MongoDB Company
 
 Authors: Samantha Ritter, Kaushal Parikh
 
 INSTALL
 -------
 
-You must have the following installed as prerequisites for running Logl.
+You must have the following installed as prerequisites for running Edda.
 
 + Pip:
 
@@ -30,9 +30,9 @@ You must have the following installed as prerequisites for running Logl.
 
   We recommend Google Chrome or Firefox.
 
-+ Install Logl:
++ Install Edda:
 
-  $ pip install logl
+  $ pip install edda
 
 RUN
 ---
@@ -40,15 +40,15 @@ RUN
 Give the log files from your servers as command-line
 arguments to the visualizer:
 
-	  python logl.py --options filename1 filename2 ...
-(see python logl.py --help for options)
+	  $ python edda.py --options filename1 filename2 ...
+(see python edda.py --help for options)
 
-Logl can read in multiple log files at once.
+Edda can read in multiple log files at once.
 
-NOTE: please only give logl files from the same server cluster!
+NOTE: please only give log files from the same server cluster!
 
 
-There are some sample log files in logl/test you can run
+There are some sample log files in edda/sample_logs you can run
 if you don't have any log files of your own yet.
 
 ADDITIONAL
