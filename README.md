@@ -1,7 +1,7 @@
 Edda, a log visualizer for MongoDB
 ==================================
 
-Edda c 2012 10gen, the MongoDB Company
+Edda © 2012 10gen, the MongoDB Company
 
 Authors: Samantha Ritter, Kaushal Parikh
 
