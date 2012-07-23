@@ -18,14 +18,6 @@ You must have the following installed as prerequisites for running Edda.
 
   see http://www.mongodb.org/downloads
 
-+ PyMongo, MongoDB's language driver for Python:
-
-  $ pip install pymongo
-
-+ argparse:
-
-  $ pip install argparse
-
 + Install a non-text-based browser
 
   We recommend Google Chrome or Firefox.
