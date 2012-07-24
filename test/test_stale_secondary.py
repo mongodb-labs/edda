@@ -17,15 +17,15 @@ from edda.filters.stale_secondary import *
 from datetime import datetime
 
 
-class test_stale_secondary(unittest.TetCase):
+class test_stale_secondary(unittest.TestCase):
     def test_criteria(self):
         """Test the criteria() method of stale_secondary.py"""
-        assert criteria("this should not pass") == -1
-        assert criteria("Thu Sep 9 17:22:46 [rs_sync] replSet error RS102 too stale to catch up") == 0
-        assert criteria("Thu Sep 9 17:24:46 [rs_sync] replSet error RS102 too stale to catch up, at least from primary: 127.0.0.1:30000") == 0
+        assert criteria("this should not pass") == 0
+        assert criteria("Thu Sep 9 17:22:46 [rs_sync] replSet error RS102 too stale to catch up") == 1
+        assert criteria("Thu Sep 9 17:24:46 [rs_sync] replSet error RS102 too stale to catch up, at least from primary: 127.0.0.1:30000") == 1
 
 
-    def test_process():
+    def test_process(self):
         """Test the process() method of stale_secondary.py"""
         date = datetime.now()
         self.check_state("Thu Sep 9 17:22:46 [rs_sync] replSet error RS102 too stale to catch up", 0, date)
@@ -39,7 +39,7 @@ class test_stale_secondary(unittest.TetCase):
         doc = process(message, date)
         assert doc
         assert doc["type"] == "stale"
-        assert doc["original_message"] == message
+        assert doc["msg"] == message
         assert doc["info"]["server"] == "self"
 
 if __name__ == '__main__':
