@@ -189,7 +189,7 @@ def address_matchup(db, coll_name):
     if not mentioned_names:
         # for edda to succeed, it needs to match logs to servers
         # so, all servers must have a network name.
-        s = list(servers.find({"self_name": "unknown"}))
+        s = list(servers.find({"network_name": "unknown"}))
         if len(s) == 0:
             LOGGER.debug("Successfully named all unnamed servers!")
             return 1

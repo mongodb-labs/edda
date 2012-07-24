@@ -727,8 +727,7 @@ class test_addr_matchup(unittest.TestCase):
 
 
     def generate_doc(self, type, server, label, code, target, date):
-        """Generate an entry
-        """
+        """Generate an entry"""
         doc = {}
         doc["type"] = type
         doc["origin_server"] = server
