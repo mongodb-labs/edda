@@ -20,16 +20,16 @@ class test_init_and_listen(unittest.TestCase):
     def test_criteria(self):
         """Test the criteria() method of this module"""
         # these should not pass
-        assert criteria("this should not pass") == -1
+        assert criteria("this should not pass") < 1
         assert criteria("Mon Jun 11 15:56:40 [conn5] end connection "
-            "127.0.0.1:55224 (2 connections now open)") == -1
+            "127.0.0.1:55224 (2 connections now open)") == 0
         assert criteria("Mon Jun 11 15:56:16 [initandlisten] ** WARNING: soft "
             "rlimits too low. Number of files is 256, should be at least 1000"
-            "") == -1
-        assert criteria("init and listen starting") == -1
-        assert criteria("[initandlisten]") == -1
-        assert criteria("starting") == -1
-        assert criteria("connection accepted") == -1
+            "") == 0
+        assert criteria("init and listen starting") == 0
+        assert criteria("[initandlisten]") == 0
+        assert criteria("starting") == 0
+        assert criteria("connection accepted") == 0
         # these should pass
         assert criteria("Mon Jun 11 15:56:16 [initandlisten] MongoDB starting "
             ": pid=7029 port=27018 dbpath=/data/rs2 64-bit "

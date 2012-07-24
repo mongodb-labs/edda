@@ -14,7 +14,7 @@
 
 import unittest #organizing servers uses the supporting methods module and is going to have the same import problem that replacing clock skew has. TO BE FIXED.
 from edda.post.event_matchup import organize_servers
-from edda.edda import assign_address
+from edda.run_edda import assign_address
 import pymongo
 import logging
 from datetime import *
@@ -39,7 +39,7 @@ class test_organizing_servers(unittest.TestCase):
 
     def test_organize_two_servers(self):
         logger = logging.getLogger(__name__)
-        servers, entries, clock_skew, db = db_setup()
+        servers, entries, clock_skew, db = self.db_setup()
         original_date = datetime.now()
 
         entries.insert(self.generate_doc(
@@ -47,8 +47,8 @@ class test_organizing_servers(unittest.TestCase):
         entries.insert(self.generate_doc("status", "pear", "STARTUP2"
             "", 5, "apple", original_date + timedelta(seconds=5)))
 
-        assign_address(1, "apple", servers)
-        assign_address(2, "pear", servers)
+        assign_address(self, 1, "apple", servers)
+        assign_address(self, 2, "pear", servers)
 
         organized_servers = organize_servers(db, "fruit")
         logger.debug("Organized servers Printing: {}".format(organized_servers))
@@ -61,7 +61,7 @@ class test_organizing_servers(unittest.TestCase):
 
 
     def test_organizing_three_servers(self):
-        servers, entries, clock_skew, db = db_setup()
+        servers, entries, clock_skew, db = self.db_setup()
         logger = logging.getLogger(__name__)
         original_date = datetime.now()
 
@@ -104,7 +104,7 @@ class test_organizing_servers(unittest.TestCase):
 
 
     def test_organize_same_times(self):
-        servers, entries, clock_skew, db = db_setup()
+        servers, entries, clock_skew, db = self.db_setup()
         logger = logging.getLogger(__name__)
         original_date = datetime.now()
 

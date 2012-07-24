@@ -26,7 +26,7 @@ class test_fsync_lock(unittest.TestCase):
     def test_criteria(self):
         assert criteria("this should not pass") == -1
         assert criteria("Mon Jul  2 10:00:10 [conn2] db is now locked for "
-            "snapshotting, no writes allowed. db.fsyncUnlock() to unlock") == 0
+            "snapshotting, no writes allowed. db.fsyncUnlock() to unlock") == 3
         assert criteria("Mon Jul  2 10:00:04 [conn2] command: "
             "unlock requested") == 1
         assert criteria("Mon Jul  2 10:00:11 [conn2] "

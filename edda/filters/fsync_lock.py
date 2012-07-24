@@ -23,7 +23,7 @@ def criteria(msg):
         return 2
     elif 'db is now locked' in msg:
         return 3
-    return 0
+    return -1
 
 
 def process(msg, date):
@@ -41,14 +41,14 @@ def process(msg, date):
     }
     """
     message_type = criteria(msg)
-    if not message_type:
+    if message_type <= 0:
         return None
 
     doc = {}
     doc["date"] = date
     doc["type"] = "fsync"
     doc["info"] = {}
-    doc["msg"] = msg
+    doc["original_message"] = msg
 
     if message_type == 1:
         doc["info"]["state"] = "UNLOCKED"
