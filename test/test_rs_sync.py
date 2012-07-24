@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import unittest
+
 from datetime import datetime
 from edda.filters.rs_sync import *
 
