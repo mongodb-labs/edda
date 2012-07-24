@@ -26,11 +26,10 @@ except ImportError:
     import simplejson as json
 import threading
 
-from time import sleep
-
 data = None
 server_list = None
 admin = None
+
 
 def run():
     """Open page and send GET request to server"""
@@ -130,6 +129,9 @@ class eddaHTTPRequest(BaseHTTPRequestHandler):
         if type == "admin":
             #admin = {}
             admin["total_frame_count"] = len(data)
+            self.send_response(200)
+            self.send_header("Content-type", 'application/json')
+            self.end_headers()
             self.wfile.write(json.dumps(admin))
 
         elif type == "all_frames":
@@ -164,10 +166,17 @@ class eddaHTTPRequest(BaseHTTPRequestHandler):
                 if not str(i) in data:
                     break
                 batch[str(i)] = data[str(i)];
+
+            self.send_response(200)
+            self.send_header("Content-type", 'application/json')
+            self.end_headers()
             self.wfile.write(json.dumps(batch))
 
 
         elif type == "servers":
+            self.send_response(200)
+            self.send_header("Content-type", 'application/json')
+            self.end_headers()
             self.wfile.write(json.dumps(server_list))
 
         elif type in self.mimetypes and os.path.exists(self.docroot + uri):
