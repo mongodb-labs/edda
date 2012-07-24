@@ -19,25 +19,24 @@ from datetime import datetime
 
 class test_rs_exit(unittest.TestCase):
     def test_criteria(self):
-        assert criteria("this should not pass") == -1
+        assert not criteria("this should not pass")
+        assert criteria("Thu Jun 14 11:43:28 dbexit: really exiting now") == 1
+        assert not criteria("Foo bar")
 
-        assert criteria("Thu Jun 14 11:43:28 dbexit: really exiting now") == 2
-        
-        assert criteria("Foo bar") == -1
 
     def test_process(self):
         date = datetime.now()
         self.check_state("Thu Jun 14 11:43:28 dbexit: really exiting now", 2, date)
-        
         self.check_state("Thu Jun 14 11:43:28 dbexit: really exiting now", 2, date)
-        assert process("This should fail", date) == None
+        assert not process("This should fail", date)
+
 
     def check_state(self, message, code, date):
         doc = process(message, date)
         print doc
         assert doc
         assert doc["type"] == "exit"
-        assert doc["original_message"] == message
+        assert doc["msg"] == message
         assert doc["info"]["server"] == "self"
         #print 'Server number is: *{0}*, testing against, *{1}*'.format(doc["info"]["server"], server)
 
