@@ -12,30 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
-# Example messages:
-
-# Tue Jul  3 10:20:15 [rsMgr] replset msgReceivedNewConfig version: version: 4
-# Tue Jul  3 10:20:15 [rsMgr] replSet info saving a newer config version to local.system.replset
-# Tue Jul  3 10:20:15 [rsMgr] replSet saveConfigLocally done
-# Tue Jul  3 10:20:15 [rsMgr] replSet info : additive change to configuration
-# Tue Jul  3 10:20:15 [rsMgr] replSet replSetReconfig new config saved locally
-
-
 import string
 import unittest
-from edda.filters.rs_reconfig import *
+
 from datetime import datetime
+from edda.filters.rs_reconfig import *
 
 
 class test_rs_reconfig(unittest.TestCase):
     def test_criteria(self):
-        assert criteria("this should not pass") == -1
+        assert not criteria("this should not pass")
         assert criteria("Tue Jul  3 10:20:15 [rsMgr]"
-            " replSet replSetReconfig new config saved locally") == 0
-        assert criteria("Tue Jul  3 10:20:15 [rsMgr]"
-            " replSet new config saved locally") == -1
-        assert criteria("Tue Jul  3 10:20:15 [rsMgr] replSet info : additive change to configuration") == -1
+            " replSet replSetReconfig new config saved locally") == 1
+        assert not criteria("Tue Jul  3 10:20:15 [rsMgr]"
+            " replSet new config saved locally")
+        assert not criteria("Tue Jul  3 10:20:15 [rsMgr] replSet info : additive change to configuration")
 
     def test_process(self):
         date = datetime.now()

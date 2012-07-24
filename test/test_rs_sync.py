@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import unittest
+
 from datetime import datetime
 from edda.filters.rs_sync import *
 
@@ -21,18 +22,18 @@ class test_rs_sync(unittest.TestCase):
     def test_criteria(self):
         assert (criteria("Tue Jun 12 13:08:47 [rsSync] replSet syncing to: localhost:27017") == 1)
         #should fail, absence of word "syncing": malformed message
-        assert criteria("Tue Jun 12 13:08:47 [rsSync] replSet to: localhost:27017") == -1
+        assert not criteria("Tue Jun 12 13:08:47 [rsSync] replSet to: localhost:27017")
         #should fail, absence of [rsSync]: malformed message
-        assert criteria("Tue Jun 12 13:08:47 replSet to: localhost:27017") == -1
+        assert not criteria("Tue Jun 12 13:08:47 replSet to: localhost:27017")
         #should pass, it doesn't test to see if there is a valid port number until test_syncingDiff: malformed message to fail at another point
         assert criteria("Tue Jun 12 13:08:47 [rsSync] replSet syncing to:") == 1
         #should pass in this situation, date is irrevealant
         assert criteria("[rsSync] replSet syncing to: localhost:27017") == 1
         #foo bar test from git comment
-        assert criteria("foo bar") == -1
+        assert not criteria("foo bar")
         assert criteria("[rsSync] replSet syncing to:") == 1
         assert criteria("[rsSync] syncing [rsSync]") == 1
-        assert criteria("This should fail!!! [rsSync]")
+        assert not criteria("This should fail!!! [rsSync]")
         return
 
 
@@ -65,5 +66,5 @@ class test_rs_sync(unittest.TestCase):
         assert doc["info"]["sync_server"] == server
         assert doc["info"]["server"] == "self"
 
-if __name__ == '__main__': 
+if __name__ == '__main__':
     unittest.main()
