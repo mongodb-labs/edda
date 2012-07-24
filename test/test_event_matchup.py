@@ -14,12 +14,13 @@
 
 # testing file for edda/post/event_matchup.py
 
-import unittest #there is a relative input problem with this file as well. MARKED TO FIX. 
+import unittest  # There is a relative input problem with this file as well. MARKED TO FIX.
 import logging
+import pymongo
+
 from pymongo import Connection
 from edda.run_edda import assign_address
 from edda.post.event_matchup import *
-import pymongo
 from datetime import datetime
 from datetime import timedelta
 from copy import deepcopy
