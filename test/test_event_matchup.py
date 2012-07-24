@@ -14,16 +14,17 @@
 
 # testing file for edda/post/event_matchup.py
 
-import unittest  # There is a relative input problem with this file as well. MARKED TO FIX.
 import logging
 import pymongo
+import unittest #there is a relative input problem with this file as well. MARKED TO FIX.
 
-from pymongo import Connection
-from edda.run_edda import assign_address
-from edda.post.event_matchup import *
+from copy import deepcopy
 from datetime import datetime
 from datetime import timedelta
-from copy import deepcopy
+from edda.run_edda import assign_address
+from edda.post.event_matchup import *
+from pymongo import Connection
+
 
 # -----------------------------
 # helper methods for testing
@@ -46,13 +47,13 @@ class test_event_matchup(unittest.TestCase):
         """Set up necessary server connection, and
         add n servers to the .servers collection.  Set
         the server_num to an int i < n, set the IP
-        field to i.i.i.i, and the hostname to i@10gen.com"""
+        field to i.i.i.i, and the self_name to i@10gen.com"""
         servers, entries, db = self.db_setup()
-        for i in range(1,n):
+        for i in range(1,n + 1):
             ip = str(i) + "." + str(i) + "." + str(i) + "." + str(i)
-            hostname = str(i) + "@10gen.com"
-            assign_address(self, i, ip, servers)
-            assign_address(self, i, hostname, servers)
+            self_name = str(i) + "@10gen.com"
+            assign_address(i, ip, False, servers)
+            assign_address(i, self_name, True, servers)
         return [servers, entries, db]
 
 
@@ -88,7 +89,7 @@ class test_event_matchup(unittest.TestCase):
             e["conn_IP"] = "jake@adventure.time"
         e["target"] = target
         e["date"] = date
-        e["summary"] = generate_summary(e)
+        e["summary"] = generate_summary(e, target)
         return e
 
 
@@ -118,7 +119,7 @@ class test_event_matchup(unittest.TestCase):
         info["state_code"] = 7
         info["server"] = "34@10gen.com:34343"
         date = datetime.now()
-        e1 = one_entry("status", "1", date, info)
+        e1 = self.one_entry("status", "1", date, info)
         server_entries["1"].append(e1)
         event = next_event(server_nums, server_entries, db, "AdventureTime")
         assert event
@@ -128,7 +129,7 @@ class test_event_matchup(unittest.TestCase):
         assert event["type"] == "status"
         assert event["date"] == date
         assert event["state"] == "ARBITER"
-        num = servers.find_one({"server_name": "34@10gen.com:34343"})
+        num = servers.find_one({"network_name": "34@10gen.com:34343"})
         assert event["target"] != num
     #    assert event["summary"] == "Server 34@10gen.com:34343 is now ARBITER"
 
@@ -144,8 +145,8 @@ class test_event_matchup(unittest.TestCase):
         info["state"] = "SECONDARY"
         info["state_code"] = 2
         info["server"] = "llama@the.zoo"
-        e1 = one_entry("status", "1", datetime.now(), info)
-        e2 = one_entry("status", "2", datetime.now(), info)
+        e1 = self.one_entry("status", "1", datetime.now(), info)
+        e2 = self.one_entry("status", "2", datetime.now(), info)
         server_entries["1"].append(e1)
         server_entries["2"].append(e2)
         # run next_event()
@@ -153,17 +154,14 @@ class test_event_matchup(unittest.TestCase):
         assert event
         assert event["witnesses"]
         assert len(event["witnesses"]) == 2
-        print event["witnesses"]
         assert "1" in event["witnesses"]
         assert "2" in event["witnesses"]
         assert not event["dissenters"]
         assert event["type"] == "status"
         assert event["state"] == "SECONDARY"
-        num = servers.find_one({"server_name": "llama@the.zoo"})["server_num"]
-        print num
+        num = servers.find_one({"network_name": "llama@the.zoo"})["server_num"]
         assert event["target"] == num
-        print event["summary"]
-        assert event["summary"] == "Server {0} is now SECONDARY".format(num)
+        assert event["summary"] == "llama@the.zoo is now SECONDARY".format(num)
 
 
     def test_next_event_four_servers(self):
@@ -179,10 +177,10 @@ class test_event_matchup(unittest.TestCase):
         info["state"] = "SECONDARY"
         info["state_code"] = 2
         info["server"] = "llama@the.zoo"
-        e1 = one_entry("status", "1", datetime.now(), info)
-        e2 = one_entry("status", "2", datetime.now(), info)
-        e3 = one_entry("status", "3", datetime.now(), info)
-        e4 = one_entry("status", "4", datetime.now(), info)
+        e1 = self.one_entry("status", "1", datetime.now(), info)
+        e2 = self.one_entry("status", "2", datetime.now(), info)
+        e3 = self.one_entry("status", "3", datetime.now(), info)
+        e4 = self.one_entry("status", "4", datetime.now(), info)
         server_entries["1"].append(e1)
         server_entries["2"].append(e2)
         server_entries["3"].append(e3)
@@ -199,9 +197,10 @@ class test_event_matchup(unittest.TestCase):
         assert not event["dissenters"]
         assert event["type"] == "status"
         assert event["state"] == "SECONDARY"
-        num = servers.find_one({"server_name": "llama@the.zoo"})["server_num"]
+        num = servers.find_one({"network_name": "llama@the.zoo"})["server_num"]
         assert event["target"] == num
-        assert event["summary"] == "Server {0} is now SECONDARY".format(num)
+        print event["summary"]
+        assert event["summary"] == "llama@the.zoo is now SECONDARY"
 
 
     def test_next_event_two_servers_no_match(self):
@@ -215,8 +214,8 @@ class test_event_matchup(unittest.TestCase):
         info1["state"], info2["state"] = "PRIMARY", "SECONDARY"
         info1["state_code"], info2["state_code"] = 1, 2
         info1["server"], info2["server"] = "llama@the.zoo", "llama@the.zoo"
-        e1 = one_entry("status", "1", datetime.now(), info1)
-        e2 = one_entry("status", "2", datetime.now(), info2)
+        e1 = self.one_entry("status", "1", datetime.now(), info1)
+        e2 = self.one_entry("status", "2", datetime.now(), info2)
         server_entries["1"].append(e1)
         server_entries["2"].append(e2)
         # run next_event()
@@ -253,8 +252,8 @@ class test_event_matchup(unittest.TestCase):
         info["state"] = "ARBITER"
         info["state_code"] = 7
         info["server"] = "sam@10gen.com"
-        e1 = one_entry("status", "1", datetime.now(), info)
-        e2 = one_entry("status", "2", datetime.now() + timedelta(seconds=4), info)
+        e1 = self.one_entry("status", "1", datetime.now(), info)
+        e2 = self.one_entry("status", "2", datetime.now() + timedelta(seconds=4), info)
         server_entries["1"].append(e1)
         server_entries["2"].append(e2)
         # run next_event()
@@ -279,7 +278,7 @@ class test_event_matchup(unittest.TestCase):
     def test_next_event_three_servers_one_lag(self):
         """Test next_event() on three servers with lag greater than
         allowable network delay affecting one server"""
-        servers, entries, db = db_setup_n_servers(3)
+        servers, entries, db = self.db_setup_n_servers(3)
         server_nums = {"1", "2", "3"}
         server_entries = {}
         server_entries["1"] = []
@@ -289,9 +288,9 @@ class test_event_matchup(unittest.TestCase):
         info["state"] = "ARBITER"
         info["state_code"] = 7
         info["server"] = "sam@10gen.com"
-        e1 = one_entry("status", "1", datetime.now(), info)
-        e2 = one_entry("status", "2", datetime.now() + timedelta(seconds=4), info)
-        e3 = one_entry("status", "3", datetime.now(), info)
+        e1 = self.one_entry("status", "1", datetime.now(), info)
+        e2 = self.one_entry("status", "2", datetime.now() + timedelta(seconds=4), info)
+        e3 = self.one_entry("status", "3", datetime.now(), info)
         server_entries["1"].append(e1)
         server_entries["2"].append(e2)
         server_entries["3"].append(e3)
@@ -321,7 +320,7 @@ class test_event_matchup(unittest.TestCase):
         """Test next_event() for an event where there
         are no entries for a certain server.  So,
         server_entries["name"] is None"""
-        servers, entries, db = db_setup_n_servers(2)
+        servers, entries, db = self.db_setup_n_servers(2)
         server_nums = {"1", "2"}
         server_entries = {}
         server_entries["1"] = []
@@ -330,7 +329,7 @@ class test_event_matchup(unittest.TestCase):
         info["state"] = "SECONDARY"
         info["state_code"] = 2
         info["server"] = "llama@the.zoo"
-        e1 = one_entry("status", "1", datetime.now(), info)
+        e1 = self.one_entry("status", "1", datetime.now(), info)
         server_entries["1"].append(e1)
         # run next_event()
         event = next_event(server_nums, server_entries, db, "AdventureTime")
@@ -346,7 +345,7 @@ class test_event_matchup(unittest.TestCase):
     def test_next_event_all_empty(self):
         """Test next_event() on all empty lists, but with
         server names present (i.e. we ran out of entries)"""
-        servers, entries, db = db_setup_n_servers(2)
+        servers, entries, db = self.db_setup_n_servers(2)
         server_nums = {"1", "2"}
         server_entries = {}
         server_entries["1"] = []
@@ -362,7 +361,7 @@ class test_event_matchup(unittest.TestCase):
         """Test next_event() for an event where there
         are no entries for a certain server.  So,
         server_entries["name"] is None"""
-        servers, entries, db = db_setup_n_servers(4)
+        servers, entries, db = self.db_setup_n_servers(4)
         server_nums = {"1", "2", "3", "4"}
         server_entries = {}
         server_entries["1"] = []
@@ -373,7 +372,7 @@ class test_event_matchup(unittest.TestCase):
         info["state"] = "SECONDARY"
         info["state_code"] = 2
         info["server"] = "llama@the.zoo"
-        e1 = one_entry("status", "1", datetime.now(), info)
+        e1 = self.one_entry("status", "1", datetime.now(), info)
         server_entries["1"].append(e1)
         # run next_event()
         event = next_event(server_nums, server_entries, db, "AdventureTime")
@@ -391,7 +390,7 @@ class test_event_matchup(unittest.TestCase):
     def test_next_event_two_matching_some_lag(self):
         """Test next_event() on lists from two servers
         with entries that do match, but are a second apart in time"""
-        servers, entries, db = db_setup_n_servers(2)
+        servers, entries, db = self.db_setup_n_servers(2)
         server_nums = {"1", "2"}
         server_entries = {}
         server_entries["1"] = []
@@ -400,16 +399,16 @@ class test_event_matchup(unittest.TestCase):
         info["state"] = "SECONDARY"
         info["state_code"] = 2
         info["server"] = "llama@the.zoo"
-        e1 = one_entry("status", "1", datetime.now(), info)
-        e2 = one_entry("status", "2", datetime.now() + timedelta(seconds=1), info)
+        e1 = self.one_entry("status", "1", datetime.now(), info)
+        e2 = self.one_entry("status", "2", datetime.now() + timedelta(seconds=1), info)
         server_entries["2"].append(e2)
         server_entries["1"].append(e1)
         info2 = {}
         info2["state"] = "FATAL"
         info2["state_code"] = 4
         info2["server"] = "finn@adventure.time"
-        e3 = one_entry("status", "1", datetime.now(), info2)
-        e4 = one_entry("status", "2", datetime.now() + timedelta(seconds=1), info2)
+        e3 = self.one_entry("status", "1", datetime.now(), info2)
+        e4 = self.one_entry("status", "2", datetime.now() + timedelta(seconds=1), info2)
         server_entries["1"].append(e3)
         server_entries["2"].append(e4)
         # run next_event()
@@ -451,109 +450,116 @@ class test_event_matchup(unittest.TestCase):
         assert target_server_match(a, b, servers)
 
 
-    def test_target_server_match_both_same_hostname(self):
+    def test_target_server_match_both_same_self_name(self):
         """Test method on two entries with corresponding
-        info.server fields, using hostnames"""
+        info.server fields, using self_names"""
         servers, entries, db = self.db_setup()
         a, b = self.generate_entries("sam@10gen.com", "sam@10gen.com")
         assert target_server_match(a, b, servers)
 
 
-    def test_target_server_match_both_different_hostnames(self):
+    def test_target_server_match_both_different_self_names(self):
         """Test method on two entries with different
-        info.server fields, both hostnames"""
+        info.server fields, both self_names
+        """
         servers, entries, db = self.db_setup()
         a, b = self.generate_entries("sam@10gen.com", "kaushal@10gen.com")
         a["origin_server"] = "1"
         b["origin_server"] = "2"
-        assign_address(self, 1, "finn@adventure.time", servers)
-        assign_address(self, 2, "jake@adventure.time", servers)
+        assign_address(1, "finn@adventure.time", True, servers)
+        assign_address(2, "jake@adventure.time", True, servers)
         assert not target_server_match(a, b, servers)
 
 
-    def test_target_server_match_both_different_IPs(self):
+    def test_target_server_match_both_different_network_names(self):
         """Test method on two entries with different
-        info.server fields, both IP addresses"""
+        info.server fields, both network addresses
+        """
         servers, entries, db = self.db_setup()
         a, b = self.generate_entries("1.2.3.4", "5.6.7.8")
         a["origin_server"] = "1"
         b["origin_server"] = "2"
-        assign_address(self, 1, "1.1.1.1", servers)
-        assign_address(self, 2, "2.2.2.2", servers)
+        assign_address(1, "1.1.1.1", False, servers)
+        assign_address(2, "2.2.2.2", False, servers)
         assert not target_server_match(a, b, servers)
 
 
-    def test_target_server_match_IP(self):
+    def test_target_server_match_network(self):
         """Test method on entries where one cites 'self',
-        other cites IP address"""
+        other cites network_name
+        """
         servers, entries, db = self.db_setup()
         a, b = self.generate_entries("self", "1.1.1.1")
         a["origin_server"] = "1"
         b["origin_server"] = "2"
-        assign_address(self, 1, "1.1.1.1", servers)
-        assign_address(self, 2, "2.2.2.2", servers)
+        assign_address(1, "1.1.1.1", False, servers)
+        assign_address(2, "2.2.2.2", False, servers)
         assert target_server_match(a, b, servers)
 
 
-    def test_target_server_match_hostname(self):
+    def test_target_server_match_self_name(self):
         """Test method on entries where one cites 'self',
-        other cites hostname"""
+        other cites self_name
+        """
         servers, entries, db = self.db_setup()
         a, b = self.generate_entries("jake@adventure.time", "self")
         a["origin_server"] = "1"
         b["origin_server"] = "2"
-        assign_address(self, 1, "finn@adventure.time", servers)
-        assign_address(self, 2, "jake@adventure.time", servers)
+        assign_address(1, "finn@adventure.time", True, servers)
+        assign_address(2, "jake@adventure.time", True, servers)
         assert target_server_match(a, b, servers)
 
 
     def test_target_server_match_IP_no_match(self):
         """Test method on entries where one cites 'self',
-        other cites incorrect IP"""
-        servers, entries, db = db_setup()
+        other cites incorrect network_name"""
+        servers, entries, db = self.db_setup()
         a, b = self.generate_entries("self", "4.4.4.4")
         a["origin_server"] = "1"
         b["origin_server"] = "2"
-        assign_address(self, 1, "1.1.1.1", servers)
-        assign_address(self, 2, "2.2.2.2", servers)
+        assign_address(1, "1.1.1.1", False, servers)
+        assign_address(2, "2.2.2.2", False, servers)
         assert not target_server_match(a, b, servers)
 
 
-    def test_target_server_match_hostname_no_match(self):
+    def test_target_server_match_self_name_no_match(self):
         """Test method on entries where one cites 'self',
-        other cites incorrect hostname"""
+        other cites incorrect network_name
+        """
         servers, entries, db = self.db_setup()
         a, b = self.generate_entries("self", "marcelene@adventure.time")
         a["origin_server"] = "1"
         b["origin_server"] = "2"
-        assign_address(self, 1, "iceking@adventure.time", servers)
-        assign_address(self, 2, "bubblegum@adventure.time", servers)
+        assign_address(1, "iceking@adventure.time", False, servers)
+        assign_address(2, "bubblegum@adventure.time", False, servers)
         assert not target_server_match(a, b, servers)
 
 
-    def test_target_server_match_unknown_IP(self):
+    def test_target_server_match_unknown_network_name(self):
         """Test method on entries where one cites 'self',
         other cites first server's true IP, but IP is not yet
-        recorded in the .servers collection"""
+        recorded in the .servers collection
+        """
         servers, entries, db = self.db_setup()
         a, b = self.generate_entries("self", "1.1.1.1")
         a["origin_server"] = "1"
         b["origin_server"] = "2"
-        assign_address(self, 1, "unknown", servers)
-        assign_address(self, 2, "2.2.2.2", servers)
+        assign_address(1, "unknown", False, servers)
+        assign_address(2, "2.2.2.2", False, servers)
         assert target_server_match(a, b, servers)
 
 
-    def test_target_server_match_unknown_hostname(self):
+    def test_target_server_match_unknown_self_name(self):
         """Test method on entries where one cites 'self',
-        other cites first server's true hostname, but
-        hostname is not yet recorded in the .servers collection"""
+        other cites first server's true self_name, but
+        self_name is not yet recorded in the .servers collection
+        """
         servers, entries, db = self.db_setup()
         a, b = self.generate_entries("treetrunks@adventure.time", "self")
         a["origin_server"] = "1"
         b["origin_server"] = "2"
-        assign_address(self, 1, "LSP@adventure.time", servers)
-        assign_address(self, 2, "unknown", servers)
+        assign_address(1, "LSP@adventure.time", True, servers)
+        assign_address(2, "unknown", True, servers)
         assert target_server_match(a, b, servers)
 
 
@@ -570,9 +576,9 @@ class test_event_matchup(unittest.TestCase):
         """Test on a list of events where there
         were no problems due to excessive network delay
         or skewed clocks"""
-        e1 = one_event("status", "finn@adventure.time", datetime.now())
-        e2 = one_event("status", "me@10.gen", datetime.now())
-        e3 = one_event("status", "you@10.gen", datetime.now())
+        e1 = self.one_event("status", "finn@adventure.time", datetime.now())
+        e2 = self.one_event("status", "me@10.gen", datetime.now())
+        e3 = self.one_event("status", "you@10.gen", datetime.now())
         e1["dissenters"] = []
         e2["dissenters"] = []
         e3["dissenters"] = []
@@ -596,8 +602,8 @@ class test_event_matchup(unittest.TestCase):
         of two events that do correspond, but were
         separated in time for next_event()"""
         date = datetime.now()
-        e1 = one_event("status", "finn@adventure.time", date)
-        e2 = one_event("status", "finn@adventure.time",
+        e1 = self.one_event("status", "finn@adventure.time", date)
+        e2 = self.one_event("status", "finn@adventure.time",
                        date + timedelta(seconds=5))
         e1["dissenters"] = ["2"]
         e1["witnesses"] = ["1"]
@@ -620,8 +626,8 @@ class test_event_matchup(unittest.TestCase):
         """Test two events from three different servers,
         with one at a lag"""
         date = datetime.now()
-        e1 = one_event("status", "finn@adventure.time", date)
-        e2 = one_event("status", "finn@adventure.time",
+        e1 = self.one_event("status", "finn@adventure.time", date)
+        e2 = self.one_event("status", "finn@adventure.time",
                        date + timedelta(seconds=5))
         e1["dissenters"] = ["2"]
         e1["witnesses"] = ["1", "3"]
@@ -645,8 +651,8 @@ class test_event_matchup(unittest.TestCase):
         """Test events from five servers, three on one
         event, and two on a later event"""
         date = datetime.now()
-        e1 = one_event("status", "finn@adventure.time", date)
-        e2 = one_event("status", "finn@adventure.time",
+        e1 = self.one_event("status", "finn@adventure.time", date)
+        e2 = self.one_event("status", "finn@adventure.time",
                        date + timedelta(seconds=5))
         e2["dissenters"] = ["4", "5"]
         e2["witnesses"] = ["1", "2", "3"]

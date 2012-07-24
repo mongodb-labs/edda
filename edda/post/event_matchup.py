@@ -198,16 +198,21 @@ def get_corresponding_events(servers, server_entries,
             server_entries[s].remove(add_entry)
             event["witnesses"].append(s)
         if not add:
-            LOGGER.debug("No matches found for server {0}, adding to dissenters".format(s))
+            LOGGER.debug("No matches found for server {0},"
+                         "adding to dissenters".format(s))
             event["dissenters"].append(s)
     return event
 
 
 def type_check(entry_a, entry_b):
     """Given two .entries documents, perform checks specific to
-    their type to see if they refer to corresponding events"""
+    their type to see if they refer to corresponding events
+    """
 
     if entry_a["type"] == entry_b["type"]:
+        if entry_a["type"] == "status":
+            if entry_a["info"]["state"] != entry_b["info"]["state"]:
+                return None
         return entry_a["type"]
 
     # handle exit messages carefully
