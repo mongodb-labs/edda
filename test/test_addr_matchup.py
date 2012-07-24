@@ -13,8 +13,7 @@
 # limitations under the License.
 
 from edda.post.server_matchup import *
-from test_clock_skew import generate_doc
-from edda.edda import assign_address
+from edda.run_edda import assign_address
 from pymongo import Connection
 from datetime import datetime, timedelta
 import logging
@@ -95,7 +94,7 @@ class test_addr_matchup(unittest.TestCase):
         """Test on a database with one unknown server"""
         servers, entries, clock_skew, db = self.db_setup()
         # insert one unknown server
-        assign_address(1, "unknown", servers)
+        assign_address(self, 1, "unknown", servers)
         assert address_matchup(db, "hp") == -1
 
 
@@ -671,6 +670,19 @@ class test_addr_matchup(unittest.TestCase):
         entries.insert(generate_doc("status", ix, "ARBITER", 7, y, datetime.now()))
         entries.insert(generate_doc("status", iy, "ARBITER", 7, x, datetime.now()))
         return
+
+
+    def generate_doc(self, type, server, label, code, target, date):
+        """Generate an entry"""
+        doc = {}
+        doc["type"] = type
+        doc["origin_server"] = server
+        doc["info"] = {}
+        doc["info"]["state"] = label
+        doc["info"]["state_code"] = code
+        doc["info"]["server"] = target
+        doc["date"] = date
+        return doc
 
 if __name__ == '__main__':
     unittest.main()

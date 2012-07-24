@@ -14,7 +14,7 @@
 
 import unittest
 from edda.post.clock_skew import *
-from edda.edda import assign_address
+from edda.run_edda import assign_address
 import pymongo
 from datetime import datetime
 from pymongo import Connection
