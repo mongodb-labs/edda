@@ -12,12 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import unittest #this doesn't exist any more...
-from edda.ui.frames import *
-from datetime import datetime
-from nose.plugins.skip import Skip, SkipTest
-from edda.post.event_matchup import generate_summary
 import string
+import unittest #this doesn't exist any more...
+
+from datetime import datetime
+from edda.post.event_matchup import generate_summary
+from edda.ui.frames import *
+from nose.plugins.skip import Skip, SkipTest
 
 #-------------------------
 # helper methods for tests
@@ -29,7 +30,8 @@ class test_frames(unittest.TestCase):
     def generate_event(self, target, type, more, w, d):
         """Generate an event of the specified type.
         More will be None unless the type specified requires
-        additional fields. w and d may be none."""
+        additional fields. w and d may be none.
+        """
         e = {}
         e["type"] = type
         # set type-specific fields
@@ -126,8 +128,8 @@ class test_frames(unittest.TestCase):
         """Test method on sync type event"""
         e = self.generate_event("4", "sync", {"sync_to":"3"}, ["4"], None)
         e2 = self.generate_event("2", "sync", {"sync_to":"1"}, ["2"], None)
-        f = info_by_type(new_frame(["4"]), e)
-        f2 = info_by_type(new_frame(["2"]), e2)
+        f = info_by_type(new_frame(["1", "2", "3", "4"]), e)
+        f2 = info_by_type(new_frame(["1", "2", "3", "4"]), e2)
         assert f
         assert f2
         assert f["syncs"]["4"]
@@ -157,7 +159,7 @@ class test_frames(unittest.TestCase):
         assert "1" in f["broken_links"]["3"]
         assert "2" in f["broken_links"]["3"]
         # links and syncs established
-        f = new_frame(["3"])
+        f = new_frame(["1", "2", "3", "4"])
         f["links"]["3"] = ["1", "2"]
         f["syncs"]["3"] = ["4"]
         f = info_by_type(f, e)
@@ -165,7 +167,6 @@ class test_frames(unittest.TestCase):
         assert not f["links"]["3"]
         assert not f["syncs"]["3"]
         assert f["broken_links"]["3"]
-        assert len(f["broken_links"]["3"]) == 2
         assert "1" in f["broken_links"]["3"]
         assert "2" in f["broken_links"]["3"]
 
