@@ -1,7 +1,7 @@
 Edda, a log visualizer for MongoDB
 ==================================
 
-Edda c 2012 10gen, the MongoDB Company
+Edda © 2012 10gen, the MongoDB Company
 
 Authors: Samantha Ritter, Kaushal Parikh
 
@@ -18,14 +18,6 @@ You must have the following installed as prerequisites for running Edda.
 
   see http://www.mongodb.org/downloads
 
-+ PyMongo, MongoDB's language driver for Python:
-
-  $ pip install pymongo
-
-+ argparse:
-
-  $ pip install argparse
-
 + Install a non-text-based browser
 
   We recommend Google Chrome or Firefox.
@@ -40,8 +32,8 @@ RUN
 Give the log files from your servers as command-line
 arguments to the visualizer:
 
-	  $ python edda.py --options filename1 filename2 ...
-(see python edda.py --help for options)
+	  $ python edda/run_edda.py --options filename1 filename2 ...
+(see python run_edda.py --help for options)
 
 Edda can read in multiple log files at once.
 
