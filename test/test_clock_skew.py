@@ -47,9 +47,11 @@ class test_clock_skew(unittest.TestCase):
     def test_clock_skew_one(self):
         """DB with entries from one server"""
         servers, entries, clock_skew, db = self.db_setup()
-        assign_address(1, "Sam", servers)
-        entries.insert(generate_doc("status", "Sam", "STARTUP2", 5, "Gaya", datetime.now()))
-        entries.insert(generate_doc("status", "Sam", "PRIMARY", 1, "self", datetime.now()))
+        assign_address(1, "Sam", False, servers)
+        entries.insert(self.generate_doc(
+                "status", "Sam", "STARTUP2", 5, "Gaya", datetime.now()))
+        entries.insert(self.generate_doc(
+                "status", "Sam", "PRIMARY", 1, "self", datetime.now()))
         server_clock_skew(db, "wildcats")
         doc = db["wildcats.clock_skew"].find_one()
         assert doc
@@ -61,16 +63,22 @@ class test_clock_skew(unittest.TestCase):
         """Two different servers"""
         servers, entries, clock_skew, db = self.db_setup()
         # fill in some servers
-        assign_address(1, "Sam", servers)
-        assign_address(2, "Nuni", servers)
+        assign_address(1, "Sam", False, servers)
+        assign_address(2, "Nuni", False, servers)
         # fill in some entries
-        entries.insert(generate_doc("status", "Sam", "SECONDARY", 2, "Nuni", datetime.now()))
-        entries.insert(generate_doc("status", "Sam", "DOWN", 8, "Nuni", datetime.now()))
-        entries.insert(generate_doc("status", "Sam", "STARTUP2", 5, "Nuni", datetime.now()))
+        entries.insert(self.generate_doc(
+                "status", "Sam", "SECONDARY", 2, "Nuni", datetime.now()))
+        entries.insert(self.generate_doc(
+                "status", "Sam", "DOWN", 8, "Nuni", datetime.now()))
+        entries.insert(self.generate_doc(
+                "status", "Sam", "STARTUP2", 5, "Nuni", datetime.now()))
         sleep(3)
-        entries.insert(generate_doc("status", "Nuni", "SECONDARY", 2, "self", datetime.now()))
-        entries.insert(generate_doc("status", "Nuni", "DOWN", 8, "self", datetime.now()))
-        entries.insert(generate_doc("status", "Nuni", "STARTUP2", 5, "self", datetime.now()))
+        entries.insert(self.generate_doc(
+                "status", "Nuni", "SECONDARY", 2, "self", datetime.now()))
+        entries.insert(self.generate_doc(
+                "status", "Nuni", "DOWN", 8, "self", datetime.now()))
+        entries.insert(self.generate_doc(
+                "status", "Nuni", "STARTUP2", 5, "self", datetime.now()))
         server_clock_skew(db, "wildcats")
         cursor = clock_skew.find()
         assert cursor.count() == 2
@@ -107,7 +115,8 @@ class test_clock_skew(unittest.TestCase):
 
     def test_clock_skew_three(self):
         """Test on a db that contains entries from
-        three different servers"""
+        three different servers
+        """
         pass
 
 
@@ -116,35 +125,35 @@ class test_clock_skew(unittest.TestCase):
         """A simple test of the detect() method in post.py"""
         servers, entries, clock_skew, db = self.db_setup()
         # fill in some servers
-        assign_address(1, "Erica", servers)
-        assign_address(2, "Alison", servers)
+        assign_address(1, "Erica", False, servers)
+        assign_address(2, "Alison", False, servers)
         # fill in some entries
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Erica", "STARTUP2", 5, "Alison", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Erica", "SECONDARY", 2, "Alison", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Erica", "PRIMARY", 1, "Alison", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Erica", "PRIMARY", 1, "self", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Erica", "SECONDARY", 2, "self", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Erica", "DOWN", 8, "self", datetime.now()))
         # wait for a bit (skew the clocks)
         sleep(3)
         # fill in more entries
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Alison", "STARTUP2", 5, "self", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Alison", "SECONDARY", 2, "self", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Alison", "PRIMARY", 1, "self", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Alison", "PRIMARY", 1, "Erica", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Alison", "SECONDARY", 2, "Erica", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Alison", "DOWN", 8, "Erica", datetime.now()))
         # check a - b
         skews1 = detect("Erica", "Alison", db, "wildcats")
@@ -173,24 +182,25 @@ class test_clock_skew(unittest.TestCase):
 
     def test_detect_a_has_more(self):
         """Test the scenario where server a has more
-        entries about b than b has about itself"""
+        entries about b than b has about itself
+        """
         servers, entries, clock_skew, db = self.db_setup()
         # fill in some servers
-        assign_address(1, "Erica", servers)
-        assign_address(2, "Alison", servers)
+        assign_address(1, "Erica", False, servers)
+        assign_address(2, "Alison", False, servers)
         # fill in some entries
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Erica", "STARTUP2", 5, "Alison", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Erica", "SECONDARY", 2, "Alison", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Erica", "PRIMARY", 1, "Alison", datetime.now()))
         # wait for a bit (skew the clocks)
         sleep(3)
         # fill in more entries
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Alison", "SECONDARY", 2, "self", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Alison", "PRIMARY", 1, "self", datetime.now()))
         # first pair doesn't match
         skews1 = detect("Erica", "Alison", db, "wildcats")
@@ -205,11 +215,11 @@ class test_clock_skew(unittest.TestCase):
         # replace some entries
         entries.remove(
             {"origin_server": "Alison"})
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Alison", "STARTUP2", 5, "self", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Alison", "STARTUP2", 5, "self", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Alison", "SECONDARY", 2, "self", datetime.now()))
         # second pair doesn't match
         skews2 = detect("Erica", "Alison", db, "wildcats")
@@ -221,34 +231,36 @@ class test_clock_skew(unittest.TestCase):
 
     def test_detect_b_has_more(self):
         """Test the case where server b has more
-        entries about itself than server a has about b"""
+        entries about itself than server a has about b
+        """
         pass
 
 
     def test_two_different_skews(self):
         """Test the case where corresponding entries
-        are skewed randomly in time"""
+        are skewed randomly in time
+        """
         # only tests a-b, not b-a
         servers, entries, clock_skew, db = self.db_setup()
         # fill in some servers
-        assign_address(1, "Hannah", servers)
-        assign_address(2, "Mel", servers)
+        assign_address(1, "Hannah", False, servers)
+        assign_address(2, "Mel", False, servers)
         # these are skewed by 3 seconds
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Hannah", "PRIMARY", 1, "Mel", datetime.now()))
         sleep(3)
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Mel", "PRIMARY", 1, "self", datetime.now()))
         # one other message to break the matching pattern
         sleep(2)
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Hannah", "ARBITER", 7, "Mel", datetime.now()))
         sleep(2)
         # these are skewed by 5 seconds
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Hannah", "SECONDARY", 2, "Mel", datetime.now()))
         sleep(5)
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Mel", "SECONDARY", 2, "self", datetime.now()))
         skews = detect("Hannah", "Mel", db, "wildcats")
         assert skews
@@ -263,33 +275,33 @@ class test_clock_skew(unittest.TestCase):
         """Test the case where there is no clock skew."""
         servers, entries, clock_skew, db = self.db_setup()
         # fill in some servers
-        assign_address(1, "Sam", servers)
-        assign_address(2, "Gaya", servers)
+        assign_address(1, "Sam", False, servers)
+        assign_address(2, "Gaya", False, servers)
         # fill in some entries (a - b)
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Sam", "STARTUP2", 5, "Gaya", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Gaya", "STARTUP2", 5, "self", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Sam", "ARBITER", 7, "Gaya", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Gaya", "ARBITER", 7, "self", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Sam", "DOWN", 8, "Gaya", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Gaya", "DOWN", 8, "self", datetime.now()))
         # fill in some entries (b - a)
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Gaya", "STARTUP2", 5, "Sam", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Sam", "STARTUP2", 5, "self", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Gaya", "STARTUP2", 5, "Sam", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Sam", "STARTUP2", 5, "self", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Gaya", "STARTUP2", 5, "Sam", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Sam", "STARTUP2", 5, "self", datetime.now()))
         skews1 = detect("Sam", "Gaya", db, "wildcats")
         skews2 = detect("Gaya", "Sam", db, "wildcats")
@@ -299,38 +311,39 @@ class test_clock_skew(unittest.TestCase):
 
     def test_detect_network_delay(self):
         """Test the case where there are time differences
-        too small to be considered clock skew"""
+        too small to be considered clock skew
+        """
         servers, entries, clock_skew, db = self.db_setup()
         # fill in some servers
-        assign_address(1, "Erica", servers)
-        assign_address(2, "Alison", servers)
+        assign_address(1, "Erica", False, servers)
+        assign_address(2, "Alison", False, servers)
         # fill in some entries
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Erica", "STARTUP2", 5, "Alison", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Erica", "SECONDARY", 2, "Alison", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Erica", "PRIMARY", 1, "Alison", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Erica", "PRIMARY", 1, "self", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Erica", "SECONDARY", 2, "self", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Erica", "DOWN", 8, "self", datetime.now()))
         # wait for a bit (skew the clocks)
         sleep(1)
         # fill in more entries
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Alison", "STARTUP2", 5, "self", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Alison", "SECONDARY", 2, "self", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Alison", "PRIMARY", 1, "self", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Alison", "PRIMARY", 1, "Erica", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Alison", "SECONDARY", 2, "Erica", datetime.now()))
-        entries.insert(generate_doc(
+        entries.insert(self.generate_doc(
             "status", "Alison", "DOWN", 8, "Erica", datetime.now()))
         # run detect()!
         skews1 = detect("Erica", "Alison", db, "wildcats")
@@ -339,10 +352,10 @@ class test_clock_skew(unittest.TestCase):
         assert not skews2
 
 
-    def generate_doc(self, type, server, label, code, target, date):
+    def generate_doc(self, d_type, server, label, code, target, date):
         """Generate an entry"""
         doc = {}
-        doc["type"] = type
+        doc["type"] = d_type
         doc["origin_server"] = server
         doc["info"] = {}
         doc["info"]["state"] = label
@@ -352,7 +365,7 @@ class test_clock_skew(unittest.TestCase):
         return doc
 
 
-    def test_clock_skew_doc():
+    def test_clock_skew_doc(self):
         """Simple tests of the clock_skew_doc() method
         in post.py"""
         doc = clock_skew_doc("6")

@@ -40,7 +40,7 @@ def server_clock_skew(db, coll_name):
     servers = db[coll_name + ".servers"]
 
     for doc_a in servers.find():
-        a_name = doc_a["server_name"]
+        a_name = doc_a["network_name"]
         a_num = str(doc_a["server_num"])
         if a_name == "unknown":
             logger.debug("Skipping unknown server")
@@ -50,7 +50,7 @@ def server_clock_skew(db, coll_name):
             skew_a = clock_skew_doc(a_num)
             clock_skew.save(skew_a)
         for doc_b in servers.find():
-            b_name = doc_b["server_name"]
+            b_name = doc_b["network_name"]
             b_num = str(doc_b["server_num"])
             if b_name == "unknown":
                 logger.debug("Skipping unknown server")

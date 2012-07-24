@@ -112,21 +112,21 @@ class eddaHTTPRequest(BaseHTTPRequestHandler):
             uri = "edda.html"
 
         # find type of file
-        (temp, dot, type) = uri.rpartition('.')
+        (temp, dot, file_type) = uri.rpartition('.')
         if len(dot) == 0:
-            type = ""
+            file_type = ""
 
-        return (uri, args, type)
+        return (uri, args, file_type)
 
     def do_GET(self):
         # do nothing with message
         # return data
-        (uri, args, type) = self.process_uri("GET")
+        (uri, args, file_type) = self.process_uri("GET")
 
-        if len(type) == 0:
+        if len(file_type) == 0:
             return
 
-        if type == "admin":
+        if file_type == "admin":
             #admin = {}
             admin["total_frame_count"] = len(data)
             self.send_response(200)
@@ -134,12 +134,12 @@ class eddaHTTPRequest(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(json.dumps(admin))
 
-        elif type == "all_frames":
+        elif file_type == "all_frames":
             self.wfile.write(json.dumps(data))
 
         # format of a batch request is
         # 'start-end.batch'
-        elif type == "batch":
+        elif file_type == "batch":
             uri = uri[:len(uri) - 6]
             parts = uri.partition("-")
             try:
@@ -156,7 +156,7 @@ class eddaHTTPRequest(BaseHTTPRequestHandler):
             if end < 0:
                 return
             if start < 0:
-                start = 0
+                start = 0;
             if start >= len(data):
                 return
             if end >= len(data):
@@ -165,24 +165,25 @@ class eddaHTTPRequest(BaseHTTPRequestHandler):
             for i in range(start, end):
                 if not str(i) in data:
                     break
-                batch[str(i)] = data[str(i)]
+                batch[str(i)] = data[str(i)];
 
             self.send_response(200)
             self.send_header("Content-type", 'application/json')
             self.end_headers()
             self.wfile.write(json.dumps(batch))
 
-        elif type == "servers":
+
+        elif file_type == "servers":
             self.send_response(200)
             self.send_header("Content-type", 'application/json')
             self.end_headers()
             self.wfile.write(json.dumps(server_list))
 
-        elif type in self.mimetypes and os.path.exists(self.docroot + uri):
+        elif file_type in self.mimetypes and os.path.exists(self.docroot + uri):
             f = open(self.docroot + uri, 'r')
 
             self.send_response(200, 'OK')
-            self.send_header('Content-type', self.mimetypes[type])
+            self.send_header('Content-type', self.mimetypes[file_type])
             self.end_headers()
             self.wfile.write(f.read())
             f.close()
