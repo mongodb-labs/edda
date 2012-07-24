@@ -41,8 +41,9 @@ class test_addr_matchup(unittest.TestCase):
 
 
     def test_eliminate_s_bigger(self):
-        """Test eliminate() on two lists where the "small"
-        list actually has more entries than the "big" list"""
+        """ Test eliminate() on two lists where the "small"
+            list actually has more entries than the "big" list
+        """
         assert eliminate(["2", "3", "4"], ["2", "3"]) == None
 
 

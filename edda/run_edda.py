@@ -25,19 +25,12 @@ in edda/filters/template.py.
 __version__ = "0.1"
 
 import argparse
-import getpass
-import logging
-import os
-import re
 import sys
-import gzip
 
 from bson import objectid
 from datetime import datetime
 from filters import *
 from post.server_matchup import address_matchup
-from post.clock_skew import server_clock_skew
-from post.replace_clock_skew import replace_clock_skew
 from post.event_matchup import event_matchup
 from pymongo import Connection
 from supporting_methods import *
@@ -56,6 +49,7 @@ PARSERS = [
 
 LOGGER = None
 
+
 def main():
     """This is the main function of edda.  It takes log
     files as command line arguments and sends each
@@ -71,7 +65,7 @@ def main():
 
     # argparse methods
     parser = argparse.ArgumentParser(
-        description = 'Process and visualize log files from mongo servers')
+    description='Process and visualize log files from mongo servers')
     parser.add_argument('--port')
     parser.add_argument('--host')
     parser.add_argument('--verbose', '-v', action='count')
@@ -104,7 +98,7 @@ def main():
     else:
         coll_name = str(objectid.ObjectId())
     # for easier debugging:
-    print "edda is storing data under collection name {0}".format(coll_name);
+    print "edda is storing data under collection name {0}".format(coll_name)
 
     # configure logger
     # use to switch from console to file: logname = "edda_logs/" + name + ".log"
@@ -261,9 +255,9 @@ def main():
 
 
 def traffic_control(msg, date):
-    """Passes given message through a number of filters.  If a
-    it fits the criteria of a given filter, that filter returns
-    a document, which this function will pass up to main().
+    """ Passes given message through a number of filters.  If a
+        it fits the criteria of a given filter, that filter returns
+        a document, which this function will pass up to main().
     """
 
     for process in PARSERS:
@@ -273,8 +267,8 @@ def traffic_control(msg, date):
 
 
 def get_server_names(db, coll_name):
-    """Format the information in the .servers collection
-    into a data structure to be sent to the JavaScript client.
+    """ Format the information in the .servers collection
+        into a data structure to be sent to the JavaScript client.
     """
     server_names = {}
     server_names["self_name"] = {}
@@ -286,8 +280,8 @@ def get_server_names(db, coll_name):
 
 
 def get_admin_info(file_names):
-    """Format administrative information to send to the
-    JavaScript client.
+    """ Format administrative information to send to the
+        JavaScript client.
     """
     admin_info = {}
     admin_info["file_names"] = file_names

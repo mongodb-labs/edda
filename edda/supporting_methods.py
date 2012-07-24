@@ -16,7 +16,6 @@
 
 
 import logging
-import pymongo
 import re
 
 from datetime import datetime
@@ -39,7 +38,7 @@ def capture_address(msg):
     'address:port#'
     """
     # capture the address, be it hostname or IP
-    m = ADDRESS.search(msg[20:]) # skip date field
+    m = ADDRESS.search(msg[20:])  # skip date field
     if not m:
         return None
     return m.group(0)
@@ -78,7 +77,7 @@ def get_server_num(addr, self_name, servers):
     # no .servers entry found for this target, make a new one
     # make sure that we do not overwrite an existing server's index
     for i in range(1, 50):
-        if not servers.find_one({"server_num" : str(i)}):
+        if not servers.find_one({"server_num": str(i)}):
             logger.info("No server entry found for target server {0}".format(addr))
             logger.info("Adding {0} to the .servers collection with server_num {1}"
                         .format(addr, i))
@@ -143,7 +142,7 @@ def assign_address(num, addr, self_name, servers):
     if not doc:
         if addr != "unknown":
             if self_name:
-                doc = servers.find_one({"self_name" : addr})
+                doc = servers.find_one({"self_name": addr})
             if not doc:
                 doc = servers.find_one({"network_name": addr})
             if doc:
@@ -184,5 +183,3 @@ def date_parser(message):
         return datetime.strptime(newMessage, "%m %d %H:%M:%S")
     except (KeyError, ValueError):
         return None
-
-

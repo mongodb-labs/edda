@@ -13,11 +13,9 @@
 
 #!/usr/bin/env python
 import logging
-import pymongo
 import string
 
 from copy import deepcopy
-from datetime import datetime
 from operator import itemgetter
 
 LOGGER = logging.getLogger(__name__)

@@ -16,14 +16,13 @@
 
 
 import logging
-import pymongo
-import re
 
 from datetime import timedelta
-from operator import itemgetter
 from edda.supporting_methods import *
+from operator import itemgetter
 
 LOGGER = logging.getLogger(__name__)
+
 
 def event_matchup(db, coll_name):
     """This method sorts through the db's entries to

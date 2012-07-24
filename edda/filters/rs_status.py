@@ -14,9 +14,6 @@
 
 #!/usr/bin/env python
 
-
-import re
-
 from edda.supporting_methods import capture_address
 
 

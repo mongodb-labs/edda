@@ -21,6 +21,7 @@ START_CONN_NUMBER = re.compile("#[0-9]+")
 END_CONN_NUMBER = re.compile("\[conn[0-9]+\]")
 ANY_NUMBER = re.compile("[0-9]+")
 
+
 def criteria(msg):
     """Determing if the given message is an instance
     of a connection type message
@@ -47,7 +48,6 @@ def process(msg, date):
               }
     }
     """
-    logger = logging.getLogger(__name__)
 
     result = criteria(msg)
     if not result:
@@ -66,6 +66,7 @@ def process(msg, date):
 
 
 def new_conn(msg, doc):
+    logger = logging.getLogger(__name__)
     """Generate a document for a new connection event."""
     doc["info"]["subtype"] = "new_conn"
 
@@ -89,6 +90,7 @@ def new_conn(msg, doc):
 
 
 def ended(msg, doc):
+    logger = logging.getLogger(__name__)
     """Generate a document for an end-of-connection event."""
     doc["info"]["subtype"] = "end_conn"
 

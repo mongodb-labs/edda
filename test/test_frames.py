@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import unittest #this doesn't exist any more...
-from edda.post.frames import *
+from edda.ui.frames import *
 from datetime import datetime
 from nose.plugins.skip import Skip, SkipTest
 from edda.post.event_matchup import generate_summary

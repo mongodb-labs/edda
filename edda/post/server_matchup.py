@@ -14,15 +14,12 @@
 
 #!/usr/bin/env python
 import logging
-import operator
-import pymongo
-import re
 
 from copy import deepcopy
-from .clock_skew import server_clock_skew
 from edda.supporting_methods import *
 
 LOGGER = logging.getLogger(__name__)
+
 
 def address_matchup(db, coll_name):
     """Runs an algorithm to match servers with their
@@ -83,7 +80,6 @@ def address_matchup(db, coll_name):
             mentioned_names.append(addr)
 
     LOGGER.debug("All mentioned network names:\n{0}".format(mentioned_names))
-
 
     last_change = -1
     round = 0

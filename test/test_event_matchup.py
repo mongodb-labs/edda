@@ -17,7 +17,7 @@
 import unittest #there is a relative input problem with this file as well. MARKED TO FIX. 
 import logging
 from pymongo import Connection
-from edda.edda import assign_address
+from edda.run_edda import assign_address
 from edda.post.event_matchup import *
 import pymongo
 from datetime import datetime
@@ -46,12 +46,12 @@ class test_event_matchup(unittest.TestCase):
         add n servers to the .servers collection.  Set
         the server_num to an int i < n, set the IP
         field to i.i.i.i, and the hostname to i@10gen.com"""
-        servers, entries, db = db_setup()
+        servers, entries, db = self.db_setup()
         for i in range(1,n):
             ip = str(i) + "." + str(i) + "." + str(i) + "." + str(i)
             hostname = str(i) + "@10gen.com"
-            self.assign_address(i, ip, servers)
-            self.assign_address(i, hostname, servers)
+            assign_address(self, i, ip, servers)
+            assign_address(self, i, hostname, servers)
         return [servers, entries, db]
 
 
@@ -437,7 +437,7 @@ class test_event_matchup(unittest.TestCase):
     def test_target_server_match_both_self(self):
         """Test method on two entries whose info.server
         field is 'self'"""
-        servers, entries, db = db_setup()
+        servers, entries, db = self.db_setup()
         a, b = self.generate_entries("self", "self")
         assert not target_server_match(a, b, servers)
 
@@ -445,7 +445,7 @@ class test_event_matchup(unittest.TestCase):
     def test_target_server_match_both_same_IP(self):
         """Test method on two entries with corresponding
         info.server fields, using IP addresses"""
-        servers, entries, db = db_setup()
+        servers, entries, db = self.db_setup()
         a, b = self.generate_entries("1.2.3.4", "1.2.3.4")
         assert target_server_match(a, b, servers)
 
@@ -453,7 +453,7 @@ class test_event_matchup(unittest.TestCase):
     def test_target_server_match_both_same_hostname(self):
         """Test method on two entries with corresponding
         info.server fields, using hostnames"""
-        servers, entries, db = db_setup()
+        servers, entries, db = self.db_setup()
         a, b = self.generate_entries("sam@10gen.com", "sam@10gen.com")
         assert target_server_match(a, b, servers)
 
@@ -461,48 +461,48 @@ class test_event_matchup(unittest.TestCase):
     def test_target_server_match_both_different_hostnames(self):
         """Test method on two entries with different
         info.server fields, both hostnames"""
-        servers, entries, db = db_setup()
+        servers, entries, db = self.db_setup()
         a, b = self.generate_entries("sam@10gen.com", "kaushal@10gen.com")
         a["origin_server"] = "1"
         b["origin_server"] = "2"
-        self.assign_address(1, "finn@adventure.time", servers)
-        self.assign_address(2, "jake@adventure.time", servers)
+        assign_address(self, 1, "finn@adventure.time", servers)
+        assign_address(self, 2, "jake@adventure.time", servers)
         assert not target_server_match(a, b, servers)
 
 
     def test_target_server_match_both_different_IPs(self):
         """Test method on two entries with different
         info.server fields, both IP addresses"""
-        servers, entries, db = db_setup()
+        servers, entries, db = self.db_setup()
         a, b = self.generate_entries("1.2.3.4", "5.6.7.8")
         a["origin_server"] = "1"
         b["origin_server"] = "2"
-        self.assign_address(1, "1.1.1.1", servers)
-        self.assign_address(2, "2.2.2.2", servers)
+        assign_address(self, 1, "1.1.1.1", servers)
+        assign_address(self, 2, "2.2.2.2", servers)
         assert not target_server_match(a, b, servers)
 
 
     def test_target_server_match_IP(self):
         """Test method on entries where one cites 'self',
         other cites IP address"""
-        servers, entries, db = db_setup()
+        servers, entries, db = self.db_setup()
         a, b = self.generate_entries("self", "1.1.1.1")
         a["origin_server"] = "1"
         b["origin_server"] = "2"
-        self.assign_address(1, "1.1.1.1", servers)
-        self.assign_address(2, "2.2.2.2", servers)
+        assign_address(self, 1, "1.1.1.1", servers)
+        assign_address(self, 2, "2.2.2.2", servers)
         assert target_server_match(a, b, servers)
 
 
     def test_target_server_match_hostname(self):
         """Test method on entries where one cites 'self',
         other cites hostname"""
-        servers, entries, db = db_setup()
+        servers, entries, db = self.db_setup()
         a, b = self.generate_entries("jake@adventure.time", "self")
         a["origin_server"] = "1"
         b["origin_server"] = "2"
-        self.assign_address(1, "finn@adventure.time", servers)
-        self.assign_address(2, "jake@adventure.time", servers)
+        assign_address(self, 1, "finn@adventure.time", servers)
+        assign_address(self, 2, "jake@adventure.time", servers)
         assert target_server_match(a, b, servers)
 
 
@@ -513,20 +513,20 @@ class test_event_matchup(unittest.TestCase):
         a, b = self.generate_entries("self", "4.4.4.4")
         a["origin_server"] = "1"
         b["origin_server"] = "2"
-        self.assign_address(1, "1.1.1.1", servers)
-        self.assign_address(2, "2.2.2.2", servers)
+        assign_address(self, 1, "1.1.1.1", servers)
+        assign_address(self, 2, "2.2.2.2", servers)
         assert not target_server_match(a, b, servers)
 
 
     def test_target_server_match_hostname_no_match(self):
         """Test method on entries where one cites 'self',
         other cites incorrect hostname"""
-        servers, entries, db = db_setup()
+        servers, entries, db = self.db_setup()
         a, b = self.generate_entries("self", "marcelene@adventure.time")
         a["origin_server"] = "1"
         b["origin_server"] = "2"
-        self.assign_address(1, "iceking@adventure.time", servers)
-        self.assign_address(2, "bubblegum@adventure.time", servers)
+        assign_address(self, 1, "iceking@adventure.time", servers)
+        assign_address(self, 2, "bubblegum@adventure.time", servers)
         assert not target_server_match(a, b, servers)
 
 
@@ -534,12 +534,12 @@ class test_event_matchup(unittest.TestCase):
         """Test method on entries where one cites 'self',
         other cites first server's true IP, but IP is not yet
         recorded in the .servers collection"""
-        servers, entries, db = db_setup()
+        servers, entries, db = self.db_setup()
         a, b = self.generate_entries("self", "1.1.1.1")
         a["origin_server"] = "1"
         b["origin_server"] = "2"
-        self.assign_address(1, "unknown", servers)
-        self.assigfn_address(2, "2.2.2.2", servers)
+        assign_address(self, 1, "unknown", servers)
+        assign_address(self, 2, "2.2.2.2", servers)
         assert target_server_match(a, b, servers)
 
 
@@ -547,12 +547,12 @@ class test_event_matchup(unittest.TestCase):
         """Test method on entries where one cites 'self',
         other cites first server's true hostname, but
         hostname is not yet recorded in the .servers collection"""
-        servers, entries, db = db_setup()
+        servers, entries, db = self.db_setup()
         a, b = self.generate_entries("treetrunks@adventure.time", "self")
         a["origin_server"] = "1"
         b["origin_server"] = "2"
-        self.assign_address(1, "LSP@adventure.time", servers)
-        self.assign_address(2, "unknown", servers)
+        assign_address(self, 1, "LSP@adventure.time", servers)
+        assign_address(self, 2, "unknown", servers)
         assert target_server_match(a, b, servers)
 
 

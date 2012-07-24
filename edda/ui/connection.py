@@ -156,7 +156,7 @@ class eddaHTTPRequest(BaseHTTPRequestHandler):
             if end < 0:
                 return
             if start < 0:
-                start = 0;
+                start = 0
             if start >= len(data):
                 return
             if end >= len(data):
@@ -165,13 +165,12 @@ class eddaHTTPRequest(BaseHTTPRequestHandler):
             for i in range(start, end):
                 if not str(i) in data:
                     break
-                batch[str(i)] = data[str(i)];
+                batch[str(i)] = data[str(i)]
 
             self.send_response(200)
             self.send_header("Content-type", 'application/json')
             self.end_headers()
             self.wfile.write(json.dumps(batch))
-
 
         elif type == "servers":
             self.send_response(200)

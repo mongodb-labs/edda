@@ -24,8 +24,8 @@ LOGGER = logging.getLogger(__name__)
 
 
 def criteria(msg):
-    """Does the given log line fit the criteria for this filter?
-    If yes, return an integer code.  If not, return 0.
+    """ Does the given log line fit the criteria for this filter?
+        If yes, return an integer code.  If not, return 0.
     """
     if '[initandlisten] MongoDB starting' in msg:
         return 1
