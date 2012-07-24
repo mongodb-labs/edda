@@ -60,19 +60,25 @@ class test_rs_status(unittest.TestCase):
         self.check_state("[rsSync] replSet member "
             "encountered FATAL ERROR", "FATAL", 4, "self")
         self.check_state("[rsStart] replSet STARTUP2", "STARTUP2", 5, "self")
-        self.check_state("[rsSync] replSet member 10.4.3.56:45456 is now in"
-            " state UNKNOWN", "UNKNOWN", 6, "10.4.3.56:45456")
-        self.check_state("[rsHealthPoll] replSet member localhost:27019"
-            " is now in state ARBITER", "ARBITER", 7, "localhost:27019")
-        self.check_state("[rsHealthPoll] replSet member "
-            "localhost:27017 is now in state DOWN", "DOWN", 8, "localhost:27017")
-        self.check_state("[rsSync] replSet member example@domain.com:22234"
+        self.check_state(
+            "Mon Jul 11 11:56:32 [rsSync] replSet member"
+            " 10.4.3.56:45456 is now in state UNKNOWN",
+            "UNKNOWN", 6, "10.4.3.56:45456")
+        self.check_state("Mon Jul 11 11:56:32"
+                         " [rsHealthPoll] replSet member localhost:27019"
+                         " is now in state ARBITER", "ARBITER", 7, "localhost:27019")
+        self.check_state("Mon Jul 11 11:56:32"
+                         " [rsHealthPoll] replSet member "
+                         "localhost:27017 is now in state DOWN", "DOWN", 8, "localhost:27017")
+        self.check_state("Mon Jul 11 11:56:32"
+                         " [rsSync] replSet member example@domain.com:22234"
             " is now in state ROLLBACK", "ROLLBACK", 9, "example@domain.com:22234")
-        self.check_state("[rsSync] replSet member my-MacBook-pro:43429 has been REMOVED"
+        self.check_state("Mon Jul 11 11:56:32"
+                         " [rsSync] replSet member my-MacBook-pro:43429 has been REMOVED"
             "", "REMOVED", 10, "my-MacBook-pro:43429")
 
 
-    def test_startup_with_IP(self):
+    def test_startup_with_network_name(self):
         """Test programs's ability to capture IP address from
         a STARTUP message"""
         self.check_state_with_addr("Mon Jun 11 15:56:16 [rsStart]"
