@@ -80,7 +80,7 @@ class test_frames(unittest.TestCase):
 
     def test_info_by_type_status(self):
         """Test method on status type event"""
-        e = generate_event("3", "status", {"state": "PRIMARY"}, ["3"], None)
+        e = self.generate_event("3", "status", {"state": "PRIMARY"}, ["3"], None)
         f = info_by_type(new_frame(["3"]), e)
         assert f
         assert f["servers"]["3"] == "PRIMARY"
@@ -88,14 +88,14 @@ class test_frames(unittest.TestCase):
 
     def test_info_by_type_reconfig(self):
         """Test method on reconfig type event"""
-        e = generate_event("1", "reconfig", None, ["1"], None)
+        e = self.generate_event("1", "reconfig", None, ["1"], None)
         f = info_by_type(new_frame(["1"]), e)
         assert f
 
 
     def test_info_by_type_new_conn(self):
         """Test method on new_conn type event"""
-        e = generate_event("1", "new_conn",
+        e = self.generate_event("1", "new_conn",
                            {"conn_addr": "1.2.3.4",
                             "conn_number": 14}, ["1"], None)
         f = info_by_type(new_frame(["1"]), e)
@@ -108,7 +108,7 @@ class test_frames(unittest.TestCase):
     def test_info_by_type_end_conn(self):
         """Test method on end_conn type event"""
         # first, when there was no user stored
-        e = generate_event("1", "end_conn",
+        e = self.generate_event("1", "end_conn",
                            {"conn_addr": "1.2.3.4",
                             "conn_number": 14}, ["1"], None)
         f = info_by_type(new_frame(["1"]), e)
@@ -124,8 +124,8 @@ class test_frames(unittest.TestCase):
 
     def test_info_by_type_sync(self):
         """Test method on sync type event"""
-        e = generate_event("4", "sync", {"sync_to":"3"}, ["4"], None)
-        e2 = generate_event("2", "sync", {"sync_to":"1"}, ["2"], None)
+        e = self.generate_event("4", "sync", {"sync_to":"3"}, ["4"], None)
+        e2 = self.generate_event("2", "sync", {"sync_to":"1"}, ["2"], None)
         f = info_by_type(new_frame(["4"]), e)
         f2 = info_by_type(new_frame(["2"]), e2)
         assert f
@@ -141,7 +141,7 @@ class test_frames(unittest.TestCase):
     def test_info_by_type_exit(self):
         """Test method on exit type event"""
         # no links established
-        e = generate_event("3", "status", {"state": "DOWN"}, ["3"], None)
+        e = self.generate_event("3", "status", {"state": "DOWN"}, ["3"], None)
         f = info_by_type(new_frame(["3"]), e)
         assert f
         assert not f["links"]["3"]
@@ -210,7 +210,7 @@ class test_frames(unittest.TestCase):
     def test_w_d_equal_w_d(self):
         """Test method an an entry with an
         equal number of witnesses and dissenters"""
-        e = generate_event("1", "status", {"state":"ARBITER"}, ["1", "2"], ["3", "4"])
+        e = self.generate_event("1", "status", {"state":"ARBITER"}, ["1", "2"], ["3", "4"])
         f = new_frame(["1", "2", "3", "4"])
         f = witnesses_dissenters(f, e)
         assert f
