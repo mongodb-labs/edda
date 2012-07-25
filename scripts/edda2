@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 from edda import run_edda
 
 if __name__ == '__main__':
