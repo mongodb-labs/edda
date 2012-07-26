@@ -37,6 +37,10 @@ from supporting_methods import *
 from ui.frames import generate_frames
 from ui.connection import send_to_js
 
+import progressbar
+
+import time
+
 PARSERS = [
     stale_secondary.process,
     rs_status.process,
@@ -140,12 +144,19 @@ def main():
     # read in from each log file
     file_names = []
     f = None
+    files_count = 1;
+    for files in namespace.filename: # fix this to work for duplicate files. 
+        files_count += 1
+    running_line_total = 0
+    current_file = 0
     for arg in namespace.filename:
+        current_file += 1
         if arg in file_names:
             LOGGER.warning("Skipping duplicate file {0}".format(arg))
             continue
         try:
             f = open(arg, 'r')
+            newFile = open(arg, 'r')
         except IOError as e:
             print "Error: Unable to read file {0}".format(arg)
             print e
@@ -159,8 +170,20 @@ def main():
 
         LOGGER.warning('Reading from logfile {0}...'.format(arg))
         previous = "none"
-        #f is the file names
+        #f is the file names\
+        one_total = 0
+        for line in newFile:
+            one_total += 1
+        total = one_total
+        total *= files_count
+        point = total / 100
+        increment = total / 100
+        running_line_total += one_total;
+        #sys.stdout.flush()
         for line in f:
+            sys.stdout.write("\r[" + "=" * ((counter + (one_total * current_file)) / increment) +  " " * ((total - (counter + (one_total * current_file)))/ increment) + "]" +  str((counter + (one_total * current_file)) / point) + "%")
+            sys.stdout.flush()
+
             counter += 1
             # handle restart lines
             if '******' in line:
@@ -207,7 +230,6 @@ def main():
                     doc["origin_server"] = server_num
                     entries.insert(doc)
                     LOGGER.debug('Stored line {0} of {1} to db'.format(counter, arg))
-                    stored += 1
                     previous = doc["type"]
         LOGGER.warning('-' * 64)
         LOGGER.warning('Finished running on {0}'.format(arg))
