@@ -175,13 +175,20 @@ def main():
         for line in newFile:
             one_total += 1
         total = one_total
-        total *= files_count
+        #total *= files_count
         point = total / 100
         increment = total / 100
         running_line_total += one_total;
+        print " "
+        print "Currently parsing log-file: {}".format(arg)
         #sys.stdout.flush()
         for line in f:
-            sys.stdout.write("\r[" + "=" * ((counter + (one_total * current_file)) / increment) +  " " * ((total - (counter + (one_total * current_file)))/ increment) + "]" +  str((counter + (one_total * current_file)) / point) + "%")
+            precent_string = ""
+            if counter/point >= 99:
+                percent_string = "100"
+            else:
+                percent_string = str(counter/point)
+            sys.stdout.write("\r[" + "=" * ((counter) / increment) + " " * ((total - (counter)) / increment) + "]" + percent_string + "%")
             sys.stdout.flush()
 
             counter += 1
