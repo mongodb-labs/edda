@@ -79,11 +79,11 @@ def main():
 
     # handle captured arguments
     if namespace.port:
-        port = namespace.port[0]
+        port = namespace.port
     else:
         port = '27017'
     if namespace.host:
-        host = namespace.host[0]
+        host = namespace.host
         place = host.find(":")
         if place >= 0:
             port = host[place + 1:]
