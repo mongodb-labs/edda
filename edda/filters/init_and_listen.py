@@ -29,6 +29,8 @@ def criteria(msg):
     """
     if '[initandlisten] MongoDB starting' in msg:
         return 1
+    if 'of MongoDB' in msg:
+        return 2
     return 0
 
 
@@ -58,14 +60,22 @@ def process(msg, date):
     if not result:
         return None
     doc = {}
-    doc["date"] = date
-    doc["type"] = "init"
     doc["info"] = {}
-    doc["msg"] = msg
+
 
     # is it this server starting up?
     if result == 1:
+        doc["date"] = date
+        doc["type"] = "init"
+        doc["msg"] = msg
         return starting_up(msg, doc)
+    if result == 2:
+        doc["type"] = "version"
+        start = msg.find("**")
+        doc["version"] = msg[start:len(msg)]
+        doc["date"] = date
+        doc["info"]["server"] = "self"
+        return doc
 
 
 def starting_up(msg, doc):

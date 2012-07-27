@@ -39,7 +39,7 @@ __doc__ = ""
 doclines = __doc__.split("\n")
 
 setup(name="edda",
-      version="0.5.1",
+      version="0.5.2",
       maintainer="10Gen",
       maintainer_email="kaushal.parikh@10gen.com",
       #url = "https://github.com/kchodorow/edda",
@@ -58,7 +58,7 @@ setup(name="edda",
       package_data={
           # If any package contains *.txt files, include them:
           'edda.ui.display.js': ['*.js'],
-          'edda.ui.display.style': ['*.css'],
+          'edda.ui.display.style': ['*.css', '*.ico'],
           'edda.ui.display': ['*.jpg', '*.html'],
           'edda.sample_logs.hp': ['*.log'],
           'edda.sample_logs.pr': ['*.log'],

@@ -22,9 +22,10 @@ Users can customize this tool by adding their own parsers
 to the edda/filters/ subdirectory, following the layout specified
 in edda/filters/template.py.
 """
-__version__ = "0.5.1"
+__version__ = "0.5.2"
 
 import argparse
+import os
 import sys
 
 from bson import objectid
@@ -36,10 +37,6 @@ from pymongo import Connection
 from supporting_methods import *
 from ui.frames import generate_frames
 from ui.connection import send_to_js
-
-import progressbar
-
-import time
 
 PARSERS = [
     stale_secondary.process,
@@ -66,7 +63,7 @@ def main():
     if (len(sys.argv) < 2):
         print "Missing argument: please provide a filename"
         return
-
+    mongo_version = ""
     # argparse methods
     parser = argparse.ArgumentParser(
     description='Process and visualize log files from mongo servers')
@@ -144,19 +141,13 @@ def main():
     # read in from each log file
     file_names = []
     f = None
-    files_count = 1;
-    for files in namespace.filename: # fix this to work for duplicate files. 
-        files_count += 1
-    running_line_total = 0
-    current_file = 0
+    previous_version = False
     for arg in namespace.filename:
-        current_file += 1
         if arg in file_names:
             LOGGER.warning("Skipping duplicate file {0}".format(arg))
             continue
         try:
             f = open(arg, 'r')
-            newFile = open(arg, 'r')
         except IOError as e:
             print "Error: Unable to read file {0}".format(arg)
             print e
@@ -171,24 +162,25 @@ def main():
         LOGGER.warning('Reading from logfile {0}...'.format(arg))
         previous = "none"
         #f is the file names\
-        one_total = 0
-        for line in newFile:
-            one_total += 1
-        total = one_total
+        file_info = os.stat(arg)
+
+        total = file_info.st_size
         #total *= files_count
         point = total / 100
         increment = total / 100
-        running_line_total += one_total;
-        print " "
+        print ""
         print "Currently parsing log-file: {}".format(arg)
         #sys.stdout.flush()
+        total_characters = 0
+
         for line in f:
-            precent_string = ""
-            if counter/point >= 99:
+            total_characters += len(line)
+            if total_characters / point >= 100:
                 percent_string = "100"
             else:
-                percent_string = str(counter/point)
-            sys.stdout.write("\r[" + "=" * ((counter) / increment) + " " * ((total - (counter)) / increment) + "]" + percent_string + "%")
+                percent_string = str(total_characters / point)
+            sys.stdout.flush()
+            sys.stdout.write("\r[" + "=" * ((total_characters) / increment) + " " * ((total - (total_characters)) / increment) + "]" + percent_string + "%")
             sys.stdout.flush()
 
             counter += 1
@@ -207,6 +199,9 @@ def main():
                 if doc:
                     # see if we have captured a new server address
                     # if server_num is at -1, this is a new server
+                    if (doc["type"] == "version" and not previous_version):
+                        mongo_version = doc["version"]
+                        previous_version = True
                     if (doc["type"] == "init" and
                         doc["info"]["subtype"] == "startup"):
                         LOGGER.debug("Found addr {0} for server {1} from startup msg"
@@ -242,7 +237,8 @@ def main():
         LOGGER.warning('Finished running on {0}'.format(arg))
         LOGGER.info('Stored {0} of {1} log lines to db'.format(stored, counter))
         LOGGER.warning('=' * 64)
-
+    print "\n"
+    print mongo_version
     # if no servers or meaningful events were found, exit
     if servers.count() == 0:
         LOGGER.critical("No servers were found, exiting.")
@@ -302,6 +298,7 @@ def get_server_names(db, coll_name):
     server_names = {}
     server_names["self_name"] = {}
     server_names["network_name"] = {}
+    server_names["server_version"] = {}
     for doc in db[coll_name].servers.find():
         server_names["self_name"][doc["server_num"]] = doc["self_name"]
         server_names["network_name"][doc["server_num"]] = doc["network_name"]
