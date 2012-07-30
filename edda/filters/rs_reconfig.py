@@ -23,6 +23,7 @@ def criteria(msg):
 
 
 def process(msg, date):
+
     """If the given log line fits the criteria for
     this filter, processes the line and creates
     a document of the following format:
@@ -38,7 +39,6 @@ def process(msg, date):
     message_type = criteria(msg)
     if not message_type:
         return None
-
     doc = {}
     doc["date"] = date
     doc["type"] = "reconfig"
