@@ -63,7 +63,7 @@ def send_to_js(frames, servers, info):
     # parent starts a server listening on localhost:27080
     # child opens page to send GET request to server
     # open socket, bind and listen
-    print " "
+    print " \n"
     print "================================================================="
     print "Opening server, kill with Ctrl+C once you are finished with edda."
     print "================================================================="
