@@ -57,6 +57,7 @@ def criteria(msg):
 
 
 def process(msg, date):
+
     """If the given log line fits the critera for this filter,
     process it and create a document of the following format:
     doc = {
