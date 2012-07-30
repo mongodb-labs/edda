@@ -210,9 +210,9 @@ def main():
                 percent_string = "100"
             else:
                 percent_string = str(total_characters / point)
-            #sys.stdout.flush()
-            #sys.stdout.write("\r[" + "=" * ((total_characters) / increment) + " " * ((total - (total_characters)) / increment) + "]" + percent_string + "%")
-            #sys.stdout.flush()
+            sys.stdout.flush()
+            sys.stdout.write("\r[" + "=" * ((total_characters) / increment) + " " * ((total - (total_characters)) / increment) + "]" + percent_string + "%")
+            sys.stdout.flush()
 
             counter += 1
             # handle restart lines
