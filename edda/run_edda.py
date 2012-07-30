@@ -40,13 +40,13 @@ from ui.frames import generate_frames
 from ui.connection import send_to_js
 
 PARSERS = [
-    stale_secondary.process,
     rs_status.process,
-    rs_exit.process,
+    fsync_lock.process,
     rs_sync.process,
     init_and_listen.process,
-    rs_reconfig.process,
-    fsync_lock.process
+    stale_secondary.process,
+    rs_exit.process,
+    rs_reconfig.process
 ]
 
 LOGGER = None
@@ -146,7 +146,7 @@ def main():
     version_change = False
     for arg in namespace.filename:
         gzipped = False
-        if ".tgz" or ".gz" in arg:
+        if ".gz" in arg:
             opened_file = gzip.open(arg, 'r')
             gzipped = True
         if arg in file_names:
@@ -210,9 +210,9 @@ def main():
                 percent_string = "100"
             else:
                 percent_string = str(total_characters / point)
-            sys.stdout.flush()
-            sys.stdout.write("\r[" + "=" * ((total_characters) / increment) + " " * ((total - (total_characters)) / increment) + "]" + percent_string + "%")
-            sys.stdout.flush()
+            #sys.stdout.flush()
+            #sys.stdout.write("\r[" + "=" * ((total_characters) / increment) + " " * ((total - (total_characters)) / increment) + "]" + percent_string + "%")
+            #sys.stdout.flush()
 
             counter += 1
             # handle restart lines
