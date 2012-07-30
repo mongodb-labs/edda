@@ -25,6 +25,7 @@ in edda/filters/template.py.
 __version__ = "0.5.3"
 
 import argparse
+import gzip
 import os
 import sys
 
@@ -144,6 +145,10 @@ def main():
     previous_version = False
     version_change = False
     for arg in namespace.filename:
+        gzipped = False
+        if ".tgz" or ".gz" in arg:
+            opened_file = gzip.open(arg, 'r')
+            gzipped = True
         if arg in file_names:
             LOGGER.warning("Skipping duplicate file {0}".format(arg))
             continue
@@ -163,18 +168,43 @@ def main():
         LOGGER.warning('Reading from logfile {0}...'.format(arg))
         previous = "none"
         #f is the file names\
-        file_info = os.stat(arg)
 
-        total = file_info.st_size
-        #total *= files_count
-        point = total / 100
-        increment = total / 100
         print ""
         print "Currently parsing log-file: {}".format(arg)
         #sys.stdout.flush()
         total_characters = 0
+        lines = []
+        new_line = ""
+        total_chars = 0
+        if gzipped:
+            text = opened_file.read()
+            for char in text:
+                total_chars += 1
+                if ord(char) is not 10:
+                    new_line += char
+                    continue
+                else:
+                    LOGGER.debug("Found a break point in the .tgz file")
+                line = new_line
+                lines.append(line)
+                new_line = ""
+            file_lines = lines
+        else:
+            file_lines = f
 
-        for line in f:
+        file_info = os.stat(arg)
+        total = 0
+        total = file_info.st_size
+        if gzipped:
+            intermediate_total = total_chars
+            total = int(intermediate_total * .98)
+
+        #total *= files_count
+        point = total / 100
+        increment = total / 100
+
+        for line in file_lines:
+            #if gzip:
             total_characters += len(line)
             if total_characters / point >= 100:
                 percent_string = "100"
@@ -206,7 +236,7 @@ def main():
                             previous_version = True
                         elif previous_version:
                             if doc["version"] != mongo_version:
-                                version_change = true
+                                version_change = True
                                 mongo_version = doc["version"]
                     if (doc["type"] == "init" and
                         doc["info"]["subtype"] == "startup"):
