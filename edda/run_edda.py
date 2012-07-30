@@ -22,7 +22,7 @@ Users can customize this tool by adding their own parsers
 to the edda/filters/ subdirectory, following the layout specified
 in edda/filters/template.py.
 """
-__version__ = "0.5.2"
+__version__ = "0.5.3"
 
 import argparse
 import os
@@ -142,6 +142,7 @@ def main():
     file_names = []
     f = None
     previous_version = False
+    version_change = False
     for arg in namespace.filename:
         if arg in file_names:
             LOGGER.warning("Skipping duplicate file {0}".format(arg))
@@ -199,9 +200,14 @@ def main():
                 if doc:
                     # see if we have captured a new server address
                     # if server_num is at -1, this is a new server
-                    if (doc["type"] == "version" and not previous_version):
-                        mongo_version = doc["version"]
-                        previous_version = True
+                    if doc["type"] == "version":
+                        if not previous_version:
+                            mongo_version = doc["version"]
+                            previous_version = True
+                        elif previous_version:
+                            if doc["version"] != mongo_version:
+                                version_change = true
+                                mongo_version = doc["version"]
                     if (doc["type"] == "init" and
                         doc["info"]["subtype"] == "startup"):
                         LOGGER.debug("Found addr {0} for server {1} from startup msg"
@@ -237,8 +243,9 @@ def main():
         LOGGER.warning('Finished running on {0}'.format(arg))
         LOGGER.info('Stored {0} of {1} log lines to db'.format(stored, counter))
         LOGGER.warning('=' * 64)
-    print "\n"
-    print mongo_version
+    if version_change == True:
+        print "\n VERSION CHANGE DETECTED!!"
+        print mongo_version
     # if no servers or meaningful events were found, exit
     if servers.count() == 0:
         LOGGER.critical("No servers were found, exiting.")
