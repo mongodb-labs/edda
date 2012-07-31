@@ -30,6 +30,9 @@ MONTH_DICT = {
     'May': 5, 'Jun': 6, 'Jul': 7, 'Aug': 8,
     'Sep': 9, 'Oct': 10, 'Nov': 11, 'Dec': 12
     }
+DAY_DICT = {
+    'Mon': 1, 'Tue': 2, 'Wed': 3, 'Thu': 4, 'Fri': 5, "Sat": 6, 'Sun': 7
+}
 
 
 def capture_address(msg):
@@ -180,6 +183,14 @@ def date_parser(message):
     and return None."""
     try:
         newMessage = str(MONTH_DICT[message[4:7]]) + message[7:19]
-        return datetime.strptime(newMessage, "%m %d %H:%M:%S")
+        return make_datetime_obj(message)
+        return datetime.strptime(newMessage, "%m %d %H:%M:%S") 
     except (KeyError, ValueError):
         return None
+
+
+def make_datetime_obj(message):
+    date = datetime(2012, MONTH_DICT[message[4:7]], DAY_DICT[message[0:3]],
+        int(message[11:13]), int(message[14:16]), int(message[17:19]))
+
+    return date
