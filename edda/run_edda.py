@@ -53,6 +53,7 @@ LOGGER = None
 
 
 def main():
+    start_time = datetime.now();
     """This is the main function of edda.  It takes log
     files as command line arguments and sends each
     line of each log through a series of parses.  Then, this
@@ -273,6 +274,9 @@ def main():
         LOGGER.warning('Finished running on {0}'.format(arg))
         LOGGER.info('Stored {0} of {1} log lines to db'.format(stored, counter))
         LOGGER.warning('=' * 64)
+    end_time = datetime.now()
+    difference = end_time - start_time
+    print difference
     if version_change == True:
         print "\n VERSION CHANGE DETECTED!!"
         print mongo_version
