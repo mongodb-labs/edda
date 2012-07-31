@@ -203,17 +203,21 @@ def main():
         #total *= files_count
         point = total / 100
         increment = total / 100
-
+        old_total = 0
         for line in file_lines:
             #if gzip:
+            ratio = total_characters /point
             total_characters += len(line)
-            if total_characters / point >= 100:
+            if ratio >= 99:
                 percent_string = "100"
             else:
                 percent_string = str(total_characters / point)
-            sys.stdout.flush()
-            sys.stdout.write("\r[" + "=" * ((total_characters) / increment) + " " * ((total - (total_characters)) / increment) + "]" + percent_string + "%")
-            sys.stdout.flush()
+
+            if ratio != old_total:
+                sys.stdout.flush()
+                sys.stdout.write("\r[" + "=" * ((total_characters) / increment) + " " * ((total - (total_characters)) / increment) + "]" + percent_string + "%")
+                old_total = ratio
+            #sys.stdout.flush()
 
             counter += 1
             # handle restart lines
@@ -274,9 +278,6 @@ def main():
         LOGGER.warning('Finished running on {0}'.format(arg))
         LOGGER.info('Stored {0} of {1} log lines to db'.format(stored, counter))
         LOGGER.warning('=' * 64)
-    end_time = datetime.now()
-    difference = end_time - start_time
-    print difference
     if version_change == True:
         print "\n VERSION CHANGE DETECTED!!"
         print mongo_version
