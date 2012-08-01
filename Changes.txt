@@ -11,9 +11,11 @@
 
 	* Ability to read compressed log files in the form of '.gz'. 
 
+	* Added field in pop up, displaying server version. 
+
 	[BUG FIXES]
 
-	* Fixed bug that was not allowing you to set a custom port correctly using the --port 	modifier. 
+	* Fixed bug that was not allowing you to set a custom port using the --port modifier. 
 
 
 0.5.0 Tue, Jul 24, 2012

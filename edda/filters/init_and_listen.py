@@ -29,7 +29,7 @@ def criteria(msg):
     """
     if '[initandlisten] MongoDB starting' in msg:
         return 1
-    if 'of MongoDB' in msg:
+    if 'db version' in msg:
         return 2
     return 0
 
@@ -53,7 +53,7 @@ def process(msg, date):
           "server" : "hostaddr:port",
           "conn_number" : int,
        }
-    }
+    }Wed Jul 18 14:48:19 [initandlisten] db version
     """
 
     result = criteria(msg)
@@ -72,7 +72,7 @@ def process(msg, date):
     if result == 2:
         doc["type"] = "version"
         start = msg.find("**")
-        doc["version"] = msg[start:len(msg)]
+        doc["version"] = msg[47:53]
         doc["date"] = date
         doc["info"]["server"] = "self"
         return doc

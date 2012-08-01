@@ -251,10 +251,10 @@ def target_server_match(entry_a, entry_b, servers):
     # in this case, we will assume that the address does belong
     # to the unnamed server and name it.
     if a == "self":
-        return check_and_assign(a, b, a_doc)
+        return check_and_assign(a, b, a_doc, servers)
 
     if b == "self":
-        return check_and_assign(b, a, b_doc)
+        return check_and_assign(b, a, b_doc, servers)
 
 
 def resolve_dissenters(events):
@@ -318,6 +318,10 @@ def generate_summary(event, hostname):
     elif event["type"] == "exit":
         summary += " is now exiting"
 
+
+
+
+
     # for locking messages
     elif event["type"] == "UNLOCKED":
         summary += " is unlocking itself"
@@ -360,7 +364,7 @@ def organize_servers(db, collName):
     return servers_list
 
 
-def check_and_assign(entry1, entry2, doc):
+def check_and_assign(entry1, entry2, doc, servers):
         if doc["network_name"] == "unknown":
             LOGGER.info("Assigning network name {0} to server {1}".format(entry1, entry2))
             doc["network_name"] == entry2

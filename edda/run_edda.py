@@ -235,14 +235,6 @@ def main():
                 if doc:
                     # see if we have captured a new server address
                     # if server_num is at -1, this is a new server
-                    if doc["type"] == "version":
-                        if not previous_version:
-                            mongo_version = doc["version"]
-                            previous_version = True
-                        elif previous_version:
-                            if doc["version"] != mongo_version:
-                                version_change = True
-                                mongo_version = doc["version"]
                     if (doc["type"] == "init" and
                         doc["info"]["subtype"] == "startup"):
                         LOGGER.debug("Found addr {0} for server {1} from startup msg"
@@ -267,6 +259,17 @@ def main():
                     # is there a server number for us yet?  If not, get one
                     if server_num == -1:
                         server_num = get_server_num("unknown", False, servers)
+
+                    if doc["type"] == "version":
+                        update_mongo_version(doc["version"], server_num, servers)
+                        if not previous_version:
+                            mongo_version = doc["version"]
+                            previous_version = True
+                        elif previous_version:
+                            if doc["version"] != mongo_version:
+                                version_change = True
+                                mongo_version = doc["version"]
+
                     # skip repetitive 'exit' messages
                     if doc["type"] == "exit" and previous == "exit":
                         continue
@@ -314,7 +317,7 @@ def main():
 
     # send to server
     LOGGER.info("Sending frames to server...")
-    send_to_js(frames, get_server_names(db, coll_name, mongo_version),
+    send_to_js(frames, get_server_names(db, coll_name),
                get_admin_info(file_names))
     LOGGER.info('-' * 64)
     LOGGER.info('=' * 64)
@@ -333,18 +336,24 @@ def traffic_control(msg, date):
             return doc
 
 
-def get_server_names(db, coll_name, version):
+def get_server_names(db, coll_name):
     """ Format the information in the .servers collection
         into a data structure to be sent to the JavaScript client.
     """
     server_names = {}
     server_names["self_name"] = {}
     server_names["network_name"] = {}
-    server_names["server_version"] = {}
+    server_names["version"] = {}
     for doc in db[coll_name].servers.find():
-        server_names["version"] = version
+        print doc
         server_names["self_name"][doc["server_num"]] = doc["self_name"]
         server_names["network_name"][doc["server_num"]] = doc["network_name"]
+        try:
+            if doc["version"]:
+                server_names["version"][doc["server_num"]] = doc['version']
+        except:
+            LOGGER.debug("No version field detected")
+            server_names["version"][doc["server_num"]] = "unknown"
     return server_names
 
 
