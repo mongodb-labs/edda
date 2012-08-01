@@ -4,7 +4,6 @@
 
 	* Speed of parsing log files has increased 5 fold.
 
-	* 
 
 	[NEW FEATURES]
 
