@@ -257,24 +257,15 @@ def target_server_match(entry_a, entry_b, servers):
         return check_and_assign(b, a, b_doc)
 
 
-def check_and_assign(entry1, entry2, doc):
-        if doc["network_name"] == "unknown":
-            LOGGER.info("Assigning network name {0} to server {1}".format(entry1, entry2))
-            doc["network_name"] == entry2
-            servers.save(doc)
-            return True
-        return False
-
-
 def resolve_dissenters(events):
     """Goes over the list of events and for each event where
     the number of dissenters > the number of witnesses,
     attempts to match that event to another corresponding
     event outside the margin of allowable network delay"""
     # useful for cases with undetected clock skew
-    LOGGER.info("------------------"
+    LOGGER.info("--------------------------------"
                 "Attempting to resolve dissenters"
-                "--------------------")
+                "--------------------------------")
     for a in events[:]:
         if len(a["dissenters"]) >= len(a["witnesses"]):
             events_b = events[:]
@@ -367,3 +358,12 @@ def organize_servers(db, collName):
         servers_list[num] = sorted(list(entries.find({"origin_server": num})), key=itemgetter("date"))
 
     return servers_list
+
+
+def check_and_assign(entry1, entry2, doc):
+        if doc["network_name"] == "unknown":
+            LOGGER.info("Assigning network name {0} to server {1}".format(entry1, entry2))
+            doc["network_name"] == entry2
+            servers.save(doc)
+            return True
+        return False
