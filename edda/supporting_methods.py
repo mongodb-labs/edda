@@ -89,6 +89,14 @@ def get_server_num(addr, self_name, servers):
     logger.critical("Ran out of server numbers!")
 
 
+def update_mongo_version(version, server_num, servers):
+    doc = []
+    doc = servers.find_one({"server_num": server_num})
+    if doc["version"] != version or doc["version"] == "unknown":
+        doc["version"] = version
+    servers.save(doc)
+
+
 def name_me(s, servers):
     """Given a string s (which can be a server_num,
     server_name, or server_IP), method returns all info known
@@ -156,6 +164,7 @@ def assign_address(num, addr, self_name, servers):
         doc["server_num"] = num
         doc["self_name"] = "unknown"
         doc["network_name"] = "unknown"
+        doc["version"] = "unknown"
     else:
         logger.debug("Fetching existing doc for server {0}".format(num))
     # NOTE: case insensitive!

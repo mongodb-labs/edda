@@ -73,6 +73,7 @@ new_click = function(e) {
     info += "<br/>Name: " + server_names["self_name"][s];
     info += "<br/>Network Name: " + server_names["network_name"][s];
     info += "<br/>State: " + frames[current_frame]["servers"][s];
+    info += "<br/>Mongo_version: " + server_names["version"];
     box.innerHTML = info;
     box.style.left = x + "px";
     box.style.top = y + "px";

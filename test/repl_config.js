@@ -34,7 +34,7 @@ rs.status()
 
 
 
-for (var i = 1; i <= Math.floor(Math.random()*10000); i++) db.foo.save({x : Math.floor(Math.random()*Math.random()), j : Math.floor(Math.random()*10000)});
+for (var i = 1; i <= Math.floor(Math.random()*10000); i++) db.foo.save({"name" : Math.floor(Math.random()*10000*Math.random()*4)});
 
 
 
