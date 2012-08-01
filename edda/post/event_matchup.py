@@ -251,18 +251,17 @@ def target_server_match(entry_a, entry_b, servers):
     # in this case, we will assume that the address does belong
     # to the unnamed server and name it.
     if a == "self":
-        if a_doc["network_name"] == "unknown":
-            LOGGER.info("Assigning network name {0} to server {1}".format(b, a))
-            a_doc["network_name"] == b
-            servers.save(a_doc)
-            return True
-        return False
+        return check_and_assign(a, b, a_doc)
 
     if b == "self":
-        if b_doc["network_name"] == "unknown":
-            LOGGER.info("Assigning network name {0} to server {1}".format(a, b))
-            b_doc["network_name"] == a
-            servers.save(b_doc)
+        return check_and_assign(b, a, b_doc)
+
+
+def check_and_assign(entry1, entry2, doc):
+        if doc["network_name"] == "unknown":
+            LOGGER.info("Assigning network name {0} to server {1}".format(entry1, entry2))
+            doc["network_name"] == entry2
+            servers.save(doc)
             return True
         return False
 
