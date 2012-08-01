@@ -203,7 +203,7 @@ def main():
         #total *= files_count
         point = total / 100
         increment = total / 100
-        old_total = 0
+        old_total = -1
         for line in file_lines:
             #if gzip:
             ratio = total_characters /point
@@ -213,7 +213,7 @@ def main():
             else:
                 percent_string = str(total_characters / point)
 
-            if ratio != old_total:
+            if ratio != old_total or ratio >= 99:
                 sys.stdout.flush()
                 sys.stdout.write("\r[" + "=" * ((total_characters) / increment) + " " * ((total - (total_characters)) / increment) + "]" + percent_string + "%")
                 old_total = ratio
@@ -314,7 +314,7 @@ def main():
 
     # send to server
     LOGGER.info("Sending frames to server...")
-    send_to_js(frames, get_server_names(db, coll_name),
+    send_to_js(frames, get_server_names(db, coll_name, mongo_version),
                get_admin_info(file_names))
     LOGGER.info('-' * 64)
     LOGGER.info('=' * 64)
@@ -333,7 +333,7 @@ def traffic_control(msg, date):
             return doc
 
 
-def get_server_names(db, coll_name):
+def get_server_names(db, coll_name, version):
     """ Format the information in the .servers collection
         into a data structure to be sent to the JavaScript client.
     """
@@ -342,6 +342,7 @@ def get_server_names(db, coll_name):
     server_names["network_name"] = {}
     server_names["server_version"] = {}
     for doc in db[coll_name].servers.find():
+        server_names["version"] = version
         server_names["self_name"][doc["server_num"]] = doc["self_name"]
         server_names["network_name"][doc["server_num"]] = doc["network_name"]
     return server_names
