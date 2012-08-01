@@ -1,0 +1,24 @@
+0.6.0 Wed, Aug 1, 1012
+
+	[ENHANCEMENTS]
+
+	* Speed of parsing log files has increased 5 fold.
+
+	* 
+
+	[NEW FEATURES]
+
+	* Progress bar added in terminal to show the progress of parsing a log file. 
+
+	* Ability to read compressed log files in the form of '.gz'. 
+
+	[BUG FIXES]
+
+	* Fixed bug that was not allowing you to set a custom port correctly using the --port 	modifier. 
+
+
+0.5.0 Tue, Jul 24, 2012
+
+	[RELEASE]
+
+	- Innitial release of Edda!
