@@ -26,15 +26,7 @@ Operating System :: Unix
 """
 
 from distutils.core import setup
-import sys
 
-if sys.version_info < (2, 3):
-    _setup = setup
-
-    def setup(**kwargs):
-        if "classifiers" in kwargs:
-            del kwargs["classifiers"]
-        _setup(**kwargs)
 __doc__ = ""
 doclines = __doc__.split("\n")
 
@@ -49,7 +41,10 @@ setup(name="edda",
       classifiers=filter(None, classifiers.split("\n")),
       long_description="\n".join(doclines[2:]),
       #include_package_data=True,
-      packages=['edda', 'edda.filters', 'edda.post', 'edda.ui', 'edda.sample_logs', 'edda.ui.display.js', 'edda.ui.display.style', 'edda.ui.display', 'edda.sample_logs.hp', 'edda.sample_logs.pr'],
+      packages=['edda', 'edda.filters', 'edda.post', 'edda.ui',
+                'edda.sample_logs', 'edda.ui.display.js', 'edda.ui.display.style',
+                'edda.ui.display', 'edda.sample_logs.hp', 'edda.sample_logs.pr'
+               ],
       #packages = find_packages('src'),  # include all packages under src
       #package_dir = {'':'src'},   # tell distutils packages are under src
       scripts=['scripts/edda'],
