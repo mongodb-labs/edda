@@ -14,7 +14,7 @@
 
 # This file will be used with PyPi in order to package and distribute the final product.
 
-classifiers = """\
+classifiers = """
 Development Status :: 4 - Beta
 Intended Audience :: Developers
 License :: OSI Approved :: Apache Software License
@@ -22,7 +22,7 @@ Programming Language :: Python
 Programming Language :: JavaScript
 Topic :: Database
 Topic :: Software Development :: Libraries :: Python Modules
-Operating System :: Unix
+Operating System :: Unix :: Windows
 """
 
 from distutils.core import setup
