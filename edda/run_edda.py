@@ -53,7 +53,6 @@ LOGGER = None
 
 
 def main():
-    start_time = datetime.now();
     """This is the main function of edda.  It takes log
     files as command line arguments and sends each
     line of each log through a series of parses.  Then, this
@@ -206,7 +205,7 @@ def main():
         old_total = -1
         for line in file_lines:
             #if gzip:
-            ratio = total_characters /point
+            ratio = total_characters / point
             total_characters += len(line)
             if ratio >= 99:
                 percent_string = "100"
@@ -215,7 +214,9 @@ def main():
 
             if ratio != old_total or ratio >= 99:
                 sys.stdout.flush()
-                sys.stdout.write("\r[" + "=" * ((total_characters) / increment) + " " * ((total - (total_characters)) / increment) + "]" + percent_string + "%")
+                sys.stdout.write("\r[" + "=" * (
+                    (total_characters) / increment) + " " * (
+                    (total - (total_characters)) / increment) + "]" + percent_string + "%")
                 old_total = ratio
             #sys.stdout.flush()
 
@@ -345,7 +346,6 @@ def get_server_names(db, coll_name):
     server_names["network_name"] = {}
     server_names["version"] = {}
     for doc in db[coll_name].servers.find():
-        print doc
         server_names["self_name"][doc["server_num"]] = doc["self_name"]
         server_names["network_name"][doc["server_num"]] = doc["network_name"]
         try:
