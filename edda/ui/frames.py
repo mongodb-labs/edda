@@ -208,14 +208,12 @@ def info_by_type(f, e):
     # by type:
     # make sure it is a string!
     s = str(e["target"])
-    print "I am s"
-    print s
     # check to see if previous was down, and if any other messages were sent from it, to bring it back up
 
     if f["servers"][s] == "DOWN" or f["servers"][s] == "STARTUP1":
         if e["witnesses"] or e["type"] == "new_conn":
             #f['servers'][s] = "UNDISCOVERED"
-            print ""
+            pass
 
     # status changes
     if e["type"] == "status":
@@ -272,6 +270,7 @@ def info_by_type(f, e):
 
     # exits
     elif e["type"] == "exit":
+        just_set = True
         f["servers"][s] = "DOWN"
         f = break_links(s, f)
 
@@ -291,9 +290,6 @@ def info_by_type(f, e):
 
     #if f servers of f was a witness to e[] bring f up
     for server in f["servers"]:
-        print e["witnesses"]
         if f["servers"][server] == "DOWN" and server in e["witnesses"] and len(e["witnesses"]) < 2:
-            print "server"
-            print server
             f['servers'][s] = "UNDISCOVERED"
     return f
