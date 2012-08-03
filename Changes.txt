@@ -13,6 +13,8 @@
 
 	* Added field in pop up, displaying server version. 
 
+	* Use '--http_port #####' to specify a port for the communication between the front and back ends 	to use. 
+
 	[BUG FIXES]
 
 	* Fixed bug that was not allowing you to set a custom port using the --port modifier. 
