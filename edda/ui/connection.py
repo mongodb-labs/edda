@@ -31,21 +31,21 @@ server_list = None
 admin = None
 
 
-def run():
+def run(http_port):
     """Open page and send GET request to server"""
     # open the JS page
-    url = "http://localhost:28000"
+    url = "http://localhost:" + http_port
     try:
         webbrowser.open(url, 1, True)
     except webbrowser.Error as e:
         print "Webbrowser failure: Unable to launch webpage:"
         print e
         print "Enter the following url into a browser to bring up edda:"
-        print "http://localhost:28000/"
+        print url
     # end of thread
 
 
-def send_to_js(frames, servers, info):
+def send_to_js(frames, servers, info, http_port):
     """Sends information to the JavaScript
     client"""
 
@@ -58,7 +58,7 @@ def send_to_js(frames, servers, info):
     server_list = servers
 
     # fork here!
-    t = threading.Thread(target=run())
+    t = threading.Thread(target=run(http_port))
     t.start()
     # parent starts a server listening on localhost:27080
     # child opens page to send GET request to server
@@ -68,7 +68,7 @@ def send_to_js(frames, servers, info):
     print "Opening server, kill with Ctrl+C once you are finished with edda."
     print "================================================================="
     try:
-        server = HTTPServer(('', 28000), eddaHTTPRequest)
+        server = HTTPServer(('', int(http_port)), eddaHTTPRequest)
     except socket.error, (value, message):
         if value == 98:
             print "Error: could not bind to localhost:28018"

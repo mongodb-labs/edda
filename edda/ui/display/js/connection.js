@@ -22,39 +22,41 @@ function connect() {
     if (frame_top > total_frame_count) { frame_top = total_frame_count; }
 
     // poll for additional setup data
+    url_string = document.URL + "data.admin";
+    console.log(document.URL );
     $.ajax({
-	    async: false,
-		url: "http://localhost:28000/data.admin",
-		dataType: "json",
-		success: function(data) {
-		admin = data;
-		total_frame_count = data["total_frame_count"];
-	    }
-	});
+        async: false,
+        url: url_string,
+        dataType: "json",
+        success: function(data) {
+        admin = data;
+        total_frame_count = data["total_frame_count"];
+        }
+    });
 
     // poll for the server names
+    url_string = document.URL + "data.servers";
     $.ajax({
-	    async: false,
-		url: "http://localhost:28000/data.servers",
-		dataType: "json",
-		success: function(data) {
-		server_names = data;
-	    }
-	});
+        async: false,
+        url: url_string,
+        dataType: "json",
+        success: function(data) {
+        server_names = data;
+        }
+    });
 
-};
+}
 
 // this function is not finished
 function get_batch(a, b) {
     // poll for a batch of frames
-    var s = "http://localhost:28000/" + a + "-" + b + ".batch";
+    var s = document.URL + a + "-" + b + ".batch";
     $.ajax({
-	    async: false,
-		url: s,
-		dataType: "json",
-		success: function(data) {
-		frames = data;
-	    }
-	});
-};
-
+        async: false,
+        url: s,
+        dataType: "json",
+        success: function(data) {
+        frames = data;
+        }
+    });
+}
