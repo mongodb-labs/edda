@@ -69,6 +69,7 @@ def main():
     parser = argparse.ArgumentParser(
     description='Process and visualize log files from mongo servers')
     parser.add_argument('--port')
+    parser.add_argument('--http_port')
     parser.add_argument('--host')
     parser.add_argument('--verbose', '-v', action='count')
     parser.add_argument('--version', action='version',
@@ -79,6 +80,11 @@ def main():
     namespace = parser.parse_args()
 
     # handle captured arguments
+
+    if namespace.http_port:
+        http_port = namespace.http_port
+    else:
+        http_port = '28000'
     if namespace.port:
         port = namespace.port
     else:
@@ -319,7 +325,7 @@ def main():
     # send to server
     LOGGER.info("Sending frames to server...")
     send_to_js(frames, get_server_names(db, coll_name),
-               get_admin_info(file_names))
+               get_admin_info(file_names), http_port)
     LOGGER.info('-' * 64)
     LOGGER.info('=' * 64)
     LOGGER.warning('Completed post processing.\nExiting.')
@@ -341,7 +347,9 @@ def get_server_names(db, coll_name):
     """ Format the information in the .servers collection
         into a data structure to be sent to the JavaScript client.
     """
+    requested_port = "28000"
     server_names = {}
+    server_names["port"] = requested_port
     server_names["self_name"] = {}
     server_names["network_name"] = {}
     server_names["version"] = {}
