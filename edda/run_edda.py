@@ -68,13 +68,13 @@ def main():
     # argparse methods
     parser = argparse.ArgumentParser(
     description='Process and visualize log files from mongo servers')
-    parser.add_argument('--port')
-    parser.add_argument('--http_port')
-    parser.add_argument('--host')
+    parser.add_argument('--port', help="Specify the MongoDb port to use")
+    parser.add_argument('--http_port', help="Specify the HTTP Port")
+    parser.add_argument('--host', help="Specify host")
     parser.add_argument('--verbose', '-v', action='count')
     parser.add_argument('--version', action='version',
                         version="Running edda version {0}".format(__version__))
-    parser.add_argument('--db', '-d')
+    parser.add_argument('--db', '-d', help="Specify DB name")
     parser.add_argument('--collection', '-c')
     parser.add_argument('filename', nargs='+')
     namespace = parser.parse_args()
@@ -347,9 +347,7 @@ def get_server_names(db, coll_name):
     """ Format the information in the .servers collection
         into a data structure to be sent to the JavaScript client.
     """
-    requested_port = "28000"
     server_names = {}
-    server_names["port"] = requested_port
     server_names["self_name"] = {}
     server_names["network_name"] = {}
     server_names["version"] = {}
