@@ -20,7 +20,6 @@ on_canvas_mouseover = function(e) {
 
     // check if mouse was over server
     for (server in servers) {
-
     // calculate distance from click
     diffX = x - servers[server]["x"];
     diffY = y - servers[server]["y"];
@@ -64,9 +63,9 @@ new_click = function(e) {
 
     // check if mouse was over server
     var s = is_over_server(e);
-    if (s == null) {
-	box.style.visibility = "hidden";
-	return;
+    if (s === null) {
+    box.style.visibility = "hidden";
+    return;
     }
 
     var info = "Number: " + s;
@@ -91,14 +90,14 @@ is_over_server = function(e) {
     // check if mouse was over server
     for (server in servers) {
 
-	// calculate distance from click
-	diffX = x - servers[server]["x"];
-	diffY = y - servers[server]["y"];
-	distance = Math.sqrt(Math.pow(diffX,2) + Math.pow(diffY,2));
-	// is it within radius?
-	if (distance <= servers[server]["r"]) {
-	    return server;
-	}
+    // calculate distance from click
+    diffX = x - servers[server]["x"];
+    diffY = y - servers[server]["y"];
+    distance = Math.sqrt(Math.pow(diffX,2) + Math.pow(diffY,2));
+    // is it within radius?
+    if (distance <= servers[server]["r"]) {
+        return server;
+    }
     }
     return null;
 };

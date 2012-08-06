@@ -84,39 +84,39 @@ draw_names = function() {
     labels = {};
     // for each server:
     for (var s in servers) {
-	var r = servers[s]["r"];
-	var label;
-	// use hostname, or IP if unknown
-	if (server_names["self_name"][s] == "unknown") {
-	    label = server_names["network_name"][s];
-	    if (label == "unknown") {
-		label += "#" + s;
-	    }
+    var r = servers[s]["r"];
+    var label;
+    // use hostname, or IP if unknown
+    if (server_names["self_name"][s] == "unknown") {
+        label = server_names["network_name"][s];
+        if (label == "unknown") {
+        label += "#" + s;
+        }
         }
         else {label = server_names["self_name"][s];}
 
-	// save this information
-	labels[s] = label;
+    // save this information
+    labels[s] = label;
 
-	// figure out which side of the circle to
-	// write labels
-	var i = 0;
-	var n = 13;
-	var y = servers[s]["y"];
-	var x = servers[s]["x"];
-	if (x < w/2){
-	    x = servers[s]["x"] - (2*r) - 170;
-	}
+    // figure out which side of the circle to
+    // write labels
+    var i = 0;
+    var n = 13;
+    var y = servers[s]["y"];
+    var x = servers[s]["x"];
+    if (x < w/2){
+        x = servers[s]["x"] - (2*r) - 170;
+    }
 
-	// draw name, but only n characters per line
-	while (true) {
-	    sub_label = label.substring(n * i, n * (i + 1));
-	    contexts["background"].fillText(sub_label, x + (1.5*r), y + (15 * i));
-	    i++;
-	    if ((n * i) > label.length) {
-		break;
-	    }
-	}
+    // draw name, but only n characters per line
+    while (true) {
+        sub_label = label.substring(n * i, n * (i + 1));
+        contexts["background"].fillText(sub_label, x + (1.5*r), y + (15 * i));
+        i++;
+        if ((n * i) > label.length) {
+        break;
+        }
+    }
     }
 };
 
@@ -276,21 +276,21 @@ unknown = function(x, y, r, ctx) {
     dotted_circle(x, y, r, "#9D7E51", 9, ctx);
     ctx.font = "45pt Georgia";
     ctx.fillStyle = "#9D7E51";
-    ctx.fillText("?", x - r/4, y + ((.4)*r));
+    ctx.fillText("?", x - r / 4, y + (0.4*r));
 };
 
 lock = function(x, y, r, ctx) {
     // draw a lock over a locked server
     // decide on a width and height
     var w = r/4;
-    var h = .7*r;
+    var h = 0.7 * r;
     var radius = h/4;
     var theta = Math.PI/8; // radians
 
     // draw the top circle
     ctx.beginPath();
     ctx.lineWidth = 10;
-    ctx.arc(x, y - radius, radius, .5*Math.PI - theta, .5*Math.PI + theta, true);
+    ctx.arc(x, y - radius, radius, 0.5 * Math.PI - theta, 0.5 * Math.PI + theta, true);
     y = y - h/2;
     ctx.moveTo(x + (radius*Math.sin(theta)), y + h/2 - (radius - radius*Math.cos(theta)));
     ctx.lineTo(x + w, y + h);

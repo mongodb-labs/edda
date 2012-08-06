@@ -24,8 +24,8 @@ var slider = {};
 // batch information
 var current_frame = 0;
 var batch_size = 100;
-var half_batch = parseInt(batch_size/2);
-var trigger = parseInt(batch_size/4);
+var half_batch = parseInt(batch_size/2, 10);
+var trigger = parseInt(batch_size/4, 10);
 var frame_top;
 var frame_bottom;
 
@@ -107,38 +107,39 @@ function visual_setup() {
 function time_setup(max_time) {
 
     $("#slider").slider({ slide: function(event, ui) {
-		// handle frame batches
-		if (ui.value >= current_frame) { direction = 1; }
-		else { direction = -1; }
-		current_frame = ui.value;
-		handle_batches();
-		document.getElementById("timestamp").innerHTML = "Time: " + frames[ui.value]["date"].substring(5, 50);
-		document.getElementById("summary").innerHTML = "Event " + ui.value + ": " + frames[ui.value]["summary"];
+        // handle frame batches
+        if (ui.value >= current_frame) { direction = 1; }
+        else { direction = -1; }
+        current_frame = ui.value;
+        handle_batches();
+        document.getElementById("timestamp").innerHTML = "Time: " + frames[ui.value]["date"].substring(5, 50);
+        document.getElementById("summary").innerHTML = "Event " + ui.value + ": " + frames[ui.value]["summary"];
 
-		// erase pop-up box
-		document.getElementById("message_box").style.visibility = "hidden";
+        // erase pop-up box
+        document.getElementById("message_box").style.visibility = "hidden";
 
-		// print witnesses, as hostnames
-		var w = "";
-		for (var s in frames[ui.value]["witnesses"]) {
-		    if (w != "") {
-			w += "<br/>";
-		    }
-		    w += labels[frames[ui.value]["witnesses"][s]];
-		}
-		document.getElementById("witnesses").innerHTML = "Witnessed event:<br/>" + w;
+        // print witnesses, as hostnames
+        var w = "";
+        var s;
+        for (s in frames[ui.value]["witnesses"]) {
+            if (w !== "") {
+            w += "<br/>";
+            }
+            w += labels[frames[ui.value]["witnesses"][s]];
+        }
+        document.getElementById("witnesses").innerHTML = "Witnessed event:<br/>" + w;
 
-		// print dissenters, as hostnames
-		var d = "";
-		for (var s in frames[ui.value]["dissenters"]) {
-		    if (d != "") {
-			d += "<br/>";
-		    }
-		    d += labels[frames[ui.value]["dissenters"][s]];
-		}
-		document.getElementById("dissenters").innerHTML = "Blind to event:<br/>" + d;
+        // print dissenters, as hostnames
+        var d = "";
+        for (s in frames[ui.value]["dissenters"]) {
+            if (d !== "") {
+            d += "<br/>";
+            }
+            d += labels[frames[ui.value]["dissenters"][s]];
+        }
+        document.getElementById("dissenters").innerHTML = "Blind to event:<br/>" + d;
 
-	    }});
+        }});
     $("#slider").slider( "option", "max", total_frame_count - 2);
 }
 
@@ -147,26 +148,26 @@ function handle_batches() {
 
     // do we even have to batch?
     if (total_frame_count <= batch_size) {
-	render(current_frame);
-	return;
+    render(current_frame);
+    return;
     }
 
     // handle case where user clicked entirely outside
     // aka load frames and then render
     if (current_frame > frame_top ||
-	current_frame < frame_bottom) {
-	// force some garbage collection?
-	slide_batch_window();
-	render(current_frame);
+    current_frame < frame_bottom) {
+    // force some garbage collection?
+    slide_batch_window();
+    render(current_frame);
     }
 
     // handle case where use is still within frame buffer
     // but close enough to edge to reload
-    else if ((frame_top - current_frame < trigger && frame_top != total_frame_count) ||
-	     (current_frame - frame_bottom < trigger && frame_bottom != 0)) {
-	render(current_frame);
-	// force some garbage collection?
-	slide_batch_window();
+    else if ((frame_top - current_frame < trigger && frame_top !== total_frame_count) ||
+         (current_frame - frame_bottom < trigger && frame_bottom !== 0)) {
+    render(current_frame);
+    // force some garbage collection?
+    slide_batch_window();
     }
 
     // otherwise, just render
@@ -182,14 +183,14 @@ function slide_batch_window() {
 
     // frame_bottom is less than 0
     if (frame_bottom < 0) {
-	frame_bottom = 0;
-	frame_top = batch_size;
+    frame_bottom = 0;
+    frame_top = batch_size;
     }
 
     // frame_top is past the last frame
     if (frame_top >= total_frame_count) {
-	frame_top = total_frame_count - 1;
-	frame_bottom = frame_top - batch_size;
+    frame_top = total_frame_count - 1;
+    frame_bottom = frame_top - batch_size;
     }
     get_batch(frame_bottom, frame_top);
 }
