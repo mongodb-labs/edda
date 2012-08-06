@@ -28,6 +28,8 @@ import argparse
 import gzip
 import os
 import sys
+import json
+import tempfile
 
 from bson import objectid
 from datetime import datetime
@@ -72,15 +74,20 @@ def main():
     parser.add_argument('--http_port', help="Specify the HTTP Port")
     parser.add_argument('--host', help="Specify host")
     parser.add_argument('--verbose', '-v', action='count')
+    parser.add_argument('--json', help="json file")
     parser.add_argument('--version', action='version',
                         version="Running edda version {0}".format(__version__))
+    #parser.add_argument('--json', action='Take json')
     parser.add_argument('--db', '-d', help="Specify DB name")
-    parser.add_argument('--collection', '-c')
+    parser.add_argument('--collection', '-c')  # Fixed
     parser.add_argument('filename', nargs='+')
     namespace = parser.parse_args()
 
     # handle captured arguments
-
+    if namespace.json:
+        has_json = True
+    else:
+        has_json = False
     if namespace.http_port:
         http_port = namespace.http_port
     else:
@@ -106,7 +113,7 @@ def main():
     else:
         coll_name = str(objectid.ObjectId())
     # for easier debugging:
-    print "edda is storing data under collection name {0}".format(coll_name)
+
 
     # configure logger
     # use to switch from console to file: logname = "edda_logs/" + name + ".log"
@@ -150,8 +157,18 @@ def main():
     f = None
     previous_version = False
     version_change = False
+    first = True
     for arg in namespace.filename:
         gzipped = False
+        if ".json" in arg:
+            print "\n\nFound file {}, of type 'json'".format(arg)
+            if not first:
+                print "Ignoring previously processed files and loading configuration found in '.json' file."
+            json_file = open(arg, "r")
+            json_obj = json.loads(json_file.read())
+            has_json = True
+            break
+        first = False
         if ".gz" in arg:
             opened_file = gzip.open(arg, 'r')
             gzipped = True
@@ -292,10 +309,10 @@ def main():
         print "\n VERSION CHANGE DETECTED!!"
         print mongo_version
     # if no servers or meaningful events were found, exit
-    if servers.count() == 0:
+    if servers.count() == 0 and has_json == False:
         LOGGER.critical("No servers were found, exiting.")
         return
-    if entries.count() == 0:
+    if entries.count() == 0 and has_json == False:
         LOGGER.critical("No meaningful events were found, exiting.")
         return
     LOGGER.info("Finished reading from log files, performing post processing")
@@ -316,7 +333,7 @@ def main():
     LOGGER.info("Completed event matchup")
     LOGGER.info('-' * 64)
 
-    # generate frames
+    """"# generate frames
     LOGGER.info("Converting events into frames...")
     frames = generate_frames(events, db, coll_name)
     LOGGER.info("Completed frame conversion")
@@ -324,8 +341,35 @@ def main():
 
     # send to server
     LOGGER.info("Sending frames to server...")
-    send_to_js(frames, get_server_names(db, coll_name),
-               get_admin_info(file_names), http_port)
+
+    frames_json = open("frames.json", "w")
+    json.dump(frames, frames_json)
+    frames_json.close()
+
+    server_names_json = open("names.json", "w")
+    names = get_server_names(db, coll_name)
+    json.dump(names, server_names_json)
+    server_names_json.close()
+
+    admin_info_json = open("admin.json", "w")
+    admin = get_admin_info(file_names)
+    json.dump(admin, admin_info_json)
+    admin_info_json.close()"""
+    # Create json file
+    if not has_json:
+        print "\nEdda is storing data under collection name {0}".format(coll_name)
+        frames = generate_frames(events, db, coll_name)
+        names = get_server_names(db, coll_name)
+        admin = get_admin_info(file_names)
+        large_json = open(coll_name + ".json", "w")
+        large_dict = {}
+        large_dict["frames"] = frames
+        large_dict["names"] = names
+        large_dict["admin"] = admin
+        json.dump(large_dict, large_json)
+    elif has_json:
+        frames, names, admin = json_to_dicts(json_obj)
+    send_to_js(frames, names, admin, http_port)
     LOGGER.info('-' * 64)
     LOGGER.info('=' * 64)
     LOGGER.warning('Completed post processing.\nExiting.')
@@ -372,6 +416,12 @@ def get_admin_info(file_names):
     admin_info["version"] = __version__
     return admin_info
 
+
+def json_to_dicts(large_dict):
+    frames = large_dict["frames"]
+    names = large_dict["names"]
+    admin = large_dict["admin"]
+    return frames, names, admin
 
 if __name__ == "__main__":
     main()
