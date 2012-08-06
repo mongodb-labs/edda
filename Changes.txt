@@ -1,4 +1,9 @@
-0.6.0 Wed, Aug 1, 1012
+0.6.1 Fri, Aug 3, 2012
+	[BUG FIXES]
+
+	* Added missing sample log files in the hp directory
+
+0.6.0 Wed, Aug 1, 2012
 
 	[ENHANCEMENTS]
 
