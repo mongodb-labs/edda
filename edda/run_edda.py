@@ -102,7 +102,7 @@ def main():
 
     # generate a unique collection name, if not specified by user
     if namespace.collection:
-        coll_name = namespace.collection[0]
+        coll_name = namespace.collection
     else:
         coll_name = str(objectid.ObjectId())
     # for easier debugging:
