@@ -76,7 +76,6 @@ def main():
     parser.add_argument('--json', help="json file")
     parser.add_argument('--version', action='version',
                         version="Running edda version {0}".format(__version__))
-    #parser.add_argument('--json', action='Take json')
     parser.add_argument('--db', '-d', help="Specify DB name")
     parser.add_argument('--collection', '-c')  # Fixed
     parser.add_argument('filename', nargs='+')
@@ -172,12 +171,12 @@ def main():
             opened_file = gzip.open(arg, 'r')
             gzipped = True
         if arg in file_names:
-            LOGGER.warning("Skipping duplicate file {0}".format(arg))
+            LOGGER.warning("\nSkipping duplicate file {0}".format(arg))
             continue
         try:
             f = open(arg, 'r')
         except IOError as e:
-            print "Error: Unable to read file {0}".format(arg)
+            print "\nError: Unable to read file {0}".format(arg)
             print e
         file_names.append(arg)
         counter = 0
@@ -187,9 +186,7 @@ def main():
         LOGGER.warning('Reading from logfile {0}...'.format(arg))
         previous = "none"
         #f is the file names\
-
-        print ""
-        print "Currently parsing log-file: {}".format(arg)
+        print "\nCurrently parsing log-file: {}".format(arg)
         #sys.stdout.flush()
         total_characters = 0
         lines = []
@@ -329,28 +326,6 @@ def main():
     LOGGER.info("Completed event matchup")
     LOGGER.info('-' * 64)
 
-    """"# generate frames
-    LOGGER.info("Converting events into frames...")
-    frames = generate_frames(events, db, coll_name)
-    LOGGER.info("Completed frame conversion")
-    LOGGER.info('-' * 64)
-
-    # send to server
-    LOGGER.info("Sending frames to server...")
-
-    frames_json = open("frames.json", "w")
-    json.dump(frames, frames_json)
-    frames_json.close()
-
-    server_names_json = open("names.json", "w")
-    names = get_server_names(db, coll_name)
-    json.dump(names, server_names_json)
-    server_names_json.close()
-
-    admin_info_json = open("admin.json", "w")
-    admin = get_admin_info(file_names)
-    json.dump(admin, admin_info_json)
-    admin_info_json.close()"""
     # Create json file
     if not has_json:
         print "\nEdda is storing data under collection name {0}".format(coll_name)
