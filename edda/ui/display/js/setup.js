@@ -112,8 +112,10 @@ function time_setup(max_time) {
         else { direction = -1; }
         current_frame = ui.value;
         handle_batches();
-        document.getElementById("timestamp").innerHTML = "Time: " + frames[ui.value]["date"].substring(5, 50);
-        document.getElementById("summary").innerHTML = "Event " + ui.value + ": " + frames[ui.value]["summary"];
+        document.getElementById(
+            "timestamp").innerHTML = "Time: " + frames[ui.value]["date"].substring(5, 50);
+        document.getElementById(
+            "summary").innerHTML = "Event " + ui.value + ": " + frames[ui.value]["summary"];
 
         // erase pop-up box
         document.getElementById("message_box").style.visibility = "hidden";
@@ -197,7 +199,7 @@ function slide_batch_window() {
 
 
 // define .size function for object
-// thanks http://stackoverflow.com/questions/5223/length-of-javascript-object-ie-associative-array
+// http://stackoverflow.com/questions/5223/length-of-javascript-object-ie-associative-array
 function size(obj) {
     var len = 0, key;
     for (key in obj) {

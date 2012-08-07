@@ -51,8 +51,7 @@ setup(
   scripts=['scripts/edda'],
   install_requires=['pymongo'],
 
-  package_data=
-  {
+  package_data={
     # If any package contains *.txt files, include them:
     'edda.ui.display.js': ['*.js'],
     'edda.ui.display.style': ['*.css', '*.ico'],
