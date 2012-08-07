@@ -178,9 +178,6 @@ def main():
         except IOError as e:
             print "Error: Unable to read file {0}".format(arg)
             print e
-            if f:
-                f.close()
-            return
         file_names.append(arg)
         counter = 0
         stored = 0
