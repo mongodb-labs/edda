@@ -22,14 +22,13 @@ Users can customize this tool by adding their own parsers
 to the edda/filters/ subdirectory, following the layout specified
 in edda/filters/template.py.
 """
-__version__ = "0.6.1"
+__version__ = "0.6.2"
 
 import argparse
 import gzip
 import os
 import sys
 import json
-import tempfile
 
 from bson import objectid
 from datetime import datetime
@@ -361,11 +360,7 @@ def main():
         names = get_server_names(db, coll_name)
         admin = get_admin_info(file_names)
         large_json = open(coll_name + ".json", "w")
-        large_dict = {}
-        large_dict["frames"] = frames
-        large_dict["names"] = names
-        large_dict["admin"] = admin
-        json.dump(large_dict, large_json)
+        json.dump(dicts_to_json(frames, names, admin), large_json)
     elif has_json:
         frames, names, admin = json_to_dicts(json_obj)
     send_to_js(frames, names, admin, http_port)
@@ -417,10 +412,20 @@ def get_admin_info(file_names):
 
 
 def json_to_dicts(large_dict):
+    # Splits dictionary into frames, names, and admin parts.
     frames = large_dict["frames"]
     names = large_dict["names"]
     admin = large_dict["admin"]
     return frames, names, admin
+
+
+def dicts_to_json(frames, names, admin):
+    # Takes three dictionaries and makes one json out of them.
+    large_dict = {}
+    large_dict["frames"] = frames
+    large_dict["names"] = names
+    large_dict["admin"] = admin
+    return large_dict
 
 if __name__ == "__main__":
     main()
