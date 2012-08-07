@@ -114,7 +114,6 @@ def main():
         coll_name = str(objectid.ObjectId())
     # for easier debugging:
 
-
     # configure logger
     # use to switch from console to file: logname = "edda_logs/" + name + ".log"
     if not namespace.verbose:

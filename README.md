@@ -32,10 +32,12 @@ RUN
 Give the log files from your servers as command-line
 arguments to the visualizer:
 
-	  $ python edda/run_edda.py --options filename1 filename2 ...
-(see python run_edda.py --help for options)
+	$ python edda/run_edda.py --options filename1 filename2 ...
+	(see python run_edda.py --help for options)
 
 Edda can read in multiple log files at once.
+
+After each run, edda generates a '.json' file that contains all of the information required to recreate the current run. Run the '.json' file just as you would a '.log'. 
 
 NOTE: please only give log files from the same server cluster!
 

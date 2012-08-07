@@ -1,3 +1,8 @@
+[Next release, insert number here]
+	[NEW FEATURES]
+
+	* After each run, a '.json' file is created at the place that you run the program from with your current configuration stored in it. Instead of sending entire log files for parsing, you can just send one '.json' file that will contain all of the information that edda needs to recreate the last run. 
+
 0.6.1 Fri, Aug 3, 2012
 	[BUG FIXES]
 
