@@ -161,7 +161,8 @@ def main():
         if ".json" in arg:
             print "\n\nFound file {}, of type 'json'".format(arg)
             if not first:
-                print "Ignoring previously processed files and loading configuration found in '.json' file."
+                print "Ignoring previously processed files"
+                " and loading configuration found in '.json' file."
             json_file = open(arg, "r")
             json_obj = json.loads(json_file.read())
             has_json = True
