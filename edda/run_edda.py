@@ -341,6 +341,9 @@ def main():
     LOGGER.info('=' * 64)
     LOGGER.warning('Completed post processing.\nExiting.')
 
+    db.drop_collection(coll_name + ".servers")
+    db.drop_collection(coll_name + ".entries")
+
 
 def traffic_control(msg, date):
     """ Passes given message through a number of filters.  If a
