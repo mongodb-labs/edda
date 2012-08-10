@@ -222,7 +222,6 @@ def main():
                     (total_characters) / increment) + " " * (
                     (total - (total_characters)) / increment) + "]" + percent_string + "%")
                 old_total = ratio
-            #sys.stdout.flush()
 
             counter += 1
             # handle restart lines
