@@ -182,42 +182,33 @@ def main():
 
         LOGGER.warning('Reading from logfile {0}...'.format(arg))
         previous = "none"
-        #f is the file names\
         print "\nCurrently parsing log-file: {}".format(arg)
-        #sys.stdout.flush()
         total_characters = 0
-        lines = []
-        new_line = ""
         total_chars = 0
+
+        # Build log lines out of characters
         if gzipped:
             text = opened_file.read()
-            for char in text:
-                total_chars += 1
-                if ord(char) is not 10:
-                    new_line += char
-                    continue
-                else:
-                    LOGGER.debug("Found a break point in the .tgz file")
-                line = new_line
-                lines.append(line)
-                new_line = ""
-            file_lines = lines
+            #for char in text:
+            total_chars = len(text)
+            array = text.split('\n')
+            file_lines = array
         else:
             file_lines = f
 
+        #print ("Finished processing gzipped with a time of: " + str(datetime.now() - now))
         file_info = os.stat(arg)
         total = 0
         total = file_info.st_size
+        # Make sure the progress bar works with gzipped file.
         if gzipped:
             intermediate_total = total_chars
             total = int(intermediate_total * .98)
 
-        #total *= files_count
         point = total / 100
         increment = total / 100
         old_total = -1
         for line in file_lines:
-            #if gzip:
             ratio = total_characters / point
             total_characters += len(line)
             if ratio >= 99:
