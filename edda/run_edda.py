@@ -196,7 +196,7 @@ def main():
         else:
             file_lines = f
 
-        #print ("Finished processing gzipped with a time of: " + str(datetime.now() - now))
+        LOGGER.debug(("Finished processing gzipped with a time of: " + str(datetime.now() - now)))
         file_info = os.stat(arg)
         total = 0
         total = file_info.st_size
@@ -285,9 +285,11 @@ def main():
         LOGGER.warning('Finished running on {0}'.format(arg))
         LOGGER.info('Stored {0} of {1} log lines to db'.format(stored, counter))
         LOGGER.warning('=' * 64)
+    LOGGER.debug(("Finished processing everything with a time of: " + str(datetime.now() - now)))
     if version_change == True:
         print "\n VERSION CHANGE DETECTED!!"
         print mongo_version
+
     # if no servers or meaningful events were found, exit
     if servers.count() == 0 and has_json == False:
         LOGGER.critical("No servers were found, exiting.")
@@ -295,9 +297,13 @@ def main():
     if entries.count() == 0 and has_json == False:
         LOGGER.critical("No meaningful events were found, exiting.")
         return
+
     LOGGER.info("Finished reading from log files, performing post processing")
     LOGGER.info('-' * 64)
 
+    LOGGER.debug("\nTotal processing time for log files: " + str(datetime.now() - now))
+
+    # Perform address matchup
     if len(namespace.filename) > 1:
         LOGGER.info("Attempting to resolve server names")
         result = address_matchup(db, coll_name)
@@ -307,7 +313,7 @@ def main():
             LOGGER.warning("Could not resolve server names")
         LOGGER.info('-' * 64)
 
-    # event matchup
+    # Event matchup
     LOGGER.info("Matching events across documents and logs...")
     events = event_matchup(db, coll_name)
     LOGGER.info("Completed event matchup")
@@ -321,6 +327,7 @@ def main():
         admin = get_admin_info(file_names)
         large_json = open(coll_name + ".json", "w")
         json.dump(dicts_to_json(frames, names, admin), large_json)
+    # No need to create json, one already provided.
     elif has_json:
         frames, names, admin = json_to_dicts(json_obj)
     send_to_js(frames, names, admin, http_port)
@@ -328,6 +335,7 @@ def main():
     LOGGER.info('=' * 64)
     LOGGER.warning('Completed post processing.\nExiting.')
 
+    # Drop the collections created for this run.
     db.drop_collection(coll_name + ".servers")
     db.drop_collection(coll_name + ".entries")
 
@@ -383,7 +391,7 @@ def json_to_dicts(large_dict):
 
 
 def dicts_to_json(frames, names, admin):
-    # Takes three dictionaries and makes one json out of them.
+    # Takes three dictionaries and makes one dictionary out of them.
     large_dict = {}
     large_dict["frames"] = frames
     large_dict["names"] = names
