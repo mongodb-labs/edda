@@ -141,13 +141,10 @@ def main():
     servers = db[coll_name].servers
 
     now = datetime.now()
-    name = now.strftime("edda_%m_%d_%Y_at_%H_%M_%S")
 
     # some verbose comments
     LOGGER.info('Connection opened with edda mongod, using {0} on port {1}'
                 .format(host, port))
-    LOGGER.debug('Writing to db edda, collection {0}\nPreparing to parse log files'
-                 .format(name))
 
     # read in from each log file
     file_names = []
