@@ -52,4 +52,4 @@ If you'd like to report a bug or request a new feature,
 please file an issue on our github repository
 (you must be logged into github to do this):
 
-https://github.com/kchodorow/edda/issues/new
+https://github.com/10gen-labs/edda/issues/new
