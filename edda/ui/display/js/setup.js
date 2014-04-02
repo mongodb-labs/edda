@@ -1,4 +1,4 @@
-// Copyright 2009-2012 10gen, Inc.
+// Copyright 2014 MongoDB, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -11,8 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
-// A centralized file for all the JS setup details
 
 // define program-wide global variables
 var layers = new Array("background", "shadow", "link", "arrow", "server");
@@ -36,7 +34,6 @@ var frames;
 var admin;
 var total_frame_count;
 
-
 // call various setup functions
 function edda_setup() {
     canvases_and_contexts();
@@ -46,24 +43,21 @@ function edda_setup() {
     visual_setup();
     version_number();
     file_names();
-
 }
 
-// set up canvases and associated contexts
+/* set up canvases and associated contexts */
 function canvases_and_contexts() {
     for (var i in layers) {
-    canvases[layers[i]] = document.getElementById(layers[i] + "_layer");
-    contexts[layers[i]] = canvases[layers[i]].getContext("2d");
+        canvases[layers[i]] = document.getElementById(layers[i] + "_layer");
+        contexts[layers[i]] = canvases[layers[i]].getContext("2d");
     }
 }
 
-
-// set up mouse-over functionality
+/* set up mouse-over functionality */
 function mouse_over_setup() {
-    canvases["server"].addEventListener("mousemove", on_canvas_mouseover, false);
-    canvases["server"].addEventListener("click", new_click, false);
+    canvases["server"].addEventListener("mousemove", onCanvasMouseover, false);
+    canvases["server"].addEventListener("click", onCanvasClick, false);
 }
-
 
 // set up display-related things from frames
 // generate coordinates
@@ -73,7 +67,7 @@ function visual_setup() {
 
     // clear all layers
     for (var name in layers) {
-    canvases[layers[name]].width = canvases[layers[name]].width;
+        canvases[layers[name]].width = canvases[layers[name]].width;
     }
 
     // color background
@@ -94,12 +88,13 @@ function visual_setup() {
             for (var name in frames["0"]["servers"]) {
                 names.push(name);
             }
-            generate_coords(names.length, names);
+            generateIconCoords(names.length, names);
+            drawServerLabels(b_ctx);
         }
     }
 
     // render first frame
-    render("0");
+    renderFrame("0");
 }
 
 
@@ -113,9 +108,9 @@ function time_setup(max_time) {
         current_frame = ui.value;
         handle_batches();
         document.getElementById(
-            "timestamp").innerHTML = "Time: " + frames[ui.value]["date"].substring(5, 50);
+            "timestamp").innerHTML = "<b>Time:</b> " + frames[ui.value]["date"].substring(5, 50);
         document.getElementById(
-            "summary").innerHTML = "Event " + ui.value + ": " + frames[ui.value]["summary"];
+            "summary").innerHTML = frames[ui.value]["summary"];
 
         // erase pop-up box
         document.getElementById("message_box").style.visibility = "hidden";
@@ -129,7 +124,7 @@ function time_setup(max_time) {
             }
             w += labels[frames[ui.value]["witnesses"][s]];
         }
-        document.getElementById("witnesses").innerHTML = "Witnessed event:<br/>" + w;
+        document.getElementById("witnesses").innerHTML = w;
 
         // print dissenters, as hostnames
         var d = "";
@@ -139,7 +134,7 @@ function time_setup(max_time) {
             }
             d += labels[frames[ui.value]["dissenters"][s]];
         }
-        document.getElementById("dissenters").innerHTML = "Blind to event:<br/>" + d;
+        document.getElementById("dissenters").innerHTML = d;
 
         }});
     $("#slider").slider( "option", "max", total_frame_count - 2);
@@ -150,8 +145,8 @@ function handle_batches() {
 
     // do we even have to batch?
     if (total_frame_count <= batch_size) {
-    render(current_frame);
-    return;
+        renderFrame(current_frame);
+        return;
     }
 
     // handle case where user clicked entirely outside
@@ -159,23 +154,22 @@ function handle_batches() {
     if (current_frame > frame_top ||
     current_frame < frame_bottom) {
     // force some garbage collection?
-    slide_batch_window();
-    render(current_frame);
+        slide_batch_window();
+        renderFrame(current_frame);
     }
 
     // handle case where use is still within frame buffer
     // but close enough to edge to reload
     else if ((frame_top - current_frame < trigger && frame_top !== total_frame_count) ||
          (current_frame - frame_bottom < trigger && frame_bottom !== 0)) {
-    render(current_frame);
+        renderFrame(current_frame);
     // force some garbage collection?
     slide_batch_window();
     }
 
     // otherwise, just render
-    else { render(current_frame); }
+    else renderFrame(current_frame);
 }
-
 
 function slide_batch_window() {
 
@@ -185,14 +179,14 @@ function slide_batch_window() {
 
     // frame_bottom is less than 0
     if (frame_bottom < 0) {
-    frame_bottom = 0;
-    frame_top = batch_size;
+        frame_bottom = 0;
+        frame_top = batch_size;
     }
 
     // frame_top is past the last frame
     if (frame_top >= total_frame_count) {
-    frame_top = total_frame_count - 1;
-    frame_bottom = frame_top - batch_size;
+        frame_top = total_frame_count - 1;
+        frame_bottom = frame_top - batch_size;
     }
     get_batch(frame_bottom, frame_top);
 }

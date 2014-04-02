@@ -1,4 +1,4 @@
-// Copyright 2009-2012 10gen, Inc.
+// Copyright 2009-2014 MongoDB, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,43 +12,42 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
-one_line = function(x1, y1, x2, y2, ctx) {
+/* Draw a line from (x, y) to (x2, y2) */
+var drawOneLine = function(x, y, x2, y2, ctx) {
     ctx.beginPath();
-    ctx.moveTo(x1, y1);
+    ctx.moveTo(x, y);
     ctx.lineWidth = 1;
-    ctx.strokeStyle = "#1C0E0B";//3B1EOB
+    ctx.strokeStyle = "#1C0E0B";
     ctx.lineTo(x2, y2);
     ctx.stroke();
 };
 
-broken_link = function(x1, y1, x2, y2, ctx) {
-    // draw a dotted line from x1,y1 to x2,y2
-    var dy = y2 - y1;
-    var dx = x2 - x1;
+/* Draw a dotted line from (x, y) to (x2, y2) */
+var drawBrokenLink = function(x, y, x2, y2, ctx) {
+    // adapted from http://stackoverflow.com/questions/4576724/dotted-stroke-in-canvas
+    var dy = y2 - y;
+    var dx = x2 - x;
     var slope = dy/dx;
-    var l = 10;
-    var x = x1;
-    var y = y1;
+    var l = 10; // length of line segments, "dots"
     var distRemaining = Math.sqrt(dx*dx + dy*dy);
     var xStep = Math.sqrt(l*l / (1 + slope*slope));
 
     // set the sign of xStep:
-    if (x1 > x2) { xStep = -xStep; }
+    if (x > x2) { xStep = -xStep; }
     var yStep = slope * xStep;
 
     ctx.lineWidth = 1;
-    ctx.strokeStyle = "#9D7E51";//3B1EOB
+    ctx.strokeStyle = "#9D7E51";
     ctx.beginPath();
-    // adapted from http://stackoverflow.com/questions/4576724/dotted-stroke-in-canvas
+
     while (distRemaining >= 0.1) {
-	ctx.moveTo(x, y);
-	x += xStep;
-	y += yStep;
-	ctx.lineTo(x, y);
-	x += xStep;
-	y += yStep;
-	distRemaining -= (2 * l);
+	    ctx.moveTo(x, y);
+	    x += xStep;
+	    y += yStep;
+	    ctx.lineTo(x, y);
+	    x += xStep;
+	    y += yStep;
+	    distRemaining -= (2 * l);
     }
     ctx.stroke();
 };
