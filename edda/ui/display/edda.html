@@ -1,4 +1,4 @@
-<!-- Copyright 2009-2012 10gen, Inc.
+<!-- Copyright 2014 MongoDB, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ limitations under the License. /-->
 
 <head>
   <!--Title/-->
-  <title>edda, a log visualizer for MongoDB</title>
+  <title>Edda</title>
 
   <!--Import style files/-->
   <link rel="stylesheet" type="text/css" href="style/edda.css"/>
@@ -31,44 +31,95 @@ limitations under the License. /-->
   <script src="js/render.js"></script>
   <script src="js/draw_servers.js"></script>
   <script src="js/connection.js"></script>
+  <script src="js/misc.js"></script>
   <script src="js/mouse_over.js"></script>
   <script src="js/arrows.js"></script>
   <script src="js/links.js"></script>
   <script src="js/pop.js"></script>
 
+  <!--Mongo Bootstrap/-->
+  <link rel="stylesheet" href="style/mongostrap.min.css">
+  <script src="js/mongostrap.min.js"></script>
+
+  <!--FontAwesome/-->
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 </head>
 
 <body onload="edda_setup()">
 
-    <div id="page">
-      <br/>
-      <div id="canvas">
-	<!--Canvas layers go in here/-->
-	<canvas id="background_layer" height="600" width="800"></canvas>
-	<canvas id="shadow_layer" height="600" width="800"></canvas>
-	<canvas id="link_layer" height="600" width="800"></canvas>
-	<canvas id="arrow_layer" height="600" width="800"></canvas>
-	<canvas id="server_layer" height="600" width="800"></canvas>
-	<div id="message_box"></div>
+    <div class="container">
+
+      <div id="nav" class="navbar navbar-inverse navbar-fixed-top">
+        <a class="navbar-brand">EDDA</a>
       </div>
-      <br/>
-      <div id="slider_box">
-	<div id="slider"></div>
+      <br/><br/><br/>
+
+      <div style="width:1200px;">
+
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <h1>Replica Set</h1><br/>
+        </div>
+        <div class="col-md-3"></div>
       </div>
 
-      <div id="side_information">
-	<div id="log_files"></div><br/>
-	<div id="timestamp">Time:</div><br/>
-	<div id="summary">Summary:</div><br/>
-	<div id="witnesses">Witnessed event:</div><br/>
-	<div id="dissenters">Blind to event:</div>
+      <div class="row">
+
+        <div class="col-md-3">
+
+          <div id="side_information">
+
+	        <div id="timestamp" class="nav nav-list collapse in"><b>Time:</b></div><br/>
+
+            <span class="nav-header" data-toggle="collapse" data-target="#summary">
+              <i class="fa fa-angle-down"></i>&nbsp;
+              <b>Summary</b></span>
+	        <div id="summary" class="nav nav-list collapse in"></div><br/>
+
+            <span class="nav-header" data-toggle="collapse" data-target="#witnesses">
+            <i class="fa fa-angle-down"></i>&nbsp;
+              <b>Witnesses to Event</b></span>
+	        <div id="witnesses" class="nav nav-list collapse in"></div><br/>
+
+            <span class="nav-header" data-toggle="collapse" data-target="#dissenters">
+            <i class="fa fa-angle-down"></i>&nbsp;
+              <b>Blind to Event</b></span>
+	        <div id="dissenters" class="nav nav-list collapse in"></div>
+          </div>
+
+        </div>
+
+        <!--the canvas/-->
+        <div class="col-md-6">
+          <div id="canvas">
+	        <!--Animation layers/-->
+	        <canvas id="background_layer" height="440" width="600"></canvas>
+	        <canvas id="shadow_layer" height="440" width="600"></canvas>
+	        <canvas id="link_layer" height="440" width="600"></canvas>
+	        <canvas id="arrow_layer" height="440" width="600"></canvas>
+	        <canvas id="server_layer" height="440" width="600"></canvas>
+
+            <div id="message_box"><!--for server information upon click/--></div>
+          </div>
+          <br/>
+	      <div id="slider"></div>
+        </div>
+
+      <!--other information/-->
+      <div class="col-md-3">
+          <span class="nav-header" data-toggle="collapse" data-target="#log_files">
+            <i class="fa fa-angle-down"></i>&nbsp;
+            <b>Files</b></span>
+	      <div id="log_files" class="nav nav-list collapse in"></div><br/>
+
+        <div id="pop_up_links">
+	      <a href="javascript:void(0)" onmousedown="popUp('icon_key')">Icon Key</a><br/>
+	      <div id="version"></div>
+        </div>
       </div>
 
-      <div id="pop_up_links">
-	<a href="javascript:void(0)" onmousedown="popUp('icon_key')">Icon Key</a><br/>
-	<div id="version"></div>
-	<br/>
-      </div>
+    </div>
 
     <div id="mask"></div>
     <div id="icon_key">
@@ -76,6 +127,7 @@ limitations under the License. /-->
 	<img src="server_icons.jpg" width="600px" height="600px"/>
       </a>
     </div>
+      </div>
 </body>
 
 
