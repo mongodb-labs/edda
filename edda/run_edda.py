@@ -1,4 +1,4 @@
-# Copyright 2012 MongoDB, Inc.
+# Copyright 2014 MongoDB, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -40,6 +40,7 @@ from supporting_methods import *
 from ui.frames import generate_frames
 from ui.connection import send_to_js
 
+LOGGER = None
 PARSERS = [
     rs_status.process,
     fsync_lock.process,
@@ -49,8 +50,6 @@ PARSERS = [
     rs_exit.process,
     rs_reconfig.process
 ]
-
-LOGGER = None
 
 def main():
 
@@ -117,7 +116,7 @@ def main():
     for file in namespace.filename:
         if ".json" in file:
             LOGGER.debug("Loading in edda data from {0}".format(file))
-            json_file = open(arg, "r")
+            json_file = open(file, "r")
             data = json.loads(json_file.read())
             send_to_js(data["frames"],
                        data["names"],
@@ -126,10 +125,12 @@ def main():
             edda_cleanup(db, coll_name)
             return
 
+    # were we supposed to have a .json file?
     if has_json:
         LOGGER.critical("--json option used, but no .json file given")
         return
 
+    # run full log processing
     processed_files = []
     for filename in namespace.filename:
         if filename in processed_files:
@@ -138,10 +139,10 @@ def main():
         process_log(logs, servers, entries)
         processed_files.append(filename)
 
+    # anything to show?
     if servers.count() == 0:
         LOGGER.critical("No servers were found, exiting")
         return
-
     if entries.count() == 0:
         LOGGER.critical("No meaningful events were found, exiting")
         return
@@ -205,13 +206,15 @@ def process_log(log, servers, entries):
     for line in log:
         date = date_parser(line)
         if not date:
+            LOGGER.debug("No date found, skipping")
             continue
         doc = filter_message(line, date)
         if not doc:
+            LOGGER.debug("No matching filter found")
             continue
 
-        # A server number is used to connect the messages
-        # from a given server.  If we find an address for the server,
+        # We use a server number to associate these messages
+        # with the current server.  If we find an address for the server,
         # that's even better, but if not, at least we have some ID for it.
         if (doc["type"] == "init" and
             doc["info"]["subtype"] == "startup"):
@@ -230,6 +233,21 @@ def process_log(log, servers, entries):
             # is this an upgrade?
             if mongo_version and mongo_version != doc["version"]:
                 upgrade = True
+                # TODO: add a new event for a server upgrade?
+                # perhaps we should track startups with a given server.
+                # This would be nicer than just "status init" that happens now:
+                #
+                # 'server 4' was started up
+                #        - version number
+                #        - options, build info
+
+        if doc["type"] == "startup_options":
+            # TODO: save these in some way.
+            continue
+
+        if doc["type"] == "build_info":
+            # TODO: save thes in some way.
+            continue
 
         # skip repetitive exit messages
         if doc["type"] == "exit" and previous == "exit":
@@ -241,6 +259,7 @@ def process_log(log, servers, entries):
         entries.insert(doc)
         LOGGER.debug("Stored line to db: \n{0}".format(line))
 
+
 def filter_message(msg, date):
     """ Pass this log line through a number of filters.
     The first filter that finds a match will return
@@ -250,6 +269,7 @@ def filter_message(msg, date):
         doc = process(msg, date)
         if doc:
             return doc
+
 
 def get_server_names(db, servers):
     """ Format the information in the .servers collection
