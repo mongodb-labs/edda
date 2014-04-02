@@ -1,22 +1,11 @@
-
-body {
-/*     background-color: #e0e0e0; */
-     background-color: #9D7E51;
-}
-
-#page {
-     background-color: #9D7E51;
-     font-family: Monaco, Georgia, Serif;
-     font-size: 14;
-}
-
 /* div that holds all the canvases */
+body {
+    background-image: url('../img/texture.png');
+}
+
 #canvas {
-	position: relative;
-	width: 800px;
-	height: 600px;
-	background-color: #ffffff;
-	margin-left: 220px;
+    height: 440px;
+    width: 580px;
 	box-shadow: 0px 0px 40px #444444;
 }
 
@@ -52,11 +41,6 @@ body {
 	      padding: 0px 0 0 0;
 }
 
-#slider_box {
-	margin-left: 220px;
-	width: 800px;
-}
-
 /* information divs */
 
 #mask {
@@ -86,29 +70,21 @@ body {
 	  visibility: hidden;
 }
 
-#side_information {
-	   width: 160px;
-	   position: absolute;
-	    left: 30px;
-	    top: 30px;
-}
-
-
 #timestamp, #summary, #log_files, #witnesses, #dissenters {
 		overflow-x: scroll;
-	    width: 160px;
-	    background-color:#DECBA2;
-	    padding: 10px;
-	    opacity:0.8;
-	    filter:alpha(opacity=80);
-	    -moz-border-radius: 5px;
-	    border-radius: 5px;
 	    font-size: 10pt;
+}
+
+#summary {
+    height: 20px;
+}
+
+#witnesses, #dissenters {
+    height: 100px;
 }
 
 #pop_up_links {
 	      /*position: absolute;*/
-
 	      width: 160px;
 	      top: 100%;
 	      padding: 10px;
@@ -123,7 +99,6 @@ a:active {color: #6a5178; text-decoration: none;}
 /* message box!! */
 
 #message_box {
-	     font-family: "Monaco";
 	     font-size: 12px;
 	     position: absolute;
 	     opacity:0.8;
