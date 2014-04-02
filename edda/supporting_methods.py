@@ -1,4 +1,4 @@
-# Copyright 2012 10gen, Inc.
+# Copyright 2014 MongoDB, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,6 @@
 
 #!/usr/bin/env python
 
-
 import logging
 import re
 
@@ -25,12 +24,12 @@ ADDRESS = re.compile("\S+:[0-9]{1,5}")
 IP_PATTERN = re.compile("(0|(1?[0-9]{1,2})|(2[0-4][0-9])"
                         "|(25[0-5]))(\.(0|(1?[0-9]{1,2})"
                         "|(2[0-4][0-9])|(25[0-5]))){3}")
-MONTH_DICT = {
+MONTHS = {
     'Jan': 1, 'Feb': 2, 'Mar': 3, 'Apr': 4,
     'May': 5, 'Jun': 6, 'Jul': 7, 'Aug': 8,
     'Sep': 9, 'Oct': 10, 'Nov': 11, 'Dec': 12
     }
-DAY_DICT = {
+DAYS = {
     'Mon': 1, 'Tue': 2, 'Wed': 3, 'Thu': 4, 'Fri': 5, "Sat": 6, 'Sun': 7
 }
 
@@ -81,7 +80,6 @@ def get_server_num(addr, self_name, servers):
     # make sure that we do not overwrite an existing server's index
     for i in range(1, 50):
         if not servers.find_one({"server_num": str(i)}):
-            logger.info("No server entry found for target server {0}".format(addr))
             logger.info("Adding {0} to the .servers collection with server_num {1}"
                         .format(addr, i))
             assign_address(str(i), addr, self_name, servers)
@@ -90,8 +88,10 @@ def get_server_num(addr, self_name, servers):
 
 
 def update_mongo_version(version, server_num, servers):
-    doc = []
     doc = servers.find_one({"server_num": server_num})
+    if not doc:
+        print "Invalid server number"
+        return
     if doc["version"] != version or doc["version"] == "unknown":
         doc["version"] = version
     servers.save(doc)
@@ -131,9 +131,9 @@ def assign_address(num, addr, self_name, servers):
     or False, and indicates whether addr is a self_name or a
     network_name.
     """
-    # in the case that two different addresses are found for the
-    # same server, this chooses to log a warning and ignore
-    # all but the first address found
+    # in the case that multiple addresses are found for the
+    # same server, we choose to log a warning and ignore
+    # all but the first address found.  We will
     # store all fields as strings, including server_num
     # server doc = {
     #    "server_num" : int, as string
@@ -144,6 +144,7 @@ def assign_address(num, addr, self_name, servers):
 
     # if "self" is the address, ignore
     if addr == "self":
+        logger.debug("Returning, will not save 'self'")
         return
 
     num = str(num)
@@ -186,20 +187,24 @@ def assign_address(num, addr, self_name, servers):
     servers.save(doc)
 
 
-def date_parser(message):
+def date_parser(msg):
     """extracts the date information from the given line.  If
     line contains incomplete or no date information, skip
     and return None."""
     try:
-        newMessage = str(MONTH_DICT[message[4:7]]) + message[7:19]
-        return make_datetime_obj(message)
-        return datetime.strptime(newMessage, "%m %d %H:%M:%S") 
+        # 2.6 logs begin with the year
+        if msg[0:2] == "20":
+            return datetime.strptime(msg[0:19], "%Y-%m-%dT%H:%M:%S")
+
+        # for old logs, 2.0
+        new_msg = str(MONTHS[msg[4:7]]) + msg[7:19]
+        return make_datetime_obj(msg)
+        return datetime.strptime(new_msg, "%m %d %H:%M:%S")
     except (KeyError, ValueError):
         return None
 
 
-def make_datetime_obj(message):
-    date = datetime(2012, MONTH_DICT[message[4:7]], DAY_DICT[message[0:3]],
-        int(message[11:13]), int(message[14:16]), int(message[17:19]))
-
+def make_datetime_obj(msg):
+    date = datetime(2012, MONTHS[msg[4:7]], DAYS[msg[0:3]],
+        int(msg[11:13]), int(msg[14:16]), int(msg[17:19]))
     return date
