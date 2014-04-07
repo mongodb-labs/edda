@@ -70,7 +70,6 @@ class test_init_and_listen(unittest.TestCase):
         assert doc
         assert doc["type"] == "init"
         assert doc["info"]["subtype"] == "startup"
-        assert doc["info"]["server"] == "self"
         assert doc["info"]["addr"] == "Kaushals-MacBook-Air.local:27018"
         return
 
