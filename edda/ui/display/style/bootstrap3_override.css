@@ -1,0 +1,170 @@
+div.container#content {
+  max-width: none;
+  margin-top: 80px;
+}
+ul {
+  padding-left: 0px !important;
+}
+ul.inline {
+  list-style: none !important;
+  margin-left: 0px !important;
+}
+ul.inline li {
+  display: inline-block !important;
+  line-height: 20px !important;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'PT Sans', sans-serif !important;
+}
+.label {
+  font-family: Helvetica, sans-serif !important;
+}
+.progress {
+  margin-bottom: 0px !important;
+}
+.progress-bar-default {
+  background-color: #bbb;
+}
+.one-liner {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+}
+h1.one-liner {
+  margin-top: 5px;
+  padding-top: 5px;
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+}
+.transparent {
+  background-color: transparent !important;
+}
+.highlight-bg {
+  background-color: #fcf0c6;
+  border-bottom: 1px solid #fcf0c6;
+  border-top: 1px solid #fcf0c6;
+}
+.one-char-div {
+  float: left;
+  width: 1.25em;
+}
+.zero-margin {
+  margin: 0px;
+}
+.commit-panel {
+  margin: 15px;
+  font-size: 14px;
+  font-family: Helvetica;
+  color: #333;
+  border-top: 1px solid #e2eaee;
+  border-bottom: 1px solid #e2eaee;
+  border-left: 1px solid #c5d5dd;
+  border-right: 1px solid #c5d5dd;
+  padding: 8px;
+  position: relative;
+}
+.commit-message-large {
+  font-size: 16px;
+}
+.commit-message {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  color: #333333;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+  line-height: 1.4em;
+}
+.commit-message-author {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  color: #333333;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+  font-size: 13px;
+  line-height: 1.4em;
+}
+.github_gobutton {
+  height: 22px;
+  padding: 0 7px;
+  line-height: 22px;
+  font-size: 12px;
+  color: #4e575b;
+  text-shadow: 0 1px rgba(255, 255, 255, 0.5);
+  background-color: #ddecf3;
+  background-image: -moz-linear-gradient(#eff6f9, #ddecf3);
+  background-image: -webkit-linear-gradient(#eff6f9, #ddecf3);
+  background-image: linear-gradient(#eff6f9, #ddecf3);
+  background-repeat: repeat-x;
+  border: 1px solid #cedee5;
+  border-radius: 3px;
+  font-family: Monaco, "Liberation Mono", Courier, monospace;
+  width: 112px;
+  text-align: center;
+}
+.commit-left {
+  margin-right: 122px;
+}
+.commit-right {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+}
+.commit-right a.browse {
+  margin-top: 1px;
+  font-size: 11px;
+  font-weight: bold;
+  float: right;
+  color: #999;
+}
+.commit-right a.browse:hover {
+  text-decoration: underline;
+}
+.label-pt-sans-align {
+  display: inline;
+  position: relative;
+  top: -0.125em;
+}
+.commit-message a {
+  color: #333333;
+}
+a.muted-link {
+  color: #333;
+}
+.commit-message a.highlight {
+  color: #4183C4;
+}
+img.gravatar-small {
+  float: left;
+  margin-right: 8px;
+  border-radius: 4px;
+  height: 36px;
+  width: 36px;
+}
+img.gravatar-medium {
+  float: left;
+  margin-right: 10px;
+  border-radius: 6px;
+  height: 50px;
+  width: 50px;
+}
+a.jira-ticket-link {
+  color: #4183C4;
+}
+.btn-dropdown {
+  border: 1px solid #ddd;
+  color: #232323;
+  text-decoration: none !important;
+}
+.btn-dropdown:hover {
+  border: 1px solid #ddd;
+  color: #232323;
+  text-decoration: none !important;
+}
