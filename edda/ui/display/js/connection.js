@@ -41,7 +41,8 @@ function connect() {
         url: url_string,
         dataType: "json",
         success: function(data) {
-        server_names = data;
+            canvases_and_contexts();
+            parse_config(data);
         }
     });
 

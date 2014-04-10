@@ -57,7 +57,6 @@ var onCanvasMouseover = function(e) {
  * information about that server.
  */
 var onCanvasClick = function(e) {
-    console.log("click!");
     var box = document.getElementById("message_box");
     var offset = $("#shadow_layer").offset();
     var x = e.clientX - offset.left;
@@ -66,9 +65,9 @@ var onCanvasClick = function(e) {
     // are we currently over a server?
     for (var s in servers) {
         if (servers[s]["on"]) {
-            info = server_names["network_name"][s] || server_names["self_name"] || "unknown";
+            info = servers[s]["network_name"] || servers[s]["self_name"] || "unknown";
             info += "<br/>" + frames[current_frame]["servers"][s];
-            info += "<br/>" + server_names["version"][s];
+            info += "<br/>" + servers[s]["version"];
             box.innerHTML = info;
             box.style.left = x + "px";
             box.style.top = y + "px";
@@ -77,7 +76,6 @@ var onCanvasClick = function(e) {
         }
     }
     box.style.visibility = "hidden";
-    console.log("not in a server");
     return;
 };
 

@@ -19,6 +19,9 @@ var contexts = {};
 var servers = {};
 var slider = {};
 
+var CANVAS_W;
+var CANVAS_H;
+
 // batch information
 var current_frame = 0;
 var batch_size = 100;
@@ -51,6 +54,8 @@ function canvases_and_contexts() {
         canvases[layers[i]] = document.getElementById(layers[i] + "_layer");
         contexts[layers[i]] = canvases[layers[i]].getContext("2d");
     }
+    CANVAS_W = canvases[layers[0]].width;
+    CANVAS_H = canvases[layers[0]].height;
 }
 
 /* set up mouse-over functionality */
@@ -83,20 +88,91 @@ function visual_setup() {
     b_ctx.fillStyle = grad;
     b_ctx.fill();
 
-    if (frames) {
-        if (frames["0"]) {
-            for (var name in frames["0"]["servers"]) {
-                names.push(name);
-            }
-            generateIconCoords(names.length, names);
-            drawServerLabels(b_ctx);
-        }
-    }
+//    if (frames) {
+//        if (frames["0"]) {
+//            for (var name in frames["0"]["servers"]) {
+//                names.push(name);
+//            }
+//            generateIconCoords(names.length, names);
+//            drawServerLabels(b_ctx);
+//        }
+//    }
 
     // render first frame
     renderFrame("0");
 }
 
+// take the config from the server and parse it out
+function parse_config(config) {
+    // this is the format we want:
+    // servers = {
+    //    "1" : { "self_name" : "",
+    //            "network_name" : "",
+    //            "version" : "",
+    //            "x" : x-coord,
+    //            "y" : y-coord }
+    // }
+    // TODO: add replSet here?
+
+    // TODO: in the main server, protect against stupid configurations.
+    // first, figure out if this is a sharded cluster
+    if (config["groups"].length == 1) {
+        ICON_RADIUS = 30;
+        servers = generateIconCoords(config["groups"][0]["members"],
+                                     CANVAS_W/2,
+                                     CANVAS_H/2,
+                                     CANVAS_H/2 - 60);
+    }
+    else {
+        ICON_RADIUS = 10;
+        // how many shards do we have?
+        var shards = [];
+        for (var k in config["groups"]) {
+            var group = config["groups"][k]
+            if (group["type"] == "replSet") {
+                rs = { "n" : group["name"] };
+                shards.push(rs);
+            }
+        }
+
+        // get center points for each shard
+        // these will be in a dictionary with key "name".
+        shards = generateIconCoords(shards,
+                                    CANVAS_W/2,
+                                    CANVAS_H/2,
+                                    CANVAS_H/2 - 70);
+        
+        // get coords for each server
+        servers = {};
+        for (var key in config["groups"]) {
+            var group = config["groups"][key];
+            var group_info = {};
+            if (group["type"] == "replSet") {
+                group_info = generateIconCoords(group["members"],
+                                                shards[group["name"]]["x"],
+                                                shards[group["name"]]["y"],
+                                                40);
+                }
+            else if (group["type"] == "mongos") {
+                group_info = generateIconCoords(group["members"],
+                                                CANVAS_W/2,
+                                                CANVAS_H/2, 
+                                                40);
+                }
+            // handle configs?
+            else if (group["type"] == "config") {
+                group_info = generateIconCoords(group["members"],
+                                                CANVAS_W/2,
+                                                CANVAS_H/2,
+                                                CANVAS_W);
+            }
+            // merge into parent servers dictionary
+            for (var s in group_info) { 
+                servers[s] = group_info[s]; 
+            }
+        }
+    }
+}
 
 // set up slider functionality
 function time_setup(max_time) {

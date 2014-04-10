@@ -27,7 +27,7 @@ except ImportError:
 import threading
 
 data = None
-server_list = None
+server_config = None
 admin = None
 
 
@@ -48,15 +48,15 @@ def run(http_port):
 def send_to_js(frames, servers, info, http_port):
     """Sends information to the JavaScript
     client"""
-
+    
     global data
-    global server_list
+    global server_config
     global admin
 
     admin = info
     data = frames
-    server_list = servers
-
+    server_config = servers
+    
     # fork here!
     t = threading.Thread(target=run(http_port))
     t.start()
@@ -85,7 +85,7 @@ def send_to_js(frames, servers, info, http_port):
 
 
 class eddaHTTPRequest(BaseHTTPRequestHandler):
-
+    
     mimetypes = mimetypes = {"html": "text/html",
                   "htm": "text/html",
                   "gif": "image/gif",
@@ -132,7 +132,7 @@ class eddaHTTPRequest(BaseHTTPRequestHandler):
             admin["total_frame_count"] = len(data)
             self.send_response(200)
             self.send_header("Content-type", 'application/json')
-            self.end_headers()
+            self.end_headers();
             self.wfile.write(json.dumps(admin))
 
         elif file_type == "all_frames":
@@ -159,9 +159,10 @@ class eddaHTTPRequest(BaseHTTPRequestHandler):
             if start < 0:
                 start = 0;
             if start >= len(data):
+                print "start is past data"
                 return
             if end >= len(data):
-                end = len(data) - 1
+                end = len(data)
 
             for i in range(start, end):
                 if not str(i) in data:
@@ -173,12 +174,11 @@ class eddaHTTPRequest(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(json.dumps(batch))
 
-
         elif file_type == "servers":
             self.send_response(200)
             self.send_header("Content-type", 'application/json')
             self.end_headers()
-            self.wfile.write(json.dumps(server_list))
+            self.wfile.write(json.dumps(server_config))
 
         elif file_type in self.mimetypes and os.path.exists(self.docroot + uri):
             f = open(self.docroot + uri, 'r')
