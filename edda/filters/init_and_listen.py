@@ -24,7 +24,8 @@ def criteria(msg):
     """ Does the given log line fit the criteria for this filter?
         If yes, return an integer code.  If not, return 0.
     """
-    if '[initandlisten] MongoDB starting' in msg:
+    if ('[initandlisten] MongoDB starting' in msg or
+        '[mongosMain] MongoS' in msg):
         return 1
     if 'db version' in msg:
         return 2
@@ -47,8 +48,9 @@ def process(msg, date):
        "origin_server" : name --> this field is added in the main file
        "info" field structure varies with subtype:
        (startup) "info" : {
-          "subtype" : "startup"
-          "server" : "hostaddr:port"
+          "subtype" : "startup",
+          "server" : "hostaddr:port",
+          "type" : mongos, mongod, config
        }
        (new_conn) "info" : {
           "subtype" : "new_conn",
@@ -74,7 +76,7 @@ def process(msg, date):
        "type" : "startup_options",
        "msg" : msg,
        "info" : {
-          "replSet" : replica set name,
+          "replSet" : replica set name (if there is one),
           "options" : all options, as a string
        }
     }
@@ -118,8 +120,6 @@ def process(msg, date):
         m = msg.find("replSet:")
         if m > -1:
             doc["info"]["replSet"] = msg[m:].split("\"")[1]
-        else:
-            doc["info"]["replSet"] = "unknown"
         doc["info"]["options"] = msg[msg.find("options:") + 9:]
         return doc
 
@@ -133,6 +133,12 @@ def process(msg, date):
 def starting_up(msg, doc):
     """Generate a document for a server startup event."""
     doc["info"]["subtype"] = "startup"
+
+    # what type of server is this?
+    if msg.find("MongoS") > -1:
+        doc["info"]["type"] = "mongos"
+    elif msg.find("MongoDB") > -1: 
+        doc["info"]["type"] = "mongod"
 
     # isolate port number
     m = PORT_NUMBER.search(msg)

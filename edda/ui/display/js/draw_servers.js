@@ -13,7 +13,7 @@
 // limitations under the License.
 
 var ICON_RADIUS = 20; // one radius to rule them all!
-var ICON_STROKE = ICON_RADIUS > 20 ? 9 : 6;
+var ICON_STROKE = ICON_RADIUS > 18 ? 12 : 6;
 var ICONS = {
     // state  : [ fill color, stroke color, dotted(bool) ]
     "PRIMARY" : ["#24B314", "#F0E92F", false],
@@ -39,6 +39,8 @@ var ICONS = {
 /* Render all server icons for a single point in time */
 var drawServers = function(frame, ctx) {
     for (var s in frame["servers"]) {
+        // TODO: this is bad.
+        if (!servers.hasOwnProperty(s)) continue;
         drawSingleServer(servers[s]["x"],
                          servers[s]["y"],
                          frame["servers"][s],
@@ -53,7 +55,6 @@ var drawSingleServer = function(x, y, type, ctx) {
     var state = n[0];
 
     // is it dotted?
-    console.log(state);
     if (ICONS[state][2]) {
         drawCircle(x, y, ICON_RADIUS, ICONS[state][0], ICONS[state][0], ctx);
         drawDottedCircle(x, y, ICON_RADIUS, ICONS[state][1], ICON_STROKE, ctx);
@@ -118,6 +119,7 @@ var generateIconCoords = function(group, cx, cy, r) {
     var xVal = 0;
     var yVal = 0;
     var start_angle = (count % 2 == 0) ? -45 : -90;
+    start_angle += Math.floor(Math.random()*90);
 
     for (var i = 0; i < count; i++) {
         xVal = (r * Math.cos(start_angle * (Math.PI)/180)) + cx;
@@ -127,7 +129,10 @@ var generateIconCoords = function(group, cx, cy, r) {
         s["y"] = yVal;
         s["on"] = false;
         s["type"] = "UNDISCOVERED";
-        all[s["n"]] = s;
+        // TODO: why is it n or server_num??  
+        if (s.hasOwnProperty("server_num"))
+            all[s["server_num"]] = s;
+        else all[s["n"]] = s;
         start_angle += 360/count;
     }
     return all;
@@ -139,7 +144,6 @@ var generateIconCoords = function(group, cx, cy, r) {
  * be drawn once.
  */
 var drawServerLabels = function(ctx) {
-    console.log("heressdsd");
     ctx.font = "100 11pt Courier New";
     ctx.fillStyle = "#FFFFFF";
     labels = {}
@@ -166,7 +170,6 @@ var drawServerLabels = function(ctx) {
         var i = 0;
         var n = 13;
         while ((n*i) <= label.length) {
-            console.log("in here");
             sub_label = label.substring(n * i, n * (i + 1));
             ctx.fillText(sub_label, x + (1.5*ICON_RADIUS), y + (15 * i));
             i++;

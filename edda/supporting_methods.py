@@ -54,6 +54,40 @@ def is_IP(s):
     return not (IP_PATTERN.search(s) == None)
 
 
+def add_shard(doc, config):
+    """Create a document for this shard in the config collection.
+    If one already exists, overwrite.
+    """
+    existing_doc = config.find_one({ "replSet" : doc["replSet"] })
+    if not existing_doc:
+        config.save({ "replSet" : doc["replSet"],
+                      "members" : doc["members"],
+                      "member_nums" : doc["member_nums"]})
+        return
+    # else, make sure that all the members we have are in this doc.
+    # Do not remove members from the doc, just add them.
+    for m in doc["members"]:
+        if m not in existing_doc["members"]:
+            existing_doc["members"].append(m)
+    for n in doc["member_nums"]:
+        if n not in existing_doc["member_nums"]:
+            existing_doc["member_nums"].append(n)
+    config.save(existing_doc)
+
+
+def assign_server_type(num, server_type, servers):
+    """Set the server type of this server to specified type.
+    """
+    doc = servers.update({ "server_num" : num },
+                         { "$set" : { "type" : server_type }})
+
+def server_type(num, servers):
+    doc = servers.find({ "server_num" : num })
+    if not "type" in doc:
+        return "unknown"
+    return doc["type"]
+
+
 def get_server_num(addr, self_name, servers):
     """Gets and returns a server_num for an
     existing .servers entry with 'addr', or creates a new .servers
@@ -90,7 +124,6 @@ def get_server_num(addr, self_name, servers):
 def update_mongo_version(version, server_num, servers):
     doc = servers.find_one({"server_num": server_num})
     if not doc:
-        print "Invalid server number"
         return
     if doc["version"] != version or doc["version"] == "unknown":
         doc["version"] = version

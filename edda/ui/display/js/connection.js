@@ -23,7 +23,6 @@ function connect() {
 
     // poll for additional setup data
     url_string = document.URL + "data.admin";
-    //console.log(document.URL );
     $.ajax({
         async: false,
         url: url_string,

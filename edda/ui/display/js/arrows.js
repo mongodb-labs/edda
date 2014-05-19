@@ -17,6 +17,7 @@ var drawOneArrow = function(x1, y1, x2, y2, ctx) {
     var dy = Math.abs(y2 - y1);
     var cx = x1 + dx/2 - dy/4;
     var cy = y1 + dy/2 + dx/4;
+    var line_length = Math.sqrt(dx*dx + dy*dy);
 
     var h = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
     var h_prime = 75.0000;
@@ -25,6 +26,12 @@ var drawOneArrow = function(x1, y1, x2, y2, ctx) {
 
     x_difference = dx * ratio;
     y_difference = dy * ratio;
+
+    // TODO: a better way of doing this.
+    if (line_length < 100) {
+        x_difference = 0;
+        y_difference = 0;
+    }
 
     // There are 4 cases for the adjustments that need to be made.
     // Arrows going in each diagonal dirrection.

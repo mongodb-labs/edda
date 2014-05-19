@@ -19,3 +19,4 @@ import rs_reconfig
 import fsync_lock
 import init_and_listen
 import stale_secondary
+import balancer

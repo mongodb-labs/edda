@@ -88,16 +88,6 @@ function visual_setup() {
     b_ctx.fillStyle = grad;
     b_ctx.fill();
 
-//    if (frames) {
-//        if (frames["0"]) {
-//            for (var name in frames["0"]["servers"]) {
-//                names.push(name);
-//            }
-//            generateIconCoords(names.length, names);
-//            drawServerLabels(b_ctx);
-//        }
-//    }
-
     // render first frame
     renderFrame("0");
 }
@@ -112,11 +102,14 @@ function parse_config(config) {
     //            "x" : x-coord,
     //            "y" : y-coord }
     // }
-    // TODO: add replSet here?
 
-    // TODO: in the main server, protect against stupid configurations.
+    // TODO: add replSet here?
+    // TODO: in the main server, protect against silly configurations
+    // that may bother us here.
+
     // first, figure out if this is a sharded cluster
     if (config["groups"].length == 1) {
+        $("#clustername").html(config["groups"][0]["name"]);
         ICON_RADIUS = 30;
         servers = generateIconCoords(config["groups"][0]["members"],
                                      CANVAS_W/2,
@@ -124,7 +117,8 @@ function parse_config(config) {
                                      CANVAS_H/2 - 60);
     }
     else {
-        ICON_RADIUS = 10;
+        $("#clustername").html("Sharded Cluster");
+        ICON_RADIUS = 15;
         // how many shards do we have?
         var shards = [];
         for (var k in config["groups"]) {
@@ -134,30 +128,28 @@ function parse_config(config) {
                 shards.push(rs);
             }
         }
-
         // get center points for each shard
         // these will be in a dictionary with key "name".
-        shards = generateIconCoords(shards,
+        shard_coords = generateIconCoords(shards,
                                     CANVAS_W/2,
                                     CANVAS_H/2,
                                     CANVAS_H/2 - 70);
-        
         // get coords for each server
         servers = {};
-        for (var key in config["groups"]) {
-            var group = config["groups"][key];
+        for (var g in config["groups"]) {
+            var group = config["groups"][g];
             var group_info = {};
             if (group["type"] == "replSet") {
                 group_info = generateIconCoords(group["members"],
-                                                shards[group["name"]]["x"],
-                                                shards[group["name"]]["y"],
-                                                40);
+                                                shard_coords[group["name"]]["x"],
+                                                shard_coords[group["name"]]["y"],
+                                                50);
                 }
             else if (group["type"] == "mongos") {
                 group_info = generateIconCoords(group["members"],
                                                 CANVAS_W/2,
                                                 CANVAS_H/2, 
-                                                40);
+                                                30);
                 }
             // handle configs?
             else if (group["type"] == "config") {
@@ -167,11 +159,12 @@ function parse_config(config) {
                                                 CANVAS_W);
             }
             // merge into parent servers dictionary
-            for (var s in group_info) { 
+            for (var s in group_info) {
                 servers[s] = group_info[s]; 
             }
         }
     }
+    ICON_STROKE = ICON_RADIUS > 18 ? 12 : 6;
 }
 
 // set up slider functionality
@@ -181,38 +174,37 @@ function time_setup(max_time) {
         // handle frame batches
         if (ui.value >= current_frame) { direction = 1; }
         else { direction = -1; }
-        current_frame = ui.value;
+        current_frame = ui.value
+        frame = frames[current_frame];
         handle_batches();
-        document.getElementById(
-            "timestamp").innerHTML = "<b>Time:</b> " + frames[ui.value]["date"].substring(5, 50);
-        document.getElementById(
-            "summary").innerHTML = frames[ui.value]["summary"];
+
+        // set info divs
+        $("#timestamp").html("<b>Time:</b> " + frame["date"].substring(5, 50));
+        $("#summary").html(frame["summary"]);
+        $("#log_message_box").html(frame["log_line"]);
 
         // erase pop-up box
-        document.getElementById("message_box").style.visibility = "hidden";
+        $("#message_box").attr("visibility", "hidden");
 
         // print witnesses, as hostnames
         var w = "";
         var s;
-        for (s in frames[ui.value]["witnesses"]) {
-            if (w !== "") {
-            w += "<br/>";
-            }
-            w += labels[frames[ui.value]["witnesses"][s]];
+        for (s in frame["witnesses"]) {
+            if (w !== "") w += "<br/>";
+            w += server_label([frame["witnesses"][s]]);
         }
-        document.getElementById("witnesses").innerHTML = w;
+        $("#witnesses").html(w);
 
         // print dissenters, as hostnames
         var d = "";
-        for (s in frames[ui.value]["dissenters"]) {
-            if (d !== "") {
-            d += "<br/>";
-            }
-            d += labels[frames[ui.value]["dissenters"][s]];
+        for (s in frame["dissenters"]) {
+            if (d !== "") d += "<br/>";
+            d += server_label(frame["dissenters"][s]);
         }
-        document.getElementById("dissenters").innerHTML = d;
+        $("#dissenters").html(d);
 
-        }});
+        renderFrame(ui.value);
+    }});
     $("#slider").slider( "option", "max", total_frame_count - 2);
 }
 
@@ -221,7 +213,6 @@ function handle_batches() {
 
     // do we even have to batch?
     if (total_frame_count <= batch_size) {
-        renderFrame(current_frame);
         return;
     }
 
@@ -231,24 +222,18 @@ function handle_batches() {
     current_frame < frame_bottom) {
     // force some garbage collection?
         slide_batch_window();
-        renderFrame(current_frame);
     }
 
-    // handle case where use is still within frame buffer
+    // handle case where user is still within frame buffer
     // but close enough to edge to reload
     else if ((frame_top - current_frame < trigger && frame_top !== total_frame_count) ||
          (current_frame - frame_bottom < trigger && frame_bottom !== 0)) {
-        renderFrame(current_frame);
-    // force some garbage collection?
-    slide_batch_window();
+        // force some garbage collection?
+        slide_batch_window();
     }
-
-    // otherwise, just render
-    else renderFrame(current_frame);
 }
 
 function slide_batch_window() {
-
     // get new frames
     frame_bottom = current_frame - half_batch;
     frame_top = current_frame + half_batch;
@@ -267,7 +252,6 @@ function slide_batch_window() {
     get_batch(frame_bottom, frame_top);
 }
 
-
 // define .size function for object
 // http://stackoverflow.com/questions/5223/length-of-javascript-object-ie-associative-array
 function size(obj) {
@@ -280,15 +264,21 @@ function size(obj) {
 }
 
 function version_number() {
-    document.getElementById("version").innerHTML = "Version " + admin["version"];
+    $("#version").html("Version " + admin["version"]);
     return;
 }
 
 function file_names() {
-    var final_string = "";
+    var s = "";
     for (var i = 0; i < admin["file_names"].length; i++) {
-        final_string += admin["file_names"][i];
-        final_string += "<br/>";
+        s += admin["file_names"][i];
+        s += "<br/>";
     }
-    document.getElementById("log_files").innerHTML = final_string;
+    $("#log_files").html(s);
+}
+
+function server_label(num) {
+    return servers[num]["network_name"] || 
+           servers[num]["self_name"] ||
+           "server " + num;
 }

@@ -65,6 +65,7 @@ def address_matchup(db, coll_name):
     entries = db[coll_name + ".entries"]
 
     all_servers_cursor = entries.distinct("info.server")
+    # TODO: this is wildly inefficient
     for addr in all_servers_cursor:
         if addr == "self":
             continue
@@ -85,7 +86,8 @@ def address_matchup(db, coll_name):
     round = 0
     while mentioned_names:
         round += 1
-        unknowns = list(servers.find({"network_name": "unknown"}))
+        # ignore mongos and configsvr
+        unknowns = list(servers.find({"network_name": "unknown", "type" : "mongod"}))
 
         if len(unknowns) == 0:
             LOGGER.debug("No unknowns, breaking")

@@ -65,7 +65,7 @@ var onCanvasClick = function(e) {
     // are we currently over a server?
     for (var s in servers) {
         if (servers[s]["on"]) {
-            info = servers[s]["network_name"] || servers[s]["self_name"] || "unknown";
+            info = server_label(s);
             info += "<br/>" + frames[current_frame]["servers"][s];
             info += "<br/>" + servers[s]["version"];
             box.innerHTML = info;
@@ -80,7 +80,7 @@ var onCanvasClick = function(e) {
 };
 
 
-is_over_server = function(e) {
+var is_over_server = function(e) {
     // check if a captured event happened over a server
     // if so, return that server's server_num
     var offset = $("#shadow_layer").offset();

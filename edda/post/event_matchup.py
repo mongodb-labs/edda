@@ -36,6 +36,7 @@ def event_matchup(db, coll_name):
         "witnesses"  = servers who agree on this event
         "dissenters" = servers who did not see this event
                        (not for connection or sync messages)
+        "log_line"   = original log message (one from the witnesses)
         "summary"    = a mnemonic summary of the event
     (event-specific additional fields:)
         "sync_to"    = for sync type messages
@@ -160,6 +161,7 @@ def next_event(servers, server_entries, db, coll_name):
         label = event["target"]
 
     event["summary"] = generate_summary(event, label)
+    event["log_line"] = first["log_line"]
 
     # handle corresponding messages
     event["witnesses"].append(first["origin_server"])
