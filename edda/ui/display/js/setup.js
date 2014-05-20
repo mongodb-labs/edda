@@ -17,6 +17,7 @@ var layers = new Array("background", "shadow", "link", "arrow", "server");
 var canvases = {};
 var contexts = {};
 var servers = {};
+var replsets = {};
 var slider = {};
 
 var CANVAS_W;
@@ -100,10 +101,21 @@ function parse_config(config) {
     //            "network_name" : "",
     //            "version" : "",
     //            "x" : x-coord,
-    //            "y" : y-coord }
+    //            "y" : y-coord,
+    //            "r" : ICON_RADIUS }
     // }
 
-    // TODO: add replSet here?
+    // for replica sets:
+    // replsets = {
+    //     "name" : { 
+    //            "members" : [ array of server_nums ],
+    //            "x" : x-coord,
+    //            "y" : y-coord,
+    //            "r" : radius,
+    //            "on" : boolean
+    //            }
+    // }
+
     // TODO: in the main server, protect against silly configurations
     // that may bother us here.
 
@@ -140,10 +152,20 @@ function parse_config(config) {
             var group = config["groups"][g];
             var group_info = {};
             if (group["type"] == "replSet") {
+                console.log(group);
                 group_info = generateIconCoords(group["members"],
                                                 shard_coords[group["name"]]["x"],
                                                 shard_coords[group["name"]]["y"],
                                                 50);
+                // format replsets entry
+                var members = [];
+                for (var s in group["members"]) members.push(group["members"][s]["server_num"]);
+                var rs = { "members" : members,
+                           "x" : shard_coords[group["name"]]["x"],
+                           "y" : shard_coords[group["name"]]["y"],
+                           "r" : 50,
+                           "on" : false };
+                replsets[group["name"]] = rs;
                 }
             else if (group["type"] == "mongos") {
                 group_info = generateIconCoords(group["members"],
@@ -164,6 +186,8 @@ function parse_config(config) {
             }
         }
     }
+    console.log(replsets);
+    console.log(servers);
     ICON_STROKE = ICON_RADIUS > 18 ? 12 : 6;
 }
 
@@ -277,6 +301,9 @@ function file_names() {
     $("#log_files").html(s);
 }
 
+/*
+ * Generate a label for this server, in most cases, the network name.
+ */
 function server_label(num) {
     return servers[num]["network_name"] || 
            servers[num]["self_name"] ||

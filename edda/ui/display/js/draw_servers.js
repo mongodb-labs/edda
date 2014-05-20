@@ -95,6 +95,7 @@ var generateIconCoords = function(group, cx, cy, r) {
         server["y"] = cy;
         server["on"] = false;
         server["type"] = "UNDISCOVERED";
+        server["r"] = ICON_RADIUS;
         all[server["n"]] = server;
         return all;
     case 2:
@@ -102,12 +103,14 @@ var generateIconCoords = function(group, cx, cy, r) {
         s1["x"] = cx + r;
         s1["y"] = cy;
         s1["on"] = false;
+        s1["r"] = ICON_RADIUS;
         s1["type"] = "UNDISCOVERED";
 
         var s2 = group[1];
         s2["x"] = cx - r;
         s2["y"] = cy;
         s2["on"] = false;
+        s2["r"] = ICON_RADIUS;
         s2["type"] = "UNDISCOVERED";
         
         all[s1["n"]] = s1;
@@ -128,6 +131,7 @@ var generateIconCoords = function(group, cx, cy, r) {
         s["x"] = xVal;
         s["y"] = yVal;
         s["on"] = false;
+        s["r"] = ICON_RADIUS;
         s["type"] = "UNDISCOVERED";
         // TODO: why is it n or server_num??  
         if (s.hasOwnProperty("server_num"))
