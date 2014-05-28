@@ -142,45 +142,6 @@ var generateIconCoords = function(group, cx, cy, r) {
     return all;
 };
 
-/*
- * For each server, draw a label next to the server icon,
- * on the "outside" of the cluster.  Labels should only need
- * be drawn once.
- */
-var drawServerLabels = function(ctx) {
-    ctx.font = "100 11pt Courier New";
-    ctx.fillStyle = "#FFFFFF";
-    labels = {}
-    for (var s in servers) {
-        var label;
-        if (server_names["self_name"][s] == "unknown") {
-            label = server_names["network_name"][s];
-            if (label == "unknown") {
-                label += "#" + s;
-            }
-        }
-        else {
-            label = server_names["self_name"][s];
-        }
-        labels[s] = label
-
-        // Which side of the circle is the outside?
-        var y = servers[s]["y"];
-        var x = servers[s]["x"];
-        var w = canvases["background"].width;
-        if (x < w/2) x = (x - ICON_RADIUS - 150);
-
-        // Limit label to n characters per line
-        var i = 0;
-        var n = 13;
-        while ((n*i) <= label.length) {
-            sub_label = label.substring(n * i, n * (i + 1));
-            ctx.fillText(sub_label, x + (1.5*ICON_RADIUS), y + (15 * i));
-            i++;
-        }
-    }
-};
-
 /* Generate a dotted circle outline, with no fill */
 var drawDottedCircle = function(x, y, r, color, wt, ctx) {
     ctx.strokeStyle = color;
