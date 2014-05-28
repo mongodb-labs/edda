@@ -48,11 +48,11 @@ PARSERS = [
     init_and_listen.process,
     stale_secondary.process,
     rs_exit.process,
-    rs_reconfig.process
+    rs_reconfig.process,
+    balancer.process
 ]
 
 def main():
-
     if (len(sys.argv) < 2):
         print "Missing argument: please provide a filename"
         return
@@ -68,7 +68,7 @@ def main():
     parser.add_argument('--version', action='version',
                         version="Running edda version {0}".format(__version__))
     parser.add_argument('--db', '-d', help="Specify DB name")
-    parser.add_argument('--collection', '-c')  # Fixed
+    parser.add_argument('--collection', '-c')
     parser.add_argument('filename', nargs='+')
     namespace = parser.parse_args()
 
@@ -111,6 +111,7 @@ def main():
         db = connection.edda
     entries = db[coll_name].entries
     servers = db[coll_name].servers
+    config = db[coll_name].config
 
     # first, see if we've gotten any .json files
     for file in namespace.filename:
@@ -124,7 +125,7 @@ def main():
                        http_port)
             edda_cleanup(db, coll_name)
             return
-
+            
     # were we supposed to have a .json file?
     if has_json:
         LOGGER.critical("--json option used, but no .json file given")
@@ -136,7 +137,7 @@ def main():
         if filename in processed_files:
             continue
         logs = extract_log_lines(filename)
-        process_log(logs, servers, entries)
+        process_log(logs, servers, entries, config)
         processed_files.append(filename)
 
     # anything to show?
@@ -154,24 +155,26 @@ def main():
 
     # match up events
     events = event_matchup(db, coll_name)
-
+    
     frames = generate_frames(events, db, coll_name)
-    names = get_server_names(db, servers)
+    server_config = get_server_config(servers, config)
     admin = get_admin_info(processed_files)
 
     LOGGER.critical("\nEdda is storing data under collection name {0}"
                     .format(coll_name))
     edda_json = open(coll_name + ".json", "w")
-    json.dump(format_json(frames, names, admin), edda_json)
+    json.dump(format_json(frames, server_config, admin), edda_json)
 
-    send_to_js(frames, names, admin, http_port)
+    send_to_js(frames, server_config, admin, http_port)
     edda_cleanup(db, coll_name)
+
 
 def edda_cleanup(db, coll_name):
     """ Clean up collections created during run.
     """
     db.drop_collection(coll_name + ".servers")
     db.drop_collection(coll_name + ".entries")
+
 
 def extract_log_lines(filename):
     """ Given a file, extract the lines from this file
@@ -183,24 +186,26 @@ def extract_log_lines(filename):
         try:
             file = gzip.open(filename, 'r')
         except IOError as e:
-            print "\nError: Unable to read file {0}".format(filename)
+            LOGGER.warning("\nError: Unable to read file {0}".format(filename))
             return []
     else:
         try:
             file = open(filename, 'r')
         except IOError as e:
-            print "\nError: Unable to read file {0}".format(filename)
+            LOGGER.warning("\nError: Unable to read file {0}".format(filename))
             return []
 
     return file.read().split('\n')
 
-def process_log(log, servers, entries):
+
+def process_log(log, servers, entries, config):
     """ Go through the lines of a log file and process them.
     Save stuff in the database as we go?  Or save later?
     """
     mongo_version = None
     upgrade = False
     previous = ""
+    line_number = 0
     server_num = get_server_num("unknown", False, servers)
 
     for line in log:
@@ -219,14 +224,47 @@ def process_log(log, servers, entries):
         if (doc["type"] == "init" and
             doc["info"]["subtype"] == "startup"):
             assign_address(server_num,
-                           str(doc["info"]["server"]), False, servers)
+                           str(doc["info"]["addr"]), True, servers)
+            assign_server_type(server_num, str(doc["info"]["type"]), servers)
+            
+        # balancer messages
+        if doc["type"] == "balancer":
+            if (doc["info"]["subtype"] == "new_shard"):
+                # add this shard to the config collection
+                add_shard({ "replSet" : doc["info"]["replSet"],
+                            "members" : doc["info"]["members"],
+                            "member_nums" : [] }, config)
+                # TODO: capture config servers in a similar way
+                # we are a mongos, add us!
+                add_shard({ "replSet" : "mongos",
+                            "members" : [],
+                            "member_nums" : [ server_num ] }, config)
+
+        # startup options, config server?
+        if doc["type"] == "startup_options":
+            # TODO: a server might report its replica set here.
+            if "replSet" in doc["info"]:
+                add_shard({ "replSet" : doc["info"]["replSet"],
+                            "members" : [],
+                            "member_nums" : [ server_num ] }, config)
+            if doc["info"]["options"].find("configsvr: true") > -1:
+                assign_server_type(server_num, "configsvr", servers)
+                # add ourselves to list of configsvrs
+                add_shard({ "replSet" : "configsvr",
+                            "members" : [],
+                            "member_nums" : [ server_num ] }, config)
 
         if (doc["type"] == "status" and
             "addr" in doc["info"]):
             LOGGER.debug("Found addr {0} for server {1} from rs_status msg"
                          .format(doc["info"]["addr"], server_num))
             assign_address(server_num,
-                           str(doc["info"]["server"]), False, servers)
+                           str(doc["info"]["addr"]), False, servers)
+            #assign_server_type(server_num, "mongod", servers)
+            # if this is a mongos, make MONGOS-UP
+            if server_type(server_num, servers) == "mongos":
+                doc["info"]["state"] = "MONGOS-UP"
+                doc["info"]["state_code"] = 50 # todo: fix.
 
         if doc["type"] == "version":
             update_mongo_version(doc["version"], server_num, servers)
@@ -246,7 +284,7 @@ def process_log(log, servers, entries):
             continue
 
         if doc["type"] == "build_info":
-            # TODO: save thes in some way.
+            # TODO: save these in some way.
             continue
 
         # skip repetitive exit messages
@@ -256,8 +294,11 @@ def process_log(log, servers, entries):
         # format and save to entries collection
         previous = doc["type"]
         doc["origin_server"] = server_num
+        doc["line_number"]   = line_number
+        doc["log_line"]      = line 
         entries.insert(doc)
         LOGGER.debug("Stored line to db: \n{0}".format(line))
+        line_number += 1
 
 
 def filter_message(msg, date):
@@ -270,33 +311,62 @@ def filter_message(msg, date):
         if doc:
             return doc
 
-
-def get_server_names(db, servers):
-    """ Format the information in the .servers collection
-    into a data structure to be sent to the JS client.
+def get_server_config(servers, config):
+    """Format the information in the .servers collection
+    into a data structure to be send to the JS client.
+    The document should have this format:
+    server_config = {
+       groups : [
+          { "name" : "replSet1",
+            "type" : "replSet",
+            "members" : [ 
+                { "n" : 1,
+                  "self_name" : "localhost:27017",
+                  "network_name" : "SamanthaRitter:27017",
+                  "version" : "2.6.0.rc1" } ] },
+          { "name" : "Mongos",
+            "type" : "mongos",
+            "members" : [ ... ] },
+          { "name" : "Configs",
+            "type" : "configs",
+            "members" : [ ... ] } 
+        ]
+    }
     """
-    server_names = { "self_name"    : {},
-                     "network_name" : {},
-                     "version"      : {} }
-    for doc in servers.find():
-        n = doc["server_num"]
-        server_names["self_name"][n] = doc["self_name"]
-        server_names["network_name"][n] = doc["network_name"]
-        try:
-            if doc["version"]:
-                server_names["version"][n] = doc['version']
-        except:
-            LOGGER.warning("No version detected for server {0}"
-                           .format(doc["self_name"]))
-    return server_names
+    groups = []
+
+    # attach each replica set
+    for rs_doc in config.find():
+        rs_group = { "name" : rs_doc["replSet"], "members" : [] }
+
+        # set the type
+        if rs_doc["replSet"] == "mongos":
+            rs_group["type"] = "mongos"
+        elif rs_doc["replSet"] == "configsvr":
+            rs_group["type"] = "config"
+        else:
+            rs_group["type"] = "replSet"
+
+        for num in rs_doc["member_nums"]:
+            # get the server doc and append it to this group
+            s = servers.find_one({ "server_num" : num }, { "_id" : 0 })
+            rs_group["members"].append(s)
+        
+        groups.append(rs_group)
+
+    server_config = { "groups" : groups }
+    return server_config
+
 
 def format_json(frames, names, admin):
     return { "frames" : frames, "names" : names, "admin" : admin }
+
 
 def get_admin_info(files):
     """ Format administrative information to send to JS client
     """
     return { "file_names" : files, "version" : __version__ }
+
 
 if __name__ == "__main__":
     main()

@@ -23,24 +23,25 @@ LOGGER = logging.getLogger(__name__)
 # The documents this module
 # generates will include the following information:
 
-# date : (string)
-# summary : (string)
-# witnesses : (list of server_nums)
-# dissenters : (list of server_nums)
-# flag : (something conflicted about this view of the world? boolean)
-# servers: {
+# date         : (string)
+# summary      : (string)
+# log_line     : (string)
+# witnesses    : (list of server_nums)
+# dissenters   : (list of server_nums)
+# flag         : (something conflicted about this view of the world?)
+# servers      : {
        # server : (state as string)...
 # }
-# links: {
+# links        : {
        # server : [ list of servers ]
 # }
-# broken_links: {
+# broken_links : {
        # server : [ list of servers ]
 # }
-# syncs: {
+# syncs        : {
        # server : [ list of servers ]
 # }
-# users: {
+# users        : {
        # server : [ list of users ]
 # }
 
@@ -68,17 +69,18 @@ def generate_frames(unsorted_events, db, collName):
                      .format(e["type"], e["target"]))
         f = new_frame(servers)
         # fill in various fields
-        f["date"] = str(e["date"])
-        f["summary"] = e["summary"]
-        f["witnesses"] = e["witnesses"]
+        f["date"]       = str(e["date"])
+        f["summary"]    = e["summary"]
+        f["log_line"]   = e["log_line"]
+        f["witnesses"]  = e["witnesses"]
         f["dissenters"] = e["dissenters"]
         # see what data we can glean from the last frame
         if last_frame:
-            f["servers"] = deepcopy(last_frame["servers"])
-            f["links"] = deepcopy(last_frame["links"])
+            f["servers"]      = deepcopy(last_frame["servers"])
+            f["links"]        = deepcopy(last_frame["links"])
             f["broken_links"] = deepcopy(last_frame["broken_links"])
-            f["users"] = deepcopy(last_frame["users"])
-            f["syncs"] = deepcopy(last_frame["syncs"])
+            f["users"]        = deepcopy(last_frame["users"])
+            f["syncs"]        = deepcopy(last_frame["syncs"])
         f = witnesses_dissenters(f, e)
         f = info_by_type(f, e)
         last_frame = f

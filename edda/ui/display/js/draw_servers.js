@@ -13,11 +13,12 @@
 // limitations under the License.
 
 var ICON_RADIUS = 20; // one radius to rule them all!
-var ICON_STROKE = ICON_RADIUS > 30 ? 9 : 6;
+var ICON_STROKE = ICON_RADIUS > 18 ? 12 : 6;
 var ICONS = {
     // state  : [ fill color, stroke color, dotted(bool) ]
     "PRIMARY" : ["#24B314", "#F0E92F", false],
     "SECONDARY" : ["#24B314", "#196E0F", false],
+    "MONGOS-UP" : ["#DB9EBD", "#C969A8", false],
     "ROLLBACK" : ["#3F308F", "#1D0C37", false],
     "REMOVED" : ["#1C0E0B", "#9D7E51", true],
     "STALE" : ["#6E6134", "#4C4725", false],
@@ -29,12 +30,17 @@ var ICONS = {
     "STARTUP1" : ["#4E3629", "#E1E2E5", false],
     "STARTUP2" : ["#85807D", "#E1E2E5", false],
     "ARBITER" : ["#BFB1A4", "#1A1007", false],
-    "DOWN" : ["#4E3629", "#9D7E51", true]
+    "DOWN" : ["#4E3629", "#9D7E51", true],
+    "MONGOS-DOWN" : ["#4E3629", "#9D7E51", true],
+    "CONFIG-UP" : ["#706300", "403902", false],
+    "CONFIG-DOWN" : ["#706300", "403902", false]
 };
 
 /* Render all server icons for a single point in time */
 var drawServers = function(frame, ctx) {
     for (var s in frame["servers"]) {
+        // TODO: this is bad.
+        if (!servers.hasOwnProperty(s)) continue;
         drawSingleServer(servers[s]["x"],
                          servers[s]["y"],
                          frame["servers"][s],
@@ -60,8 +66,8 @@ var drawSingleServer = function(x, y, type, ctx) {
     // if a special type, add details
     if (state == "PRIMARY") drawIconCrown(x, (y - 0.22*ICON_RADIUS),
                                           0.6*ICON_RADIUS, 0.5*ICON_RADIUS, ctx);
-    if (state == "ARBITER") drawIconStripes(x, y, ICON_RADIUS, ctx);
-    if (state == "UNKNOWN") drawIconQuestionMark(x, y, ICON_RADIUS, ctx);
+    else if (state == "ARBITER") drawIconStripes(x, y, ICON_RADIUS, ctx);
+    else if (state == "UNKNOWN") drawIconQuestionMark(x, y, ICON_RADIUS, ctx);
 
     // if we had a lock, add a lock
     if (n.length > 1) {
@@ -72,90 +78,68 @@ var drawSingleServer = function(x, y, type, ctx) {
 /*
  * Generate coordinates for this group of servers.
  * These should be set once, and then not change.
+ * "group" is an array of server config documents by server_num,
+ * "cx" and "cy" are the coordinates of the center of the
+ * group, and "r" is the radius of the group.
  */
-var generateIconCoords = function(count, names) {
-    var w = canvases["server"].width;
-    var h = canvases["server"].height;
-    var margin = 60;
-    var r = h/2 - margin;
+var generateIconCoords = function(group, cx, cy, r) {
+    var count = Object.keys(group).length;
+    var all = {};
 
     switch(count) {
     case 0:
         return;
     case 1:
-        servers[names[0]] = { "x" : w/2,
-                              "y" : h/2,
-                              "on" : false,
-                              "type" : "UNDISCOVERED" };
-        return;
+        var server = group[0];
+        server["x"] = cx;
+        server["y"] = cy;
+        server["on"] = false;
+        server["type"] = "UNDISCOVERED";
+        server["r"] = ICON_RADIUS;
+        all[server["n"]] = server;
+        return all;
     case 2:
-        servers[names[0]] = {"x" : w/3,
-                             "y" : h/2,
-                             "on" : false,
-                             "type" : "UNDISCOVERED"};
-        servers[names[1]] = {"x" : (0.66)*w,
-                             "y" : h/2,
-                             "on" : false,
-                             "type" : "UNDISCOVERED"};
-        return;
+        var s1 = group[0];
+        s1["x"] = cx + r;
+        s1["y"] = cy;
+        s1["on"] = false;
+        s1["r"] = ICON_RADIUS;
+        s1["type"] = "UNDISCOVERED";
+
+        var s2 = group[1];
+        s2["x"] = cx - r;
+        s2["y"] = cy;
+        s2["on"] = false;
+        s2["r"] = ICON_RADIUS;
+        s2["type"] = "UNDISCOVERED";
+        
+        all[s1["n"]] = s1;
+        all[s2["n"]] = s2;
+        return all;
     }
 
     // all other numbers of servers are drawn on a circular pattern
     var xVal = 0;
     var yVal = 0;
     var start_angle = (count % 2 == 0) ? -45 : -90;
+    start_angle += Math.floor(Math.random()*90);
 
     for (var i = 0; i < count; i++) {
-        xVal = (r * Math.cos(start_angle * (Math.PI)/180)) + w/2;
-        yVal = (r * Math.sin(start_angle * (Math.PI)/180)) + h/2;
-        servers[names[i]] = { "x" : xVal,
-                              "y" : yVal,
-                              "on" : false,
-                              "type" : "UNDISCOVERED"};
+        xVal = (r * Math.cos(start_angle * (Math.PI)/180)) + cx;
+        yVal = (r * Math.sin(start_angle * (Math.PI)/180)) + cy;
+        var s = group[i];
+        s["x"] = xVal;
+        s["y"] = yVal;
+        s["on"] = false;
+        s["r"] = ICON_RADIUS;
+        s["type"] = "UNDISCOVERED";
+        // TODO: why is it n or server_num??  
+        if (s.hasOwnProperty("server_num"))
+            all[s["server_num"]] = s;
+        else all[s["n"]] = s;
         start_angle += 360/count;
     }
-    return;
-};
-
-/*
- * For each server, draw a label next to the server icon,
- * on the "outside" of the cluster.  Labels should only need
- * be drawn once.
- */
-var drawServerLabels = function(ctx) {
-    console.log("heressdsd");
-    ctx.font = "100 11pt Courier New";
-    ctx.fillStyle = "#FFFFFF";
-    labels = {}
-    for (var s in servers) {
-        var label;
-        if (server_names["self_name"][s] == "unknown") {
-            label = server_names["network_name"][s];
-            if (label == "unknown") {
-                label += "#" + s;
-            }
-        }
-        else {
-            label = server_names["self_name"][s];
-        }
-        labels[s] = label
-
-        // Which side of the circle is the outside?
-        var y = servers[s]["y"];
-        var x = servers[s]["x"];
-        var w = canvases["background"].width;
-        if (x < w/2) x = (x - ICON_RADIUS - 150);
-
-        // Limit label to n characters per line
-        var i = 0;
-        var n = 13;
-        while ((n*i) <= label.length) {
-            console.log("in here");
-            sub_label = label.substring(n * i, n * (i + 1));
-            ctx.fillText(sub_label, x + (1.5*ICON_RADIUS), y + (15 * i));
-            i++;
-        }
-    }
+    return all;
 };
 
 /* Generate a dotted circle outline, with no fill */
@@ -206,7 +190,7 @@ var drawCircle = function(x, y, r, fill, stroke, ctx) {
     ctx.beginPath();
     ctx.arc(x,y, r, 0, 360, false);
     ctx.strokeStyle = stroke;
-    ctx.lineWidth = (r > 30) ? 18 : 12;
+    ctx.lineWidth = ICON_STROKE;
     ctx.stroke();
     ctx.fill();
 };

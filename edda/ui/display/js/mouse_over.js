@@ -12,44 +12,60 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/*
+ * On mouseover, draws a drop shadow under any server or
+ * replica set that we've selected.
+ */
 var onCanvasMouseover = function(e) {
-    var offset = $("#shadow_layer").offset();
-    var x = e.clientX - offset.left;
-    var y = e.clientY - offset.top;
+    if (mouseoverNodes(servers, e)) return;
+    mouseoverNodes(replsets, e);
+};
 
-    // check if mouse was over server
-    for (var s in servers) {
-        // calculate distance from click
-        diffX = x - servers[s]["x"];
-        diffY = y - servers[s]["y"];
-        distance = Math.sqrt(Math.pow(diffX,2) + Math.pow(diffY,2));
-
-        // is it within radius?
-        if (distance <= ICON_RADIUS) {
-            // check if that server is set to "true" for mouseover
-            if (!servers[s]["on"]) {
-                // make a shadow under server, and a sound
-                servers[s]["on"] = true;
-                var shadow = contexts["shadow"];
-
-                // draw the drop shadow
-                shadow.beginPath();
-                shadow.arc(servers[s]["x"], servers[s]["y"], ICON_RADIUS, 0, 360, false);
-                shadow.strokeStyle = "red";
-                shadow.fillStyle = "rgba(10, 10, 10, 1)";
-                shadow.lineWidth = 10;
-                shadow.shadowColor = "black";
-                shadow.shadowBlur = ICON_RADIUS + 30;
-                shadow.fill();
-                shadow.shadowBlur = 0;
-            }
+/*
+ * Given a group of nodes, check if we are mousing over any of them,
+ * and respond by drawing a drop shadow. Return true if we were over
+ * any of the nodes, false if over none.
+ */
+var mouseoverNodes = function(nodes, e) {
+    for (var n in nodes) {
+        var node = nodes[n];
+        if (isOverNode(node, e)) {
+            if (node["on"]) return true;
+            drawDropShadow(node);
+            nodes[n]["on"] = true;
+            return true;
         }
-        // if not in radius:
-        else if (servers[s]["on"] == true){
-            servers[s]["on"] = false;
-            canvases["shadow"].width = canvases["shadow"].width;
+        else {
+            if (node["on"]) undrawDropShadows();
         }
     }
+    return false;
+};
+
+/*
+ * Draw a drop shadow under a server or replica set.
+ */
+var drawDropShadow = function(node) {
+    undrawDropShadows();
+    var shadow = contexts["shadow"];
+    shadow.beginPath();
+    shadow.arc(node["x"], node["y"], node["r"], 0, 360, false);
+    shadow.strokeStyle = "red";
+    shadow.fillStyle = "rgba(10, 10, 10, 1)";
+    shadow.lineWidth = 10;
+    shadow.shadowColor = "black";
+    shadow.shadowBlur = node["r"] + 30;
+    shadow.fill();
+    node["on"] = true;
+};
+
+/*
+ * Erase all drop shadows, and turn off all nodes.
+ */
+var undrawDropShadows = function() {
+    for (var n in replsets) replsets[n]["on"] = false;
+    for (var n in servers) servers[n]["on"] = false;
+    canvases["shadow"].width = canvases["shadow"].width;
 };
 
 /*
@@ -57,49 +73,69 @@ var onCanvasMouseover = function(e) {
  * information about that server.
  */
 var onCanvasClick = function(e) {
-    console.log("click!");
-    var box = document.getElementById("message_box");
-    var offset = $("#shadow_layer").offset();
-    var x = e.clientX - offset.left;
-    var y = e.clientY - offset.top;
-
-    // are we currently over a server?
     for (var s in servers) {
-        if (servers[s]["on"]) {
-            info = server_names["network_name"][s] || server_names["self_name"] || "unknown";
+        if (isOverNode(servers[s], e)) {
+            var info = server_label(s);
             info += "<br/>" + frames[current_frame]["servers"][s];
-            info += "<br/>" + server_names["version"][s];
-            box.innerHTML = info;
-            box.style.left = x + "px";
-            box.style.top = y + "px";
-            box.style.visibility = "visible";
+            info += "<br/>" + servers[s]["version"];
+            formatInfoBox(info, e);
             return;
         }
     }
-    box.style.visibility = "hidden";
-    console.log("not in a server");
+    for (var rs in replsets) {
+        var repl = replsets[rs];
+        if (isOverNode(repl, e)) {
+            var info = "Replica set " + rs + "<br/>";
+            info += "Members: <br/>";
+            for (var i = 0; i < repl["members"].length; i++) {
+                info += "&nbsp;&nbsp;&nbsp;" + server_label(repl["members"][i]) + "<br/>";
+            }
+            formatInfoBox(info, e);
+            return;
+        }
+    }
+    hideInfoBox();
     return;
 };
 
-
-is_over_server = function(e) {
-    // check if a captured event happened over a server
-    // if so, return that server's server_num
+/*
+ * Fill the info box with this message and display at the
+ * correct coordinates.
+ */
+var formatInfoBox = function(msg, e) {
     var offset = $("#shadow_layer").offset();
     var x = e.clientX - offset.left;
     var y = e.clientY - offset.top;
+    $("#message_box").html(msg);
+    $("#message_box").css({ left : x + 'px' });
+    $("#message_box").css({ top : y + 'px' });
+    showInfoBox();
+};
 
-    // check if mouse was over server
-    for (server in servers) {
+/*
+ * Show the info box.
+ */
+var showInfoBox = function() {
+    $("#message_box").show();
+};
 
-    // calculate distance from click
-    diffX = x - servers[server]["x"];
-    diffY = y - servers[server]["y"];
+/*
+ * Hide the info box.
+ */
+var hideInfoBox = function() {
+    $("#message_box").hide();
+};
+
+/*
+ * Is the mouse over this node?
+ */
+var isOverNode = function(node, e) {
+    var offset = $("#shadow_layer").offset();
+    var x = e.clientX - offset.left;
+    var y = e.clientY - offset.top;
+    diffX = x - node["x"];
+    diffY = y - node["y"];
     distance = Math.sqrt(Math.pow(diffX,2) + Math.pow(diffY,2));
-    // is it within radius?
-    if (distance <= servers[server]["r"]) {
-        return server;
-    }
-    }
-    return null;
+    if (distance <= node["r"]) return true;
+    return false;
 };

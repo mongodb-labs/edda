@@ -59,7 +59,7 @@ limitations under the License. /-->
       <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6">
-          <h1>Replica Set</h1><br/>
+          <h1 id="clustername">Replica Set</h1><br/>
         </div>
         <div class="col-md-3"></div>
       </div>
@@ -73,19 +73,19 @@ limitations under the License. /-->
 	        <div id="timestamp" class="nav nav-list collapse in"><b>Time:</b></div><br/>
 
             <span class="nav-header" data-toggle="collapse" data-target="#summary">
-              <i class="fa fa-angle-down"></i>&nbsp;
+              <i class="fa fa-angle-right"></i>&nbsp;
               <b>Summary</b></span>
 	        <div id="summary" class="nav nav-list collapse in"></div><br/>
 
             <span class="nav-header" data-toggle="collapse" data-target="#witnesses">
-            <i class="fa fa-angle-down"></i>&nbsp;
+            <i class="fa fa-angle-right"></i>&nbsp;
               <b>Witnesses to Event</b></span>
-	        <div id="witnesses" class="nav nav-list collapse in"></div><br/>
+	        <div id="witnesses" class="nav nav-list collapse"></div><br/>
 
             <span class="nav-header" data-toggle="collapse" data-target="#dissenters">
-            <i class="fa fa-angle-down"></i>&nbsp;
+            <i class="fa fa-angle-right"></i>&nbsp;
               <b>Blind to Event</b></span>
-	        <div id="dissenters" class="nav nav-list collapse in"></div>
+	        <div id="dissenters" class="nav nav-list collapse"></div>
           </div>
 
         </div>
@@ -104,14 +104,21 @@ limitations under the License. /-->
           </div>
           <br/>
 	      <div id="slider"></div>
+          <br/>
+          <div id="log_message_box"></div>
         </div>
 
       <!--other information/-->
       <div class="col-md-3">
-          <span class="nav-header" data-toggle="collapse" data-target="#log_files">
-            <i class="fa fa-angle-down"></i>&nbsp;
-            <b>Files</b></span>
-	      <div id="log_files" class="nav nav-list collapse in"></div><br/>
+        <span class="nav-header" data-toggle="collapse" data-target="#log_files">
+          <i class="fa fa-angle-right"></i>&nbsp;
+          <b>Files</b></span>
+	    <div id="log_files" class="nav nav-list collapse"></div><br/>
+
+        <span class="nav-header" data-toggle="collapse" data-target="#topology">
+          <i class="fa fa-angle-right"></i>&nbsp;
+          <b>Topology</b></span>
+        <div id="topology" class="nav nav-list collapse"></div><br/>
 
         <div id="pop_up_links">
 	      <a href="javascript:void(0)" onmousedown="popUp('icon_key')">Icon Key</a><br/>

@@ -23,7 +23,6 @@ function connect() {
 
     // poll for additional setup data
     url_string = document.URL + "data.admin";
-    //console.log(document.URL );
     $.ajax({
         async: false,
         url: url_string,
@@ -41,7 +40,8 @@ function connect() {
         url: url_string,
         dataType: "json",
         success: function(data) {
-        server_names = data;
+            canvases_and_contexts();
+            parse_config(data);
         }
     });
 
