@@ -18,7 +18,9 @@ var canvases = {};
 var contexts = {};
 var servers = {};
 var replsets = {};
+var mongos = {};
 var slider = {};
+var clusterType = "standalone";
 
 var CANVAS_W;
 var CANVAS_H;
@@ -121,6 +123,7 @@ function parse_config(config) {
 
     // first, figure out if this is a sharded cluster
     if (config["groups"].length == 1) {
+        clusterType = "replset";
         $("#clustername").html(config["groups"][0]["name"]);
         ICON_RADIUS = 30;
         servers = generateIconCoords(config["groups"][0]["members"],
@@ -129,6 +132,7 @@ function parse_config(config) {
                                      CANVAS_H/2 - 60);
     }
     else {
+        clusterType = "sharded";
         $("#clustername").html("Sharded Cluster");
         ICON_RADIUS = 15;
         // how many shards do we have?
@@ -167,11 +171,12 @@ function parse_config(config) {
                 replsets[group["name"]] = rs;
                 }
             else if (group["type"] == "mongos") {
-                servers = $.extend(servers, generateIconCoords(group["members"],
-                                                CANVAS_W/2,
-                                                CANVAS_H/2, 
-                                                30));
-                }
+                mongos = generateIconCoords(group["members"],
+                                            CANVAS_W/2,
+                                            CANVAS_H/2, 
+                                            30);
+                servers = $.extend(servers, mongos);
+            }
             // handle configs?
             else if (group["type"] == "config") {
                 group_info = generateIconCoords(group["members"],
@@ -185,9 +190,8 @@ function parse_config(config) {
             }
         }
     }
-    console.log(replsets);
-    console.log(servers);
     ICON_STROKE = ICON_RADIUS > 18 ? 12 : 6;
+    add_topology();
 }
 
 // set up slider functionality
@@ -298,6 +302,40 @@ function file_names() {
         s += "<br/>";
     }
     $("#log_files").html(s);
+}
+
+/*
+ * Fill the #topology div with the structure of this cluster.
+ */
+function add_topology() {
+    var topology = "";
+    // standalone
+    if (servers.length == 1) {
+        topology = server_label(servers.keys[0]);
+    }
+    // repl set
+    else if (clusterType == "replset") {
+        for (var server in servers) {
+            topology += "- " + server_label(server) + "<br/>";
+        }
+    }
+    // sharded cluster
+    else {
+        for (var repl in replsets) {
+            topology += repl + "<br/>";
+            replset = replsets[repl];
+            for (var m in replset["members"]) {
+                topology += "&nbsp;&nbsp;&nbsp; - ";
+                topology += server_label(replset["members"][m]) + "<br/>";
+            }
+        }
+        topology += "Mongos<br/>";
+        for (var server in mongos) {
+            topology += "&nbsp;&nbsp;&nbsp; - ";
+            topology += server_label(server) + "<br/>";
+        }
+    }
+    $("#topology").html(topology);
 }
 
 /*
