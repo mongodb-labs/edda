@@ -152,7 +152,6 @@ function parse_config(config) {
             var group = config["groups"][g];
             var group_info = {};
             if (group["type"] == "replSet") {
-                console.log(group);
                 group_info = generateIconCoords(group["members"],
                                                 shard_coords[group["name"]]["x"],
                                                 shard_coords[group["name"]]["y"],
@@ -168,10 +167,10 @@ function parse_config(config) {
                 replsets[group["name"]] = rs;
                 }
             else if (group["type"] == "mongos") {
-                group_info = generateIconCoords(group["members"],
+                servers = $.extend(servers, generateIconCoords(group["members"],
                                                 CANVAS_W/2,
                                                 CANVAS_H/2, 
-                                                30);
+                                                30));
                 }
             // handle configs?
             else if (group["type"] == "config") {
@@ -305,7 +304,9 @@ function file_names() {
  * Generate a label for this server, in most cases, the network name.
  */
 function server_label(num) {
-    return servers[num]["network_name"] || 
-           servers[num]["self_name"] ||
-           "server " + num;
+    if (servers[num]["network_name"] != "unknown")
+        return servers[num]["network_name"]
+    if (servers[num]["self_name"] != "unknown")
+        return servers[num]["self_name"]
+    return "server " + num;
 }

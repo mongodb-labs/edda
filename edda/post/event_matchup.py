@@ -130,6 +130,12 @@ def next_event(servers, server_entries, db, coll_name):
     if event["type"] == "status":
         event["state"] = first["info"]["state"]
 
+    # init events, for mongos
+    if event["type"] == "init" and first["info"]["type"] == "mongos":
+        # make this a status event, and make the state "MONGOS-UP"
+        event["type"] = "status"
+        event["state"] = "MONGOS-UP"
+
     # exit messages
     if event["type"] == "exit":
         event["state"] = "DOWN"
