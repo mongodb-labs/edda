@@ -12,11 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/*
+ * Draw an arrow going from (x1, y1) to (x2, y2).
+ */
 var drawOneArrow = function(x1, y1, x2, y2, ctx) {
     var dx = Math.abs(x2 - x1);
     var dy = Math.abs(y2 - y1);
-    var cx = x1 + dx/2 - dy/4;
-    var cy = y1 + dy/2 + dx/4;
     var line_length = Math.sqrt(dx*dx + dy*dy);
 
     var h = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
@@ -24,13 +25,14 @@ var drawOneArrow = function(x1, y1, x2, y2, ctx) {
     var ratio = h_prime / h;
     var x_difference, y_difference;
 
+    // move endpoints in along axis
     x_difference = dx * ratio;
     y_difference = dy * ratio;
 
     // TODO: a better way of doing this.
     if (line_length < 100) {
-        x_difference = 0;
-        y_difference = 0;
+        x_difference = dx * .8;
+        y_difference = dy * .8;
     }
 
     // There are 4 cases for the adjustments that need to be made.
@@ -84,11 +86,15 @@ var drawOneArrow = function(x1, y1, x2, y2, ctx) {
     drawArrowHead(x1, x2, y1, y2, ctx);
 };
 
+/*
+ * Render an arrowhhead with its forward tip at (tox, toy) along an
+ * axis that goes from (fromx, fromy) to (tox, toy).
+ */
 var drawArrowHead = function (fromx, tox, fromy, toy, ctx) {
      // adapted from http://stackoverflow.com/questions/808826/draw-arrow-on-canvas-tag
     ctx.beginPath();
 
-    var headlen = 12;   // length of arrow head in pixels
+    var headlen = ICON_RADIUS < 18 ? 8 : 20;   // length of arrow head in pixels
     var angle = Math.atan2(toy - fromy, tox - fromx);
 
     ctx.strokeStyle = "#F0E92F";
