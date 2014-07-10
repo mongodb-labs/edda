@@ -1,0 +1,1041 @@
+2014-07-10T11:08:24.295-0400 [DataFileSync] BackgroundJob starting: DataFileSync
+2014-07-10T11:08:24.296-0400 shardObjTest passed
+2014-07-10T11:08:24.296-0400 isInRangeTest passed
+2014-07-10T11:08:24.296-0400 shardKeyTest passed
+2014-07-10T11:08:24.296-0400 [initandlisten] MongoDB starting : pid=87814 port=27018 dbpath=./data/db27018 64-bit host=As-MacBook-Pro-2.local
+2014-07-10T11:08:24.296-0400 [initandlisten] db version v2.6.3
+2014-07-10T11:08:24.296-0400 [initandlisten] git version: 255f67a66f9603c59380b2a389e386910bbb52cb
+2014-07-10T11:08:24.296-0400 [initandlisten] build info: Darwin mci-osx108-3.build.10gen.cc 12.3.0 Darwin Kernel Version 12.3.0: Sun Jan  6 22:37:10 PST 2013; root:xnu-2050.22.13~1/RELEASE_X86_64 x86_64 BOOST_LIB_VERSION=1_49
+2014-07-10T11:08:24.296-0400 [initandlisten] allocator: system
+2014-07-10T11:08:24.296-0400 [initandlisten] options: { net: { http: { enabled: false }, ipv6: true, port: 27018 }, replication: { oplogSizeMB: 150, replSet: "repl0" }, storage: { dbPath: "./data/db27018", journal: { enabled: false }, nsSize: 1, preallocDataFiles: false, smallFiles: true }, systemLog: { destination: "file", path: "./log/db27018.log", verbosity: 5 } }
+2014-07-10T11:08:24.296-0400 [initandlisten] enter repairDatabases (to check pdfile version #)
+2014-07-10T11:08:24.297-0400 [initandlisten] done repairDatabases
+2014-07-10T11:08:24.297-0400 [initandlisten] opening db:  admin
+2014-07-10T11:08:24.297-0400 [initandlisten] Running query: query: {} sort: {} projection: {}
+2014-07-10T11:08:24.297-0400 [initandlisten] query admin.system.roles planSummary: EOF ntoreturn:0 ntoskip:0 keyUpdates:0 numYields:0 locks(micros) W:232 r:70 nreturned:0 reslen:20 0ms
+2014-07-10T11:08:24.297-0400 [ClientCursorMonitor] BackgroundJob starting: ClientCursorMonitor
+2014-07-10T11:08:24.297-0400 [PeriodicTaskRunner] BackgroundJob starting: PeriodicTaskRunner
+2014-07-10T11:08:24.297-0400 [TTLMonitor] BackgroundJob starting: TTLMonitor
+2014-07-10T11:08:24.297-0400 [initandlisten] Collection admin.system.version does not exist. Using EOF runner: query: { _id: "authSchema" } sort: {} projection: {}
+2014-07-10T11:08:24.297-0400 [initandlisten] Collection admin.system.users does not exist. Using EOF runner: query: {} sort: {} projection: {}
+2014-07-10T11:08:24.297-0400 [IndexRebuilder] BackgroundJob starting: IndexRebuilder
+2014-07-10T11:08:24.297-0400 [initandlisten] fd limit hard:1000000 soft:100000 max conn: 80000
+2014-07-10T11:08:24.297-0400 [IndexRebuilder] checking complete
+2014-07-10T11:08:24.297-0400 [initandlisten] run command local.$cmd { create: "startup_log", size: 10485760, capped: true }
+2014-07-10T11:08:24.297-0400 [initandlisten] opening db:  local
+2014-07-10T11:08:24.298-0400 [initandlisten] create collection local.startup_log { size: 10485760, capped: true }
+2014-07-10T11:08:24.298-0400 [initandlisten] mmf create ./data/db27018/local.ns
+2014-07-10T11:08:24.298-0400 [FileAllocator] allocating new datafile ./data/db27018/local.ns, filling with zeroes...
+2014-07-10T11:08:24.298-0400 [FileAllocator] creating directory ./data/db27018/_tmp
+2014-07-10T11:08:24.298-0400 [FileAllocator] done allocating datafile ./data/db27018/local.ns, size: 1MB,  took 0 secs
+2014-07-10T11:08:24.298-0400 [initandlisten] mmf finishOpening 0x106906000 /Users/emptysquare/.virtualenvs/test-tools/test-tools/./data/db27018/local.ns len:1048576
+2014-07-10T11:08:24.298-0400 [initandlisten] Database::_addNamespaceToCatalog ns: local.startup_log
+2014-07-10T11:08:24.298-0400 [initandlisten] Database::_addNamespaceToCatalog ns: local.system.namespaces
+2014-07-10T11:08:24.298-0400 [initandlisten] mmf create ./data/db27018/local.0
+2014-07-10T11:08:24.298-0400 [FileAllocator] allocating new datafile ./data/db27018/local.0, filling with zeroes...
+2014-07-10T11:08:24.309-0400 [FileAllocator] done allocating datafile ./data/db27018/local.0, size: 16MB,  took 0.01 secs
+2014-07-10T11:08:24.309-0400 [initandlisten] mmf finishOpening 0x106a06000 /Users/emptysquare/.virtualenvs/test-tools/test-tools/./data/db27018/local.0 len:16777216
+2014-07-10T11:08:24.320-0400 [initandlisten] ExtentManager::increaseStorageSize ns:local.system.namespaces desiredSize:8192 fromFreeList: 0 eloc: 0:2000
+2014-07-10T11:08:24.320-0400 [initandlisten] _reuse extent was: now:local.system.namespaces
+2014-07-10T11:08:24.320-0400 [initandlisten] ExtentManager::increaseStorageSize ns:local.startup_log desiredSize:10485760 fromFreeList: 0 eloc: 0:4000
+2014-07-10T11:08:24.320-0400 [initandlisten] _reuse extent was: now:local.startup_log
+2014-07-10T11:08:24.321-0400 [initandlisten] Database::_addNamespaceToCatalog ns: local.system.indexes
+2014-07-10T11:08:24.322-0400 [initandlisten] ExtentManager::increaseStorageSize ns:local.system.indexes desiredSize:8192 fromFreeList: 0 eloc: 0:a04000
+2014-07-10T11:08:24.322-0400 [initandlisten] _reuse extent was: now:local.system.indexes
+2014-07-10T11:08:24.323-0400 [initandlisten] Database::_addNamespaceToCatalog ns: local.startup_log.$_id_
+2014-07-10T11:08:24.323-0400 [initandlisten] build index on: local.startup_log properties: { v: 1, key: { _id: 1 }, name: "_id_", ns: "local.startup_log" }
+2014-07-10T11:08:24.323-0400 [initandlisten] local.startup_log: clearing plan cache - collection info cache reset
+2014-07-10T11:08:24.323-0400 [initandlisten] allocating new extent
+2014-07-10T11:08:24.323-0400 [initandlisten] ExtentManager::increaseStorageSize ns:local.startup_log.$_id_ desiredSize:131072 fromFreeList: 0 eloc: 0:a06000
+2014-07-10T11:08:24.323-0400 [initandlisten] _reuse extent was: now:local.startup_log.$_id_
+2014-07-10T11:08:24.324-0400 [initandlisten] 	 added index to empty collection
+2014-07-10T11:08:24.324-0400 [initandlisten] local.startup_log: clearing plan cache - collection info cache reset
+2014-07-10T11:08:24.324-0400 [initandlisten] command local.$cmd command: create { create: "startup_log", size: 10485760, capped: true } ntoreturn:1 keyUpdates:0 numYields:0  reslen:37 26ms
+2014-07-10T11:08:24.324-0400 [initandlisten] info PageFaultRetryableSection will not yield, already locked upon reaching
+2014-07-10T11:08:24.324-0400 [initandlisten] insert local.startup_log ninserted:1 keyUpdates:0 numYields:0  0ms
+2014-07-10T11:08:24.324-0400 [initandlisten] waiting for connections on port 27018
+2014-07-10T11:08:24.324-0400 [rsStart] replSet beginning startup...
+2014-07-10T11:08:24.324-0400 [rsStart] loadConfig() local.system.replset
+2014-07-10T11:08:24.325-0400 [rsStart] Running query: query: {} sort: {} projection: {}
+2014-07-10T11:08:24.325-0400 [rsStart] query local.system.replset planSummary: EOF ntoreturn:1 ntoskip:0 keyUpdates:0 numYields:0 locks(micros) r:1085 nreturned:0 reslen:20 1ms
+2014-07-10T11:08:24.325-0400 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+2014-07-10T11:08:24.325-0400 [rsStart] replSet info you may need to run replSetInitiate -- rs.initiate() in the shell -- if that is not already done
+2014-07-10T11:08:24.325-0400 [rsStart] replSet info no seed hosts were specified on the --replSet command line
+2014-07-10T11:08:24.525-0400 [initandlisten] connection accepted from 127.0.0.1:57197 #1 (1 connection now open)
+2014-07-10T11:08:24.525-0400 [conn1] Socket recv() conn closed? 127.0.0.1:57197
+2014-07-10T11:08:24.526-0400 [conn1] SocketException: remote: 127.0.0.1:57197 error: 9001 socket exception [CLOSED] server [127.0.0.1:57197] 
+2014-07-10T11:08:24.526-0400 [conn1] end connection 127.0.0.1:57197 (0 connections now open)
+2014-07-10T11:08:25.327-0400 [rsStart] Running query: query: {} sort: {} projection: {}
+2014-07-10T11:08:25.327-0400 [rsStart] query local.system.replset planSummary: EOF ntoreturn:1 ntoskip:0 keyUpdates:0 numYields:0 locks(micros) r:111 nreturned:0 reslen:20 0ms
+2014-07-10T11:08:25.327-0400 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+2014-07-10T11:08:25.327-0400 [rsStart] replSet info no seed hosts were specified on the --replSet command line
+2014-07-10T11:08:26.327-0400 [rsStart] Running query: query: {} sort: {} projection: {}
+2014-07-10T11:08:26.327-0400 [rsStart] query local.system.replset planSummary: EOF ntoreturn:1 ntoskip:0 keyUpdates:0 numYields:0 locks(micros) r:174 nreturned:0 reslen:20 0ms
+2014-07-10T11:08:26.327-0400 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+2014-07-10T11:08:26.327-0400 [rsStart] replSet info no seed hosts were specified on the --replSet command line
+2014-07-10T11:08:27.329-0400 [rsStart] Running query: query: {} sort: {} projection: {}
+2014-07-10T11:08:27.329-0400 [rsStart] query local.system.replset planSummary: EOF ntoreturn:1 ntoskip:0 keyUpdates:0 numYields:0 locks(micros) r:106 nreturned:0 reslen:20 0ms
+2014-07-10T11:08:27.329-0400 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+2014-07-10T11:08:27.329-0400 [rsStart] replSet info no seed hosts were specified on the --replSet command line
+2014-07-10T11:08:28.330-0400 [rsStart] Running query: query: {} sort: {} projection: {}
+2014-07-10T11:08:28.330-0400 [rsStart] query local.system.replset planSummary: EOF ntoreturn:1 ntoskip:0 keyUpdates:0 numYields:0 locks(micros) r:175 nreturned:0 reslen:20 0ms
+2014-07-10T11:08:28.330-0400 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+2014-07-10T11:08:28.330-0400 [rsStart] replSet info no seed hosts were specified on the --replSet command line
+2014-07-10T11:08:29.331-0400 [rsStart] Running query: query: {} sort: {} projection: {}
+2014-07-10T11:08:29.331-0400 [rsStart] query local.system.replset planSummary: EOF ntoreturn:1 ntoskip:0 keyUpdates:0 numYields:0 locks(micros) r:176 nreturned:0 reslen:20 0ms
+2014-07-10T11:08:29.331-0400 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+2014-07-10T11:08:29.331-0400 [rsStart] replSet info no seed hosts were specified on the --replSet command line
+2014-07-10T11:08:30.331-0400 [rsStart] Running query: query: {} sort: {} projection: {}
+2014-07-10T11:08:30.332-0400 [rsStart] query local.system.replset planSummary: EOF ntoreturn:1 ntoskip:0 keyUpdates:0 numYields:0 locks(micros) r:187 nreturned:0 reslen:20 0ms
+2014-07-10T11:08:30.332-0400 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+2014-07-10T11:08:30.332-0400 [rsStart] replSet info no seed hosts were specified on the --replSet command line
+2014-07-10T11:08:31.333-0400 [rsStart] Running query: query: {} sort: {} projection: {}
+2014-07-10T11:08:31.333-0400 [rsStart] query local.system.replset planSummary: EOF ntoreturn:1 ntoskip:0 keyUpdates:0 numYields:0 locks(micros) r:174 nreturned:0 reslen:20 0ms
+2014-07-10T11:08:31.333-0400 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+2014-07-10T11:08:31.333-0400 [rsStart] replSet info no seed hosts were specified on the --replSet command line
+2014-07-10T11:08:32.334-0400 [rsStart] Running query: query: {} sort: {} projection: {}
+2014-07-10T11:08:32.334-0400 [rsStart] query local.system.replset planSummary: EOF ntoreturn:1 ntoskip:0 keyUpdates:0 numYields:0 locks(micros) r:173 nreturned:0 reslen:20 0ms
+2014-07-10T11:08:32.334-0400 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+2014-07-10T11:08:32.334-0400 [rsStart] replSet info no seed hosts were specified on the --replSet command line
+2014-07-10T11:08:33.335-0400 [rsStart] Running query: query: {} sort: {} projection: {}
+2014-07-10T11:08:33.335-0400 [rsStart] query local.system.replset planSummary: EOF ntoreturn:1 ntoskip:0 keyUpdates:0 numYields:0 locks(micros) r:107 nreturned:0 reslen:20 0ms
+2014-07-10T11:08:33.335-0400 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+2014-07-10T11:08:33.335-0400 [rsStart] replSet info no seed hosts were specified on the --replSet command line
+2014-07-10T11:08:34.336-0400 [rsStart] Running query: query: {} sort: {} projection: {}
+2014-07-10T11:08:34.336-0400 [rsStart] query local.system.replset planSummary: EOF ntoreturn:1 ntoskip:0 keyUpdates:0 numYields:0 locks(micros) r:101 nreturned:0 reslen:20 0ms
+2014-07-10T11:08:34.336-0400 [rsStart] replSet can't get local.system.replset config from self or any seed (EMPTYCONFIG)
+2014-07-10T11:08:34.336-0400 [rsStart] replSet info no seed hosts were specified on the --replSet command line
+2014-07-10T11:08:34.790-0400 [initandlisten] connection accepted from 127.0.0.1:57201 #2 (1 connection now open)
+2014-07-10T11:08:34.790-0400 [conn2] run command admin.$cmd { replSetHeartbeat: "repl0", v: -1, pv: 1, checkEmpty: true, from: "" }
+2014-07-10T11:08:34.790-0400 [conn2] command: { replSetHeartbeat: "repl0", v: -1, pv: 1, checkEmpty: true, from: "" }
+2014-07-10T11:08:34.791-0400 [conn2] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: -1, pv: 1, checkEmpty: true, from: "" } ntoreturn:1 keyUpdates:0 numYields:0 locks(micros) r:1087 reslen:82 1ms
+2014-07-10T11:08:35.155-0400 [conn2] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:08:35.155-0400 [conn2] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:08:35.155-0400 [conn2] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:72 0ms
+2014-07-10T11:08:35.337-0400 [rsStart] Running query: query: {} sort: {} projection: {}
+2014-07-10T11:08:35.337-0400 [rsStart] query local.system.replset planSummary: EOF ntoreturn:1 ntoskip:0 keyUpdates:0 numYields:0 locks(micros) r:107 nreturned:0 reslen:20 0ms
+2014-07-10T11:08:35.337-0400 [rsStart] ReplSetConfig load localhost:27017
+2014-07-10T11:08:35.337-0400 [rsStart] trying to contact localhost:27017
+2014-07-10T11:08:35.337-0400 [ConnectBG] BackgroundJob starting: ConnectBG
+2014-07-10T11:08:35.338-0400 [rsStart] connected to server localhost:27017 (127.0.0.1)
+2014-07-10T11:08:35.339-0400 [rsStart] replSet load config ok from localhost:27017
+2014-07-10T11:08:35.339-0400 [rsStart] getMyAddrs(): [::1] [127.0.0.1] [fe80::1%lo0] [fe80::3e15:c2ff:feb8:d442%en0] [10.4.123.195] [fe80::3e15:c2ff:feb8:d442%en6] [169.254.100.137]
+2014-07-10T11:08:35.340-0400 [rsStart] getallIPs("localhost"): [::1] [127.0.0.1] [fe80::1%lo0]
+2014-07-10T11:08:35.340-0400 [rsStart] replSet I am localhost:27018
+2014-07-10T11:08:35.340-0400 [rsHealthPoll] BackgroundJob starting: rsHealthPoll
+2014-07-10T11:08:35.340-0400 [rsHealthPoll] replSet not initialized yet, skipping health poll this round
+2014-07-10T11:08:35.340-0400 [rsHealthPoll] BackgroundJob starting: rsHealthPoll
+2014-07-10T11:08:35.340-0400 [rsStart] replSet got config version 1 from a remote, saving locally
+2014-07-10T11:08:35.340-0400 [rsHealthPoll] replSet not initialized yet, skipping health poll this round
+2014-07-10T11:08:35.340-0400 [rsStart] replSet info saving a newer config version to local.system.replset: { _id: "repl0", version: 1, members: [ { _id: 0, host: "localhost:27017" }, { _id: 1, host: "localhost:27018" }, { _id: 2, host: "localhost:27019" } ] }
+2014-07-10T11:08:35.340-0400 [rsStart] processing update :  query: {} updated: { _id: "repl0", version: 1, members: [ { _id: 0, host: "localhost:27017" }, { _id: 1, host: "localhost:27018" }, { _id: 2, host: "localhost:27019" } ] } god: 1 upsert: 1 multi: 0 callLogOp: 0 fromMigration: 0 fromReplications: 0
+2014-07-10T11:08:35.340-0400 [rsStart] Collection local.system.replset does not exist. Using EOF runner: query: {} sort: {} projection: {}
+2014-07-10T11:08:35.340-0400 [rsStart] update validate options --  updatedFields: Fields:[ ] immutableAndSingleValueFields.size:0 fromRepl: 0 validate:1
+2014-07-10T11:08:35.340-0400 [rsStart] update validate options --  updatedFields: Fields:[ ] immutableAndSingleValueFields.size:0 fromRepl: 0 validate:1
+2014-07-10T11:08:35.340-0400 [rsStart] Database::_addNamespaceToCatalog ns: local.system.replset
+2014-07-10T11:08:35.341-0400 [rsStart] ExtentManager::increaseStorageSize ns:local.system.replset desiredSize:8192 fromFreeList: 0 eloc: 0:a26000
+2014-07-10T11:08:35.341-0400 [rsStart] _reuse extent was: now:local.system.replset
+2014-07-10T11:08:35.343-0400 [rsStart] Database::_addNamespaceToCatalog ns: local.system.replset.$_id_
+2014-07-10T11:08:35.343-0400 [rsStart] build index on: local.system.replset properties: { v: 1, key: { _id: 1 }, name: "_id_", ns: "local.system.replset" }
+2014-07-10T11:08:35.343-0400 [rsStart] local.system.replset: clearing plan cache - collection info cache reset
+2014-07-10T11:08:35.343-0400 [rsStart] allocating new extent
+2014-07-10T11:08:35.343-0400 [rsStart] ExtentManager::increaseStorageSize ns:local.system.replset.$_id_ desiredSize:131072 fromFreeList: 0 eloc: 0:a28000
+2014-07-10T11:08:35.343-0400 [rsStart] _reuse extent was: now:local.system.replset.$_id_
+2014-07-10T11:08:35.344-0400 [rsStart] 	 added index to empty collection
+2014-07-10T11:08:35.344-0400 [rsStart] local.system.replset: clearing plan cache - collection info cache reset
+2014-07-10T11:08:35.344-0400 [rsStart] UpdateResult --  upserted: { upserted: "repl0" } modifiers: 0 existing: 0 numDocsModified: 1 numMatched: 1
+2014-07-10T11:08:35.344-0400 [rsStart] replSet saveConfigLocally done
+2014-07-10T11:08:35.344-0400 [rsStart] processing update :  query: {} updated: { _id: ObjectId('53beac73a4da366cdcc56fa4'), host: "As-MacBook-Pro-2.local" } god: 0 upsert: 1 multi: 0 callLogOp: 1 fromMigration: 0 fromReplications: 0
+2014-07-10T11:08:35.344-0400 [rsStart] Collection local.me does not exist. Using EOF runner: query: {} sort: {} projection: {}
+2014-07-10T11:08:35.344-0400 [rsStart] update validate options --  updatedFields: Fields:[ ] immutableAndSingleValueFields.size:0 fromRepl: 0 validate:1
+2014-07-10T11:08:35.344-0400 [rsStart] update validate options --  updatedFields: Fields:[ ] immutableAndSingleValueFields.size:0 fromRepl: 0 validate:1
+2014-07-10T11:08:35.344-0400 [rsStart] Database::_addNamespaceToCatalog ns: local.me
+2014-07-10T11:08:35.344-0400 [rsStart] ExtentManager::increaseStorageSize ns:local.me desiredSize:8192 fromFreeList: 0 eloc: 0:a48000
+2014-07-10T11:08:35.344-0400 [rsStart] _reuse extent was: now:local.me
+2014-07-10T11:08:35.345-0400 [rsStart] Database::_addNamespaceToCatalog ns: local.me.$_id_
+2014-07-10T11:08:35.345-0400 [rsStart] build index on: local.me properties: { v: 1, key: { _id: 1 }, name: "_id_", ns: "local.me" }
+2014-07-10T11:08:35.345-0400 [rsStart] local.me: clearing plan cache - collection info cache reset
+2014-07-10T11:08:35.345-0400 [rsStart] allocating new extent
+2014-07-10T11:08:35.345-0400 [rsStart] ExtentManager::increaseStorageSize ns:local.me.$_id_ desiredSize:131072 fromFreeList: 0 eloc: 0:a4a000
+2014-07-10T11:08:35.345-0400 [rsStart] _reuse extent was: now:local.me.$_id_
+2014-07-10T11:08:35.346-0400 [rsStart] 	 added index to empty collection
+2014-07-10T11:08:35.346-0400 [rsStart] local.me: clearing plan cache - collection info cache reset
+2014-07-10T11:08:35.346-0400 [rsStart] UpdateResult --  upserted: { upserted: ObjectId('53beac73a4da366cdcc56fa4') } modifiers: 0 existing: 0 numDocsModified: 1 numMatched: 1
+2014-07-10T11:08:35.346-0400 [rsStart] replSet STARTUP2
+2014-07-10T11:08:35.346-0400 [rsMgr] BackgroundJob starting: rsMgr
+2014-07-10T11:08:35.346-0400 [rsGhostSync] BackgroundJob starting: rsGhostSync
+2014-07-10T11:08:35.346-0400 [rsSync] ******
+2014-07-10T11:08:35.346-0400 [rsSync] creating replication oplog of size: 150MB...
+2014-07-10T11:08:35.346-0400 [rsSync] create collection local.oplog.rs { size: 157286400.0, capped: true, autoIndexId: false }
+2014-07-10T11:08:35.346-0400 [SyncSourceFeedbackThread] BackgroundJob starting: SyncSourceFeedbackThread
+2014-07-10T11:08:35.346-0400 [rsSync] Database::_addNamespaceToCatalog ns: local.oplog.rs
+2014-07-10T11:08:35.346-0400 [rsSync] mmf create ./data/db27018/local.1
+2014-07-10T11:08:35.346-0400 [FileAllocator] allocating new datafile ./data/db27018/local.1, filling with zeroes...
+2014-07-10T11:08:35.739-0400 [FileAllocator] done allocating datafile ./data/db27018/local.1, size: 256MB,  took 0.392 secs
+2014-07-10T11:08:35.739-0400 [rsSync] mmf finishOpening 0x109200000 /Users/emptysquare/.virtualenvs/test-tools/test-tools/./data/db27018/local.1 len:268435456
+2014-07-10T11:08:35.754-0400 [rsSync] ExtentManager::increaseStorageSize ns:local.oplog.rs desiredSize:157286400 fromFreeList: 0 eloc: 1:2000
+2014-07-10T11:08:35.754-0400 [rsSync] _reuse extent was: now:local.oplog.rs
+2014-07-10T11:08:35.805-0400 [rsSync] ******
+2014-07-10T11:08:35.805-0400 [rsSync] replSet initial sync pending
+2014-07-10T11:08:35.805-0400 [rsSync] replSet initial sync need a member to be primary or secondary to do our initial sync
+2014-07-10T11:08:37.156-0400 [conn2] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:08:37.156-0400 [conn2] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:08:37.156-0400 [conn2] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:217 0ms
+2014-07-10T11:08:37.157-0400 [conn2] run command admin.$cmd { replSetFresh: 1, set: "repl0", opTime: new Date(6034450160644259841), who: "localhost:27017", cfgver: 1, id: 0 }
+2014-07-10T11:08:37.157-0400 [conn2] command: { replSetFresh: 1, set: "repl0", opTime: new Date(6034450160644259841), who: "localhost:27017", cfgver: 1, id: 0 }
+2014-07-10T11:08:37.157-0400 [conn2] command admin.$cmd command: replSetFresh { replSetFresh: 1, set: "repl0", opTime: new Date(6034450160644259841), who: "localhost:27017", cfgver: 1, id: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:125 0ms
+2014-07-10T11:08:37.157-0400 [conn2] run command admin.$cmd { replSetFresh: 1, set: "repl0", opTime: new Date(6034450160644259841), who: "localhost:27017", cfgver: 1, id: 0 }
+2014-07-10T11:08:37.157-0400 [conn2] command: { replSetFresh: 1, set: "repl0", opTime: new Date(6034450160644259841), who: "localhost:27017", cfgver: 1, id: 0 }
+2014-07-10T11:08:37.157-0400 [conn2] command admin.$cmd command: replSetFresh { replSetFresh: 1, set: "repl0", opTime: new Date(6034450160644259841), who: "localhost:27017", cfgver: 1, id: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:125 0ms
+2014-07-10T11:08:37.171-0400 [initandlisten] connection accepted from 127.0.0.1:57207 #3 (2 connections now open)
+2014-07-10T11:08:37.171-0400 [conn3] run command admin.$cmd { ismaster: 1 }
+2014-07-10T11:08:37.171-0400 [conn3] command admin.$cmd command: isMaster { ismaster: 1 } keyUpdates:0 numYields:0  reslen:330 0ms
+2014-07-10T11:08:37.340-0400 [ConnectBG] BackgroundJob starting: ConnectBG
+2014-07-10T11:08:37.341-0400 [rsHealthPoll] connected to server localhost:27019 (127.0.0.1)
+2014-07-10T11:08:37.341-0400 [rsHealthPoll] replSet member localhost:27017 is up
+2014-07-10T11:08:37.341-0400 [rsHealthPoll] replSet member localhost:27017 is now in state SECONDARY
+2014-07-10T11:08:37.341-0400 [rsHealthPoll] replset info localhost:27019 thinks that we are down
+2014-07-10T11:08:37.341-0400 [rsHealthPoll] replSet member localhost:27019 is up
+2014-07-10T11:08:37.341-0400 [rsHealthPoll] replSet member localhost:27019 is now in state STARTUP2
+2014-07-10T11:08:37.597-0400 [initandlisten] connection accepted from 127.0.0.1:57209 #4 (3 connections now open)
+2014-07-10T11:08:37.597-0400 [conn4] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:08:37.597-0400 [conn4] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:08:37.597-0400 [conn4] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:197 0ms
+2014-07-10T11:08:39.157-0400 [conn2] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:08:39.157-0400 [conn2] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:08:39.157-0400 [conn2] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:197 0ms
+2014-07-10T11:08:39.174-0400 [initandlisten] connection accepted from 127.0.0.1:57213 #5 (4 connections now open)
+2014-07-10T11:08:39.174-0400 [conn5] run command admin.$cmd { ismaster: 1 }
+2014-07-10T11:08:39.174-0400 [conn5] command admin.$cmd command: isMaster { ismaster: 1 } keyUpdates:0 numYields:0  reslen:330 0ms
+2014-07-10T11:08:39.174-0400 [conn3] Socket recv() conn closed? 127.0.0.1:57207
+2014-07-10T11:08:39.174-0400 [conn3] SocketException: remote: 127.0.0.1:57207 error: 9001 socket exception [CLOSED] server [127.0.0.1:57207] 
+2014-07-10T11:08:39.174-0400 [conn3] end connection 127.0.0.1:57207 (3 connections now open)
+2014-07-10T11:08:39.598-0400 [conn4] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:08:39.599-0400 [conn4] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:08:39.599-0400 [conn4] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:197 0ms
+2014-07-10T11:08:41.157-0400 [conn2] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:08:41.157-0400 [conn2] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:08:41.157-0400 [conn2] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:197 0ms
+2014-07-10T11:08:41.178-0400 [initandlisten] connection accepted from 127.0.0.1:57216 #6 (4 connections now open)
+2014-07-10T11:08:41.178-0400 [conn6] run command admin.$cmd { ismaster: 1 }
+2014-07-10T11:08:41.178-0400 [conn6] command admin.$cmd command: isMaster { ismaster: 1 } keyUpdates:0 numYields:0  reslen:330 0ms
+2014-07-10T11:08:41.178-0400 [conn5] Socket recv() conn closed? 127.0.0.1:57213
+2014-07-10T11:08:41.178-0400 [conn5] SocketException: remote: 127.0.0.1:57213 error: 9001 socket exception [CLOSED] server [127.0.0.1:57213] 
+2014-07-10T11:08:41.178-0400 [conn5] end connection 127.0.0.1:57213 (3 connections now open)
+2014-07-10T11:08:41.600-0400 [conn4] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:08:41.600-0400 [conn4] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:08:41.600-0400 [conn4] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:197 0ms
+2014-07-10T11:08:43.158-0400 [conn2] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:08:43.158-0400 [conn2] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:08:43.158-0400 [conn2] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:197 0ms
+2014-07-10T11:08:43.158-0400 [conn2] run command admin.$cmd { replSetFresh: 1, set: "repl0", opTime: new Date(6034450160644259841), who: "localhost:27017", cfgver: 1, id: 0 }
+2014-07-10T11:08:43.158-0400 [conn2] command: { replSetFresh: 1, set: "repl0", opTime: new Date(6034450160644259841), who: "localhost:27017", cfgver: 1, id: 0 }
+2014-07-10T11:08:43.158-0400 [conn2] command admin.$cmd command: replSetFresh { replSetFresh: 1, set: "repl0", opTime: new Date(6034450160644259841), who: "localhost:27017", cfgver: 1, id: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:70 0ms
+2014-07-10T11:08:43.159-0400 [conn2] run command admin.$cmd { replSetElect: 1, set: "repl0", who: "localhost:27017", whoid: 0, cfgver: 1, round: ObjectId('53beac7b9cf5364c7051eb82') }
+2014-07-10T11:08:43.159-0400 [conn2] command: { replSetElect: 1, set: "repl0", who: "localhost:27017", whoid: 0, cfgver: 1, round: ObjectId('53beac7b9cf5364c7051eb82') }
+2014-07-10T11:08:43.159-0400 [conn2] replSet received elect msg { replSetElect: 1, set: "repl0", who: "localhost:27017", whoid: 0, cfgver: 1, round: ObjectId('53beac7b9cf5364c7051eb82') }
+2014-07-10T11:08:43.159-0400 [conn2] replSet info voting yea for localhost:27017 (0)
+2014-07-10T11:08:43.159-0400 [conn2] command admin.$cmd command: replSetElect { replSetElect: 1, set: "repl0", who: "localhost:27017", whoid: 0, cfgver: 1, round: ObjectId('53beac7b9cf5364c7051eb82') } ntoreturn:1 keyUpdates:0 numYields:0  reslen:66 0ms
+2014-07-10T11:08:43.346-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:08:43.346-0400 [rsHealthPoll] replSet member localhost:27017 is now in state PRIMARY
+2014-07-10T11:08:43.602-0400 [conn4] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:08:43.602-0400 [conn4] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:08:43.602-0400 [conn4] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:197 0ms
+2014-07-10T11:08:45.159-0400 [conn2] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:08:45.159-0400 [conn2] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:08:45.159-0400 [conn2] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:197 0ms
+2014-07-10T11:08:45.348-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:08:45.603-0400 [conn4] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:08:45.603-0400 [conn4] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:08:45.603-0400 [conn4] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:197 0ms
+2014-07-10T11:08:47.161-0400 [conn2] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:08:47.161-0400 [conn2] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:08:47.161-0400 [conn2] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:197 0ms
+2014-07-10T11:08:47.349-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:08:47.605-0400 [conn4] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:08:47.605-0400 [conn4] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:08:47.605-0400 [conn4] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:197 0ms
+2014-07-10T11:08:49.162-0400 [conn2] Socket recv() conn closed? 127.0.0.1:57201
+2014-07-10T11:08:49.163-0400 [conn2] SocketException: remote: 127.0.0.1:57201 error: 9001 socket exception [CLOSED] server [127.0.0.1:57201] 
+2014-07-10T11:08:49.163-0400 [conn2] end connection 127.0.0.1:57201 (2 connections now open)
+2014-07-10T11:08:49.163-0400 [initandlisten] connection accepted from 127.0.0.1:57230 #7 (3 connections now open)
+2014-07-10T11:08:49.163-0400 [conn7] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:08:49.163-0400 [conn7] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:08:49.163-0400 [conn7] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:197 0ms
+2014-07-10T11:08:49.350-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:08:49.606-0400 [conn4] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:08:49.607-0400 [conn4] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:08:49.607-0400 [conn4] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:197 0ms
+2014-07-10T11:08:51.164-0400 [conn7] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:08:51.164-0400 [conn7] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:08:51.164-0400 [conn7] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:197 0ms
+2014-07-10T11:08:51.352-0400 [ConnectBG] BackgroundJob starting: ConnectBG
+2014-07-10T11:08:51.352-0400 [rsHealthPoll] connected to server localhost:27017 (127.0.0.1)
+2014-07-10T11:08:51.352-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:08:51.607-0400 [conn4] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:08:51.607-0400 [conn4] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:08:51.608-0400 [conn4] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:197 0ms
+2014-07-10T11:08:51.808-0400 [rsSync] replSet initial sync pending
+2014-07-10T11:08:51.808-0400 [rsSync] replSet syncing to: localhost:27017
+2014-07-10T11:08:51.808-0400 [ConnectBG] BackgroundJob starting: ConnectBG
+2014-07-10T11:08:51.808-0400 [rsSync] connected to server localhost:27017 (127.0.0.1)
+2014-07-10T11:08:51.808-0400 [rsSync] processing update :  query: {} updated: { $set: { doingInitialSync: true } } god: 0 upsert: 1 multi: 0 callLogOp: 1 fromMigration: 0 fromReplications: 0
+2014-07-10T11:08:51.808-0400 [rsSync] Collection local.replset.minvalid does not exist. Using EOF runner: query: {} sort: {} projection: {}
+2014-07-10T11:08:51.809-0400 [rsSync] update validate options --  updatedFields: Fields:[ ] immutableAndSingleValueFields.size:0 fromRepl: 0 validate:1
+2014-07-10T11:08:51.809-0400 [rsSync] update validate options --  updatedFields: Fields:[ doingInitialSync,] immutableAndSingleValueFields.size:0 fromRepl: 0 validate:1
+2014-07-10T11:08:51.809-0400 [rsSync] Database::_addNamespaceToCatalog ns: local.replset.minvalid
+2014-07-10T11:08:51.810-0400 [rsSync] ExtentManager::increaseStorageSize ns:local.replset.minvalid desiredSize:8192 fromFreeList: 0 eloc: 1:9602000
+2014-07-10T11:08:51.810-0400 [rsSync] _reuse extent was: now:local.replset.minvalid
+2014-07-10T11:08:51.811-0400 [rsSync] Database::_addNamespaceToCatalog ns: local.replset.minvalid.$_id_
+2014-07-10T11:08:51.811-0400 [rsSync] build index on: local.replset.minvalid properties: { v: 1, key: { _id: 1 }, name: "_id_", ns: "local.replset.minvalid" }
+2014-07-10T11:08:51.811-0400 [rsSync] local.replset.minvalid: clearing plan cache - collection info cache reset
+2014-07-10T11:08:51.811-0400 [rsSync] allocating new extent
+2014-07-10T11:08:51.812-0400 [rsSync] ExtentManager::increaseStorageSize ns:local.replset.minvalid.$_id_ desiredSize:131072 fromFreeList: 0 eloc: 1:9604000
+2014-07-10T11:08:51.812-0400 [rsSync] _reuse extent was: now:local.replset.minvalid.$_id_
+2014-07-10T11:08:51.812-0400 [rsSync] 	 added index to empty collection
+2014-07-10T11:08:51.812-0400 [rsSync] local.replset.minvalid: clearing plan cache - collection info cache reset
+2014-07-10T11:08:51.812-0400 [rsSync] UpdateResult --  upserted: { upserted: ObjectId('53beac83a4da366cdcc56fa5') } modifiers: 1 existing: 0 numDocsModified: 1 numMatched: 1
+2014-07-10T11:08:51.812-0400 [rsSync] replSet initial sync drop all databases
+2014-07-10T11:08:51.812-0400 [rsSync] dropAllDatabasesExceptLocal 1
+2014-07-10T11:08:51.812-0400 [rsSync] replSet initial sync clone all databases
+2014-07-10T11:08:51.813-0400 [rsSync] replSet initial sync cloning db: admin
+2014-07-10T11:08:51.813-0400 [rsSync] creating new connection to:localhost:27017
+2014-07-10T11:08:51.813-0400 [ConnectBG] BackgroundJob starting: ConnectBG
+2014-07-10T11:08:51.813-0400 [rsSync] connected to server localhost:27017 (127.0.0.1)
+2014-07-10T11:08:51.813-0400 [rsSync] connected connection!
+2014-07-10T11:08:51.813-0400 [rsSync] replSet initial sync data copy, starting syncup
+2014-07-10T11:08:51.813-0400 [rsSync] oplog sync 1 of 3
+2014-07-10T11:08:51.814-0400 [rsSync] oplog sync 2 of 3
+2014-07-10T11:08:51.814-0400 [rsSyncNotifier] replset markOplog: 0:0 53beac73:1
+2014-07-10T11:08:51.814-0400 [rsSyncNotifier] now last is 53beac73:1
+2014-07-10T11:08:51.814-0400 [rsSync] replSet initial sync building indexes
+2014-07-10T11:08:51.814-0400 [rsSync] replSet initial sync cloning indexes for : admin
+2014-07-10T11:08:51.814-0400 [rsSync] 		cloning collection admin.system.indexes to admin.system.indexes on localhost:27017 with filter { name: { $ne: "_id_" }, ns: { $nin: [] } }
+2014-07-10T11:08:51.814-0400 [rsSync] oplog sync 3 of 3
+2014-07-10T11:08:51.815-0400 [rsSync] Running query: query: {} sort: {} projection: {}
+2014-07-10T11:08:51.815-0400 [rsSync] query admin.system.roles planSummary: EOF ntoreturn:0 ntoskip:0 keyUpdates:0 numYields:0 locks(micros) r:40 nreturned:0 reslen:20 0ms
+2014-07-10T11:08:51.815-0400 [rsSync] replSet initial sync finishing up
+2014-07-10T11:08:51.820-0400 [rsSync] replSet set minValid=53beac73:1
+2014-07-10T11:08:51.820-0400 [rsSync] processing update :  query: {} updated: { $set: { ts: Timestamp 1405004915000|1 } } god: 0 upsert: 1 multi: 0 callLogOp: 1 fromMigration: 0 fromReplications: 0
+2014-07-10T11:08:51.820-0400 [rsSync] Only one plan is available; it will be run but will not be cached. query: {} sort: {} projection: {}, planSummary: COLLSCAN
+2014-07-10T11:08:51.820-0400 [rsSync] update validate options --  updatedFields: Fields:[ ts,] immutableAndSingleValueFields.size:0 fromRepl: 0 validate:1
+2014-07-10T11:08:51.820-0400 [rsSync] UpdateResult --  upserted: {} modifiers: 1 existing: 1 numDocsModified: 1 numMatched: 1
+2014-07-10T11:08:51.820-0400 [rsSync] processing update :  query: {} updated: { $unset: { doingInitialSync: true } } god: 0 upsert: 1 multi: 0 callLogOp: 1 fromMigration: 0 fromReplications: 0
+2014-07-10T11:08:51.820-0400 [rsSync] Only one plan is available; it will be run but will not be cached. query: {} sort: {} projection: {}, planSummary: COLLSCAN
+2014-07-10T11:08:51.821-0400 [rsSync] update validate options --  updatedFields: Fields:[ doingInitialSync,] immutableAndSingleValueFields.size:0 fromRepl: 0 validate:1
+2014-07-10T11:08:51.821-0400 [rsSync] UpdateResult --  upserted: {} modifiers: 1 existing: 1 numDocsModified: 1 numMatched: 1
+2014-07-10T11:08:51.825-0400 [rsSync] replSet RECOVERING
+2014-07-10T11:08:51.825-0400 [rsSync] replSet initial sync done
+2014-07-10T11:08:52.360-0400 [rsBackgroundSync] replset bgsync fetch queue set to: 53beac73:1 0
+2014-07-10T11:08:52.361-0400 [rsBackgroundSync] replSet syncing to: localhost:27017
+2014-07-10T11:08:52.361-0400 [ConnectBG] BackgroundJob starting: ConnectBG
+2014-07-10T11:08:52.361-0400 [rsBackgroundSync] connected to server localhost:27017 (127.0.0.1)
+2014-07-10T11:08:52.361-0400 [rsBackgroundSync] resetting connection in sync source feedback
+2014-07-10T11:08:52.361-0400 [rsBackgroundSync] replset setting syncSourceFeedback to localhost:27017
+2014-07-10T11:08:52.362-0400 [ConnectBG] BackgroundJob starting: ConnectBG
+2014-07-10T11:08:52.362-0400 [rsBackgroundSync] connected to server localhost:27017 (127.0.0.1)
+2014-07-10T11:08:52.362-0400 [rsBackgroundSync] detecting upstream updater
+2014-07-10T11:08:52.362-0400 [rsBackgroundSync] upstream updater is supported
+2014-07-10T11:08:52.362-0400 [rsBackgroundSync] repl: local.oplog.rs.find({ ts: { $gte: Timestamp 1405004915000|1 } })
+2014-07-10T11:08:52.826-0400 [rsSync] replSet SECONDARY
+2014-07-10T11:08:53.166-0400 [conn7] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:08:53.166-0400 [conn7] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:08:53.166-0400 [conn7] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:08:53.212-0400 [conn6] Socket recv() conn closed? 127.0.0.1:57216
+2014-07-10T11:08:53.212-0400 [conn6] SocketException: remote: 127.0.0.1:57216 error: 9001 socket exception [CLOSED] server [127.0.0.1:57216] 
+2014-07-10T11:08:53.212-0400 [conn6] end connection 127.0.0.1:57216 (2 connections now open)
+2014-07-10T11:08:53.354-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:08:53.354-0400 [rsHealthPoll] replSet member localhost:27019 is now in state SECONDARY
+2014-07-10T11:08:53.609-0400 [conn4] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:08:53.609-0400 [conn4] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:08:53.609-0400 [conn4] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:08:55.168-0400 [conn7] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:08:55.168-0400 [conn7] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:08:55.168-0400 [conn7] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:08:55.354-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:08:55.611-0400 [conn4] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:08:55.611-0400 [conn4] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:08:55.611-0400 [conn4] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:08:57.169-0400 [conn7] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:08:57.169-0400 [conn7] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:08:57.169-0400 [conn7] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:08:57.356-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:08:57.612-0400 [conn4] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:08:57.612-0400 [conn4] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:08:57.613-0400 [conn4] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:08:59.171-0400 [conn7] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:08:59.171-0400 [conn7] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:08:59.171-0400 [conn7] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:08:59.358-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:08:59.614-0400 [conn4] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:08:59.614-0400 [conn4] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:08:59.614-0400 [conn4] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:01.172-0400 [conn7] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:01.172-0400 [conn7] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:01.172-0400 [conn7] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:01.360-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:09:01.616-0400 [conn4] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:01.616-0400 [conn4] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:01.616-0400 [conn4] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:03.173-0400 [conn7] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:03.173-0400 [conn7] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:03.173-0400 [conn7] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:03.361-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:09:03.617-0400 [conn4] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:03.617-0400 [conn4] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:03.617-0400 [conn4] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:05.175-0400 [conn7] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:05.175-0400 [conn7] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:05.175-0400 [conn7] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:05.363-0400 [ConnectBG] BackgroundJob starting: ConnectBG
+2014-07-10T11:09:05.363-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:09:05.363-0400 [rsHealthPoll] connected to server localhost:27019 (127.0.0.1)
+2014-07-10T11:09:05.619-0400 [conn4] Socket recv() conn closed? 127.0.0.1:57209
+2014-07-10T11:09:05.619-0400 [conn4] SocketException: remote: 127.0.0.1:57209 error: 9001 socket exception [CLOSED] server [127.0.0.1:57209] 
+2014-07-10T11:09:05.619-0400 [conn4] end connection 127.0.0.1:57209 (1 connection now open)
+2014-07-10T11:09:05.619-0400 [initandlisten] connection accepted from 127.0.0.1:57257 #8 (2 connections now open)
+2014-07-10T11:09:05.619-0400 [conn8] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:05.619-0400 [conn8] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:05.619-0400 [conn8] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:07.175-0400 [conn7] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:07.176-0400 [conn7] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:07.176-0400 [conn7] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:07.365-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:09:07.620-0400 [conn8] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:07.620-0400 [conn8] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:07.620-0400 [conn8] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:09.177-0400 [conn7] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:09.177-0400 [conn7] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:09.177-0400 [conn7] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:09.367-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:09:09.621-0400 [conn8] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:09.621-0400 [conn8] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:09.621-0400 [conn8] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:11.178-0400 [conn7] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:11.178-0400 [conn7] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:11.178-0400 [conn7] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:11.369-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:09:11.621-0400 [conn8] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:11.621-0400 [conn8] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:11.621-0400 [conn8] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:13.179-0400 [conn7] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:13.179-0400 [conn7] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:13.179-0400 [conn7] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:13.370-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:09:13.623-0400 [conn8] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:13.623-0400 [conn8] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:13.623-0400 [conn8] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:15.181-0400 [conn7] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:15.181-0400 [conn7] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:15.181-0400 [conn7] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:15.372-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:09:15.624-0400 [conn8] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:15.624-0400 [conn8] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:15.624-0400 [conn8] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:17.182-0400 [conn7] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:17.183-0400 [conn7] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:17.183-0400 [conn7] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:17.373-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:09:17.625-0400 [conn8] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:17.625-0400 [conn8] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:17.625-0400 [conn8] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:19.184-0400 [conn7] Socket recv() conn closed? 127.0.0.1:57230
+2014-07-10T11:09:19.184-0400 [conn7] SocketException: remote: 127.0.0.1:57230 error: 9001 socket exception [CLOSED] server [127.0.0.1:57230] 
+2014-07-10T11:09:19.184-0400 [conn7] end connection 127.0.0.1:57230 (1 connection now open)
+2014-07-10T11:09:19.184-0400 [initandlisten] connection accepted from 127.0.0.1:57258 #9 (2 connections now open)
+2014-07-10T11:09:19.184-0400 [conn9] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:19.184-0400 [conn9] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:19.184-0400 [conn9] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:19.374-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:09:19.625-0400 [conn8] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:19.626-0400 [conn8] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:19.626-0400 [conn8] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:21.186-0400 [conn9] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:21.186-0400 [conn9] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:21.186-0400 [conn9] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:21.375-0400 [ConnectBG] BackgroundJob starting: ConnectBG
+2014-07-10T11:09:21.376-0400 [rsHealthPoll] connected to server localhost:27017 (127.0.0.1)
+2014-07-10T11:09:21.376-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:09:21.627-0400 [conn8] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:21.627-0400 [conn8] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:21.627-0400 [conn8] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:23.187-0400 [conn9] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:23.187-0400 [conn9] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:23.187-0400 [conn9] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:23.377-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:09:23.629-0400 [conn8] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:23.629-0400 [conn8] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:23.629-0400 [conn8] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:24.300-0400 [TTLMonitor] TTLMonitor thread awake
+2014-07-10T11:09:24.300-0400 [PeriodicTaskRunner] task: DBConnectionPool-cleaner took: 0ms
+2014-07-10T11:09:24.300-0400 [PeriodicTaskRunner] task: WriteBackManager::cleaner took: 0ms
+2014-07-10T11:09:24.300-0400 [PeriodicTaskRunner] task: DBConnectionPool-cleaner took: 0ms
+2014-07-10T11:09:24.300-0400 [TTLMonitor] Running query: query: { expireAfterSeconds: { $exists: true } } sort: {} projection: {}
+2014-07-10T11:09:24.300-0400 [TTLMonitor] query admin.system.indexes query: { expireAfterSeconds: { $exists: true } } planSummary: EOF ntoreturn:0 ntoskip:0 keyUpdates:0 numYields:0 locks(micros) r:109 nreturned:0 reslen:20 0ms
+2014-07-10T11:09:24.300-0400 [TTLMonitor] Running query: query: { expireAfterSeconds: { $exists: true } } sort: {} projection: {}
+2014-07-10T11:09:24.300-0400 [TTLMonitor] Only one plan is available; it will be run but will not be cached. query: { expireAfterSeconds: { $exists: true } } sort: {} projection: {}, planSummary: COLLSCAN
+2014-07-10T11:09:24.300-0400 [TTLMonitor] query local.system.indexes query: { expireAfterSeconds: { $exists: true } } planSummary: COLLSCAN ntoreturn:0 ntoskip:0 keyUpdates:0 numYields:0 locks(micros) r:147 nreturned:0 reslen:20 0ms
+2014-07-10T11:09:24.306-0400 [DataFileSync] flushing mmaps took 7ms  for 4 files
+2014-07-10T11:09:24.310-0400 [clientcursormon] mem (MB) res:35 virt:2791
+2014-07-10T11:09:24.310-0400 [clientcursormon]  mapped:273
+2014-07-10T11:09:24.310-0400 [clientcursormon]  connections:2
+2014-07-10T11:09:24.310-0400 [clientcursormon]  replication threads:32
+2014-07-10T11:09:25.189-0400 [conn9] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:25.189-0400 [conn9] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:25.189-0400 [conn9] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:25.379-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:09:25.630-0400 [conn8] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:25.630-0400 [conn8] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:25.630-0400 [conn8] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:27.190-0400 [conn9] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:27.190-0400 [conn9] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:27.190-0400 [conn9] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:27.380-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:09:27.632-0400 [conn8] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:27.632-0400 [conn8] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:27.632-0400 [conn8] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:29.192-0400 [conn9] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:29.192-0400 [conn9] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:29.192-0400 [conn9] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:29.382-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:09:29.633-0400 [conn8] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:29.633-0400 [conn8] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:29.633-0400 [conn8] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:31.194-0400 [conn9] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:31.194-0400 [conn9] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:31.194-0400 [conn9] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:31.383-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:09:31.634-0400 [conn8] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:31.634-0400 [conn8] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:31.634-0400 [conn8] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:33.195-0400 [conn9] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:33.195-0400 [conn9] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:33.196-0400 [conn9] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:33.385-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:09:33.635-0400 [conn8] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:33.635-0400 [conn8] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:33.635-0400 [conn8] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:35.197-0400 [conn9] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:35.197-0400 [conn9] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:35.197-0400 [conn9] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:35.386-0400 [ConnectBG] BackgroundJob starting: ConnectBG
+2014-07-10T11:09:35.387-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:09:35.387-0400 [rsHealthPoll] connected to server localhost:27019 (127.0.0.1)
+2014-07-10T11:09:35.636-0400 [conn8] Socket recv() conn closed? 127.0.0.1:57257
+2014-07-10T11:09:35.636-0400 [conn8] SocketException: remote: 127.0.0.1:57257 error: 9001 socket exception [CLOSED] server [127.0.0.1:57257] 
+2014-07-10T11:09:35.636-0400 [conn8] end connection 127.0.0.1:57257 (1 connection now open)
+2014-07-10T11:09:35.636-0400 [initandlisten] connection accepted from 127.0.0.1:57264 #10 (2 connections now open)
+2014-07-10T11:09:35.636-0400 [conn10] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:35.636-0400 [conn10] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:35.636-0400 [conn10] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:37.199-0400 [conn9] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:37.199-0400 [conn9] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:37.199-0400 [conn9] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:37.388-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:09:37.638-0400 [conn10] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:37.638-0400 [conn10] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:37.638-0400 [conn10] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:39.200-0400 [conn9] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:39.200-0400 [conn9] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:39.200-0400 [conn9] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:39.389-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:09:39.638-0400 [conn10] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:39.638-0400 [conn10] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:39.639-0400 [conn10] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:41.201-0400 [conn9] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:41.201-0400 [conn9] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:41.201-0400 [conn9] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:41.391-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:09:41.639-0400 [conn10] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:41.639-0400 [conn10] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:41.639-0400 [conn10] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:43.202-0400 [conn9] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:43.202-0400 [conn9] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:43.202-0400 [conn9] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:43.392-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:09:43.641-0400 [conn10] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:43.641-0400 [conn10] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:43.641-0400 [conn10] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:45.203-0400 [conn9] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:45.204-0400 [conn9] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:45.204-0400 [conn9] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:45.393-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:09:45.642-0400 [conn10] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:45.642-0400 [conn10] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:45.643-0400 [conn10] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:47.205-0400 [conn9] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:47.205-0400 [conn9] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:47.205-0400 [conn9] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:47.394-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:09:47.643-0400 [conn10] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:47.643-0400 [conn10] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:47.643-0400 [conn10] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:49.206-0400 [conn9] Socket recv() conn closed? 127.0.0.1:57258
+2014-07-10T11:09:49.206-0400 [conn9] SocketException: remote: 127.0.0.1:57258 error: 9001 socket exception [CLOSED] server [127.0.0.1:57258] 
+2014-07-10T11:09:49.206-0400 [conn9] end connection 127.0.0.1:57258 (1 connection now open)
+2014-07-10T11:09:49.206-0400 [initandlisten] connection accepted from 127.0.0.1:57267 #11 (2 connections now open)
+2014-07-10T11:09:49.206-0400 [conn11] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:49.206-0400 [conn11] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:49.206-0400 [conn11] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:49.395-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:09:49.645-0400 [conn10] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:49.645-0400 [conn10] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:49.645-0400 [conn10] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:51.207-0400 [conn11] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:51.207-0400 [conn11] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:51.208-0400 [conn11] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:51.397-0400 [ConnectBG] BackgroundJob starting: ConnectBG
+2014-07-10T11:09:51.397-0400 [rsHealthPoll] connected to server localhost:27017 (127.0.0.1)
+2014-07-10T11:09:51.397-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:09:51.646-0400 [conn10] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:51.646-0400 [conn10] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:51.646-0400 [conn10] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:53.209-0400 [conn11] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:53.209-0400 [conn11] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:53.209-0400 [conn11] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:53.399-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:09:53.648-0400 [conn10] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:53.648-0400 [conn10] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:53.648-0400 [conn10] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:55.211-0400 [conn11] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:55.211-0400 [conn11] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:55.211-0400 [conn11] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:55.400-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:09:55.649-0400 [conn10] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:55.649-0400 [conn10] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:55.649-0400 [conn10] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:57.156-0400 [conn11] run command admin.$cmd { replSetHeartbeat: "repl0", v: -1, pv: 1, checkEmpty: false, from: "", fromId: 0 }
+2014-07-10T11:09:57.156-0400 [conn11] command: { replSetHeartbeat: "repl0", v: -1, pv: 1, checkEmpty: false, from: "", fromId: 0 }
+2014-07-10T11:09:57.156-0400 [conn11] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: -1, pv: 1, checkEmpty: false, from: "", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:336 0ms
+2014-07-10T11:09:57.157-0400 [rsBackgroundSync] replSet lastOpTimeFetched: Jul 10 11:09:57:1
+2014-07-10T11:09:57.157-0400 [rsSync] processing update :  query: {} updated: { $set: { ts: Timestamp 1405004997000|1 } } god: 0 upsert: 1 multi: 0 callLogOp: 1 fromMigration: 0 fromReplications: 0
+2014-07-10T11:09:57.157-0400 [rsSync] Only one plan is available; it will be run but will not be cached. query: {} sort: {} projection: {}, planSummary: COLLSCAN
+2014-07-10T11:09:57.157-0400 [rsSync] update validate options --  updatedFields: Fields:[ ts,] immutableAndSingleValueFields.size:0 fromRepl: 0 validate:1
+2014-07-10T11:09:57.157-0400 [rsSync] UpdateResult --  upserted: {} modifiers: 1 existing: 1 numDocsModified: 1 numMatched: 1
+2014-07-10T11:09:57.157-0400 [rsSync] replication batch size is 1
+2014-07-10T11:09:57.158-0400 [rsSyncNotifier] replset markOplog: 53beac73:1 53beacc5:1
+2014-07-10T11:09:57.158-0400 [rsSyncNotifier] now last is 53beacc5:1
+2014-07-10T11:09:57.213-0400 [conn11] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:57.213-0400 [conn11] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:57.213-0400 [conn11] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:57.402-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:09:57.402-0400 [rsMgr] replset msgReceivedNewConfig version: version: 2
+2014-07-10T11:09:57.402-0400 [rsMgr] replSet info saving a newer config version to local.system.replset: { _id: "repl0", version: 2, members: [ { _id: 0, host: "localhost:27017" }, { _id: 1, host: "localhost:27018" }, { _id: 2, host: "localhost:27019" }, { _id: 3, host: "localhost:27020" } ] }
+2014-07-10T11:09:57.402-0400 [rsMgr] processing update :  query: {} updated: { _id: "repl0", version: 2, members: [ { _id: 0, host: "localhost:27017" }, { _id: 1, host: "localhost:27018" }, { _id: 2, host: "localhost:27019" }, { _id: 3, host: "localhost:27020" } ] } god: 1 upsert: 1 multi: 0 callLogOp: 0 fromMigration: 0 fromReplications: 0
+2014-07-10T11:09:57.402-0400 [rsMgr] Only one plan is available; it will be run but will not be cached. query: {} sort: {} projection: {}, planSummary: COLLSCAN
+2014-07-10T11:09:57.402-0400 [rsMgr] update validate options --  updatedFields: Fields:[ ] immutableAndSingleValueFields.size:0 fromRepl: 0 validate:1
+2014-07-10T11:09:57.402-0400 [rsMgr] UpdateResult --  upserted: {} modifiers: 0 existing: 1 numDocsModified: 1 numMatched: 1
+2014-07-10T11:09:57.403-0400 [rsMgr] replSet saveConfigLocally done
+2014-07-10T11:09:57.403-0400 [rsMgr] replSet info : additive change to configuration
+2014-07-10T11:09:57.403-0400 [rsHealthPoll] BackgroundJob starting: rsHealthPoll
+2014-07-10T11:09:57.403-0400 [rsMgr] replSet replSetReconfig new config saved locally
+2014-07-10T11:09:57.403-0400 [ConnectBG] BackgroundJob starting: ConnectBG
+2014-07-10T11:09:57.403-0400 [rsHealthPoll] connected to server localhost:27020 (127.0.0.1)
+2014-07-10T11:09:57.403-0400 [ConnectBG] BackgroundJob starting: ConnectBG
+2014-07-10T11:09:57.403-0400 [rsHealthPoll] connected to server localhost:27020 (127.0.0.1)
+2014-07-10T11:09:57.404-0400 [rsHealthPoll] replSet member localhost:27020 is up
+2014-07-10T11:09:57.404-0400 [rsMgr] replSet total number of votes is even - add arbiter or give one member an extra vote
+2014-07-10T11:09:57.651-0400 [conn10] run command admin.$cmd { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:57.651-0400 [conn10] command: { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:57.651-0400 [conn10] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 1, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:379 0ms
+2014-07-10T11:09:57.843-0400 [initandlisten] connection accepted from 127.0.0.1:57277 #12 (3 connections now open)
+2014-07-10T11:09:57.843-0400 [conn12] run command admin.$cmd { replSetHeartbeat: "repl0", v: -2, pv: 1, checkEmpty: false, from: "" }
+2014-07-10T11:09:57.843-0400 [conn12] command: { replSetHeartbeat: "repl0", v: -2, pv: 1, checkEmpty: false, from: "" }
+2014-07-10T11:09:57.843-0400 [conn12] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: -2, pv: 1, checkEmpty: false, from: "" } ntoreturn:1 keyUpdates:0 numYields:0  reslen:379 0ms
+2014-07-10T11:09:57.843-0400 [conn12] Running query: query: {} sort: {} projection: {}
+2014-07-10T11:09:57.843-0400 [conn12] Only one plan is available; it will be run but will not be cached. query: {} sort: {} projection: {}, planSummary: COLLSCAN
+2014-07-10T11:09:57.844-0400 [conn12] query local.system.replset planSummary: COLLSCAN ntoreturn:1 ntoskip:0 keyUpdates:0 numYields:0 locks(micros) r:91 nreturned:1 reslen:239 0ms
+2014-07-10T11:09:57.844-0400 [conn12] run command local.$cmd { count: "system.replset", query: {} }
+2014-07-10T11:09:57.844-0400 [conn12] command local.$cmd command: count { count: "system.replset", query: {} } ntoreturn:1 keyUpdates:0 numYields:0 locks(micros) r:16 reslen:48 0ms
+2014-07-10T11:09:59.215-0400 [conn11] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:59.215-0400 [conn11] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:09:59.215-0400 [conn11] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:59.404-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:09:59.404-0400 [rsHealthPoll] replset info localhost:27020 thinks that we are down
+2014-07-10T11:09:59.404-0400 [rsHealthPoll] replSet member localhost:27020 is now in state STARTUP2
+2014-07-10T11:09:59.652-0400 [conn10] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:59.652-0400 [conn10] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:09:59.652-0400 [conn10] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:09:59.847-0400 [conn12] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:09:59.847-0400 [conn12] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:09:59.847-0400 [conn12] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:01.216-0400 [conn11] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:01.216-0400 [conn11] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:01.216-0400 [conn11] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:01.405-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:10:01.654-0400 [conn10] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:10:01.654-0400 [conn10] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:10:01.654-0400 [conn10] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:01.848-0400 [conn12] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:01.848-0400 [conn12] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:01.848-0400 [conn12] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:03.217-0400 [conn11] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:03.217-0400 [conn11] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:03.218-0400 [conn11] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:03.406-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:10:03.656-0400 [conn10] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:10:03.656-0400 [conn10] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:10:03.656-0400 [conn10] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:03.850-0400 [conn12] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:03.850-0400 [conn12] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:03.850-0400 [conn12] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:05.219-0400 [conn11] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:05.219-0400 [conn11] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:05.219-0400 [conn11] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:05.408-0400 [ConnectBG] BackgroundJob starting: ConnectBG
+2014-07-10T11:10:05.408-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:10:05.408-0400 [rsHealthPoll] connected to server localhost:27019 (127.0.0.1)
+2014-07-10T11:10:05.657-0400 [conn10] Socket recv() conn closed? 127.0.0.1:57264
+2014-07-10T11:10:05.657-0400 [conn10] SocketException: remote: 127.0.0.1:57264 error: 9001 socket exception [CLOSED] server [127.0.0.1:57264] 
+2014-07-10T11:10:05.657-0400 [conn10] end connection 127.0.0.1:57264 (2 connections now open)
+2014-07-10T11:10:05.658-0400 [initandlisten] connection accepted from 127.0.0.1:57282 #13 (3 connections now open)
+2014-07-10T11:10:05.658-0400 [conn13] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:10:05.658-0400 [conn13] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:10:05.658-0400 [conn13] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:05.851-0400 [conn12] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:05.851-0400 [conn12] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:05.852-0400 [conn12] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:07.221-0400 [conn11] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:07.221-0400 [conn11] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:07.221-0400 [conn11] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:07.410-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:10:07.659-0400 [conn13] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:10:07.659-0400 [conn13] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:10:07.659-0400 [conn13] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:07.853-0400 [conn12] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:07.854-0400 [conn12] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:07.854-0400 [conn12] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:09.222-0400 [conn11] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:09.222-0400 [conn11] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:09.222-0400 [conn11] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:09.411-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:10:09.660-0400 [conn13] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:10:09.660-0400 [conn13] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:10:09.660-0400 [conn13] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:09.855-0400 [conn12] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:09.855-0400 [conn12] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:09.855-0400 [conn12] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:11.223-0400 [conn11] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:11.223-0400 [conn11] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:11.223-0400 [conn11] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:11.412-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:10:11.661-0400 [conn13] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:10:11.661-0400 [conn13] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:10:11.661-0400 [conn13] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:11.855-0400 [conn12] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:11.855-0400 [conn12] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:11.855-0400 [conn12] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:13.225-0400 [conn11] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:13.225-0400 [conn11] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:13.225-0400 [conn11] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:13.414-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:10:13.663-0400 [conn13] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:10:13.663-0400 [conn13] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:10:13.663-0400 [conn13] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:13.856-0400 [conn12] Socket recv() conn closed? 127.0.0.1:57277
+2014-07-10T11:10:13.856-0400 [conn12] SocketException: remote: 127.0.0.1:57277 error: 9001 socket exception [CLOSED] server [127.0.0.1:57277] 
+2014-07-10T11:10:13.856-0400 [conn12] end connection 127.0.0.1:57277 (2 connections now open)
+2014-07-10T11:10:13.857-0400 [initandlisten] connection accepted from 127.0.0.1:57283 #14 (3 connections now open)
+2014-07-10T11:10:13.857-0400 [conn14] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:13.857-0400 [conn14] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:13.857-0400 [conn14] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:15.227-0400 [conn11] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:15.227-0400 [conn11] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:15.227-0400 [conn11] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:15.415-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:10:15.415-0400 [rsHealthPoll] replSet member localhost:27020 is now in state SECONDARY
+2014-07-10T11:10:15.664-0400 [conn13] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:10:15.664-0400 [conn13] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:10:15.664-0400 [conn13] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:15.857-0400 [conn14] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:15.858-0400 [conn14] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:15.858-0400 [conn14] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:17.229-0400 [conn11] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:17.229-0400 [conn11] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:17.229-0400 [conn11] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:17.417-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:10:17.666-0400 [conn13] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:10:17.666-0400 [conn13] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:10:17.666-0400 [conn13] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:17.859-0400 [conn14] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:17.859-0400 [conn14] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:17.859-0400 [conn14] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:19.229-0400 [conn11] Socket recv() conn closed? 127.0.0.1:57267
+2014-07-10T11:10:19.229-0400 [conn11] SocketException: remote: 127.0.0.1:57267 error: 9001 socket exception [CLOSED] server [127.0.0.1:57267] 
+2014-07-10T11:10:19.229-0400 [conn11] end connection 127.0.0.1:57267 (2 connections now open)
+2014-07-10T11:10:19.230-0400 [initandlisten] connection accepted from 127.0.0.1:57288 #15 (3 connections now open)
+2014-07-10T11:10:19.230-0400 [conn15] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:19.230-0400 [conn15] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:19.230-0400 [conn15] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:19.419-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:10:19.668-0400 [conn13] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:10:19.668-0400 [conn13] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:10:19.668-0400 [conn13] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:19.860-0400 [conn14] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:19.860-0400 [conn14] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:19.860-0400 [conn14] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:21.231-0400 [conn15] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:21.231-0400 [conn15] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:21.231-0400 [conn15] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:21.419-0400 [ConnectBG] BackgroundJob starting: ConnectBG
+2014-07-10T11:10:21.419-0400 [rsHealthPoll] connected to server localhost:27017 (127.0.0.1)
+2014-07-10T11:10:21.420-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:10:21.670-0400 [conn13] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:10:21.670-0400 [conn13] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:10:21.670-0400 [conn13] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:21.861-0400 [conn14] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:21.861-0400 [conn14] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:21.861-0400 [conn14] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:23.232-0400 [conn15] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:23.232-0400 [conn15] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:23.232-0400 [conn15] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:23.421-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:10:23.671-0400 [conn13] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:10:23.671-0400 [conn13] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:10:23.671-0400 [conn13] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:23.862-0400 [conn14] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:23.862-0400 [conn14] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:23.862-0400 [conn14] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:24.302-0400 [PeriodicTaskRunner] task: DBConnectionPool-cleaner took: 0ms
+2014-07-10T11:10:24.302-0400 [PeriodicTaskRunner] task: WriteBackManager::cleaner took: 0ms
+2014-07-10T11:10:24.302-0400 [PeriodicTaskRunner] task: DBConnectionPool-cleaner took: 0ms
+2014-07-10T11:10:24.303-0400 [TTLMonitor] TTLMonitor thread awake
+2014-07-10T11:10:24.303-0400 [TTLMonitor] Running query: query: { expireAfterSeconds: { $exists: true } } sort: {} projection: {}
+2014-07-10T11:10:24.303-0400 [TTLMonitor] query admin.system.indexes query: { expireAfterSeconds: { $exists: true } } planSummary: EOF ntoreturn:0 ntoskip:0 keyUpdates:0 numYields:0 locks(micros) r:83 nreturned:0 reslen:20 0ms
+2014-07-10T11:10:24.303-0400 [TTLMonitor] Running query: query: { expireAfterSeconds: { $exists: true } } sort: {} projection: {}
+2014-07-10T11:10:24.303-0400 [TTLMonitor] Only one plan is available; it will be run but will not be cached. query: { expireAfterSeconds: { $exists: true } } sort: {} projection: {}, planSummary: COLLSCAN
+2014-07-10T11:10:24.303-0400 [TTLMonitor] query local.system.indexes query: { expireAfterSeconds: { $exists: true } } planSummary: COLLSCAN ntoreturn:0 ntoskip:0 keyUpdates:0 numYields:0 locks(micros) r:117 nreturned:0 reslen:20 0ms
+2014-07-10T11:10:24.309-0400 [DataFileSync] flushing mmaps took 7ms  for 4 files
+2014-07-10T11:10:25.234-0400 [conn15] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:25.234-0400 [conn15] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:25.234-0400 [conn15] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:25.423-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:10:25.671-0400 [conn13] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:10:25.671-0400 [conn13] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:10:25.671-0400 [conn13] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:25.864-0400 [conn14] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:25.864-0400 [conn14] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:25.864-0400 [conn14] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:27.235-0400 [conn15] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:27.235-0400 [conn15] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:27.235-0400 [conn15] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:27.424-0400 [ConnectBG] BackgroundJob starting: ConnectBG
+2014-07-10T11:10:27.424-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:10:27.424-0400 [rsHealthPoll] connected to server localhost:27020 (127.0.0.1)
+2014-07-10T11:10:27.673-0400 [conn13] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:10:27.673-0400 [conn13] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:10:27.673-0400 [conn13] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:27.866-0400 [conn14] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:27.866-0400 [conn14] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:27.866-0400 [conn14] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:29.237-0400 [conn15] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:29.237-0400 [conn15] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:29.237-0400 [conn15] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:29.425-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:10:29.675-0400 [conn13] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:10:29.675-0400 [conn13] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:10:29.675-0400 [conn13] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:29.867-0400 [conn14] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:29.867-0400 [conn14] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:29.867-0400 [conn14] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:31.237-0400 [conn15] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:31.238-0400 [conn15] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:31.238-0400 [conn15] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:152 0ms
+2014-07-10T11:10:31.425-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:10:31.426-0400 [conn15] run command admin.$cmd { replSetHeartbeat: "repl0", v: -1, pv: 1, checkEmpty: false, from: "", fromId: 0 }
+2014-07-10T11:10:31.426-0400 [conn15] command: { replSetHeartbeat: "repl0", v: -1, pv: 1, checkEmpty: false, from: "", fromId: 0 }
+2014-07-10T11:10:31.427-0400 [conn15] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: -1, pv: 1, checkEmpty: false, from: "", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:379 0ms
+2014-07-10T11:10:31.427-0400 [rsBackgroundSync] Socket recv() conn closed? 127.0.0.1:27017
+2014-07-10T11:10:31.427-0400 [rsBackgroundSync] SocketException: remote: 127.0.0.1:27017 error: 9001 socket exception [CLOSED] server [127.0.0.1:27017] 
+2014-07-10T11:10:31.428-0400 [rsBackgroundSync] User Assertion: 10278:dbclient error communicating with server: localhost:27017
+2014-07-10T11:10:31.428-0400 [rsBackgroundSync] replSet sync source problem: 10278 dbclient error communicating with server: localhost:27017
+2014-07-10T11:10:31.428-0400 [rsBackgroundSync] replSet syncing to: localhost:27017
+2014-07-10T11:10:31.428-0400 [ConnectBG] BackgroundJob starting: ConnectBG
+2014-07-10T11:10:31.428-0400 [conn15] run command admin.$cmd { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:31.428-0400 [conn15] command: { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:31.428-0400 [conn15] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:179 0ms
+2014-07-10T11:10:31.428-0400 [rsBackgroundSync] connected to server localhost:27017 (127.0.0.1)
+2014-07-10T11:10:31.429-0400 [rsBackgroundSync] resetting connection in sync source feedback
+2014-07-10T11:10:31.429-0400 [rsBackgroundSync] replset setting syncSourceFeedback to localhost:27017
+2014-07-10T11:10:31.429-0400 [ConnectBG] BackgroundJob starting: ConnectBG
+2014-07-10T11:10:31.429-0400 [rsBackgroundSync] connected to server localhost:27017 (127.0.0.1)
+2014-07-10T11:10:31.429-0400 [rsBackgroundSync] detecting upstream updater
+2014-07-10T11:10:31.429-0400 [rsBackgroundSync] upstream updater is supported
+2014-07-10T11:10:31.429-0400 [rsBackgroundSync] repl: local.oplog.rs.find({ ts: { $gte: Timestamp 1405004997000|1 } })
+2014-07-10T11:10:31.429-0400 [rsBackgroundSync] replSet lastOpTimeFetched: Jul 10 11:10:31:1
+2014-07-10T11:10:31.429-0400 [rsSync] processing update :  query: {} updated: { $set: { ts: Timestamp 1405005031000|1 } } god: 0 upsert: 1 multi: 0 callLogOp: 1 fromMigration: 0 fromReplications: 0
+2014-07-10T11:10:31.429-0400 [rsSync] Only one plan is available; it will be run but will not be cached. query: {} sort: {} projection: {}, planSummary: COLLSCAN
+2014-07-10T11:10:31.430-0400 [rsSync] update validate options --  updatedFields: Fields:[ ts,] immutableAndSingleValueFields.size:0 fromRepl: 0 validate:1
+2014-07-10T11:10:31.430-0400 [rsSync] UpdateResult --  upserted: {} modifiers: 1 existing: 1 numDocsModified: 1 numMatched: 1
+2014-07-10T11:10:31.430-0400 [rsSync] replication batch size is 1
+2014-07-10T11:10:31.430-0400 [rsSyncNotifier] replset markOplog: 53beacc5:1 53beace7:1
+2014-07-10T11:10:31.430-0400 [rsSyncNotifier] now last is 53beace7:1
+2014-07-10T11:10:31.677-0400 [conn13] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:10:31.677-0400 [conn13] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 }
+2014-07-10T11:10:31.677-0400 [conn13] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27019", fromId: 2 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:179 0ms
+2014-07-10T11:10:31.677-0400 [conn13] Socket recv() conn closed? 127.0.0.1:57282
+2014-07-10T11:10:31.677-0400 [conn13] SocketException: remote: 127.0.0.1:57282 error: 9001 socket exception [CLOSED] server [127.0.0.1:57282] 
+2014-07-10T11:10:31.677-0400 [conn13] end connection 127.0.0.1:57282 (2 connections now open)
+2014-07-10T11:10:31.868-0400 [conn14] run command admin.$cmd { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:31.869-0400 [conn14] command: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:31.869-0400 [conn14] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:179 0ms
+2014-07-10T11:10:31.870-0400 [conn14] run command admin.$cmd { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:31.870-0400 [conn14] command: { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:31.870-0400 [conn14] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:179 0ms
+2014-07-10T11:10:33.427-0400 [rsHealthPoll] Socket recv() conn closed? 127.0.0.1:27019
+2014-07-10T11:10:33.427-0400 [rsHealthPoll] SocketException: remote: 127.0.0.1:27019 error: 9001 socket exception [CLOSED] server [127.0.0.1:27019] 
+2014-07-10T11:10:33.427-0400 [rsHealthPoll] DBClientCursor::init call() failed
+2014-07-10T11:10:33.427-0400 [rsHealthPoll] User Assertion: 10276:DBClientBase::findN: transport error: localhost:27019 ns: admin.$cmd query: { replSetHeartbeat: "repl0", v: 2, pv: 1, checkEmpty: false, from: "localhost:27018", fromId: 1 }
+2014-07-10T11:10:33.427-0400 [rsHealthPoll] replset info localhost:27019 heartbeat failed, retrying
+2014-07-10T11:10:33.427-0400 [rsHealthPoll] unable to set SO_RCVTIMEO
+2014-07-10T11:10:33.427-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:10:33.427-0400 [rsMgr] replset msgReceivedNewConfig version: version: 3
+2014-07-10T11:10:33.427-0400 [rsMgr] replSet info saving a newer config version to local.system.replset: { _id: "repl0", version: 3, members: [ { _id: 0, host: "localhost:27017" }, { _id: 1, host: "localhost:27018" }, { _id: 3, host: "localhost:27020" } ] }
+2014-07-10T11:10:33.427-0400 [rsMgr] processing update :  query: {} updated: { _id: "repl0", version: 3, members: [ { _id: 0, host: "localhost:27017" }, { _id: 1, host: "localhost:27018" }, { _id: 3, host: "localhost:27020" } ] } god: 1 upsert: 1 multi: 0 callLogOp: 0 fromMigration: 0 fromReplications: 0
+2014-07-10T11:10:33.427-0400 [rsMgr] Only one plan is available; it will be run but will not be cached. query: {} sort: {} projection: {}, planSummary: COLLSCAN
+2014-07-10T11:10:33.427-0400 [rsMgr] update validate options --  updatedFields: Fields:[ ] immutableAndSingleValueFields.size:0 fromRepl: 0 validate:1
+2014-07-10T11:10:33.427-0400 [rsMgr] UpdateResult --  upserted: {} modifiers: 0 existing: 1 numDocsModified: 1 numMatched: 1
+2014-07-10T11:10:33.427-0400 [rsMgr] replSet saveConfigLocally done
+2014-07-10T11:10:33.428-0400 [rsHealthPoll] BackgroundJob starting: rsHealthPoll
+2014-07-10T11:10:33.428-0400 [rsMgr] replSet replSetReconfig new config saved locally
+2014-07-10T11:10:33.428-0400 [rsHealthPoll] BackgroundJob starting: rsHealthPoll
+2014-07-10T11:10:33.428-0400 [rsMgr] replset msgReceivedNewConfig version: version: 3
+2014-07-10T11:10:33.428-0400 [rsMgr] replSet info msgReceivedNewConfig but version isn't higher 3 3
+2014-07-10T11:10:33.428-0400 [rsMgr] couldn't find member: 2
+2014-07-10T11:10:33.428-0400 [rsHealthPoll] replSet member localhost:27020 is up
+2014-07-10T11:10:33.428-0400 [MultiCommandJob] BackgroundJob starting: MultiCommandJob
+2014-07-10T11:10:33.428-0400 [MultiCommandJob] multiCommand running on host localhost:27020
+2014-07-10T11:10:33.428-0400 [rsHealthPoll] replSet member localhost:27020 is now in state SECONDARY
+2014-07-10T11:10:33.428-0400 [MultiCommandJob] BackgroundJob starting: MultiCommandJob
+2014-07-10T11:10:33.428-0400 [rsHealthPoll] replSet member localhost:27017 is up
+2014-07-10T11:10:33.428-0400 [MultiCommandJob] multiCommand running on host localhost:27017
+2014-07-10T11:10:33.428-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:10:33.428-0400 [rsHealthPoll] replSet member localhost:27017 is now in state PRIMARY
+2014-07-10T11:10:33.428-0400 [MultiCommandJob] multiCommand response: { opTime: new Date(6034450658860466177), fresher: false, veto: true, errmsg: "localhost:27018 is trying to elect itself but localhost:27017 is already primary and more up-to-date", ok: 1.0 }
+2014-07-10T11:10:33.428-0400 [MultiCommandJob] multiCommand response: { opTime: new Date(6034450658860466177), fresher: false, veto: true, errmsg: "I am already primary, localhost:27018 can try again once I've stepped down", ok: 1.0 }
+2014-07-10T11:10:33.428-0400 [rsHealthPoll] trying reconnect to localhost:27019 (127.0.0.1) failed
+2014-07-10T11:10:33.428-0400 [rsMgr] not electing self, localhost:27020 would veto with 'localhost:27018 is trying to elect itself but localhost:27017 is already primary and more up-to-date'
+2014-07-10T11:10:33.428-0400 [ConnectBG] BackgroundJob starting: ConnectBG
+2014-07-10T11:10:33.428-0400 [rsHealthPoll] connected to server localhost:27019 (127.0.0.1)
+2014-07-10T11:10:33.429-0400 [rsHealthPoll] reconnect localhost:27019 (127.0.0.1) ok
+2014-07-10T11:10:33.429-0400 [conn15] Socket recv() conn closed? 127.0.0.1:57288
+2014-07-10T11:10:33.429-0400 [conn15] SocketException: remote: 127.0.0.1:57288 error: 9001 socket exception [CLOSED] server [127.0.0.1:57288] 
+2014-07-10T11:10:33.429-0400 [conn15] end connection 127.0.0.1:57288 (1 connection now open)
+2014-07-10T11:10:33.429-0400 [initandlisten] connection accepted from 127.0.0.1:57312 #16 (2 connections now open)
+2014-07-10T11:10:33.429-0400 [conn16] run command admin.$cmd { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:33.429-0400 [conn16] command: { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:33.429-0400 [conn16] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:179 0ms
+2014-07-10T11:10:33.871-0400 [conn14] run command admin.$cmd { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:33.871-0400 [conn14] command: { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:33.872-0400 [conn14] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:179 0ms
+2014-07-10T11:10:35.429-0400 [ConnectBG] BackgroundJob starting: ConnectBG
+2014-07-10T11:10:35.429-0400 [rsHealthPoll] connected to server localhost:27017 (127.0.0.1)
+2014-07-10T11:10:35.429-0400 [conn16] run command admin.$cmd { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:35.429-0400 [conn16] command: { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:35.430-0400 [conn16] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:179 0ms
+2014-07-10T11:10:35.430-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:10:35.872-0400 [conn14] run command admin.$cmd { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:35.872-0400 [conn14] command: { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:35.872-0400 [conn14] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:179 0ms
+2014-07-10T11:10:36.450-0400 [rsBackgroundSync] changing sync target because current sync target's most recent OpTime is Jul 10 11:09:57:1 which is more than 30 seconds behind member localhost:27020 whose most recent OpTime is 1405005031
+2014-07-10T11:10:36.450-0400 [ConnectBG] BackgroundJob starting: ConnectBG
+2014-07-10T11:10:36.450-0400 [rsBackgroundSync] connected to server localhost:27017 (127.0.0.1)
+2014-07-10T11:10:36.451-0400 [rsBackgroundSync] resetting connection in sync source feedback
+2014-07-10T11:10:36.451-0400 [rsBackgroundSync] replset setting syncSourceFeedback to localhost:27017
+2014-07-10T11:10:36.451-0400 [ConnectBG] BackgroundJob starting: ConnectBG
+2014-07-10T11:10:36.451-0400 [rsBackgroundSync] connected to server localhost:27017 (127.0.0.1)
+2014-07-10T11:10:36.451-0400 [rsBackgroundSync] detecting upstream updater
+2014-07-10T11:10:36.452-0400 [rsBackgroundSync] upstream updater is supported
+2014-07-10T11:10:36.452-0400 [rsBackgroundSync] repl: local.oplog.rs.find({ ts: { $gte: Timestamp 1405005031000|1 } })
+2014-07-10T11:10:37.430-0400 [conn16] run command admin.$cmd { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:37.430-0400 [conn16] command: { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:37.430-0400 [conn16] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:179 0ms
+2014-07-10T11:10:37.430-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:10:37.873-0400 [conn14] run command admin.$cmd { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:37.873-0400 [conn14] command: { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:37.873-0400 [conn14] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:179 0ms
+2014-07-10T11:10:39.431-0400 [conn16] run command admin.$cmd { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:39.431-0400 [conn16] command: { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:39.431-0400 [conn16] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:179 0ms
+2014-07-10T11:10:39.431-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:10:39.875-0400 [conn14] run command admin.$cmd { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:39.875-0400 [conn14] command: { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:39.875-0400 [conn14] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:179 0ms
+2014-07-10T11:10:41.432-0400 [conn16] run command admin.$cmd { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:41.432-0400 [conn16] command: { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:41.432-0400 [conn16] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:179 0ms
+2014-07-10T11:10:41.432-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:10:41.877-0400 [conn14] run command admin.$cmd { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:41.877-0400 [conn14] command: { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:41.877-0400 [conn14] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:179 0ms
+2014-07-10T11:10:43.433-0400 [conn16] run command admin.$cmd { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:43.434-0400 [conn16] command: { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:43.434-0400 [conn16] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:179 0ms
+2014-07-10T11:10:43.434-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:10:43.877-0400 [conn14] run command admin.$cmd { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:43.877-0400 [conn14] command: { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:43.877-0400 [conn14] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:179 0ms
+2014-07-10T11:10:45.435-0400 [conn16] run command admin.$cmd { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:45.435-0400 [conn16] command: { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:45.435-0400 [conn16] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:179 0ms
+2014-07-10T11:10:45.436-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:10:45.878-0400 [conn14] run command admin.$cmd { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:45.878-0400 [conn14] command: { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:45.878-0400 [conn14] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:179 0ms
+2014-07-10T11:10:47.437-0400 [conn16] run command admin.$cmd { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:47.437-0400 [conn16] command: { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:47.437-0400 [conn16] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:179 0ms
+2014-07-10T11:10:47.437-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:10:47.880-0400 [conn14] Socket recv() conn closed? 127.0.0.1:57283
+2014-07-10T11:10:47.880-0400 [conn14] SocketException: remote: 127.0.0.1:57283 error: 9001 socket exception [CLOSED] server [127.0.0.1:57283] 
+2014-07-10T11:10:47.880-0400 [conn14] end connection 127.0.0.1:57283 (1 connection now open)
+2014-07-10T11:10:47.880-0400 [initandlisten] connection accepted from 127.0.0.1:57350 #17 (2 connections now open)
+2014-07-10T11:10:47.880-0400 [conn17] run command admin.$cmd { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:47.880-0400 [conn17] command: { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:47.880-0400 [conn17] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:179 0ms
+2014-07-10T11:10:49.439-0400 [conn16] run command admin.$cmd { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:49.439-0400 [ConnectBG] BackgroundJob starting: ConnectBG
+2014-07-10T11:10:49.439-0400 [conn16] command: { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:49.439-0400 [conn16] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:179 0ms
+2014-07-10T11:10:49.439-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:10:49.439-0400 [rsHealthPoll] connected to server localhost:27020 (127.0.0.1)
+2014-07-10T11:10:49.882-0400 [conn17] run command admin.$cmd { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:49.882-0400 [conn17] command: { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:49.882-0400 [conn17] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:179 0ms
+2014-07-10T11:10:51.441-0400 [conn16] run command admin.$cmd { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:51.441-0400 [conn16] command: { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 }
+2014-07-10T11:10:51.441-0400 [conn16] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27017", fromId: 0 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:179 0ms
+2014-07-10T11:10:51.441-0400 [rsHealthPoll] setting electionTime to electionTime: new Date(6034450195003998209)
+2014-07-10T11:10:51.882-0400 [conn17] run command admin.$cmd { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:51.882-0400 [conn17] command: { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 }
+2014-07-10T11:10:51.882-0400 [conn17] command admin.$cmd command: replSetHeartbeat { replSetHeartbeat: "repl0", v: 3, pv: 1, checkEmpty: false, from: "localhost:27020", fromId: 3 } ntoreturn:1 keyUpdates:0 numYields:0  reslen:179 0ms
+2014-07-10T11:10:53.387-0400 [signalProcessingThread] got signal 15 (Terminated: 15), will terminate after current cmd ends
+2014-07-10T11:10:53.387-0400 [signalProcessingThread] now exiting
+2014-07-10T11:10:53.387-0400 [signalProcessingThread] dbexit: 
+2014-07-10T11:10:53.387-0400 [signalProcessingThread] shutdown: going to close listening sockets...
+2014-07-10T11:10:53.387-0400 [signalProcessingThread] closing listening socket: 9
+2014-07-10T11:10:53.387-0400 [signalProcessingThread] closing listening socket: 10
+2014-07-10T11:10:53.387-0400 [signalProcessingThread] closing listening socket: 11
+2014-07-10T11:10:53.387-0400 [signalProcessingThread] removing socket file: /tmp/mongodb-27018.sock
+2014-07-10T11:10:53.387-0400 [signalProcessingThread] shutdown: going to flush diaglog...
+2014-07-10T11:10:53.387-0400 [signalProcessingThread] shutdown: going to close sockets...
+2014-07-10T11:10:53.388-0400 [signalProcessingThread] shutdown: waiting for fs preallocator...
+2014-07-10T11:10:53.388-0400 [signalProcessingThread] shutdown: closing all files...
+2014-07-10T11:10:53.388-0400 [signalProcessingThread] mmf close /Users/emptysquare/.virtualenvs/test-tools/test-tools/./data/db27018/local.ns
+2014-07-10T11:10:53.388-0400 [signalProcessingThread] mmf close /Users/emptysquare/.virtualenvs/test-tools/test-tools/./data/db27018/local.0
+2014-07-10T11:10:53.388-0400 [conn16] Socket recv() errno:9 Bad file descriptor 127.0.0.1:57312
+2014-07-10T11:10:53.388-0400 [signalProcessingThread] mmf close 
+2014-07-10T11:10:53.388-0400 [conn16] SocketException: remote: 127.0.0.1:57312 error: 9001 socket exception [RECV_ERROR] server [127.0.0.1:57312] 
+2014-07-10T11:10:53.388-0400 [rsBackgroundSync] Socket recv() errno:9 Bad file descriptor 127.0.0.1:27017
+2014-07-10T11:10:53.388-0400 [signalProcessingThread] mmf close /Users/emptysquare/.virtualenvs/test-tools/test-tools/./data/db27018/local.1
+2014-07-10T11:10:53.388-0400 [conn17] Socket recv() errno:9 Bad file descriptor 127.0.0.1:57350
+2014-07-10T11:10:53.388-0400 [conn16] end connection 127.0.0.1:57312 (1 connection now open)
+2014-07-10T11:10:53.388-0400 [rsBackgroundSync] SocketException: remote: 127.0.0.1:27017 error: 9001 socket exception [RECV_ERROR] server [127.0.0.1:27017] 
+2014-07-10T11:10:53.388-0400 [signalProcessingThread] closeAllFiles() finished
+2014-07-10T11:10:53.388-0400 [conn17] SocketException: remote: 127.0.0.1:57350 error: 9001 socket exception [RECV_ERROR] server [127.0.0.1:57350] 
+2014-07-10T11:10:53.388-0400 [rsBackgroundSync] User Assertion: 10278:dbclient error communicating with server: localhost:27017
+2014-07-10T11:10:53.388-0400 [signalProcessingThread] shutdown: removing fs lock...
+2014-07-10T11:10:53.388-0400 [conn17] end connection 127.0.0.1:57350 (0 connections now open)
+2014-07-10T11:10:53.388-0400 [rsBackgroundSync] replSet sync source problem: 10278 dbclient error communicating with server: localhost:27017
+2014-07-10T11:10:53.388-0400 [signalProcessingThread] shutdown: groupCommitMutex
+2014-07-10T11:10:53.389-0400 [signalProcessingThread] dbexit: really exiting now
