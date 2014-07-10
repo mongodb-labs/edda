@@ -32,7 +32,7 @@ doclines = __doc__.split("\n")
 
 setup(
   name="edda",
-  version="0.7.0",
+  version="0.7.0+",
   maintainer="10Gen",
   maintainer_email="kaushal.parikh@10gen.com",
   #url = "https://github.com/kchodorow/edda",
