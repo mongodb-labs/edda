@@ -22,7 +22,7 @@ Users can customize this tool by adding their own parsers
 to the edda/filters/ subdirectory, following the layout specified
 in edda/filters/template.py.
 """
-__version__ = "0.7.0"
+__version__ = "0.7.0+"
 
 import argparse
 import gzip
