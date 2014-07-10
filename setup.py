@@ -34,9 +34,9 @@ doclines = __doc__.split("\n")
 setup(
     name="edda",
     version="0.7.0+",
-    maintainer="10Gen",
-    maintainer_email="kaushal.parikh@10gen.com",
-    # url = "https://github.com/kchodorow/edda",
+    maintainer="MongoDB",
+    maintainer_email="samantha.ritter@mongodb.com",
+    url="https://github.com/10gen-labs/edda",
     license="http://www.apache.org/licenses/LICENSE-2.0.html",
     platforms=["any"],
     description=doclines[0],
