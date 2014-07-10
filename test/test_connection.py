@@ -56,12 +56,7 @@ class test_connection(unittest.TestCase):
         frame2["syncs"]["kaushal"] = ["sam", "kristina"]
         frame2["summary"] = "This is a summary of frame two."
         frames["1"] = frame2
-        server_names = {}
-        server_names["hostname"] = {}
-        server_names["hostname"]["sam"] = "sam"
-        server_names["hostname"]["kaushal"] = "UNKNOWN"
-        server_names["hostname"]["kristina"] = "kristina"
-        send_to_js(frames, server_names)
+        send_to_js(frames)
 
 
     def new_frame(self, servers):

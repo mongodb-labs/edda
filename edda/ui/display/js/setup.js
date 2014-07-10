@@ -19,8 +19,6 @@ var contexts = {};
 var servers = {};
 var replsets = {};
 var mongos = {};
-var slider = {};
-var clusterType = "standalone";
 
 var CANVAS_W;
 var CANVAS_H;
@@ -34,8 +32,6 @@ var frame_top;
 var frame_bottom;
 
 // stored information
-var server_names;
-var labels;
 var frames;
 var admin;
 var total_frame_count;
@@ -71,7 +67,7 @@ function mouse_over_setup() {
 // generate coordinates
 // set background to brown
 function visual_setup() {
-    var names = new Array();
+    canvases_and_contexts();
 
     // clear all layers
     for (var name in layers) {
@@ -93,105 +89,6 @@ function visual_setup() {
 
     // render first frame
     renderFrame("0");
-}
-
-// take the config from the server and parse it out
-function parse_config(config) {
-    // this is the format we want:
-    // servers = {
-    //    "1" : { "self_name" : "",
-    //            "network_name" : "",
-    //            "version" : "",
-    //            "x" : x-coord,
-    //            "y" : y-coord,
-    //            "r" : ICON_RADIUS }
-    // }
-
-    // for replica sets:
-    // replsets = {
-    //     "name" : { 
-    //            "members" : [ array of server_nums ],
-    //            "x" : x-coord,
-    //            "y" : y-coord,
-    //            "r" : radius,
-    //            "on" : boolean
-    //            }
-    // }
-
-    // TODO: in the main server, protect against silly configurations
-    // that may bother us here.
-
-    // first, figure out if this is a sharded cluster
-    if (config["groups"].length == 1) {
-        clusterType = "replset";
-        $("#clustername").html(config["groups"][0]["name"]);
-        ICON_RADIUS = 30;
-        servers = generateIconCoords(config["groups"][0]["members"],
-                                     CANVAS_W/2,
-                                     CANVAS_H/2,
-                                     CANVAS_H/2 - 60);
-    }
-    else {
-        clusterType = "sharded";
-        $("#clustername").html("Sharded Cluster");
-        ICON_RADIUS = 15;
-        // how many shards do we have?
-        var shards = [];
-        for (var k in config["groups"]) {
-            var group = config["groups"][k]
-            if (group["type"] == "replSet") {
-                rs = { "n" : group["name"] };
-                shards.push(rs);
-            }
-        }
-        // get center points for each shard
-        // these will be in a dictionary with key "name".
-        shard_coords = generateIconCoords(shards,
-                                    CANVAS_W/2,
-                                    CANVAS_H/2,
-                                    CANVAS_H/2 - 70);
-        // get coords for each server
-        servers = {};
-        for (var g in config["groups"]) {
-            var group = config["groups"][g];
-            var group_info = {};
-            if (group["type"] == "replSet") {
-                group_info = generateIconCoords(group["members"],
-                                                shard_coords[group["name"]]["x"],
-                                                shard_coords[group["name"]]["y"],
-                                                50);
-                // format replsets entry
-                var members = [];
-                for (var s in group["members"]) members.push(group["members"][s]["server_num"]);
-                var rs = { "members" : members,
-                           "x" : shard_coords[group["name"]]["x"],
-                           "y" : shard_coords[group["name"]]["y"],
-                           "r" : 50,
-                           "on" : false };
-                replsets[group["name"]] = rs;
-                }
-            else if (group["type"] == "mongos") {
-                mongos = generateIconCoords(group["members"],
-                                            CANVAS_W/2,
-                                            CANVAS_H/2, 
-                                            30);
-                servers = $.extend(servers, mongos);
-            }
-            // handle configs?
-            else if (group["type"] == "config") {
-                group_info = generateIconCoords(group["members"],
-                                                CANVAS_W/2,
-                                                CANVAS_H/2,
-                                                CANVAS_W);
-            }
-            // merge into parent servers dictionary
-            for (var s in group_info) {
-                servers[s] = group_info[s]; 
-            }
-        }
-    }
-    ICON_STROKE = ICON_RADIUS > 18 ? 12 : 6;
-    add_topology();
 }
 
 // set up slider functionality
@@ -302,49 +199,4 @@ function file_names() {
         s += "<br/>";
     }
     $("#log_files").html(s);
-}
-
-/*
- * Fill the #topology div with the structure of this cluster.
- */
-function add_topology() {
-    var topology = "";
-    // standalone
-    if (servers.length == 1) {
-        topology = server_label(servers.keys[0]);
-    }
-    // repl set
-    else if (clusterType == "replset") {
-        for (var server in servers) {
-            topology += "- " + server_label(server) + "<br/>";
-        }
-    }
-    // sharded cluster
-    else {
-        for (var repl in replsets) {
-            topology += repl + "<br/>";
-            replset = replsets[repl];
-            for (var m in replset["members"]) {
-                topology += "&nbsp;&nbsp;&nbsp; - ";
-                topology += server_label(replset["members"][m]) + "<br/>";
-            }
-        }
-        topology += "Mongos<br/>";
-        for (var server in mongos) {
-            topology += "&nbsp;&nbsp;&nbsp; - ";
-            topology += server_label(server) + "<br/>";
-        }
-    }
-    $("#topology").html(topology);
-}
-
-/*
- * Generate a label for this server, in most cases, the network name.
- */
-function server_label(num) {
-    if (servers[num]["network_name"] != "unknown")
-        return servers[num]["network_name"]
-    if (servers[num]["self_name"] != "unknown")
-        return servers[num]["self_name"]
-    return "server " + num;
 }

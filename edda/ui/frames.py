@@ -295,3 +295,12 @@ def info_by_type(f, e):
         if f["servers"][server] == "DOWN" and server in e["witnesses"] and len(e["witnesses"]) < 2:
             f['servers'][s] = "UNDISCOVERED"
     return f
+
+
+def update_frames_with_config(frames, config):
+    i = 0
+    while str(i) in frames:
+        f = frames[str(i)]
+        f["server_groups"] = config["groups"]
+        i += 1
+

@@ -15,18 +15,23 @@
 /* Render the cluster at a single point in time */
 var renderFrame = function(time) {
     if (!frames[time]) return;
-    // TODO: could we be more efficient than wiping everything every time?
     clearLayer("arrow");
     clearLayer("server");
 
-    renderLinks(frames[time], contexts["arrow"]);
-    renderBrokenLinks(frames[time], contexts["arrow"]);
-    renderSyncs(frames[time], contexts["arrow"]);
-    drawServers(frames[time], contexts["server"]);
- };
+    var frame = frames[time];
+    var serverCoordinates = calculateServerCoordinates(frame);
+
+    // The global "servers" object initialized in setup.js.
+    servers = serverCoordinates.coordinates;
+
+    renderLinks(serverCoordinates, frame, contexts["arrow"]);
+    renderBrokenLinks(serverCoordinates, frame, contexts["arrow"]);
+    renderSyncs(serverCoordinates, frame, contexts["arrow"]);
+    drawServers(serverCoordinates, frame, contexts["server"]);
+};
 
 /* Render broken links between servers at a single point in time */
-var renderBrokenLinks = function(frame, ctx) {
+var renderBrokenLinks = function(serverCoordinates, frame, ctx) {
     for (var server in frame["broken_links"]) {
         var list = frame["broken_links"][server];
         for (i = 0; i < list.length; i++) {
@@ -37,7 +42,7 @@ var renderBrokenLinks = function(frame, ctx) {
 };
 
 /* Render links between servers for a single point in time */
-var renderLinks = function(frame, ctx) {
+var renderLinks = function(serverCoordinates, frame, ctx) {
     for (var server in frame["links"]) {
         var list = frame["links"][server];
         for (i = 0; i < list.length; i++) {
@@ -48,7 +53,7 @@ var renderLinks = function(frame, ctx) {
 };
 
 /* Render syncs between servers for a single point in time */
-var renderSyncs = function(frame, ctx) {
+var renderSyncs = function(serverCoordinates, frame, ctx) {
     for (var server in frame["syncs"]) {
         var list = frame["syncs"][server];
         for (i = 0; i < list.length; i++) {
