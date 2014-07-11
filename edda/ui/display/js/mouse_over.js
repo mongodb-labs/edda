@@ -75,7 +75,7 @@ var undrawDropShadows = function() {
 var onCanvasClick = function(e) {
     for (var s in servers) {
         if (isOverNode(servers[s], e)) {
-            var info = server_label(s);
+            var info = server_label(servers, s);
             info += "<br/>" + frames[current_frame]["servers"][s];
             info += "<br/>" + servers[s]["version"];
             formatInfoBox(info, e);
@@ -88,7 +88,8 @@ var onCanvasClick = function(e) {
             var info = "Replica set " + rs + "<br/>";
             info += "Members: <br/>";
             for (var i = 0; i < repl["members"].length; i++) {
-                info += "&nbsp;&nbsp;&nbsp;" + server_label(repl["members"][i]) + "<br/>";
+                info += "&nbsp;&nbsp;&nbsp;";
+                info += server_label(servers, repl["members"][i]) + "<br/>";
             }
             formatInfoBox(info, e);
             return;

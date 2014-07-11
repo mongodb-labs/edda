@@ -110,12 +110,14 @@ function time_setup(max_time) {
         // erase pop-up box
         $("#message_box").attr("visibility", "hidden");
 
+        renderFrame(ui.value);
+
         // print witnesses, as hostnames
         var w = "";
         var s;
         for (s in frame["witnesses"]) {
             if (w !== "") w += "<br/>";
-            w += server_label([frame["witnesses"][s]]);
+            w += server_label(servers, [frame["witnesses"][s]]);
         }
         $("#witnesses").html(w);
 
@@ -123,11 +125,9 @@ function time_setup(max_time) {
         var d = "";
         for (s in frame["dissenters"]) {
             if (d !== "") d += "<br/>";
-            d += server_label(frame["dissenters"][s]);
+            d += server_label(servers, frame["dissenters"][s]);
         }
         $("#dissenters").html(d);
-
-        renderFrame(ui.value);
     }});
     $("#slider").slider( "option", "max", total_frame_count - 2);
 }

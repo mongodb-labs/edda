@@ -35,8 +35,13 @@ var renderBrokenLinks = function(serverCoordinates, frame, ctx) {
     for (var server in frame["broken_links"]) {
         var list = frame["broken_links"][server];
         for (i = 0; i < list.length; i++) {
-            drawBrokenLink(servers[server]["x"], servers[server]["y"],
-                        servers[list[i]]["x"], servers[list[i]]["y"], ctx);
+            /* Coords only calculated for servers present in this frame. */
+            if (servers[server] && servers[list[i]]) {
+                drawBrokenLink(
+                    servers[server]["x"], servers[server]["y"],
+                    servers[list[i]]["x"], servers[list[i]]["y"],
+                    ctx);
+            }
         }
     }
 };
@@ -46,8 +51,13 @@ var renderLinks = function(serverCoordinates, frame, ctx) {
     for (var server in frame["links"]) {
         var list = frame["links"][server];
         for (i = 0; i < list.length; i++) {
-            drawOneLine(servers[server]["x"], servers[server]["y"],
-                     servers[list[i]]["x"], servers[list[i]]["y"], ctx);
+            /* Coords only calculated for servers present in this frame. */
+            if (servers[server] && servers[list[i]]) {
+                drawOneLine(
+                    servers[server]["x"], servers[server]["y"],
+                    servers[list[i]]["x"], servers[list[i]]["y"],
+                    ctx);
+            }
         }
     }
 };
@@ -57,8 +67,13 @@ var renderSyncs = function(serverCoordinates, frame, ctx) {
     for (var server in frame["syncs"]) {
         var list = frame["syncs"][server];
         for (i = 0; i < list.length; i++) {
-            drawOneArrow(servers[list[i]]["x"], servers[list[i]]["y"],
-                      servers[server]["x"], servers[server]["y"], ctx);
+            /* Coords only calculated for servers present in this frame. */
+            if (servers[server] && servers[list[i]]) {
+                drawOneArrow(
+                    servers[list[i]]["x"], servers[list[i]]["y"],
+                    servers[server]["x"], servers[server]["y"],
+                    ctx);
+            }
         }
     }
 };

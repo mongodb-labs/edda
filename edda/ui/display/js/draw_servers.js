@@ -43,11 +43,15 @@ var drawServers = function(serverCoordinates, frame, ctx) {
     for (var s in frame.servers) {
         if (frame.servers.hasOwnProperty(s)) {
             var coordinates = serverCoordinates.coordinates[s];
-            drawSingleServer(
-                coordinates.x,
-                coordinates.y,
-                frame.servers[s],
-                ctx);
+            
+            /* Coords only calculated for servers present in this frame. */
+            if (coordinates) {
+                drawSingleServer(
+                    coordinates.x,
+                    coordinates.y,
+                    frame.servers[s],
+                    ctx);
+            }
         }
     }
 };
@@ -89,6 +93,7 @@ function calculateServerCoordinates(frame) {
         $("#clustername").html(server_groups[0]["name"]);
         ICON_RADIUS = 30;
         serverCoordinates.coordinates = generateIconCoords(
+            frame,
             server_groups[0]["members"],
             CANVAS_W/2,
             CANVAS_H/2,
@@ -110,6 +115,7 @@ function calculateServerCoordinates(frame) {
         // get center points for each shard
         // these will be in a dictionary with key "name".
         var shard_coords = generateIconCoords(
+            frame,
             shards,
             CANVAS_W/2,
             CANVAS_H/2,
@@ -120,10 +126,13 @@ function calculateServerCoordinates(frame) {
             var group = server_groups[g];
             var group_info = {};
             if (group["type"] == "replSet") {
-                group_info = generateIconCoords(group["members"],
-                                                shard_coords[group["name"]]["x"],
-                                                shard_coords[group["name"]]["y"],
-                                                50);
+                group_info = generateIconCoords(
+                    frame,
+                    group["members"],
+                    shard_coords[group["name"]]["x"],
+                    shard_coords[group["name"]]["y"],
+                    50);
+
                 // format replsets entry
                 var members = [];
                 for (var s in group["members"]) members.push(group["members"][s]["server_num"]);
@@ -135,18 +144,23 @@ function calculateServerCoordinates(frame) {
                 replsets[group["name"]] = rs;
                 }
             else if (group["type"] == "mongos") {
-                var mongos = generateIconCoords(group["members"],
-                                            CANVAS_W/2,
-                                            CANVAS_H/2,
-                                            30);
+                var mongos = generateIconCoords(
+                    frame,
+                    group["members"],
+                    CANVAS_W/2,
+                    CANVAS_H/2,
+                    30);
+                
                 $.extend(serverCoordinates.coordinates, mongos);
             }
             // handle configs?
             else if (group["type"] == "config") {
-                group_info = generateIconCoords(group["members"],
-                                                CANVAS_W/2,
-                                                CANVAS_H/2,
-                                                CANVAS_W);
+                group_info = generateIconCoords(
+                    frame,
+                    group["members"],
+                    CANVAS_W/2,
+                    CANVAS_H/2,
+                    CANVAS_W);
             }
             // merge into parent servers dictionary
             for (var s in group_info) {
@@ -202,24 +216,36 @@ function server_label(servers, num) {
         if (servers[num]["self_name"] != "unknown")
             return servers[num]["self_name"];
     }
-    return "server " + num;
+    
+    /* This server was not up at the time, no entry in frame. */
+    return "";
 }
 
 /*
  * Generate coordinates for this group of servers.
+ * "frame" is the current frame,
  * "group" is an array of server config documents by server_num,
  * "cx" and "cy" are the coordinates of the center of the
  * group, and "r" is the radius of the group.
  */
-var generateIconCoords = function(group, cx, cy, r) {
-    var count = Object.keys(group).length;
+var generateIconCoords = function(frame, group, cx, cy, r) {
+    var filteredGroup = {};
+    var filteredIndex = 0;
+    for (var serverNum in group) {
+        if (frame.servers[parseInt(serverNum) + 1] != "UNDISCOVERED") {
+            filteredGroup[filteredIndex] = group[serverNum];
+            filteredIndex++;
+        }
+    }
+    
+    var count = Object.keys(filteredGroup).length;
     var all = {};
 
     switch(count) {
     case 0:
         return;
     case 1:
-        var server = group[0];
+        var server = filteredGroup[0];
         server["x"] = cx;
         server["y"] = cy;
         server["on"] = false;
@@ -228,14 +254,14 @@ var generateIconCoords = function(group, cx, cy, r) {
         all[server["n"]] = server;
         return all;
     case 2:
-        var s1 = group[0];
+        var s1 = filteredGroup[0];
         s1["x"] = cx + r;
         s1["y"] = cy;
         s1["on"] = false;
         s1["r"] = ICON_RADIUS;
         s1["type"] = "UNDISCOVERED";
 
-        var s2 = group[1];
+        var s2 = filteredGroup[1];
         s2["x"] = cx - r;
         s2["y"] = cy;
         s2["on"] = false;
@@ -256,7 +282,7 @@ var generateIconCoords = function(group, cx, cy, r) {
     for (var i = 0; i < count; i++) {
         xVal = (r * Math.cos(start_angle * (Math.PI)/180)) + cx;
         yVal = (r * Math.sin(start_angle * (Math.PI)/180)) + cy;
-        var s = group[i];
+        var s = filteredGroup[i];
         s["x"] = xVal;
         s["y"] = yVal;
         s["on"] = false;
