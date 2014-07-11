@@ -37,14 +37,22 @@ var ICONS = {
 };
 
 /* Render all server icons for a single point in time */
-var drawServers = function(frame, ctx) {
-    for (var s in frame["servers"]) {
-        // TODO: this is bad.
-        if (!servers.hasOwnProperty(s)) continue;
-        drawSingleServer(servers[s]["x"],
-                         servers[s]["y"],
-                         frame["servers"][s],
-                         ctx);
+var drawServers = function(serverCoordinates, frame, ctx) {
+    add_topology(serverCoordinates.clusterType, serverCoordinates.coordinates);
+
+    for (var s in frame.servers) {
+        if (frame.servers.hasOwnProperty(s)) {
+            var coordinates = serverCoordinates.coordinates[s];
+            
+            /* Coords only calculated for servers present in this frame. */
+            if (coordinates) {
+                drawSingleServer(
+                    coordinates.x,
+                    coordinates.y,
+                    frame.servers[s],
+                    ctx);
+            }
+        }
     }
 };
 
@@ -75,22 +83,169 @@ var drawSingleServer = function(x, y, type, ctx) {
     }
 };
 
+function calculateServerCoordinates(frame) {
+    var server_groups = frame["server_groups"];
+    var serverCoordinates = {clusterType: null, coordinates: []};
+
+    // first, figure out if this is a sharded cluster
+    if (server_groups.length == 1) {
+        serverCoordinates.clusterType = "replset";
+        $("#clustername").html(server_groups[0]["name"]);
+        ICON_RADIUS = 30;
+        serverCoordinates.coordinates = generateIconCoords(
+            frame,
+            server_groups[0]["members"],
+            CANVAS_W/2,
+            CANVAS_H/2,
+            CANVAS_H/2 - 60);
+    }
+    else {
+        serverCoordinates.clusterType = "sharded";
+        $("#clustername").html("Sharded Cluster");
+        ICON_RADIUS = 15;
+        // how many shards do we have?
+        var shards = [];
+        for (var k in server_groups) {
+            var group = server_groups[k]
+            if (group["type"] == "replSet") {
+                rs = { "n" : group["name"] };
+                shards.push(rs);
+            }
+        }
+        // get center points for each shard
+        // these will be in a dictionary with key "name".
+        var shard_coords = generateIconCoords(
+            frame,
+            shards,
+            CANVAS_W/2,
+            CANVAS_H/2,
+            CANVAS_H/2 - 70);
+
+        // get coords for each server
+        for (var g in server_groups) {
+            var group = server_groups[g];
+            var group_info = {};
+            if (group["type"] == "replSet") {
+                group_info = generateIconCoords(
+                    frame,
+                    group["members"],
+                    shard_coords[group["name"]]["x"],
+                    shard_coords[group["name"]]["y"],
+                    50);
+
+                // format replsets entry
+                var members = [];
+                for (var s in group["members"]) members.push(group["members"][s]["server_num"]);
+                var rs = { "members" : members,
+                           "x" : shard_coords[group["name"]]["x"],
+                           "y" : shard_coords[group["name"]]["y"],
+                           "r" : 50,
+                           "on" : false };
+                replsets[group["name"]] = rs;
+                }
+            else if (group["type"] == "mongos") {
+                var mongos = generateIconCoords(
+                    frame,
+                    group["members"],
+                    CANVAS_W/2,
+                    CANVAS_H/2,
+                    30);
+                
+                $.extend(serverCoordinates.coordinates, mongos);
+            }
+            // handle configs?
+            else if (group["type"] == "config") {
+                group_info = generateIconCoords(
+                    frame,
+                    group["members"],
+                    CANVAS_W/2,
+                    CANVAS_H/2,
+                    CANVAS_W);
+            }
+            // merge into parent servers dictionary
+            for (var s in group_info) {
+                serverCoordinates[s] = group_info[s];
+            }
+        }
+    }
+    ICON_STROKE = ICON_RADIUS > 18 ? 12 : 6; // TODO:
+    return serverCoordinates;
+}
+
+/*
+ * Fill the #topology div with the structure of this cluster.
+ */
+function add_topology(clusterType, servers) {
+    var topology = "";
+    // standalone
+    if (servers.length == 1) {
+        topology = server_label(servers, servers.keys[0]);
+    }
+    // repl set
+    else if (clusterType == "replset") {
+        for (var server in servers) {
+            topology += "- " + server_label(servers, server) + "<br/>";
+        }
+    }
+    // sharded cluster
+    else {
+        for (var repl in replsets) {
+            topology += repl + "<br/>";
+            var replset = replsets[repl];
+            for (var m in replset["members"]) {
+                topology += "&nbsp;&nbsp;&nbsp; - ";
+                topology += server_label(servers, replset["members"][m]) + "<br/>";
+            }
+        }
+        topology += "Mongos<br/>";
+        for (var server in mongos) {
+            topology += "&nbsp;&nbsp;&nbsp; - ";
+            topology += server_label(servers, server) + "<br/>";
+        }
+    }
+    $("#topology").html(topology);
+}
+
+/*
+ * Generate a label for this server, in most cases, the network name.
+ */
+function server_label(servers, num) {
+    if (servers[num]) {
+        if (servers[num]["network_name"] != "unknown")
+            return servers[num]["network_name"];
+        if (servers[num]["self_name"] != "unknown")
+            return servers[num]["self_name"];
+    }
+    
+    /* This server was not up at the time, no entry in frame. */
+    return "";
+}
+
 /*
  * Generate coordinates for this group of servers.
- * These should be set once, and then not change.
+ * "frame" is the current frame,
  * "group" is an array of server config documents by server_num,
  * "cx" and "cy" are the coordinates of the center of the
  * group, and "r" is the radius of the group.
  */
-var generateIconCoords = function(group, cx, cy, r) {
-    var count = Object.keys(group).length;
+var generateIconCoords = function(frame, group, cx, cy, r) {
+    var filteredGroup = {};
+    var filteredIndex = 0;
+    for (var serverNum in group) {
+        if (frame.servers[parseInt(serverNum) + 1] != "UNDISCOVERED") {
+            filteredGroup[filteredIndex] = group[serverNum];
+            filteredIndex++;
+        }
+    }
+    
+    var count = Object.keys(filteredGroup).length;
     var all = {};
 
     switch(count) {
     case 0:
         return;
     case 1:
-        var server = group[0];
+        var server = filteredGroup[0];
         server["x"] = cx;
         server["y"] = cy;
         server["on"] = false;
@@ -99,14 +254,14 @@ var generateIconCoords = function(group, cx, cy, r) {
         all[server["n"]] = server;
         return all;
     case 2:
-        var s1 = group[0];
+        var s1 = filteredGroup[0];
         s1["x"] = cx + r;
         s1["y"] = cy;
         s1["on"] = false;
         s1["r"] = ICON_RADIUS;
         s1["type"] = "UNDISCOVERED";
 
-        var s2 = group[1];
+        var s2 = filteredGroup[1];
         s2["x"] = cx - r;
         s2["y"] = cy;
         s2["on"] = false;
@@ -122,12 +277,12 @@ var generateIconCoords = function(group, cx, cy, r) {
     var xVal = 0;
     var yVal = 0;
     var start_angle = (count % 2 == 0) ? -45 : -90;
-    start_angle += Math.floor(Math.random()*90);
+//    start_angle += Math.floor(Math.random()*90);
 
     for (var i = 0; i < count; i++) {
         xVal = (r * Math.cos(start_angle * (Math.PI)/180)) + cx;
         yVal = (r * Math.sin(start_angle * (Math.PI)/180)) + cy;
-        var s = group[i];
+        var s = filteredGroup[i];
         s["x"] = xVal;
         s["y"] = yVal;
         s["on"] = false;

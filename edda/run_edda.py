@@ -22,7 +22,7 @@ Users can customize this tool by adding their own parsers
 to the edda/filters/ subdirectory, following the layout specified
 in edda/filters/template.py.
 """
-__version__ = "0.7.0"
+__version__ = "0.7.0+"
 
 import argparse
 import gzip
@@ -37,7 +37,7 @@ from post.server_matchup import address_matchup
 from post.event_matchup import event_matchup
 from pymongo import Connection
 from supporting_methods import *
-from ui.frames import generate_frames
+from ui.frames import generate_frames, update_frames_with_config
 from ui.connection import send_to_js
 
 LOGGER = None
@@ -120,7 +120,6 @@ def main():
             json_file = open(file, "r")
             data = json.loads(json_file.read())
             send_to_js(data["frames"],
-                       data["names"],
                        data["admin"],
                        http_port)
             edda_cleanup(db, coll_name)
@@ -158,14 +157,15 @@ def main():
     
     frames = generate_frames(events, db, coll_name)
     server_config = get_server_config(servers, config)
+    update_frames_with_config(frames, server_config)
     admin = get_admin_info(processed_files)
 
     LOGGER.critical("\nEdda is storing data under collection name {0}"
                     .format(coll_name))
     edda_json = open(coll_name + ".json", "w")
-    json.dump(format_json(frames, server_config, admin), edda_json)
+    json.dump(format_json(frames, admin), edda_json)
 
-    send_to_js(frames, server_config, admin, http_port)
+    send_to_js(frames, admin, http_port)
     edda_cleanup(db, coll_name)
 
 
@@ -358,8 +358,8 @@ def get_server_config(servers, config):
     return server_config
 
 
-def format_json(frames, names, admin):
-    return { "frames" : frames, "names" : names, "admin" : admin }
+def format_json(frames, admin):
+    return {"frames": frames, "admin": admin}
 
 
 def get_admin_info(files):

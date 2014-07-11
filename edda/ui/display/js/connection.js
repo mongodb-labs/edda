@@ -32,19 +32,6 @@ function connect() {
         total_frame_count = data["total_frame_count"];
         }
     });
-
-    // poll for the server names
-    url_string = document.URL + "data.servers";
-    $.ajax({
-        async: false,
-        url: url_string,
-        dataType: "json",
-        success: function(data) {
-            canvases_and_contexts();
-            parse_config(data);
-        }
-    });
-
 }
 
 // this function is not finished

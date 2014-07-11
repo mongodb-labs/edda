@@ -45,18 +45,16 @@ def run(http_port):
     # end of thread
 
 
-def send_to_js(frames, servers, info, http_port):
+def send_to_js(frames, info, http_port):
     """Sends information to the JavaScript
     client"""
     
     global data
-    global server_config
     global admin
 
     admin = info
     data = frames
-    server_config = servers
-    
+
     # fork here!
     t = threading.Thread(target=run(http_port))
     t.start()
@@ -173,12 +171,6 @@ class eddaHTTPRequest(BaseHTTPRequestHandler):
             self.send_header("Content-type", 'application/json')
             self.end_headers()
             self.wfile.write(json.dumps(batch))
-
-        elif file_type == "servers":
-            self.send_response(200)
-            self.send_header("Content-type", 'application/json')
-            self.end_headers()
-            self.wfile.write(json.dumps(server_config))
 
         elif file_type in self.mimetypes and os.path.exists(self.docroot + uri):
             f = open(self.docroot + uri, 'r')
