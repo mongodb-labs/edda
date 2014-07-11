@@ -29,8 +29,8 @@ MONTHS = {
     'May': 5, 'Jun': 6, 'Jul': 7, 'Aug': 8,
     'Sep': 9, 'Oct': 10, 'Nov': 11, 'Dec': 12
     }
-DAYS = {
-    'Mon': 1, 'Tue': 2, 'Wed': 3, 'Thu': 4, 'Fri': 5, "Sat": 6, 'Sun': 7
+WEEKDAYS = {
+    'Mon': 0, 'Tue': 1, 'Wed': 2, 'Thu': 3, 'Fri': 4, 'Sat': 5, 'Sun': 6
 }
 
 
@@ -228,16 +228,58 @@ def date_parser(msg):
         # 2.6 logs begin with the year
         if msg[0:2] == "20":
             return datetime.strptime(msg[0:19], "%Y-%m-%dT%H:%M:%S")
-
-        # for old logs, 2.0
-        new_msg = str(MONTHS[msg[4:7]]) + msg[7:19]
-        return make_datetime_obj(msg)
-        return datetime.strptime(new_msg, "%m %d %H:%M:%S")
+        # for older logs
+        return old_style_log_date(msg)
     except (KeyError, ValueError):
         return None
 
 
-def make_datetime_obj(msg):
-    date = datetime(2012, MONTHS[msg[4:7]], DAYS[msg[0:3]],
-        int(msg[11:13]), int(msg[14:16]), int(msg[17:19]))
+def has_same_weekday(log_day, log_month, log_weekday, test_year):
+    """If this log message's date occurred on the same weekday
+    as this year, return true.
+    """
+    test_date = datetime(test_year, log_month, log_day)
+    return test_date.weekday() == log_weekday
+
+
+def guess_log_year(log_day, log_month, log_weekday):
+    """Guess the year in which this log line was created."""
+    # Pre-2.6 servers do not record the year in their logs.
+    #
+    # Beginning in the current year, compare the date in this year
+    # to the date in this log message.  If the weekday is the same for
+    # both, assume that this is the correct year.
+    #
+    # Note: because of MongoDB's relatively short lifespan, this
+    # algorithm should be correct with the exception that dates in
+    # 2014 have the same weekdays as in 2008.  Going forward, we will have
+    # such conflicts between any two years that are six years apart.
+    # In these cases, we choose the more recent year.
+
+    # for years between now and 2008:
+    # if has_same_weekday, return year.
+    current_year = datetime.now().year
+    for y in range(current_year, 2008, -1):
+        if has_same_weekday(log_day, log_month, log_weekday, y):
+            return y
+    return current_year
+
+
+def parse_old_style_log_date(msg):
+    """Return the date in this log line as a dictionary."""
+    # Note: we cannot use strptime here to process the date, because
+    # we do not have a year to work with.  Strptime, given a day, month,
+    # and weekday, will ignore the weekday, set itself to the year 1900,
+    # and use whatever weekday the "day"th of "month" was in 1900.
+    date = { "day"     : int(msg[8:10]),
+             "month"   : MONTHS[msg[4:7]],
+             "weekday" : WEEKDAYS[msg[0:3]] }
     return date
+
+
+def old_style_log_date(msg):
+    """Return a datetime object for this log line."""
+    date = parse_old_style_log_date(msg)
+    proper_year = guess_log_year(date["day"], date["month"], date["weekday"])
+    return datetime(proper_year, date["month"], date["day"],
+                    int(msg[11:13]), int(msg[14:16]), int(msg[17:19]))
