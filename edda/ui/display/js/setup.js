@@ -103,7 +103,7 @@ function time_setup(max_time) {
         handle_batches();
 
         // set info divs
-        $("#timestamp").html("<b>Time:</b> " + frame["date"].substring(5, 50));
+        $("#timestamp").html("<b>Time:</b> " + frame["date"].substring(0, 50));
         $("#summary").html(frame["summary"]);
         $("#log_message_box").html(frame["log_line"]);
 
