@@ -27,6 +27,8 @@ You must have the following installed as prerequisites for running Edda.
 + Install Edda:
 
   $ pip install edda
+  
+NOTE: version 0.7.0 is the latest version of Edda on PyPi.  This version only supports logs from Mongod up to v2.4.  To use logs from MongoDB v2.6 and newer, please clone from the repository instead.
 
 RUN
 ---
