@@ -18,7 +18,7 @@ from edda.run_edda import assign_address
 import pymongo
 import logging
 from datetime import *
-from pymongo import Connection
+from pymongo import MongoClient
 from time import sleep
 from nose.plugins.skip import Skip, SkipTest
 
@@ -26,7 +26,7 @@ from nose.plugins.skip import Skip, SkipTest
 class test_organizing_servers(unittest.TestCase):
     def db_setup(self):
         """Set up a database for use by tests"""
-        c = Connection()
+        c = MongoClient()
         db = c["test"]
         servers = db["fruit.servers"]
         entries = db["fruit.entries"]

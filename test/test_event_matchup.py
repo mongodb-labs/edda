@@ -23,7 +23,7 @@ from datetime import datetime
 from datetime import timedelta
 from edda.run_edda import assign_address
 from edda.post.event_matchup import *
-from pymongo import Connection
+from pymongo import MongoClient
 
 
 # -----------------------------
@@ -34,7 +34,7 @@ class test_event_matchup(unittest.TestCase):
 
     def db_setup(self):
         """Set up necessary server connections"""
-        c = Connection()
+        c = MongoClient()
         logging.basicConfig(level=logging.DEBUG)
         db = c["test_event_matchup"]
         servers = db["AdventureTime.servers"]

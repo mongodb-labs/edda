@@ -17,7 +17,7 @@ from edda.post.clock_skew import *
 from edda.run_edda import assign_address
 import pymongo
 from datetime import datetime
-from pymongo import Connection
+from pymongo import MongoClient
 from time import sleep
 from nose.plugins.skip import Skip, SkipTest
 
@@ -25,7 +25,7 @@ from nose.plugins.skip import Skip, SkipTest
 class test_clock_skew(unittest.TestCase):
     def db_setup(self):
         """Set up a database for use by tests"""
-        c = Connection()
+        c = MongoClient()
         db = c["test"]
         servers = db["wildcats.servers"]
         entries = db["wildcats.entries"]

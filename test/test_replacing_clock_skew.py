@@ -18,12 +18,12 @@ import unittest #replacing clock skew uses supporting methods, so there is the p
 from edda.post.replace_clock_skew import replace_clock_skew
 from edda.supporting_methods import assign_address
 from datetime import *
-from pymongo import Connection #The tests fail, but this module is not currently used. 
+from pymongo import MongoClient #The tests fail, but this module is not currently used. 
 
 class test_replacing_clock_skew(unittest.TestCase):
     def db_setup(self):
         """Set up a database for use by tests"""
-        c = Connection()
+        c = MongoClient()
         db = c["test"]
         servers = db["fruit.servers"]
         entries = db["fruit.entries"]

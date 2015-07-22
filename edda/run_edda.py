@@ -35,7 +35,7 @@ from datetime import datetime
 from filters import *
 from post.server_matchup import address_matchup
 from post.event_matchup import event_matchup
-from pymongo import Connection
+from pymongo import MongoClient
 from supporting_methods import *
 from ui.frames import generate_frames, update_frames_with_config
 from ui.connection import send_to_js
@@ -100,7 +100,7 @@ def main():
 
     # exit gracefully if no server is running
     try:
-        connection = Connection(uri)
+        connection = MongoClient(uri)
     except:
         LOGGER.critical("Unable to connect to {0}, exiting".format(uri))
         return

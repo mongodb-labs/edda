@@ -18,14 +18,14 @@ import unittest
 from datetime import datetime, timedelta
 from edda.post.server_matchup import *
 from edda.run_edda import assign_address
-from pymongo import Connection
+from pymongo import MongoClient
 
 
 class test_addr_matchup(unittest.TestCase):
     def db_setup(self):
         """Set up a database for use by tests"""
         logging.basicConfig(level=logging.DEBUG)
-        c = Connection()
+        c = MongoClient()
         db = c["test_server_matchup"]
         servers = db["hp.servers"]
         entries = db["hp.entries"]
