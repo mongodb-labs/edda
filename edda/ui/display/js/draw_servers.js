@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-var ICON_RADIUS = 20; // one radius to rule them all!
+var ICON_RADIUS = 20;
 var ICON_STROKE = ICON_RADIUS > 18 ? 12 : 6;
 var ICONS = {
     // state  : [ fill color, stroke color, dotted(bool) ]
@@ -38,20 +38,17 @@ var ICONS = {
 
 /* Render all server icons for a single point in time */
 var drawServers = function(serverCoordinates, frame, ctx) {
-    add_topology(serverCoordinates.clusterType, serverCoordinates.coordinates);
+    addTopology(serverCoordinates.clusterType, serverCoordinates);
 
     for (var s in frame.servers) {
-        if (frame.servers.hasOwnProperty(s)) {
-            var coordinates = serverCoordinates.coordinates[s];
-            
-            /* Coords only calculated for servers present in this frame. */
-            if (coordinates) {
-                drawSingleServer(
-                    coordinates.x,
-                    coordinates.y,
-                    frame.servers[s],
-                    ctx);
-            }
+        if (serverCoordinates.hasOwnProperty(s)) {
+            var x = serverCoordinates[s]["x"];
+            var y = serverCoordinates[s]["y"];
+            drawSingleServer(
+                x,
+                y,
+                frame.servers[s],
+                ctx);
         }
     }
 };
@@ -84,20 +81,26 @@ var drawSingleServer = function(x, y, type, ctx) {
 };
 
 function calculateServerCoordinates(frame) {
+    console.log("calculating coords for frame:");
+    console.log(frame);
     var server_groups = frame["server_groups"];
-    var serverCoordinates = {clusterType: null, coordinates: []};
+    var serverCoordinates = {clusterType: null};
 
     // first, figure out if this is a sharded cluster
     if (server_groups.length == 1) {
         serverCoordinates.clusterType = "replset";
         $("#clustername").html(server_groups[0]["name"]);
         ICON_RADIUS = 30;
-        serverCoordinates.coordinates = generateIconCoords(
+        group_info = generateIconCoords(
             frame,
             server_groups[0]["members"],
             CANVAS_W/2,
             CANVAS_H/2,
             CANVAS_H/2 - 60);
+
+        for (var s in group_info) {
+            serverCoordinates[s] = group_info[s];
+        }
     }
     else {
         serverCoordinates.clusterType = "sharded";
@@ -119,12 +122,13 @@ function calculateServerCoordinates(frame) {
             shards,
             CANVAS_W/2,
             CANVAS_H/2,
-            CANVAS_H/2 - 70);
+            CANVAS_H/2 - 85);
 
         // get coords for each server
         for (var g in server_groups) {
             var group = server_groups[g];
             var group_info = {};
+
             if (group["type"] == "replSet") {
                 group_info = generateIconCoords(
                     frame,
@@ -135,24 +139,28 @@ function calculateServerCoordinates(frame) {
 
                 // format replsets entry
                 var members = [];
-                for (var s in group["members"]) members.push(group["members"][s]["server_num"]);
+                for (var s in group["members"]) {
+                    members.push(group["members"][s]["server_num"]);
+                }
+
                 var rs = { "members" : members,
                            "x" : shard_coords[group["name"]]["x"],
                            "y" : shard_coords[group["name"]]["y"],
                            "r" : 50,
                            "on" : false };
+
                 replsets[group["name"]] = rs;
-                }
+            }
+
             else if (group["type"] == "mongos") {
-                var mongos = generateIconCoords(
+                group_info = generateIconCoords(
                     frame,
                     group["members"],
                     CANVAS_W/2,
                     CANVAS_H/2,
                     30);
-                
-                $.extend(serverCoordinates.coordinates, mongos);
             }
+
             // handle configs?
             else if (group["type"] == "config") {
                 group_info = generateIconCoords(
@@ -162,21 +170,24 @@ function calculateServerCoordinates(frame) {
                     CANVAS_H/2,
                     CANVAS_W);
             }
+
             // merge into parent servers dictionary
             for (var s in group_info) {
                 serverCoordinates[s] = group_info[s];
             }
         }
     }
-    ICON_STROKE = ICON_RADIUS > 18 ? 12 : 6; // TODO:
+
+    ICON_STROKE = ICON_RADIUS > 18 ? 12 : 6;
     return serverCoordinates;
 }
 
 /*
  * Fill the #topology div with the structure of this cluster.
  */
-function add_topology(clusterType, servers) {
+function addTopology(clusterType, servers) {
     var topology = "";
+
     // standalone
     if (servers.length == 1) {
         topology = server_label(servers, servers.keys[0]);
@@ -215,8 +226,9 @@ function server_label(servers, num) {
             return servers[num]["network_name"];
         if (servers[num]["self_name"] != "unknown")
             return servers[num]["self_name"];
+        return "no name found";
     }
-    
+
     /* This server was not up at the time, no entry in frame. */
     return "";
 }
@@ -229,23 +241,15 @@ function server_label(servers, num) {
  * group, and "r" is the radius of the group.
  */
 var generateIconCoords = function(frame, group, cx, cy, r) {
-    var filteredGroup = {};
-    var filteredIndex = 0;
-    for (var serverNum in group) {
-        if (frame.servers[parseInt(serverNum) + 1] != "UNDISCOVERED") {
-            filteredGroup[filteredIndex] = group[serverNum];
-            filteredIndex++;
-        }
-    }
-    
-    var count = Object.keys(filteredGroup).length;
+    var count = Object.keys(group).length;
     var all = {};
 
+    // For 0, 1, or 2 servers, special case coordinates
     switch(count) {
     case 0:
         return;
     case 1:
-        var server = filteredGroup[0];
+        var server = group[0];
         server["x"] = cx;
         server["y"] = cy;
         server["on"] = false;
@@ -254,20 +258,20 @@ var generateIconCoords = function(frame, group, cx, cy, r) {
         all[server["n"]] = server;
         return all;
     case 2:
-        var s1 = filteredGroup[0];
+        var s1 = group[0];
         s1["x"] = cx + r;
         s1["y"] = cy;
         s1["on"] = false;
         s1["r"] = ICON_RADIUS;
         s1["type"] = "UNDISCOVERED";
 
-        var s2 = filteredGroup[1];
+        var s2 = group[1];
         s2["x"] = cx - r;
         s2["y"] = cy;
         s2["on"] = false;
         s2["r"] = ICON_RADIUS;
         s2["type"] = "UNDISCOVERED";
-        
+
         all[s1["n"]] = s1;
         all[s2["n"]] = s2;
         return all;
@@ -277,18 +281,16 @@ var generateIconCoords = function(frame, group, cx, cy, r) {
     var xVal = 0;
     var yVal = 0;
     var start_angle = (count % 2 == 0) ? -45 : -90;
-//    start_angle += Math.floor(Math.random()*90);
 
     for (var i = 0; i < count; i++) {
         xVal = (r * Math.cos(start_angle * (Math.PI)/180)) + cx;
         yVal = (r * Math.sin(start_angle * (Math.PI)/180)) + cy;
-        var s = filteredGroup[i];
+        var s = group[i];
         s["x"] = xVal;
         s["y"] = yVal;
         s["on"] = false;
         s["r"] = ICON_RADIUS;
         s["type"] = "UNDISCOVERED";
-        // TODO: why is it n or server_num??  
         if (s.hasOwnProperty("server_num"))
             all[s["server_num"]] = s;
         else all[s["n"]] = s;

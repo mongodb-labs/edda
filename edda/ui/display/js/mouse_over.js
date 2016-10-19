@@ -17,7 +17,7 @@
  * replica set that we've selected.
  */
 var onCanvasMouseover = function(e) {
-    if (mouseoverNodes(servers, e)) return;
+    if (mouseoverNodes(globalServers, e)) return;
     mouseoverNodes(replsets, e);
 };
 
@@ -31,13 +31,13 @@ var mouseoverNodes = function(nodes, e) {
         var node = nodes[n];
         if (isOverNode(node, e)) {
             if (node["on"]) return true;
+
             drawDropShadow(node);
-            nodes[n]["on"] = true;
+            node["on"] = true;
             return true;
         }
-        else {
-            if (node["on"]) undrawDropShadows();
-        }
+
+        if (node["on"]) undrawDropShadows();
     }
     return false;
 };
@@ -64,7 +64,7 @@ var drawDropShadow = function(node) {
  */
 var undrawDropShadows = function() {
     for (var n in replsets) replsets[n]["on"] = false;
-    for (var n in servers) servers[n]["on"] = false;
+    for (var n in globalServers) globalServers[n]["on"] = false;
     canvases["shadow"].width = canvases["shadow"].width;
 };
 
@@ -73,11 +73,11 @@ var undrawDropShadows = function() {
  * information about that server.
  */
 var onCanvasClick = function(e) {
-    for (var s in servers) {
-        if (isOverNode(servers[s], e)) {
-            var info = server_label(servers, s);
+    for (var s in globalServers) {
+        if (isOverNode(globalServers[s], e)) {
+            var info = server_label(globalServers, s);
             info += "<br/>" + frames[current_frame]["servers"][s];
-            info += "<br/>" + servers[s]["version"];
+            info += "<br/>" + globalServers[s]["version"];
             formatInfoBox(info, e);
             return;
         }
@@ -89,7 +89,7 @@ var onCanvasClick = function(e) {
             info += "Members: <br/>";
             for (var i = 0; i < repl["members"].length; i++) {
                 info += "&nbsp;&nbsp;&nbsp;";
-                info += server_label(servers, repl["members"][i]) + "<br/>";
+                info += server_label(globalServers, repl["members"][i]) + "<br/>";
             }
             formatInfoBox(info, e);
             return;

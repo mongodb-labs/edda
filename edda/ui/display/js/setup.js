@@ -13,38 +13,38 @@
 // limitations under the License.
 
 // define program-wide global variables
-var layers = new Array("background", "shadow", "link", "arrow", "server");
-var canvases = {};
-var contexts = {};
-var servers = {};
-var replsets = {};
-var mongos = {};
+layers = new Array("background", "shadow", "link", "arrow", "server");
+canvases = {};
+globalServers = {};
+contexts = {};
+replsets = {};
+mongos = {};
 
-var CANVAS_W;
-var CANVAS_H;
+CANVAS_W = 0;
+CANVAS_H = 0;
 
 // batch information
-var current_frame = 0;
-var batch_size = 100;
-var half_batch = parseInt(batch_size/2, 10);
-var trigger = parseInt(batch_size/4, 10);
-var frame_top;
-var frame_bottom;
+current_frame = 0;
+batch_size = 100;
+half_batch = parseInt(batch_size/2, 10);
+trigger = parseInt(batch_size/4, 10);
+frame_top = 0;
+frame_bottom = 0;
 
 // stored information
-var frames;
-var admin;
-var total_frame_count;
+frames = {};
+admin = {};
+total_frame_count = 0;
 
 // call various setup functions
 function edda_setup() {
     canvases_and_contexts();
-    mouse_over_setup();
     connect();  // see connection.js
     time_setup(size(frames));
     visual_setup();
     version_number();
     file_names();
+    mouse_over_setup();
 }
 
 /* set up canvases and associated contexts */
@@ -117,7 +117,7 @@ function time_setup(max_time) {
         var s;
         for (s in frame["witnesses"]) {
             if (w !== "") w += "<br/>";
-            w += server_label(servers, [frame["witnesses"][s]]);
+            w += server_label(globalServers, [frame["witnesses"][s]]);
         }
         $("#witnesses").html(w);
 
@@ -125,7 +125,7 @@ function time_setup(max_time) {
         var d = "";
         for (s in frame["dissenters"]) {
             if (d !== "") d += "<br/>";
-            d += server_label(servers, frame["dissenters"][s]);
+            d += server_label(globalServers, frame["dissenters"][s]);
         }
         $("#dissenters").html(d);
     }});

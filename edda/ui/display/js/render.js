@@ -18,20 +18,21 @@ var renderFrame = function(time) {
     clearLayer("arrow");
     clearLayer("server");
 
+    // set the global servers
     var frame = frames[time];
-    var serverCoordinates = calculateServerCoordinates(frame);
+    globalServers = calculateServerCoordinates(frame);
 
-    // The global "servers" object initialized in setup.js.
-    servers = serverCoordinates.coordinates;
+    console.log("Setting global servers:");
+    console.log(globalServers);
 
-    renderLinks(serverCoordinates, frame, contexts["arrow"]);
-    renderBrokenLinks(serverCoordinates, frame, contexts["arrow"]);
-    renderSyncs(serverCoordinates, frame, contexts["arrow"]);
-    drawServers(serverCoordinates, frame, contexts["server"]);
+    renderLinks(globalServers, frame, contexts["arrow"]);
+    renderBrokenLinks(globalServers, frame, contexts["arrow"]);
+    renderSyncs(globalServers, frame, contexts["arrow"]);
+    drawServers(globalServers, frame, contexts["server"]);
 };
 
 /* Render broken links between servers at a single point in time */
-var renderBrokenLinks = function(serverCoordinates, frame, ctx) {
+var renderBrokenLinks = function(servers, frame, ctx) {
     for (var server in frame["broken_links"]) {
         var list = frame["broken_links"][server];
         for (i = 0; i < list.length; i++) {
@@ -47,7 +48,7 @@ var renderBrokenLinks = function(serverCoordinates, frame, ctx) {
 };
 
 /* Render links between servers for a single point in time */
-var renderLinks = function(serverCoordinates, frame, ctx) {
+var renderLinks = function(servers, frame, ctx) {
     for (var server in frame["links"]) {
         var list = frame["links"][server];
         for (i = 0; i < list.length; i++) {
@@ -63,7 +64,7 @@ var renderLinks = function(serverCoordinates, frame, ctx) {
 };
 
 /* Render syncs between servers for a single point in time */
-var renderSyncs = function(serverCoordinates, frame, ctx) {
+var renderSyncs = function(servers, frame, ctx) {
     for (var server in frame["syncs"]) {
         var list = frame["syncs"][server];
         for (i = 0; i < list.length; i++) {
