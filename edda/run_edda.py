@@ -62,6 +62,10 @@ def main():
     description='Process and visualize log files from mongo servers')
     parser.add_argument('--port', help="Specify the MongoDb port to use")
     parser.add_argument('--http_port', help="Specify the HTTP Port")
+    parser.add_argument('--hint', help="Provide self-name to network-name"
+                        " translations for the servers in this cluster. "
+                        "Hint should be provided as a string of the form "
+                        "'<self-name1>/<network-name1>,<self-name2>/<network-name2>,...")
     parser.add_argument('--host', help="Specify host")
     parser.add_argument('--json', help="json file")
     parser.add_argument('--verbose', '-v', action='count')
@@ -75,6 +79,7 @@ def main():
     has_json = namespace.json or False
     http_port = namespace.http_port or '28000'
     port = namespace.port or '27017'
+    hint = namespace.hint or ""
     coll_name = namespace.collection or str(objectid.ObjectId())
     if namespace.host:
         host = namespace.host
@@ -124,7 +129,7 @@ def main():
                        http_port)
             edda_cleanup(db, coll_name)
             return
-            
+
     # were we supposed to have a .json file?
     if has_json:
         LOGGER.critical("--json option used, but no .json file given")
@@ -149,12 +154,13 @@ def main():
 
     # match up addresses
     if len(namespace.filename) > 1:
-        if address_matchup(db, coll_name) != 1:
-            LOGGER.warning("Could not resolve server names")
+        if address_matchup(db, coll_name, hint) != 1:
+            LOGGER.critical("Could not resolve server names. Edda may work better if you provide a hint.")
+            #return
 
     # match up events
     events = event_matchup(db, coll_name)
-    
+
     frames = generate_frames(events, db, coll_name)
     server_config = get_server_config(servers, config)
     update_frames_with_config(frames, server_config)

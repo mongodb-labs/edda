@@ -182,7 +182,7 @@ def get_corresponding_events(servers, server_entries,
     """Given a list of server names and entries
     organized by server, find all events that correspond to
     this one and combine them"""
-    delay = timedelta(seconds=2)
+    delay = timedelta(milliseconds=500)
 
     # find corresponding messages
     for s in servers:
@@ -237,32 +237,37 @@ def type_check(entry_a, entry_b):
 def target_server_match(entry_a, entry_b, servers):
     """Given two .entries documents, are they talking about the
     same sever?  (these should never be from the same
-    origin_server) Return True or False"""
+    origin_server) Return True or False.
 
-    a = entry_a["info"]["server"]
-    b = entry_b["info"]["server"]
+    Side effect: may update servers entries in the db."""
 
-    if a == "self" and b == "self":
+    target_a = entry_a["info"]["server"]
+    target_b = entry_b["info"]["server"]
+
+    if target_a == "self" and target_b == "self":
+        # a and b are both talking about themselves
         return False
-    if a == b:
-        return True
+
     a_doc = servers.find_one({"server_num": entry_a["origin_server"]})
     b_doc = servers.find_one({"server_num": entry_b["origin_server"]})
 
-    # address is known
-    if a == "self" and b == a_doc["network_name"]:
-            return True
-    if b == "self" and a == b_doc["network_name"]:
-            return True
+    if target_a == "self" and target_b == a_doc["network_name"]:
+        # a is talking about itself, and b is talking about a
+        return True
 
-    # address not known
-    # in this case, we will assume that the address does belong
-    # to the unnamed server and name it.
-    if a == "self":
-        return check_and_assign(a, b, a_doc, servers)
+    if target_b == "self" and target_a == b_doc["network_name"]:
+        # b is talking about itself, and a is talking about b
+        return True
 
-    if b == "self":
-        return check_and_assign(b, a, b_doc, servers)
+    # If one target is talking about itself and it doesn't have a network name,
+    # assume that these entries match, and name the unnamed server
+    if target_a == "self":
+        return check_and_assign(target_b, a_doc, servers)
+
+    if target_b == "self":
+        return check_and_assign(target_b, b_doc, servers)
+
+    return target_a == target_b
 
 
 def resolve_dissenters(events):
@@ -326,10 +331,6 @@ def generate_summary(event, hostname):
     elif event["type"] == "exit":
         summary += " is now exiting"
 
-
-
-
-
     # for locking messages
     elif event["type"] == "UNLOCKED":
         summary += " is unlocking itself"
@@ -372,10 +373,10 @@ def organize_servers(db, collName):
     return servers_list
 
 
-def check_and_assign(entry1, entry2, doc, servers):
+def check_and_assign(network_name, doc, servers):
         if doc["network_name"] == "unknown":
-            LOGGER.info("Assigning network name {0} to server {1}".format(entry1, entry2))
-            doc["network_name"] == entry2
+            LOGGER.info("Assigning network name {0} to server {1}".format(network_name, doc["self_name"]))
+            doc["network_name"] == network_name
             servers.save(doc)
             return True
         return False

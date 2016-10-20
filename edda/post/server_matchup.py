@@ -21,7 +21,7 @@ from edda.supporting_methods import *
 LOGGER = logging.getLogger(__name__)
 
 
-def address_matchup(db, coll_name):
+def address_matchup(db, coll_name, hint):
     """Runs an algorithm to match servers with their
     corresponding hostnames/IP addresses.  The algorithm works as follows,
     using replica set status messages from the logs to find addresses:
@@ -65,48 +65,95 @@ def address_matchup(db, coll_name):
     entries = db[coll_name + ".entries"]
 
     all_servers_cursor = entries.distinct("info.server")
+
+    LOGGER.info("Attempting to match up all servers:")
+    for doc in servers.find({}):
+        LOGGER.info("{0}".format(doc))
+
+    # use hints, if we have them
+    if hint:
+        # split on commas
+        hints = hint.split(",")
+        for server_hint in hints:
+            names = server_hint.split("/")
+            if len(names) != 2:
+                LOGGER.warning("Malformed hint, should be <self-name>/<network-name>: {0}"
+                               .format(server_hint));
+                continue
+
+            # see if we have a server with this self-name
+            doc = servers.find_one({"self_name": names[0]})
+            if doc:
+                if doc["network_name"] == "unknown":
+                    LOGGER.info("Applying hint {0} to server {1}"
+                                .format(server_hint, doc["self_name"]))
+                    doc["network_name"] = names[1]
+                    servers.save(doc)
+                    continue
+                LOGGER.info("Found entry for self-name hint {0}, but it already has a network-name"
+                            .format(server_hint))
+
+            # if not, see if we have a server with this network-name
+            # TODO: can this actually happen?
+            doc = servers.find_one({"network_name": names[1]})
+            if doc:
+                if doc["self_name"] == "unknown":
+                    LOGGER.info("Applying hint {0} to server {1}"
+                                .format(server_hint, doc["network_name"]))
+                    doc["self_name"] = names[0]
+                    servers.save(doc)
+                    continue
+                LOGGER.info("Found entry for network-name in hint {0}, but it already has a self-name"
+                            .format(server_hint))
+
+            # if we didn't find a match for our hint, enter it as a new server
+            LOGGER.info("Adding a new server entry for hint {0}".format(server_hint))
+            index = get_server_num(names[0], True, servers)
+            servers.update({ "server_num" : index }, { "$set" : { "network_name" : names[1] }})
+
+    # weed out servers that we already have names for
     # TODO: this is wildly inefficient
     for addr in all_servers_cursor:
         if addr == "self":
             continue
+        # if we have already matched this, continue
         if servers.find_one({"network_name": addr}):
             continue
-        # check if there exists doc with this self_name
+        # if a server's self and network names are the same, set and continue
         doc = servers.find_one({"self_name": addr})
         if doc:
             doc["network_name"] = addr
             servers.save(doc)
             continue
+        # do we have a hint for this server?
+        # otherwise, we have an unclaimed network name
         if not addr in mentioned_names:
             mentioned_names.append(addr)
 
-    LOGGER.debug("All mentioned network names:\n{0}".format(mentioned_names))
+    LOGGER.info("All unclaimed mentioned network names:\n{0}".format(mentioned_names))
 
-    last_change = -1
     round = 0
+    change_this_round = False
     while mentioned_names:
         round += 1
+
         # ignore mongos and configsvr
-        unknowns = list(servers.find({"network_name": "unknown", "type" : "mongod"}))
+        #unknowns = list(servers.find({"network_name": "unknown", "type" : "mongod"}))
+        unknowns = list(servers.find({"network_name": "unknown"}))
 
         if len(unknowns) == 0:
-            LOGGER.debug("No unknowns, breaking")
+            LOGGER.debug("All servers have matched-up names, breaking")
             break
+
         for s in unknowns:
 
             # extract server information
             num = s["server_num"]
+
+            # QUESTION: how could network_name be unknown here? We checked above?
+            name = None
             if s["network_name"] != "unknown":
                 name = s["network_name"]
-            else:
-                name = None
-
-            # break if we've exhausted algorithm
-            if last_change == num:
-                LOGGER.debug("Algorithm exhausted, breaking")
-                break
-            if last_change == -1:
-                last_change = num
 
             # get neighbors of s into list
             # (these are servers s mentions)
@@ -122,12 +169,14 @@ def address_matchup(db, coll_name):
             # and then, the servers they in turn mention
             # (stronger algorithm)
             if name:
+                # TODO: refactor this into a function
                 LOGGER.debug("Server (S) is named! Running stronger algorithm")
                 LOGGER.debug(
                     "finding neighbors of (S) referring to name {0}".format(name))
                 neighbors_neighbors = []
                 neighbors = list(entries.find(
                     {"info.server": name}).distinct("origin_server"))
+
                 # for each server that mentions s
                 for n_addr in neighbors:
                     LOGGER.debug("Find neighbors of (S)'s neighbor, {0}"
@@ -163,6 +212,7 @@ def address_matchup(db, coll_name):
                     match = eliminate(neighbors_of_s, mentioned_names)
             else:
                 # (weaker algorithm)
+                # is there one server that is mentioned by all that is NOT mentioned by S?
                 LOGGER.debug(
                     "Server {0} is unnamed.  Running weaker algorithm"
                     .format(num))
@@ -170,23 +220,29 @@ def address_matchup(db, coll_name):
                     "Examining for match:\n{0}\n{1}"
                     .format(neighbors_of_s, mentioned_names))
                 match = eliminate(neighbors_of_s, mentioned_names)
+
             LOGGER.debug("match: {0}".format(match))
             if match:
-                # we are only trying to match network names here
-                if s["network_name"] == "unknown":
-                        last_change = num
-                        mentioned_names.remove(match)
-                        LOGGER.debug("Network name {0} matched to server {1}"
-                                     .format(match, num))
-                        assign_address(num, match, False, servers)
-                LOGGER.debug("Duplicate network names found for server {0}"
-                             .format(s["network_name"]))
+                change_this_round = True
+                mentioned_names.remove(match)
+                LOGGER.debug("Network name {0} matched to server {1}"
+                             .format(match, num))
+                assign_address(num, match, False, servers)
             else:
                 LOGGER.debug("No match found for server {0} this round"
                              .format(num))
-        else:
-            continue
+
+        # break if we've exhausted algorithm
+        if not change_this_round:
+            LOGGER.debug("Algorithm exhausted, breaking")
+            break;
+
         break
+
+
+    LOGGER.info("Servers after address matchup:")
+    for doc in servers.find({}):
+        LOGGER.info("{0}".format(doc))
 
     if not mentioned_names:
         # for edda to succeed, it needs to match logs to servers
@@ -195,11 +251,12 @@ def address_matchup(db, coll_name):
         if len(s) == 0:
             LOGGER.debug("Successfully named all unnamed servers!")
             return 1
-        LOGGER.debug(
+        LOGGER.critical(
             "Exhausted mentioned_names, but {0} servers remain unnamed"
             .format(len(s)))
         return -1
-    LOGGER.debug(
+
+    LOGGER.critical(
         "Could not match {0} addresses: {1}"
         .format(len(mentioned_names), mentioned_names))
     return -1
@@ -210,17 +267,24 @@ def eliminate(small, big):
     there is exactly one entry in big that
     is not in small.  Return that entry, or None.
     """
+
+    # big list must have exactly one entry more than small list
+    if (len(small) + 1) != len(big):
+        return None
+
+    if len(big) == 1:
+        return big[0]
+
     # make copies of lists, because they are mutable
     # and changes made here will alter the lists outside
-    if not big:
-        return None
     s = deepcopy(small)
     b = deepcopy(big)
+
     for addr in s:
-        if not b:
-            return None
         if addr in b:
             b.remove(addr)
+
     if len(b) == 1:
         return b.pop()
+
     return None
