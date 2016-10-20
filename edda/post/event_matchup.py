@@ -57,7 +57,7 @@ def event_matchup(db, coll_name):
     "reconfig" : new config information was received
 
     This module assumes that normal network delay can account
-    for up to 4 seconds of lag between server logs.  Beyond this
+    for up to 2 second of lag between server logs.  Beyond this
     margin, module assumes that servers are no longer in sync.
     """
     # put events in ordered lists by date, one per origin_server
@@ -182,7 +182,7 @@ def get_corresponding_events(servers, server_entries,
     """Given a list of server names and entries
     organized by server, find all events that correspond to
     this one and combine them"""
-    delay = timedelta(milliseconds=500)
+    delay = timedelta(seconds=1)
 
     # find corresponding messages
     for s in servers:
@@ -193,10 +193,10 @@ def get_corresponding_events(servers, server_entries,
         for entry in server_entries[s]:
             if abs(entry["date"] - event["date"]) > delay:
                 break
-            if not target_server_match(entry, first, servers_coll):
-                continue
             type = type_check(first, entry)
             if not type:
+                continue
+            if not target_server_match(entry, first, servers_coll):
                 continue
             # match found!
             event["type"] = type
