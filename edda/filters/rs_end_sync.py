@@ -1,4 +1,4 @@
-# Copyright 2012 10gen, Inc.
+# Copyright 2016 MongoDB, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,28 +18,31 @@
 import logging
 
 
+logs = [
+    "could not find member to sync from",
+    "failed to find sync source",
+    "Fetcher stopped querying remote oplog",
+    "Cannot select sync source which is blacklisted"
+]
+
 def criteria(msg):
     """Does the given log line fit the criteria for this filter?
     If so, return an integer code.  Otherwise, return 0.
     """
-    if ('[rsSync]' in msg and
-        'syncing' in msg):
-        return 1
-    if 'sync source candidate' in msg:
-        return 1
+    for log in logs:
+        if msg.find(log) >= 0:
+            return 1
     return 0
-
 
 def process(msg, date):
     """If the given log line fits the criteria for this filter,
     process the line and create a document of the following format:
     document = {
        "date" : date,
-       "type" : "sync",
+       "type" : "end_sync",
        "msg" : msg,
        "info" : {
-          "sync_server" : "host:port"
-          "server" : "self
+          "server" : "self"
           }
     }
     """
@@ -48,35 +51,13 @@ def process(msg, date):
         return None
     doc = {}
     doc["date"] = date
-    doc["type"] = "sync"
+    doc["type"] = "end_sync"
     doc["info"] = {}
     doc["msg"] = msg
 
-    #Has the member begun syncing to a different place
-    if(messageType == 1):
-        return syncing_diff(msg, doc)
-
-
-def syncing_diff(msg, doc):
-    """Generate and return a document for replica sets
-    that are syncing to a new server.
-    """
-    logs = [
-        "syncing to: ",
-        "sync source candidate: "
-    ]
-
-    for log in logs:
-        i = msg.find(log)
-        if i < 0:
-            continue
-        doc["info"]["sync_server"] = msg[i + len(log): len(msg)]
-        break
-
-    if not doc["info"]["sync_server"]:
-        return None
-
+    # populate info
     doc["info"]["server"] = "self"
+
     logger = logging.getLogger(__name__)
     logger.debug(doc)
     return doc

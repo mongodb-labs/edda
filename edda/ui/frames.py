@@ -274,6 +274,11 @@ def info_by_type(f, e):
         if s_from in f["broken_links"][s_to]:
             f["broken_links"][s_to].remove(s_from)
 
+    # end syncs
+    elif e["type"] == "end_sync":
+        # remove sync arrow for this server
+        f["syncs"][s] = []
+
     # exits
     elif e["type"] == "exit":
         just_set = True

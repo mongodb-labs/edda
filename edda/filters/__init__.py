@@ -14,6 +14,7 @@
 
 import rs_status
 import rs_exit
+import rs_end_sync
 import rs_sync
 import rs_reconfig
 import fsync_lock
