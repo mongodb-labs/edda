@@ -45,6 +45,7 @@ PARSERS = [
     rs_status.process,
     fsync_lock.process,
     rs_sync.process,
+    rs_end_sync.process,
     init_and_listen.process,
     stale_secondary.process,
     rs_exit.process,
@@ -66,6 +67,7 @@ def main():
                         " translations for the servers in this cluster. "
                         "Hint should be provided as a string of the form "
                         "'<self-name1>/<network-name1>,<self-name2>/<network-name2>,...")
+    parser.add_argument('--ignore_unclaimed')
     parser.add_argument('--host', help="Specify host")
     parser.add_argument('--json', help="json file")
     parser.add_argument('--verbose', '-v', action='count')
@@ -80,6 +82,7 @@ def main():
     http_port = namespace.http_port or '28000'
     port = namespace.port or '27017'
     hint = namespace.hint or ""
+    ignore_unclaimed = namespace.ignore_unclaimed or False
     coll_name = namespace.collection or str(objectid.ObjectId())
     if namespace.host:
         host = namespace.host
@@ -162,7 +165,7 @@ def main():
     events = event_matchup(db, coll_name)
 
     frames = generate_frames(events, db, coll_name)
-    server_config = get_server_config(servers, config)
+    server_config = get_server_config(servers, config, ignore_unclaimed)
     update_frames_with_config(frames, server_config)
     admin = get_admin_info(processed_files)
 
@@ -317,7 +320,7 @@ def filter_message(msg, date):
         if doc:
             return doc
 
-def get_server_config(servers, config):
+def get_server_config(servers, config, ignore_unclaimed):
     """Format the information in the .servers collection
     into a data structure to be send to the JS client.
     The document should have this format:
@@ -340,17 +343,7 @@ def get_server_config(servers, config):
     }
     """
     groups = []
-
-    # if we don't have any groups in our config so far but we have
-    # servers, then make a group for them and call it a replSet
-    if config.find().count() == 0:
-        group = { "name" : "UnknownCluster", "type" : "replSet", "members" : [] }
-        for s in servers.find({}):
-            # TODO: fix to serialize ObjectIds into javascript
-            s["_id"] = 0
-            group["members"].append(s)
-
-        groups.append(group)
+    claimed = []
 
     # attach each replica set
     for rs_doc in config.find():
@@ -368,8 +361,31 @@ def get_server_config(servers, config):
             # get the server doc and append it to this group
             s = servers.find_one({ "server_num" : num }, { "_id" : 0 })
             rs_group["members"].append(s)
+            claimed.append(num)
 
         groups.append(rs_group)
+
+    # if we have any servers that don't have a detected group,
+    # create a group for them and call it a replSet
+    if not ignore_unclaimed:
+        group = { "name" : "UnclaimedServers", "type" : "replSet", "members" : [] }
+        for doc in servers.find():
+            if doc["server_num"] in claimed:
+                continue
+
+            # if both names of this server are unknown, ignore it
+            if doc["self_name"] == "unknown" and doc["network_name"] == "unknown":
+                continue
+
+            # TODO: fix to serialize ObjectIds into javascript
+            doc["_id"] = 0
+            group["members"].append(doc)
+
+        if len(group["members"]) > 0:
+            print "Have " + str(len(group["members"])) + " misfit servers"
+            groups.append(group)
+
+    print "Have the following final groups: " + str(groups)
 
     server_config = { "groups" : groups }
     return server_config
