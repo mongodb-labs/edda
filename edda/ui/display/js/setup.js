@@ -98,9 +98,11 @@ function time_setup(max_time) {
         // handle frame batches
         if (ui.value >= current_frame) { direction = 1; }
         else { direction = -1; }
+
         current_frame = ui.value
-        frame = frames[current_frame];
         handle_batches();
+
+        frame = frames[ui.value];
 
         // set info divs
         $("#timestamp").html("<b>Time:</b> " + frame["date"].substring(0, 50));
