@@ -86,14 +86,15 @@ function calculateServerCoordinates(frame) {
     var server_groups = frame["server_groups"];
     var serverCoordinates = {clusterType: null};
 
-    // first, figure out if this is a sharded cluster
+    // Handle replica sets
     if (server_groups.length == 1) {
-        serverCoordinates.clusterType = "replset";
-        $("#clustername").html(server_groups[0]["name"]);
+        var group = server_groups[0];
+        serverCoordinates.clusterType = group["type"];
+        $("#clustername").html(group["name"]);
         ICON_RADIUS = 30;
         group_info = generateIconCoords(
             frame,
-            server_groups[0]["members"],
+            group["members"],
             CANVAS_W/2,
             CANVAS_H/2,
             CANVAS_H/2 - 60);
@@ -102,6 +103,7 @@ function calculateServerCoordinates(frame) {
             serverCoordinates[s] = group_info[s];
         }
     }
+    // Handle sharded clusters
     else {
         serverCoordinates.clusterType = "sharded";
         $("#clustername").html("Sharded Cluster");
@@ -193,7 +195,7 @@ function addTopology(clusterType, servers) {
         topology = server_label(servers, servers.keys[0]);
     }
     // repl set
-    else if (clusterType == "replset") {
+    else if (clusterType == "replSet") {
         for (var server in servers) {
             topology += "- " + server_label(servers, server) + "<br/>";
         }

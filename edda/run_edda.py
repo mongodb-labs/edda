@@ -325,7 +325,7 @@ def get_server_config(servers, config):
        groups : [
           { "name" : "replSet1",
             "type" : "replSet",
-            "members" : [ 
+            "members" : [
                 { "n" : 1,
                   "self_name" : "localhost:27017",
                   "network_name" : "SamanthaRitter:27017",
@@ -335,11 +335,22 @@ def get_server_config(servers, config):
             "members" : [ ... ] },
           { "name" : "Configs",
             "type" : "configs",
-            "members" : [ ... ] } 
+            "members" : [ ... ] }
         ]
     }
     """
     groups = []
+
+    # if we don't have any groups in our config so far but we have
+    # servers, then make a group for them and call it a replSet
+    if config.find().count() == 0:
+        group = { "name" : "UnknownCluster", "type" : "replSet", "members" : [] }
+        for s in servers.find({}):
+            # TODO: fix to serialize ObjectIds into javascript
+            s["_id"] = 0
+            group["members"].append(s)
+
+        groups.append(group)
 
     # attach each replica set
     for rs_doc in config.find():
@@ -357,7 +368,7 @@ def get_server_config(servers, config):
             # get the server doc and append it to this group
             s = servers.find_one({ "server_num" : num }, { "_id" : 0 })
             rs_group["members"].append(s)
-        
+
         groups.append(rs_group)
 
     server_config = { "groups" : groups }

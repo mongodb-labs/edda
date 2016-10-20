@@ -29,6 +29,10 @@ LOGGER = logging.getLogger(__name__)
 # witnesses    : (list of server_nums)
 # dissenters   : (list of server_nums)
 # flag         : (something conflicted about this view of the world?)
+# server_groups: [
+#     { "type" : <string>, "name" : "string", "members" : [ list of servers ] },
+#     ...
+# ]
 # servers      : {
        # server : (state as string)...
 # }
@@ -303,4 +307,3 @@ def update_frames_with_config(frames, config):
         f = frames[str(i)]
         f["server_groups"] = config["groups"]
         i += 1
-
