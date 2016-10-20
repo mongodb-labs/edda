@@ -19,15 +19,11 @@ var drawOneArrow = function(x1, y1, x2, y2, ctx) {
     var dx = Math.abs(x2 - x1);
     var dy = Math.abs(y2 - y1);
     var line_length = Math.sqrt(dx*dx + dy*dy);
-
-    var h = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
-    var h_prime = 75.0000;
-    var ratio = h_prime / h;
-    var x_difference, y_difference;
+    var ratio = .75;
 
     // move endpoints in along axis
-    x_difference = dx * ratio;
-    y_difference = dy * ratio;
+    var x_difference = dx * ratio;
+    var y_difference = dy * ratio;
 
     // TODO: a better way of doing this.
     if (line_length < 100) {

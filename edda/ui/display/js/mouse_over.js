@@ -76,8 +76,11 @@ var onCanvasClick = function(e) {
     for (var s in globalServers) {
         if (isOverNode(globalServers[s], e)) {
             var info = server_label(globalServers, s);
-            info += "<br/>" + frames[current_frame]["servers"][s];
-            info += "<br/>" + globalServers[s]["version"];
+            var info = "self_name:  ";
+            info += globalServers[s]["self_name"];
+            info += "<br/>network_name:  " + globalServers[s]["network_name"];
+            info += "<br/>status:  " + frames[current_frame]["servers"][s];
+            info += "<br/>version:  " + globalServers[s]["version"];
             formatInfoBox(info, e);
             return;
         }

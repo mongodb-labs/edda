@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-var ICON_RADIUS = 20;
-var ICON_STROKE = ICON_RADIUS > 18 ? 12 : 6;
-var ICONS = {
+ICON_RADIUS = 20;
+ICON_STROKE = ICON_RADIUS > 18 ? 12 : 6;
+ICONS = {
     // state  : [ fill color, stroke color, dotted(bool) ]
     "PRIMARY" : ["#24B314", "#F0E92F", false],
     "SECONDARY" : ["#24B314", "#196E0F", false],
