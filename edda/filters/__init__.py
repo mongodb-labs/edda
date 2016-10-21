@@ -12,12 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import rs_status
-import rs_exit
-import rs_end_sync
-import rs_sync
-import rs_reconfig
+import balancer
 import fsync_lock
 import init_and_listen
+import restart
+import rs_end_sync
+import rs_exit
+import rs_reconfig
+import rs_status
+import rs_sync
 import stale_secondary
-import balancer

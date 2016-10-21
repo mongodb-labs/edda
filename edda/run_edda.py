@@ -42,15 +42,16 @@ from ui.connection import send_to_js
 
 LOGGER = None
 PARSERS = [
-    rs_status.process,
+    balancer.process,
     fsync_lock.process,
-    rs_sync.process,
-    rs_end_sync.process,
     init_and_listen.process,
-    stale_secondary.process,
+    restart.process,
+    rs_end_sync.process,
     rs_exit.process,
     rs_reconfig.process,
-    balancer.process
+    rs_status.process,
+    rs_sync.process,
+    stale_secondary.process,
 ]
 
 def main():

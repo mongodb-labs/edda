@@ -40,21 +40,23 @@ def event_matchup(db, coll_name):
         "summary"    = a mnemonic summary of the event
     (event-specific additional fields:)
         "sync_to"    = for sync type messages
-        "conn_addr"    = for new_conn or end_conn messages
+        "conn_addr"  = for new_conn or end_conn messages
         "conn_num"   = for new_conn or end_conn messages
         "state"      = for status type messages (label, not code)
         }
 
     possible event types include:
-    "new_conn" : new user connections
+
+    "exit"     : a replica set is exiting
     "end_conn" : end a user connection
+    "lock"     : a server requests to lock itself from writes
+    "new_conn" : new user connections
+    "reconfig" : new config information was received
+    "restart"  : a server was restarted
+    "stale"    : a secondary is going stale
     "status"   : a status change for a server
     "sync"     : a new sync pattern for a server
-    "stale"    : a secondary is going stale
-    "exit"     : a replica set is exiting
-    "lock"     : a server requests to lock itself from writes
     "unlock"   : a server requests to unlock itself from writes
-    "reconfig" : new config information was received
 
     This module assumes that normal network delay can account
     for up to 2 second of lag between server logs.  Beyond this
@@ -130,28 +132,34 @@ def next_event(servers, server_entries, db, coll_name):
     if event["type"] == "status":
         event["state"] = first["info"]["state"]
 
+    # server restarts
+    elif event["type"] == "restart":
+        print "setting state to DOWN for RESTART"
+        event["type"] = "status"
+        event["state"] = "DOWN"
+
     # init events, for mongos
-    if event["type"] == "init" and first["info"]["type"] == "mongos":
+    elif event["type"] == "init" and first["info"]["type"] == "mongos":
         # make this a status event, and make the state "MONGOS-UP"
         event["type"] = "status"
         event["state"] = "MONGOS-UP"
 
     # exit messages
-    if event["type"] == "exit":
+    elif event["type"] == "exit":
         event["state"] = "DOWN"
 
     # locking messages
-    if event["type"] == "fsync":
+    elif event["type"] == "fsync":
         event["type"] = first["info"]["state"]
 
     # sync events
-    if event["type"] == "sync":
+    elif event["type"] == "sync":
         # must have a server number for this server
         num = get_server_num(first["info"]["sync_server"], False, servers_coll)
         event["sync_to"] = num
 
     # conn messages
-    if first["type"] == "conn":
+    elif first["type"] == "conn":
         event["type"] = first["info"]["subtype"]
         event["conn_addr"] = first["info"]["conn_addr"]
         event["conn_number"] = first["info"]["conn_number"]
