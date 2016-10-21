@@ -235,7 +235,7 @@ def process_log(log, servers, entries, config):
             assign_address(server_num,
                            str(doc["info"]["addr"]), True, servers)
             assign_server_type(server_num, str(doc["info"]["type"]), servers)
-            
+
         # balancer messages
         if doc["type"] == "balancer":
             if (doc["info"]["subtype"] == "new_shard"):
@@ -244,10 +244,11 @@ def process_log(log, servers, entries, config):
                             "members" : doc["info"]["members"],
                             "member_nums" : [] }, config)
                 # TODO: capture config servers in a similar way
-                # we are a mongos, add us!
-                add_shard({ "replSet" : "mongos",
-                            "members" : [],
-                            "member_nums" : [ server_num ] }, config)
+                # If we are a mongos, add us!
+                if doc["info"]["mongos"]:
+                    add_shard({ "replSet" : "mongos",
+                                "members" : [],
+                                "member_nums" : [ server_num ] }, config)
 
         # startup options, config server?
         if doc["type"] == "startup_options":
@@ -360,8 +361,14 @@ def get_server_config(servers, config, ignore_unclaimed):
         for num in rs_doc["member_nums"]:
             # get the server doc and append it to this group
             s = servers.find_one({ "server_num" : num }, { "_id" : 0 })
-            rs_group["members"].append(s)
-            claimed.append(num)
+            # Bug: only add mongos to the mongos group
+            if rs_group["type"] == "mongos":
+                if s["type"] == "mongos":
+                    rs_group["members"].append(s)
+                    claimed.append(num)
+            else:
+                rs_group["members"].append(s)
+                claimed.append(num)
 
         groups.append(rs_group)
 
@@ -382,7 +389,6 @@ def get_server_config(servers, config, ignore_unclaimed):
             group["members"].append(doc)
 
         if len(group["members"]) > 0:
-            print "Have " + str(len(group["members"])) + " misfit servers"
             groups.append(group)
 
     print "Have the following final groups: " + str(groups)

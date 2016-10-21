@@ -21,9 +21,11 @@ def criteria(msg):
     If yes, return an integer code.  Otherwise, return -1.
     """
     # recognize a shard
-    if '[Balancer] starting new replica set monitor' in msg:
-        return 0
-    return -1
+    if 'starting new replica set monitor for replica set' in msg:
+        return 1
+    if 'Starting new replica set monitor for' in msg:
+        return 2
+    return 0
 
 def process(msg, date):
     """If the given log line fits the critera for this filter,
@@ -36,12 +38,13 @@ def process(msg, date):
        "info" : {
           "subtype" : "new_shard",
           "replSet" : name,
-          "members" : [ strings of server names ]
+          "members" : [ strings of server names ],
+          "mongos"  : True/False
           }
     }
     """
     result = criteria(msg)
-    if result < 0:
+    if result == 0:
         return None
 
     doc = {}
@@ -50,12 +53,29 @@ def process(msg, date):
     doc["msg"] = msg
     doc["info"] = {}
 
-    if result == 0:
+    doc["info"]["mongos"] = False
+    if '[mongosMain]' in msg:
+        doc["info"]["mongos"] = True
+
+    if result == 1:
         # get replica set name and seeds
-        a = msg.split("starting new replica set monitor for replica set ")
+        a = msg.split("starting new replica set monitor for replica set")
         b = a[1].split()
         doc["info"]["subtype"] = "new_shard"
         doc["info"]["replSet"] = b[0]
         doc["info"]["members"] = b[3].split(',')
         doc["info"]["server"] = "self"
         return doc
+
+    if result == 2:
+        # updated parsing for 3.4
+        a = msg.split("Starting new replica set monitor for ")
+        b = a[1].split('/')
+        doc["info"]["subtype"] = "new_shard"
+        doc["info"]["replSet"] = b[0]
+        doc["info"]["members"] = b[1].split(',')
+        doc["info"]["server"] = "self"
+        print "returning shard doc " + str(doc)
+        return doc
+
+    return None

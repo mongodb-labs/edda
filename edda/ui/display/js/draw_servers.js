@@ -81,8 +81,6 @@ var drawSingleServer = function(x, y, type, ctx) {
 };
 
 function calculateServerCoordinates(frame) {
-    console.log("calculating coords for frame:");
-    console.log(frame);
     var server_groups = frame["server_groups"];
     var serverCoordinates = {clusterType: null};
 
@@ -154,6 +152,7 @@ function calculateServerCoordinates(frame) {
                 replsets[group["name"]] = rs;
             }
 
+            // Handle mongos
             else if (group["type"] == "mongos") {
                 group_info = generateIconCoords(
                     frame,
@@ -257,7 +256,7 @@ var generateIconCoords = function(frame, group, cx, cy, r) {
         server["on"] = false;
         server["type"] = "UNDISCOVERED";
         server["r"] = ICON_RADIUS;
-        all[server["n"]] = server;
+        all[server["server_num"]] = server;
         return all;
     case 2:
         var s1 = group[0];
@@ -274,15 +273,15 @@ var generateIconCoords = function(frame, group, cx, cy, r) {
         s2["r"] = ICON_RADIUS;
         s2["type"] = "UNDISCOVERED";
 
-        all[s1["n"]] = s1;
-        all[s2["n"]] = s2;
+        all[s1["server_num"]] = s1;
+        all[s2["server_num"]] = s2;
         return all;
     }
 
     // all other numbers of servers are drawn on a circular pattern
     var xVal = 0;
     var yVal = 0;
-    var start_angle = (count % 2 == 0) ? -45 : -90;
+    var start_angle = (count % 2 == 0) ? -35 : -70;
 
     for (var i = 0; i < count; i++) {
         xVal = (r * Math.cos(start_angle * (Math.PI)/180)) + cx;
@@ -293,9 +292,11 @@ var generateIconCoords = function(frame, group, cx, cy, r) {
         s["on"] = false;
         s["r"] = ICON_RADIUS;
         s["type"] = "UNDISCOVERED";
-        if (s.hasOwnProperty("server_num"))
+        if (s.hasOwnProperty("server_num")) {
             all[s["server_num"]] = s;
-        else all[s["n"]] = s;
+        } else {
+            all[s["n"]] = s;
+        }
         start_angle += 360/count;
     }
     return all;

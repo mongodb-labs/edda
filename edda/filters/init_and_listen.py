@@ -25,7 +25,8 @@ def criteria(msg):
         If yes, return an integer code.  If not, return 0.
     """
     if ('[initandlisten] MongoDB starting' in msg or
-        '[mongosMain] MongoS' in msg):
+        '[mongosMain] MongoS' in msg or
+        '[mongosMain] mongos' in msg):
         return 1
     if 'db version' in msg:
         return 2
@@ -49,7 +50,7 @@ def process(msg, date):
        "info" field structure varies with subtype:
        (startup) "info" : {
           "subtype" : "startup",
-          "server" : "hostaddr:port",
+          "addr" : "hostaddr:port",
           "type" : mongos, mongod, config
        }
        (new_conn) "info" : {
@@ -106,7 +107,7 @@ def process(msg, date):
         doc["msg"] = msg
         return starting_up(msg, doc)
 
-    # MongoDB version
+    # db version
     if result == 2:
         doc["type"] = "version"
         m = msg.find("db version v")
@@ -135,9 +136,13 @@ def starting_up(msg, doc):
     doc["info"]["subtype"] = "startup"
 
     # what type of server is this?
-    if msg.find("MongoS") > -1:
+    if ('MongoS' in msg) or ('mongos' in msg):
         doc["info"]["type"] = "mongos"
-    elif msg.find("MongoDB") > -1: 
+        # mongos startup does not provide an address
+        doc["info"]["addr"] = "unknown"
+        LOGGER.debug("Returning mongos startup doc")
+        return doc
+    elif msg.find("MongoDB") > -1:
         doc["info"]["type"] = "mongod"
 
     # isolate port number
@@ -145,6 +150,7 @@ def starting_up(msg, doc):
     if m is None:
         LOGGER.debug("malformed starting_up message: no port number found")
         return None
+
     port = m.group(0)[5:]
     host = msg[msg.find("host=") + 5:].split()[0]
 

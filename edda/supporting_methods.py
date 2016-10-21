@@ -56,7 +56,7 @@ def is_IP(s):
 
 def add_shard(doc, config):
     """Create a document for this shard in the config collection.
-    If one already exists, overwrite.
+    If one already exists, update it.
     """
     existing_doc = config.find_one({ "replSet" : doc["replSet"] })
     if not existing_doc:
@@ -112,7 +112,7 @@ def get_server_num(addr, self_name, servers):
 
     # no .servers entry found for this target, make a new one
     # make sure that we do not overwrite an existing server's index
-    for i in range(1, 50):
+    for i in range(1, 500):
         if not servers.find_one({"server_num": str(i)}):
             logger.info("Adding {0} to the .servers collection with server_num {1}"
                         .format(addr, i))
