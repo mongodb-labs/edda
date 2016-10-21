@@ -160,6 +160,18 @@ function calculateServerCoordinates(frame) {
                     CANVAS_W/2,
                     CANVAS_H/2,
                     30);
+
+                // add the mongos to the topology
+                members = []
+                for (var s in group_info) {
+                    members.push(group_info[s]);
+                }
+
+                mongos = { "members" : members,
+                           "x" : CANVAS_W/2,
+                           "y" : CANVAS_H/2,
+                           "r" : 30,
+                           "on" : false };
             }
 
             // handle configs?
@@ -210,9 +222,9 @@ function addTopology(clusterType, servers) {
             }
         }
         topology += "Mongos<br/>";
-        for (var server in mongos) {
+        for (var server in mongos["members"]) {
             topology += "&nbsp;&nbsp;&nbsp; - ";
-            topology += server_label(servers, server) + "<br/>";
+            topology += server_label(servers, mongos["members"][server]["server_num"]) + "<br/>";
         }
     }
     $("#topology").html(topology);
@@ -231,7 +243,7 @@ function server_label(servers, num) {
     }
 
     /* This server was not up at the time, no entry in frame. */
-    return "";
+    return "unknown";
 }
 
 /*
