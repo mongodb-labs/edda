@@ -43,6 +43,7 @@ from ui.connection import send_to_js
 LOGGER = None
 PARSERS = [
     balancer.process,
+    chunk_migration.process,
     fsync_lock.process,
     init_and_listen.process,
     restart.process,

@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import balancer
+import chunk_migration
 import fsync_lock
 import init_and_listen
 import restart

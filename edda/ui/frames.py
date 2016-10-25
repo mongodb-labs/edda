@@ -42,6 +42,9 @@ LOGGER = logging.getLogger(__name__)
 # broken_links : {
        # server : [ list of servers ]
 # }
+# migrations : {
+#      repl_name : [ list of shards it is migrating to ]
+# }
 # syncs        : {
        # server : [ list of servers ]
 # }
@@ -82,6 +85,7 @@ def generate_frames(unsorted_events, db, collName):
         if last_frame:
             f["servers"]      = deepcopy(last_frame["servers"])
             f["links"]        = deepcopy(last_frame["links"])
+            f["migrations"]   = deepcopy(last_frame["migrations"])
             f["broken_links"] = deepcopy(last_frame["broken_links"])
             f["users"]        = deepcopy(last_frame["users"])
             f["syncs"]        = deepcopy(last_frame["syncs"])
@@ -103,6 +107,7 @@ def new_frame(server_nums):
     f["flag"] = False
     f["links"] = {}
     f["broken_links"] = {}
+    f["migrations"] = {}
     f["syncs"] = {}
     f["users"] = {}
     f["servers"] = {}
@@ -255,6 +260,20 @@ def info_by_type(f, e):
     elif e["type"] == "end_conn":
         if e["conn_addr"] in f["users"][s]:
             f["users"][s].remove(e["conn_addr"])
+
+    # chunk migrations
+    # start: nothing
+    # commit or abort: remove arrow
+    elif e["type"] == "migration":
+        # add the migration, if it's not already there
+        if not e["from_shard"] in f["migrations"]:
+            f["migrations"][e["from_shard"]] = []
+            f["migrations"][e["from_shard"]].append(e["from_shard"])
+        elif not e["to_shard"] in f["migrations"][e["from_shard"]]:
+            f["migrations"][e["from_shard"]].append(e["to_shard"])
+    elif e["type"] == "commit_migration" or e["type"] == "abort_migration":
+        # remove arrow
+        f["migrations"][e["from_shard"]].remove(e["to_shard"])
 
     # syncs
     elif e["type"] == "sync":

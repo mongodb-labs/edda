@@ -39,10 +39,12 @@ def event_matchup(db, coll_name):
         "log_line"   = original log message (one from the witnesses)
         "summary"    = a mnemonic summary of the event
     (event-specific additional fields:)
-        "sync_to"    = for sync type messages
-        "conn_addr"  = for new_conn or end_conn messages
-        "conn_num"   = for new_conn or end_conn messages
-        "state"      = for status type messages (label, not code)
+        "conn_addr"    = for new_conn or end_conn messages
+        "conn_num"     = for new_conn or end_conn messages
+        "from_shard"   = for chunk migrations
+        "to_shard"     = for chunk migrations
+        "state"        = for status type messages (label, not code)
+        "sync_to"      = for sync type messages
         }
 
     possible event types include:
@@ -143,6 +145,14 @@ def next_event(servers, server_entries, db, coll_name):
         # make this a status event, and make the state "MONGOS-UP"
         event["type"] = "status"
         event["state"] = "MONGOS-UP"
+
+    # chunk migrations
+    elif (event["type"] == "migration"
+          or event["type"] == "commit_migration"
+          or event["type"] == "abort_migration"):
+        print first
+        event["from_shard"] = first["info"]["from_shard"]
+        event["to_shard"] = first["info"]["to_shard"]
 
     # exit messages
     elif event["type"] == "exit":

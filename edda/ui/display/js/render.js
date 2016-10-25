@@ -27,6 +27,7 @@ var renderFrame = function(time) {
 
     renderLinks(globalServers, frame, contexts["arrow"]);
     renderBrokenLinks(globalServers, frame, contexts["arrow"]);
+    renderMigrations(globalServers, frame, contexts["arrow"]);
     renderSyncs(globalServers, frame, contexts["arrow"]);
     drawServers(globalServers, frame, contexts["server"]);
 };
@@ -42,6 +43,21 @@ var renderBrokenLinks = function(servers, frame, ctx) {
                     servers[server]["x"], servers[server]["y"],
                     servers[list[i]]["x"], servers[list[i]]["y"],
                     ctx);
+            }
+        }
+    }
+};
+
+/* Render chunk migrations */
+var renderMigrations = function(servers, frame, ctx) {
+    console.log("replsets:");
+    console.log(replsets);
+    migrations = frame["migrations"];
+    for (var from_shard in migrations) {
+        for (var to_shard in migrations[from_shard]) {
+            if (replsets.hasOwnProperty(from_shard) && replsets.hasOwnProperty(to_shard)) {
+                drawOneArrow(replsets[from_shard]["x"], replsets[from_shard]["y"],
+                             replsets[to_shard]["x"], replsets[to_shard]["x"], ctx);
             }
         }
     }
